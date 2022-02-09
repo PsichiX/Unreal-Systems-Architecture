@@ -33,7 +33,8 @@ setup and use Systems Architecture in your game:
 
 For now until plugin gets accepted into Epic Marketplace, you should download
 plugins ZIP files from [Releases page](https://github.com/PsichiX/Unreal-Systems-Architecture/releases)
-and unpack them in `Plugins` folder of your game project.
+and unpack them in `Plugins` folder of your game project, enable plugins in game `.uproject` file and
+recompile game project (basically follow 3rd-party plugins installation rules).
 
 ## Quick showcase
 
