@@ -1,6 +1,16 @@
 # Unreal Systems Architecture
 Systems Architecture plugin for Unreal Engine.
 
+## Table of contents
+
+- [About](#about)
+- [Installation](#installation)
+- [Testing demos](#testing-demos)
+- [Quick showcase](#quick-showcase)
+- [Plugins documentation](#plugins-documentation)
+
+## About
+
 This plugin adds database-like interface over Unreal Engine world that allows
 you to query and process game world data in easy, ergonomic and modular way.
 
@@ -33,8 +43,16 @@ setup and use Systems Architecture in your game:
 
 For now until plugin gets accepted into Epic Marketplace, you should download
 plugins ZIP files from [Releases page](https://github.com/PsichiX/Unreal-Systems-Architecture/releases)
-and unpack them in `Plugins` folder of your game project, enable plugins in game `.uproject` file and
-recompile game project (basically follow 3rd-party plugins installation rules).
+and unpack them in `Plugins` folder of your game project, enable plugins in game
+`.uproject` file and recompile game project (basically follow 3rd-party plugins
+installation rules).
+
+## Testing demos
+
+If you want to test demo mini-games, please clone this entire repo, compile game
+and open level for mini-game you want to play:
+- Boids - `/Content/Boids/Maps/BoidsMap.umap`
+- Life - `/Content/Life/Maps/LifeMap.umap`
 
 ## Quick showcase
 
