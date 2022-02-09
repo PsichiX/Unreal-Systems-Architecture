@@ -29,6 +29,12 @@ setup and use Systems Architecture in your game:
     - [C++ Code](Source/Systems_Workspace/Life/)
     - [Content](Content/Life/)
 
+## Installation
+
+For now until plugin gets accepted into Epic Marketplace, you should download
+plugins ZIP files from [Releases page](https://github.com/PsichiX/Unreal-Systems-Architecture/releases)
+and unpack them in `Plugins` folder of your game project.
+
 ## Quick showcase
 
 - Components store data:

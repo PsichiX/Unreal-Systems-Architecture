@@ -34,14 +34,14 @@ public:
 	bool ConsumeTicked();
 
 	/// Tells the current time phase.
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Systems|Metronome")
 	float Accumulator = 0;
 
 	/// Tells the time limit that marks time of ticking.
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Systems|Metronome")
 	float Limit = 1;
 
 	/// Tells if metronome has ticked.
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Systems|Metronome")
 	bool bTicked = true;
 };

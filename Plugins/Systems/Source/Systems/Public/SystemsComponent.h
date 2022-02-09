@@ -58,7 +58,7 @@ public:
 	///
 	/// If list is empty, it means this component will be added to every
 	/// registered systems world.
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Systems|Component|Actor")
 	TSet<FName> SystemsWorlds = {};
 
 protected:
@@ -67,7 +67,7 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Systems|Component|Actor")
 	bool bRegister = true;
 };
 
@@ -115,7 +115,7 @@ public:
 	///
 	/// If list is empty, it means this component will be added to every
 	/// registered systems world.
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Systems|Component|Scene")
 	TSet<FName> SystemsWorlds = {};
 
 protected:
@@ -124,6 +124,6 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Systems|Component|Scene")
 	bool bRegister = true;
 };

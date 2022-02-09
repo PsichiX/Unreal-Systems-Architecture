@@ -54,7 +54,9 @@ public:
 	/// Create, setup and register new systems world.
 	///
 	/// Blueprint-side version of [`class: Self::AcquireSystemsWorld`]().
-	UFUNCTION(BlueprintCallable, Meta = (DisplayName = "Acquire Systems World"))
+	UFUNCTION(BlueprintCallable,
+		Category = "Systems|Subsystem",
+		Meta = (DisplayName = "Acquire Systems World"))
 	void BlueprintAcquireSystemsWorld(
 		/// Systems world ID.
 		FName Id,
@@ -71,11 +73,15 @@ public:
 	/// ```snippet
 	/// subsystem_game_mode
 	/// ```
-	UFUNCTION(BlueprintCallable, Meta = (Displayname = "Release Systems World"))
+	UFUNCTION(BlueprintCallable,
+		Category = "Systems|Subsystem",
+		Meta = (Displayname = "Release Systems World"))
 	void ReleaseSystemsWorld(FName Id);
 
 	/// Gets systems world by its label.
-	UFUNCTION(BlueprintCallable, Meta = (Displayname = "Get Systems World"))
+	UFUNCTION(BlueprintCallable,
+		Category = "Systems|Subsystem",
+		Meta = (Displayname = "Get Systems World"))
 	USystemsWorld* GetSystemsWorld(
 		/// Systems world ID.
 		FName Id);
