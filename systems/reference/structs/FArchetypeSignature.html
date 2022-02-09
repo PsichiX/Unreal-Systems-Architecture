@@ -1,0 +1,508 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>FArchetypeSignature - Systems - Modular and scalable game architecture for orthogonal game logic</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../documentation.html">Documentation</a></li><li class="chapter-item expanded "><a href="../../book/index.html">Book</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../book/getting_started.html">Getting started</a></li><li class="chapter-item expanded "><a href="../../book/architecture/index.html">Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../book/architecture/world.html">World</a></li><li class="chapter-item expanded "><a href="../../book/architecture/systems.html">Systems</a></li><li class="chapter-item expanded "><a href="../../book/architecture/components.html">Components</a></li><li class="chapter-item expanded "><a href="../../book/architecture/resources.html">Resources</a></li><li class="chapter-item expanded "><a href="../../book/architecture/subsystem.html">Subsystem</a></li><li class="chapter-item expanded "><a href="../../book/architecture/iterators.html">Iterators</a></li><li class="chapter-item expanded "><a href="../../book/architecture/channels.html">Channels</a></li></ol></li><li class="chapter-item expanded "><a href="../../book/learning_materials/index.html">Learning materials</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/index.html">Tutorial</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/installation.html">Installation</a></li><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/setup_game.html">Setup game</a></li><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/setup_actors.html">Setup actors</a></li><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/spawn_system.html">Spawn system</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../reference.html">C++ API Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/structs.html">Structs</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/structs/FActorsIter.html">FActorsIter</a></li><li class="chapter-item expanded "><a href="../../reference/structs/FArchetypeSignature.html" class="active">FArchetypeSignature</a></li><li class="chapter-item expanded "><a href="../../reference/structs/FInstallSystemOptions.html">FInstallSystemOptions</a></li><li class="chapter-item expanded "><a href="../../reference/structs/FMetronome.html">FMetronome</a></li><li class="chapter-item expanded "><a href="../../reference/structs/IterSizeHint.html">IterSizeHint</a></li><li class="chapter-item expanded "><a href="../../reference/structs/TQuery.html">TQuery</a></li><li class="chapter-item expanded "><a href="../../reference/structs/TReceiverChannel.html">TReceiverChannel</a></li><li class="chapter-item expanded "><a href="../../reference/structs/TSenderChannel.html">TSenderChannel</a></li><li class="chapter-item expanded "><a href="../../reference/structs/TTaggedQuery.html">TTaggedQuery</a></li></ol></li><li class="chapter-item expanded "><a href="../../reference/classes.html">Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/classes/UDynamicQuery.html">UDynamicQuery</a></li><li class="chapter-item expanded "><a href="../../reference/classes/ULambdaSystem.html">ULambdaSystem</a></li><li class="chapter-item expanded "><a href="../../reference/classes/UScriptableSystem.html">UScriptableSystem</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystem.html">USystem</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsActorComponent.html">USystemsActorComponent</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsSceneComponent.html">USystemsSceneComponent</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsStatics.html">USystemsStatics</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsSubsystem.html">USystemsSubsystem</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsWorld.html">USystemsWorld</a></li></ol></li><li class="chapter-item expanded "><a href="../../reference/functions.html">Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/functions/IterGenerate.html">IterGenerate</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterOnce.html">IterOnce</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterRange.html">IterRange</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterRepeat.html">IterRepeat</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterStd.html">IterStd</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterStdConst.html">IterStdConst</a></li></ol></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Systems - Modular and scalable game architecture for orthogonal game logic</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="struct-farchetypesignature"><a class="header" href="#struct-farchetypesignature"><strong>Struct: <code>FArchetypeSignature</code></strong></a></h1>
+<pre><code class="language-cpp">struct SYSTEMS_API FArchetypeSignature;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<hr />
+<p>Signature of actor components set.</p>
+<p>More in depth about archetype signatures in <a href="/book/architecture/world.html">this architecture book
+section</a>.</p>
+<p>Signatures are used internally by <a href="/reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> to allow
+identification of to which buckets (archetypes) given set of components
+belongs to - that allows for querying iterators over only these actor
+components that contain all requested components and omiting ones that
+doesn't, which improves performance of querying systems world (which is the
+most frequently used operation in systems game architecture, hence the
+importance of making it fast).</p>
+<h1 id="note"><a class="header" href="#note">Note</a></h1>
+<blockquote>
+<p>Although constructing signatures has no real value for common usecases
+while developing games this API can be useful for users that needs to
+perform more advanced operations.</p>
+</blockquote>
+<h1 id="example"><a class="header" href="#example">Example</a></h1>
+<pre><code class="language-cpp">	// Instead of this:
+	const auto A = Systems-&gt;Query&lt;UShiaComponent&gt;().Count();
+
+	// You can do this:
+	auto Signature = FArchetypeSignature();
+	if (const auto Index =
+			Systems-&gt;ComponentTypeIndex(UShiaComponent::StaticClass()))
+	{
+		Signature.EnableBit(Index.GetValue());
+	}
+
+	const auto B = Systems-&gt;Count(Signature);
+</code></pre>
+<hr />
+<h1 id="methods"><a class="header" href="#methods"><strong>Methods</strong></a></h1>
+<ul>
+<li>
+<h1 id="clear"><a class="header" href="#clear"><strong><code>Clear</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void Clear();
+</code></pre>
+<details>
+<hr />
+<p>Clears components set.</p>
+</details>
+</li>
+<li>
+<h1 id="containsall"><a class="header" href="#containsall"><strong><code>ContainsAll</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool ContainsAll(
+    const FArchetypeSignature&amp; Other
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Checks if this signature fully contain component set of another
+signature.</p>
+<p>Used by <a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> to filter archetypes that are
+valid for iteration.</p>
+<hr />
+<h1 id="arguments"><a class="header" href="#arguments"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="other"><a class="header" href="#other"><strong><code>Other</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; Other
+</code></pre>
+<p>Other signature to compare with.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="containsany"><a class="header" href="#containsany"><strong><code>ContainsAny</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool ContainsAny(
+    const FArchetypeSignature&amp; Other
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Checks if this signature at least partially contain component set of
+another signature.</p>
+<hr />
+<h1 id="arguments-1"><a class="header" href="#arguments-1"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="other-1"><a class="header" href="#other-1"><strong><code>Other</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; Other
+</code></pre>
+<p>Other signature to compare with.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="countbits"><a class="header" href="#countbits"><strong><code>CountBits</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+uint32 CountBits() const;
+</code></pre>
+<details>
+<hr />
+<p>Counts bits of enabled components in set.</p>
+</details>
+</li>
+<li>
+<h1 id="difference"><a class="header" href="#difference"><strong><code>Difference</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+FArchetypeSignature Difference(
+    const FArchetypeSignature&amp; Other
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Returns signature with only component set bits that differs between this
+and another signature.</p>
+<hr />
+<h1 id="arguments-2"><a class="header" href="#arguments-2"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="other-2"><a class="header" href="#other-2"><strong><code>Other</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; Other
+</code></pre>
+<p>Other signature to test with.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="disablebit"><a class="header" href="#disablebit"><strong><code>DisableBit</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void DisableBit(
+    uint32 Index
+);
+</code></pre>
+<details>
+<hr />
+<p>Disable component bit at given index.</p>
+<hr />
+<h1 id="arguments-3"><a class="header" href="#arguments-3"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="index"><a class="header" href="#index"><strong><code>Index</code></strong></a></h2>
+<pre><code class="language-cpp">uint32 Index
+</code></pre>
+<p>Index of component bit to disable.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="enablebit"><a class="header" href="#enablebit"><strong><code>EnableBit</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void EnableBit(
+    uint32 Index
+);
+</code></pre>
+<details>
+<hr />
+<p>Enable component bit at given index.</p>
+<hr />
+<h1 id="arguments-4"><a class="header" href="#arguments-4"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="index-1"><a class="header" href="#index-1"><strong><code>Index</code></strong></a></h2>
+<pre><code class="language-cpp">uint32 Index
+</code></pre>
+<p>Index of component bit to enable.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="exclude"><a class="header" href="#exclude"><strong><code>Exclude</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+FArchetypeSignature Exclude(
+    const FArchetypeSignature&amp; Other
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Exclude components set bits from ones of another signature.</p>
+<hr />
+<h1 id="arguments-5"><a class="header" href="#arguments-5"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="other-3"><a class="header" href="#other-3"><strong><code>Other</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; Other
+</code></pre>
+<p>Other signature to exclude from.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="farchetypesignature"><a class="header" href="#farchetypesignature"><strong><code>FArchetypeSignature</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+FArchetypeSignature();
+</code></pre>
+<details>
+<hr />
+<p>Constructs signature of empty components set.</p>
+</details>
+</li>
+<li>
+<h1 id="farchetypesignature-1"><a class="header" href="#farchetypesignature-1"><strong><code>FArchetypeSignature</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+FArchetypeSignature(
+    const FArchetypeSignature&amp; Other
+);
+</code></pre>
+<details>
+<hr />
+<p>Copies signature from another one.</p>
+<hr />
+<h1 id="arguments-6"><a class="header" href="#arguments-6"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="other-4"><a class="header" href="#other-4"><strong><code>Other</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; Other
+</code></pre>
+<p>Other signature to copy components set from.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="farchetypesignature-2"><a class="header" href="#farchetypesignature-2"><strong><code>FArchetypeSignature</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+FArchetypeSignature(
+    uint32 Bit
+);
+</code></pre>
+<details>
+<hr />
+<p>Constructs signature with single component bit enabled.</p>
+<hr />
+<h1 id="arguments-7"><a class="header" href="#arguments-7"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="bit"><a class="header" href="#bit"><strong><code>Bit</code></strong></a></h2>
+<pre><code class="language-cpp">uint32 Bit
+</code></pre>
+<p>Index of component bit to enable.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="hasbit"><a class="header" href="#hasbit"><strong><code>HasBit</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool HasBit(
+    uint32 Index
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Checks if component bit at given index is enabled.</p>
+<hr />
+<h1 id="arguments-8"><a class="header" href="#arguments-8"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="index-2"><a class="header" href="#index-2"><strong><code>Index</code></strong></a></h2>
+<pre><code class="language-cpp">uint32 Index
+</code></pre>
+<p>Index of component bit to check.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="include"><a class="header" href="#include"><strong><code>Include</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+FArchetypeSignature Include(
+    const FArchetypeSignature&amp; Other
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Include components set bits from ones of another signature.</p>
+<hr />
+<h1 id="arguments-9"><a class="header" href="#arguments-9"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="other-5"><a class="header" href="#other-5"><strong><code>Other</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; Other
+</code></pre>
+<p>Other signature to include from.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="isempty"><a class="header" href="#isempty"><strong><code>IsEmpty</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool IsEmpty() const;
+</code></pre>
+<details>
+<hr />
+<p>Checks if components set is empty.</p>
+</details>
+</li>
+<li>
+<h1 id="union"><a class="header" href="#union"><strong><code>Union</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+FArchetypeSignature Union(
+    const FArchetypeSignature&amp; Other
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Returns signature with only component set bits enabled by both
+signatures.</p>
+<hr />
+<h1 id="arguments-10"><a class="header" href="#arguments-10"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="other-6"><a class="header" href="#other-6"><strong><code>Other</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; Other
+</code></pre>
+<p>Other signature to test with.</p>
+</li>
+</ul>
+</details>
+</li>
+</ul>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../reference/structs/FActorsIter.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../../reference/structs/FInstallSystemOptions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../reference/structs/FActorsIter.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../../reference/structs/FInstallSystemOptions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

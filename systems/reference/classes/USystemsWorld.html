@@ -1,0 +1,1437 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>USystemsWorld - Systems - Modular and scalable game architecture for orthogonal game logic</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../documentation.html">Documentation</a></li><li class="chapter-item expanded "><a href="../../book/index.html">Book</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../book/getting_started.html">Getting started</a></li><li class="chapter-item expanded "><a href="../../book/architecture/index.html">Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../book/architecture/world.html">World</a></li><li class="chapter-item expanded "><a href="../../book/architecture/systems.html">Systems</a></li><li class="chapter-item expanded "><a href="../../book/architecture/components.html">Components</a></li><li class="chapter-item expanded "><a href="../../book/architecture/resources.html">Resources</a></li><li class="chapter-item expanded "><a href="../../book/architecture/subsystem.html">Subsystem</a></li><li class="chapter-item expanded "><a href="../../book/architecture/iterators.html">Iterators</a></li><li class="chapter-item expanded "><a href="../../book/architecture/channels.html">Channels</a></li></ol></li><li class="chapter-item expanded "><a href="../../book/learning_materials/index.html">Learning materials</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/index.html">Tutorial</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/installation.html">Installation</a></li><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/setup_game.html">Setup game</a></li><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/setup_actors.html">Setup actors</a></li><li class="chapter-item expanded "><a href="../../book/learning_materials/tutorial/spawn_system.html">Spawn system</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../reference.html">C++ API Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/structs.html">Structs</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/structs/FActorsIter.html">FActorsIter</a></li><li class="chapter-item expanded "><a href="../../reference/structs/FArchetypeSignature.html">FArchetypeSignature</a></li><li class="chapter-item expanded "><a href="../../reference/structs/FInstallSystemOptions.html">FInstallSystemOptions</a></li><li class="chapter-item expanded "><a href="../../reference/structs/FMetronome.html">FMetronome</a></li><li class="chapter-item expanded "><a href="../../reference/structs/IterSizeHint.html">IterSizeHint</a></li><li class="chapter-item expanded "><a href="../../reference/structs/TQuery.html">TQuery</a></li><li class="chapter-item expanded "><a href="../../reference/structs/TReceiverChannel.html">TReceiverChannel</a></li><li class="chapter-item expanded "><a href="../../reference/structs/TSenderChannel.html">TSenderChannel</a></li><li class="chapter-item expanded "><a href="../../reference/structs/TTaggedQuery.html">TTaggedQuery</a></li></ol></li><li class="chapter-item expanded "><a href="../../reference/classes.html">Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/classes/UDynamicQuery.html">UDynamicQuery</a></li><li class="chapter-item expanded "><a href="../../reference/classes/ULambdaSystem.html">ULambdaSystem</a></li><li class="chapter-item expanded "><a href="../../reference/classes/UScriptableSystem.html">UScriptableSystem</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystem.html">USystem</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsActorComponent.html">USystemsActorComponent</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsSceneComponent.html">USystemsSceneComponent</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsStatics.html">USystemsStatics</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsSubsystem.html">USystemsSubsystem</a></li><li class="chapter-item expanded "><a href="../../reference/classes/USystemsWorld.html" class="active">USystemsWorld</a></li></ol></li><li class="chapter-item expanded "><a href="../../reference/functions.html">Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/functions/IterGenerate.html">IterGenerate</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterOnce.html">IterOnce</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterRange.html">IterRange</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterRepeat.html">IterRepeat</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterStd.html">IterStd</a></li><li class="chapter-item expanded "><a href="../../reference/functions/IterStdConst.html">IterStdConst</a></li></ol></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Systems - Modular and scalable game architecture for orthogonal game logic</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="class-usystemsworld"><a class="header" href="#class-usystemsworld"><strong>Class: <code>USystemsWorld</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API USystemsWorld
+    : public UObject;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers"><a class="header" href="#specifiers">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintType</strong></li>
+</ul>
+<hr />
+<p>Container that holds systems, resources and registry of components that
+belongs to actors.</p>
+<p><a href="/book/architecture/world.html">Architecture book page</a> explains more in depth
+what systems world is, but in a brief: systems world is a central point user
+interacts with using queries to resources and actor components. Think of it
+as database - actor components are records and resources are unique
+singleton-like data (usually config/settings or things you would call
+managers).</p>
+<hr />
+<h1 id="methods"><a class="header" href="#methods"><strong>Methods</strong></a></h1>
+<ul>
+<li>
+<h1 id="actors"><a class="header" href="#actors"><strong><code>Actors</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+FActorsIter Actors();
+</code></pre>
+<details>
+<hr />
+<p>Acquires lazy-iterator over all registered actors.</p>
+<p>This works similar to <a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> but it yields
+only actors without their components, and <strong>it yields all actors</strong>. This
+method exists only for a last resort use cases - user should have a
+valid reason to query all actors and should always try to solve problem
+with <a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a>.</p>
+<p>The only use case i can think of is when user needs to for example count
+all registered actors, but there are other usecases which can definitely
+be solved with regular component queries.</p>
+<p>Common usecase that would be wrong to query actors would be:</p>
+<pre><code class="language-cpp">Systems-&gt;Actors().ForEach(
+	[](const auto* Actor)
+	{
+		auto* ShiaActor = Cast&lt;AShiaActor&gt;(Actor);
+		if (IsValid(ShiaActor))
+		{
+			ShiaActor-&gt;JustDoit();
+		}
+	});
+</code></pre>
+<p>User should instead for example add <code>UShiaComponent</code> actor component and
+query actors using
+<a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> to iterate only on these actors that
+are marked as &quot;Shia&quot; actor using actor component tag:</p>
+<pre><code class="language-cpp">Systems-&gt;Query&lt;UShiaComponent&gt;().ForEach(
+	[](const auto* Actor)
+	{
+		auto* ShiaActor = Cast&lt;AShiaActor&gt;(Actor);
+		if (IsValid(ShiaActor))
+		{
+			ShiaActor-&gt;JustDoit();
+		}
+	});
+</code></pre>
+<p>Another thing is that user should avoid putting any logic into the
+actors itself and rather create system that performs work of
+<code>AShiaActor::JustDoIt()</code> method. Although sometimes, mostly in case of
+interacting with third-party code, user is forced to call logic of actor
+so in this case just marking actor with component tag would be a
+sufficient compromise.</p>
+</details>
+</li>
+<li>
+<h1 id="actorscount"><a class="header" href="#actorscount"><strong><code>ActorsCount</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+uint32 ActorsCount() const;
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<hr />
+<p>Counts all registered actors.</p>
+<p>Useful for debugging purposes to show number of registered actors, but
+any other use case would and most likely should be solved with regular
+queries.</p>
+</details>
+</li>
+<li>
+<h1 id="addcomponent"><a class="header" href="#addcomponent"><strong><code>AddComponent</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool AddComponent(
+    UActorComponent* Component
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-1"><a class="header" href="#specifiers-1">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Add actor component to registry.</p>
+<p>Called in <a href="/reference/classes/USystemsActorComponent.html#beginplay"><strong><code>USystemsActorComponent::BeginPlay</code></strong></a> and
+<a href="/reference/classes/USystemsSceneComponent.html#beginplay"><strong><code>USystemsSceneComponent::BeginPlay</code></strong></a> methods so user doesn't
+have to, but in case of user dynamically removing actor component to
+achieve support for beavior toggling, adding components back to registry
+can be achieved with this method.</p>
+<h1 id="note"><a class="header" href="#note">Note</a></h1>
+<blockquote>
+<p>Actor components are not registered immediatelly to avoid undefined
+behavior or even gam crashes when performing this while iterating
+over systems world queries - rather they ar queued and registered
+after all systems complete their run on current game tick.</p>
+</blockquote>
+<h1 id="return"><a class="header" href="#return">Return</a></h1>
+<p>True if both actor and component are valid.</p>
+<h1 id="example"><a class="header" href="#example">Example</a></h1>
+<pre><code class="language-cpp">void ASomeActor::ToggleTagComponent(USystemsWorld&amp; Systems, UTagComponent* Tag)
+{
+	this-&gt;bTagEnabled = !this-&gt;bTagEnabled;
+	if (this-&gt;bTagEnabled)
+	{
+		Systems-&gt;AddComponent(this, Tag);
+	}
+	else
+	{
+		Systems-&gt;RemoveComponent(this, Tag);
+	}
+}
+</code></pre>
+<hr />
+<h1 id="arguments"><a class="header" href="#arguments"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="component"><a class="header" href="#component"><strong><code>Component</code></strong></a></h2>
+<pre><code class="language-cpp">UActorComponent* Component
+</code></pre>
+<p>Component to be registered.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="component-1"><a class="header" href="#component-1"><strong><code>Component</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class T&gt;
+T* Component(
+    AActor* Actor
+);
+</code></pre>
+<details>
+<hr />
+<p>Tries to get pointer to registered actor component.</p>
+<p>Handy shortcut for <a href="/reference/classes/USystemsWorld.html#componentraw"><strong><code>USystemsWorld::ComponentRaw</code></strong></a></p>
+<h1 id="return-1"><a class="header" href="#return-1">Return</a></h1>
+<p>Pointer to component or <code>nullptr</code> in case component does not exist in
+registry.</p>
+<h1 id="note-1"><a class="header" href="#note-1">Note</a></h1>
+<blockquote>
+<p><code>T</code> should inherit from <strong><code>UActorComponent</code></strong></p>
+</blockquote>
+<h1 id="example-1"><a class="header" href="#example-1">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;Component&lt;UShiaComponent&gt;(Actor)-&gt;JustDoIt();
+</code></pre>
+<hr />
+<h1 id="arguments-1"><a class="header" href="#arguments-1"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="actor"><a class="header" href="#actor"><strong><code>Actor</code></strong></a></h2>
+<pre><code class="language-cpp">AActor* Actor
+</code></pre>
+<p>Actor owning given component.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="componentindex"><a class="header" href="#componentindex"><strong><code>ComponentIndex</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TOptional&lt;uint32&gt; ComponentIndex(
+    const UActorComponent* Component
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Get component registry index.</p>
+<p>Useful when working directly with <a href="/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
+user most likely won't have any high-level usecase for that.</p>
+<p>For getting component index by its class use: <a href="/reference/classes/USystemsWorld.html#componenttypeindex"><strong><code>USystemsWorld::ComponentTypeIndex</code></strong></a></p>
+<hr />
+<h1 id="arguments-2"><a class="header" href="#arguments-2"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="component-2"><a class="header" href="#component-2"><strong><code>Component</code></strong></a></h2>
+<pre><code class="language-cpp">const UActorComponent* Component
+</code></pre>
+<p>Component which index of we ask for.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="componentraw"><a class="header" href="#componentraw"><strong><code>ComponentRaw</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+UActorComponent* ComponentRaw(
+    AActor* Actor,
+    const UClass* Type
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-2"><a class="header" href="#specifiers-2">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<h3 id="meta-specifiers"><a class="header" href="#meta-specifiers">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DisplayName</strong> = <em>Get Component</em></li>
+</ul>
+<hr />
+<p>Tries to get pointer to registered actor component.</p>
+<h1 id="note-2"><a class="header" href="#note-2">Note</a></h1>
+<blockquote>
+<p>Because components are registered after systems run this will always
+return <code>nullptr</code> whe trying to get actor component just after calling
+<a href="/reference/classes/USystemsWorld.html#addcomponent"><strong><code>USystemsWorld::AddComponent</code></strong></a></p>
+</blockquote>
+<blockquote>
+<p>Also when trying to get actor component just after calling
+<a href="/reference/classes/USystemsWorld.html#removecomponent"><strong><code>USystemsWorld::RemoveComponent</code></strong></a> will return given component
+instead o <code>nullptr</code> because components get unregistered after systems
+run.</p>
+</blockquote>
+<h1 id="return-2"><a class="header" href="#return-2">Return</a></h1>
+<p>Pointer to component or <code>nullptr</code> in case component does not exist in
+registry.</p>
+<h1 id="example-2"><a class="header" href="#example-2">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;ComponentRaw(Actor, UShiaComponent::StaticClass())-&gt;JustDoIt();
+</code></pre>
+<hr />
+<h1 id="arguments-3"><a class="header" href="#arguments-3"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="actor-1"><a class="header" href="#actor-1"><strong><code>Actor</code></strong></a></h2>
+<pre><code class="language-cpp">AActor* Actor
+</code></pre>
+<p>Actor owning given component.</p>
+</li>
+<li>
+<h2 id="type"><a class="header" href="#type"><strong><code>Type</code></strong></a></h2>
+<pre><code class="language-cpp">const UClass* Type
+</code></pre>
+<p>Component class.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="componenttypeindex"><a class="header" href="#componenttypeindex"><strong><code>ComponentTypeIndex</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TOptional&lt;uint32&gt; ComponentTypeIndex(
+    const UClass* Type
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Get component registry index.</p>
+<p>Useful when working directly with <a href="/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
+user most likely won't have any high-level usecase for that.</p>
+<p>For getting component index by component: <a href="/reference/classes/USystemsWorld.html#componentindex"><strong><code>USystemsWorld::ComponentIndex</code></strong></a></p>
+<hr />
+<h1 id="arguments-4"><a class="header" href="#arguments-4"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="type-1"><a class="header" href="#type-1"><strong><code>Type</code></strong></a></h2>
+<pre><code class="language-cpp">const UClass* Type
+</code></pre>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="components"><a class="header" href="#components"><strong><code>Components</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class... T&gt;
+TTuple&lt;T*...&gt; Components(
+    AActor* Actor
+);
+</code></pre>
+<details>
+<hr />
+<p>Gets tuple of actor components.</p>
+<p>Handy wrapper for <a href="/reference/classes/USystemsWorld.html#component"><strong><code>USystemsWorld::Component</code></strong></a> in case of
+asking for more than one actor component.</p>
+<h1 id="note-3"><a class="header" href="#note-3">Note</a></h1>
+<blockquote>
+<p>Works similar way to <a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> but do not put
+actor in its first tuple element, rather gives exactly the pointers to
+actor components user requests. It's worth noting that in case of
+component not being registered, it returns <code>nullptr</code> in tuple elements
+corresponding to requested actor component type.</p>
+</blockquote>
+<hr />
+<h1 id="arguments-5"><a class="header" href="#arguments-5"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="actor-2"><a class="header" href="#actor-2"><strong><code>Actor</code></strong></a></h2>
+<pre><code class="language-cpp">AActor* Actor
+</code></pre>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="componentsdidchanged"><a class="header" href="#componentsdidchanged"><strong><code>ComponentsDidChanged</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class... T&gt;
+bool ComponentsDidChanged() const;
+</code></pre>
+<details>
+<hr />
+<p>Tells if components changed during last game tick.</p>
+<p>handy wrapper for <a href="/reference/classes/USystemsWorld.html#componentsdidchangedraw"><strong><code>USystemsWorld::ComponentsDidChangedRaw</code></strong></a>.</p>
+</details>
+</li>
+<li>
+<h1 id="componentsdidchangedraw"><a class="header" href="#componentsdidchangedraw"><strong><code>ComponentsDidChangedRaw</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool ComponentsDidChangedRaw(
+    const FArchetypeSignature&amp; Signature
+) const;
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<hr />
+<p>Tells if components changed during last game tick.</p>
+<h1 id="note-4"><a class="header" href="#note-4">Note</a></h1>
+<blockquote>
+<p>This checks if any, not all of components marked in signature changed.</p>
+</blockquote>
+<hr />
+<h1 id="arguments-6"><a class="header" href="#arguments-6"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="signature"><a class="header" href="#signature"><strong><code>Signature</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; Signature
+</code></pre>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="componentssignature"><a class="header" href="#componentssignature"><strong><code>ComponentsSignature</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+FArchetypeSignature ComponentsSignature(
+    const TArrayView&lt;UActorComponent*&gt;&amp; View
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Get archetype signature of given set of components.</p>
+<p>Useful when working directly with <a href="/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
+user most likely won't have any high-level usecase for that.</p>
+<hr />
+<h1 id="arguments-7"><a class="header" href="#arguments-7"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="view"><a class="header" href="#view"><strong><code>View</code></strong></a></h2>
+<pre><code class="language-cpp">const TArrayView&lt;UActorComponent*&gt;&amp; View
+</code></pre>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="count"><a class="header" href="#count"><strong><code>Count</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class... T&gt;
+uint32 Count() const;
+</code></pre>
+<details>
+<hr />
+<p>Counts actors that contain given archetype signature.</p>
+<p>This is ergonomic shortcut for <a href="/reference/classes/USystemsWorld.html#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a>.</p>
+<h1 id="note-5"><a class="header" href="#note-5">Note</a></h1>
+<blockquote>
+<p><code>T</code> classes should inherit from <strong><code>UActorComponent</code></strong>!</p>
+</blockquote>
+<h1 id="example-3"><a class="header" href="#example-3">Example</a></h1>
+<pre><code class="language-cpp">const auto Result = Systems-&gt;Count&lt;UShiaComponent&gt;();
+</code></pre>
+</details>
+</li>
+<li>
+<h1 id="countraw"><a class="header" href="#countraw"><strong><code>CountRaw</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+uint32 CountRaw(
+    const FArchetypeSignature&amp; Signature
+) const;
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<hr />
+<p>Counts actors that contain given archetype signature.</p>
+<p>This is more performant way of counting actors with given set of
+components (although non-ergonomic for sure):</p>
+<pre><code class="language-cpp">	// Instead of this:
+	const auto A = Systems-&gt;Query&lt;UShiaComponent&gt;().Count();
+
+	// You can do this:
+	auto Signature = FArchetypeSignature();
+	if (const auto Index =
+			Systems-&gt;ComponentTypeIndex(UShiaComponent::StaticClass()))
+	{
+		Signature.EnableBit(Index.GetValue());
+	}
+
+	const auto B = Systems-&gt;Count(Signature);
+</code></pre>
+<p>See <a href="/reference/classes/USystemsWorld.html#count"><strong><code>USystemsWorld::Count</code></strong></a> for more ergonomic use.</p>
+<h1 id="note-6"><a class="header" href="#note-6">Note</a></h1>
+<blockquote>
+<p>For example if requested signature is: <code>&lt;A, B&gt;</code> and there are actors:
+<code>1: A, B, C</code> and <code>2: A, C</code> then only actor <code>1: A, B, C</code> gets counted
+since only this one contains entirel requested signature.</p>
+</blockquote>
+<hr />
+<h1 id="arguments-8"><a class="header" href="#arguments-8"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="signature-1"><a class="header" href="#signature-1"><strong><code>Signature</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; Signature
+</code></pre>
+<p>Archetype signature with minimal set of components that counted
+actors should contain.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="dynamicquery"><a class="header" href="#dynamicquery"><strong><code>DynamicQuery</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class T&gt;
+UDynamicQuery* DynamicQuery();
+</code></pre>
+<details>
+<hr />
+<p>Acquires lazy-iterator to dynamically query actor components.</p>
+<p>Handy shortcut for <a href="/reference/classes/USystemsWorld.html#spawnquery"><strong><code>USystemsWorld::SpawnQuery</code></strong></a>.</p>
+<p>See <a href="/reference/classes/UDynamicQuery.html"><strong><code>UDynamicQuery</code></strong></a></p>
+</details>
+</li>
+<li>
+<h1 id="installdefaultresource"><a class="header" href="#installdefaultresource"><strong><code>InstallDefaultResource</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool InstallDefaultResource(
+    const UClass* Type
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-3"><a class="header" href="#specifiers-3">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Register resource object.</p>
+<p>See <a href="/reference/classes/USystemsWorld.html#installresourceraw"><strong><code>USystemsWorld::InstallResourceRaw</code></strong></a></p>
+<h1 id="return-3"><a class="header" href="#return-3">Return</a></h1>
+<p>True if resource was successfully installed (registry is not sealed).</p>
+<h1 id="example-4"><a class="header" href="#example-4">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;InstallDefaultResource(UInventory::StaticClass());
+</code></pre>
+<hr />
+<h1 id="arguments-9"><a class="header" href="#arguments-9"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="type-2"><a class="header" href="#type-2"><strong><code>Type</code></strong></a></h2>
+<pre><code class="language-cpp">const UClass* Type
+</code></pre>
+<p>Resource class to get constructed and registered.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="installdefaultsystem"><a class="header" href="#installdefaultsystem"><strong><code>InstallDefaultSystem</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool InstallDefaultSystem(
+    const UClass* Type,
+    FInstallSystemOptions Options
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-4"><a class="header" href="#specifiers-4">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Install system.</p>
+<p>See <a href="/reference/classes/USystemsWorld.html#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a>, <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>,
+<a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<h1 id="return-4"><a class="header" href="#return-4">Return</a></h1>
+<p>True if system was successfully installed (registry is not sealed).</p>
+<h1 id="example-5"><a class="header" href="#example-5">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;InstallDefaultSystem(
+	USomeSystem::StaticClass(), FInstallSystemOptions(&quot;Something&quot;));
+</code></pre>
+<hr />
+<h1 id="arguments-10"><a class="header" href="#arguments-10"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="type-3"><a class="header" href="#type-3"><strong><code>Type</code></strong></a></h2>
+<pre><code class="language-cpp">const UClass* Type
+</code></pre>
+<p>Class of system being installed.</p>
+</li>
+<li>
+<h2 id="options"><a class="header" href="#options"><strong><code>Options</code></strong></a></h2>
+<pre><code class="language-cpp">FInstallSystemOptions Options
+</code></pre>
+<p>System install options.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="installlambdasystem"><a class="header" href="#installlambdasystem"><strong><code>InstallLambdaSystem</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool InstallLambdaSystem(
+    TFunction&lt;LambdaSystemType&gt;&amp;&amp; Functor,
+    FInstallSystemOptions Options
+);
+</code></pre>
+<details>
+<hr />
+<p>Install state-less (function or lambda) system.</p>
+<p>Stateless systems are the most common ones because usually what system
+does it only processes the data, so creating function/lambda systems
+brings more ergonomics into codebase.</p>
+<p>See <a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<h1 id="return-5"><a class="header" href="#return-5">Return</a></h1>
+<p>True if system was successfully installed (registry is not sealed).</p>
+<h1 id="example-6"><a class="header" href="#example-6">Example</a></h1>
+<pre><code class="language-cpp">UFUNCTION()
+void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems);
+
+void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
+{
+	Systems.Query&lt;UVelocityComponent, UBoidComponent&gt;().ForEach(
+		[&amp;](auto&amp; QueryItem)
+		{
+			auto* Actor = QueryItem.Get&lt;0&gt;();
+			const auto* Velocity = QueryItem.Get&lt;1&gt;();
+
+			if (Velocity-&gt;Value.IsNearlyZero() == false)
+			{
+				Actor-&gt;SetActorRotation(Velocity-&gt;Value.Rotation());
+			}
+		});
+}
+</code></pre>
+<pre><code class="language-cpp">Systems-&gt;InstallLambdaSystem(
+	BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
+</code></pre>
+<hr />
+<h1 id="arguments-11"><a class="header" href="#arguments-11"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="functor"><a class="header" href="#functor"><strong><code>Functor</code></strong></a></h2>
+<pre><code class="language-cpp">TFunction&lt;LambdaSystemType&gt;&amp;&amp; Functor
+</code></pre>
+<p>Function or lambda being installed as system</p>
+<h1 id="note-7"><a class="header" href="#note-7">Note</a></h1>
+<blockquote>
+<p><code>LambdaSystemType</code> should comply to given signature:
+<code>void(USystemsWorld&amp;)</code></p>
+</blockquote>
+</li>
+<li>
+<h2 id="options-1"><a class="header" href="#options-1"><strong><code>Options</code></strong></a></h2>
+<pre><code class="language-cpp">FInstallSystemOptions Options
+</code></pre>
+<p>System install options.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="installresource"><a class="header" href="#installresource"><strong><code>InstallResource</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class T&gt;
+bool InstallResource();
+</code></pre>
+<details>
+<hr />
+<p>Register resource object.</p>
+<p>Handy shortcut for <a href="/reference/classes/USystemsWorld.html#installdefaultresource"><strong><code>USystemsWorld::InstallDefaultResource</code></strong></a></p>
+<h1 id="return-6"><a class="header" href="#return-6">Return</a></h1>
+<p>True if resource was successfully installed (registry is not sealed).</p>
+<h1 id="example-7"><a class="header" href="#example-7">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;InstallResource&lt;UInventory&gt;();
+</code></pre>
+</details>
+</li>
+<li>
+<h1 id="installresourceraw"><a class="header" href="#installresourceraw"><strong><code>InstallResourceRaw</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool InstallResourceRaw(
+    UObject* Resource
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-5"><a class="header" href="#specifiers-5">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<h3 id="meta-specifiers-1"><a class="header" href="#meta-specifiers-1">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DisplayName</strong> = <em>Install Resource</em></li>
+</ul>
+<hr />
+<p>Register resource object.</p>
+<p>It accepts any object that inherits from <code>UObject</code>. Also systems world
+takes ownership over provided resource so its best to not pass any
+object that has its lifetime managed by other object.</p>
+<h1 id="return-7"><a class="header" href="#return-7">Return</a></h1>
+<p>True if resource was successfully installed (registry is not sealed).</p>
+<h1 id="example-8"><a class="header" href="#example-8">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;InstallResourceRaw(
+	NewObject&lt;UInventory&gt;(Systems, UInventory::StaticClass()));
+</code></pre>
+<hr />
+<h1 id="arguments-12"><a class="header" href="#arguments-12"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="resource"><a class="header" href="#resource"><strong><code>Resource</code></strong></a></h2>
+<pre><code class="language-cpp">UObject* Resource
+</code></pre>
+<p>Resource object to get registered and managed by this systems world.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="installsystem"><a class="header" href="#installsystem"><strong><code>InstallSystem</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class T&gt;
+bool InstallSystem(
+    FInstallSystemOptions Options
+);
+</code></pre>
+<details>
+<hr />
+<p>Install system.</p>
+<p>Handy shortcut for <a href="/reference/classes/USystemsWorld.html#installdefaultsystem"><strong><code>USystemsWorld::InstallDefaultSystem</code></strong></a></p>
+<p>See <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<h1 id="note-8"><a class="header" href="#note-8">Note</a></h1>
+<blockquote>
+<p>Make sure <code>T</code> is a class that inherits from <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>!</p>
+</blockquote>
+<h1 id="return-8"><a class="header" href="#return-8">Return</a></h1>
+<p>True if system was successfully installed (registry is not sealed).</p>
+<h1 id="example-9"><a class="header" href="#example-9">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;InstallSystem&lt;USomeSystem&gt;(FInstallSystemOptions(&quot;Something&quot;));
+</code></pre>
+<hr />
+<h1 id="arguments-13"><a class="header" href="#arguments-13"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="options-2"><a class="header" href="#options-2"><strong><code>Options</code></strong></a></h2>
+<pre><code class="language-cpp">FInstallSystemOptions Options
+</code></pre>
+<p>System install options.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="installsystemraw"><a class="header" href="#installsystemraw"><strong><code>InstallSystemRaw</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool InstallSystemRaw(
+    USystem* System,
+    FInstallSystemOptions Options
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-6"><a class="header" href="#specifiers-6">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<h3 id="meta-specifiers-2"><a class="header" href="#meta-specifiers-2">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DisplayName</strong> = <em>Install System</em></li>
+</ul>
+<hr />
+<p>Install system.</p>
+<p>Usually user would want to install systems using either
+<a href="/reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="/reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
+can install system by its instance.</p>
+<p>See <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<h1 id="return-9"><a class="header" href="#return-9">Return</a></h1>
+<p>True if system was successfully installed (registry is not sealed).</p>
+<h1 id="example-10"><a class="header" href="#example-10">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;InstallSystemRaw(
+	NewObject&lt;USomeSystem&gt;(Systems, USomeSystem::StaticClass()),
+	FInstallSystemOptions(&quot;Something&quot;));
+</code></pre>
+<hr />
+<h1 id="arguments-14"><a class="header" href="#arguments-14"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="system"><a class="header" href="#system"><strong><code>System</code></strong></a></h2>
+<pre><code class="language-cpp">USystem* System
+</code></pre>
+<p>Pointer to system being installed.</p>
+</li>
+<li>
+<h2 id="options-3"><a class="header" href="#options-3"><strong><code>Options</code></strong></a></h2>
+<pre><code class="language-cpp">FInstallSystemOptions Options
+</code></pre>
+<p>System install options.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="lastchangedcomponents"><a class="header" href="#lastchangedcomponents"><strong><code>LastChangedComponents</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+const FArchetypeSignature&amp; LastChangedComponents() const;
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<hr />
+<p>Returns signature of component types that changed during last game tick.</p>
+<p>Useful for more usecases where user needs to cache and perform more
+advanced change detection between game ticks.</p>
+</details>
+</li>
+<li>
+<h1 id="lastchangedresources"><a class="header" href="#lastchangedresources"><strong><code>LastChangedResources</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+const TSet&lt;uint32&gt;&amp; LastChangedResources() const;
+</code></pre>
+<details>
+<hr />
+<p>Returns a set of unique type IDs of all resources that changed in last
+game tick.</p>
+<p>Useful for more advanced usecases where user needs to ask for all
+changes anyway and compare them with some cached set of previously
+stored changes.</p>
+</details>
+</li>
+<li>
+<h1 id="markcomponentchanged"><a class="header" href="#markcomponentchanged"><strong><code>MarkComponentChanged</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void MarkComponentChanged(
+    UActorComponent* Component
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-7"><a class="header" href="#specifiers-7">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Marks component as changed.</p>
+<h1 id="note-9"><a class="header" href="#note-9">Note</a></h1>
+<blockquote>
+<p>This will mark component type, not component instance, as changed. The
+need for component iinstance here is purely to ensure we do not mark
+components we do not have access to.</p>
+</blockquote>
+<hr />
+<h1 id="arguments-15"><a class="header" href="#arguments-15"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="component-3"><a class="header" href="#component-3"><strong><code>Component</code></strong></a></h2>
+<pre><code class="language-cpp">UActorComponent* Component
+</code></pre>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="markresourcechanged"><a class="header" href="#markresourcechanged"><strong><code>MarkResourceChanged</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void MarkResourceChanged(
+    UObject* Resource
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-8"><a class="header" href="#specifiers-8">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Marks given resource as changed.</p>
+<p>Useful if user wants to create reactive systems and/or UI that should
+only trigger when given resource changes. The reason why user has to
+manually mark resources as changed is for optimizations purposes, to
+mark deliberate changes in resources instead of markin them
+automatically, to avoid a lot of boilerplate of that automation, when
+most of the times systems and UI do not require to ask for changes.</p>
+<p>Use <a href="/reference/classes/USystemsWorld.html#resourcedidchanged"><strong><code>USystemsWorld::ResourceDidChanged</code></strong></a> to ask if some
+resource has changed.</p>
+<hr />
+<h1 id="arguments-16"><a class="header" href="#arguments-16"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="resource-1"><a class="header" href="#resource-1"><strong><code>Resource</code></strong></a></h2>
+<pre><code class="language-cpp">UObject* Resource
+</code></pre>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="process"><a class="header" href="#process"><strong><code>Process</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void Process();
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-9"><a class="header" href="#specifiers-9">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Process systems world.</p>
+<p>It performs:</p>
+<ul>
+<li>unregistering of removed components and/or actors.</li>
+<li>registering of added components and/or actors.</li>
+<li>run systems logic.</li>
+</ul>
+<p>In case of registry not being sealed at the time of calling this method,
+none of steps above are gonna be performed.</p>
+<p>This method is called automatically for global systems world managed by
+<a href="/reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>, but in case of user managing systems
+world on their own, user can do:</p>
+<pre><code class="language-cpp">	auto* Systems =
+		NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
+
+	// [Systems world setup...]
+
+	Systems-&gt;Process();
+</code></pre>
+</details>
+</li>
+<li>
+<h1 id="query"><a class="header" href="#query"><strong><code>Query</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class... T&gt;
+TQuery&lt;T...&gt; Query();
+</code></pre>
+<details>
+<hr />
+<p>Acquires lazy-iterator to query actor components.</p>
+<p>More about iterators in <a href="/book/architecture/iterators.html">this architecture book
+page</a>.</p>
+<p>Queries allow to yield tuples of actor and their components, and only
+those that comply to given query signature, so there is no iteration
+over any actor that do not have given component types - actors and
+components are registered to buckets called archetypes, and archetypes
+are unique as long as their signature is unique. Signature is
+constructed from types provided to query, as well as from types
+registered to systems world that belong to the same actor. Systems
+architecture focuses on performing queries as fast as possible and not
+iterating over actors that do not need to be queried was a priority.</p>
+<p>See <a href="/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a></p>
+<h1 id="note-10"><a class="header" href="#note-10">Note</a></h1>
+<blockquote>
+<p>Returned query iterator has always actor put as first item of item
+tuple and then follow requested components. So <code>Systems-&gt;Query&lt;A, B, C&gt;()</code> iterator will yield given tuple <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code></p>
+</blockquote>
+<h1 id="example-11"><a class="header" href="#example-11">Example</a></h1>
+<pre><code class="language-cpp">	const auto Count =
+		static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
+	const auto Difference = Count - EXPECTED_POPULATION_NUMBER;
+
+	if (Difference &gt; 0)
+	{
+		Systems.Query&lt;UBoidComponent&gt;()
+			.Take(Difference)
+			.ForEach(
+				[](auto&amp; QueryItem)
+				{
+					auto* Actor = QueryItem.Get&lt;0&gt;();
+
+					Actor-&gt;Destroy();
+				});
+	}
+</code></pre>
+</details>
+</li>
+<li>
+<h1 id="registercomponent"><a class="header" href="#registercomponent"><strong><code>RegisterComponent</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class T&gt;
+bool RegisterComponent();
+</code></pre>
+<details>
+<hr />
+<p>Register component type.</p>
+<p>Templated shortcut for <a href="/reference/classes/USystemsWorld.html#registercomponentraw"><strong><code>USystemsWorld::RegisterComponentRaw</code></strong></a></p>
+<p>See <strong><code>UActorComponent</code></strong></p>
+<h1 id="return-10"><a class="header" href="#return-10">Return</a></h1>
+<p>True if component was successfully installed (registry is not sealed and
+registry haven't reached its capacity).</p>
+<h1 id="note-11"><a class="header" href="#note-11">Note</a></h1>
+<blockquote>
+<p><code>T</code> has to be a component that inherits from <strong><code>UActorComponent</code></strong></p>
+</blockquote>
+<h1 id="example-12"><a class="header" href="#example-12">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;RegisterComponent&lt;USomeComponent&gt;();
+</code></pre>
+</details>
+</li>
+<li>
+<h1 id="registercomponentraw"><a class="header" href="#registercomponentraw"><strong><code>RegisterComponentRaw</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool RegisterComponentRaw(
+    const UClass* Type
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-10"><a class="header" href="#specifiers-10">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<h3 id="meta-specifiers-3"><a class="header" href="#meta-specifiers-3">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DisplayName</strong> = <em>Register Component</em></li>
+</ul>
+<hr />
+<p>Register component type.</p>
+<p>Prior to <a href="/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a> being usable for queries and
+other architecture parts, it has to be able to identify components and
+for that they has to be registered by their class.</p>
+<p>See <strong><code>UActorComponent</code></strong></p>
+<h1 id="return-11"><a class="header" href="#return-11">Return</a></h1>
+<p>True if component was successfully installed (registry is not sealed and
+registry haven't reached its capacity).</p>
+<h1 id="example-13"><a class="header" href="#example-13">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;RegisterComponentRaw(USomeComponent::StaticClass());
+</code></pre>
+<hr />
+<h1 id="arguments-17"><a class="header" href="#arguments-17"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="type-4"><a class="header" href="#type-4"><strong><code>Type</code></strong></a></h2>
+<pre><code class="language-cpp">const UClass* Type
+</code></pre>
+<p>Class of component that has to inherit from <strong><code>UActorComponent</code></strong></p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="removecomponent"><a class="header" href="#removecomponent"><strong><code>RemoveComponent</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool RemoveComponent(
+    UActorComponent* Component
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-11"><a class="header" href="#specifiers-11">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Remove actor component from registry.</p>
+<p>Called in <a href="/reference/classes/USystemsActorComponent.html#endplay"><strong><code>USystemsActorComponent::EndPlay</code></strong></a> and
+<a href="/reference/classes/USystemsSceneComponent.html#endplay"><strong><code>USystemsSceneComponent::EndPlay</code></strong></a> methods so user doesn't have
+to, but in case of user dynamically adding actor component to achieve
+support for beavior toggling, removing components from registry can be
+achieved with this method.</p>
+<h1 id="note-12"><a class="header" href="#note-12">Note</a></h1>
+<blockquote>
+<p>Actor components are not unregistered immediatelly to avoid undefined
+behavior or eve game crashes when performing this while iterating
+over systems world queries - rather the are queued and unregistered
+after all systems complete their run on current game tick.</p>
+</blockquote>
+<h1 id="return-12"><a class="header" href="#return-12">Return</a></h1>
+<p>True if both actor and component are valid.</p>
+<h1 id="example-14"><a class="header" href="#example-14">Example</a></h1>
+<pre><code class="language-cpp">void ASomeActor::ToggleTagComponent(USystemsWorld&amp; Systems, UTagComponent* Tag)
+{
+	this-&gt;bTagEnabled = !this-&gt;bTagEnabled;
+	if (this-&gt;bTagEnabled)
+	{
+		Systems-&gt;AddComponent(this, Tag);
+	}
+	else
+	{
+		Systems-&gt;RemoveComponent(this, Tag);
+	}
+}
+</code></pre>
+<hr />
+<h1 id="arguments-18"><a class="header" href="#arguments-18"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="component-4"><a class="header" href="#component-4"><strong><code>Component</code></strong></a></h2>
+<pre><code class="language-cpp">UActorComponent* Component
+</code></pre>
+<p>Component to be unregistered.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="resource-2"><a class="header" href="#resource-2"><strong><code>Resource</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;typename T&gt;
+T* Resource();
+</code></pre>
+<details>
+<hr />
+<p>Tries to get pointer to resource by its type.</p>
+<h1 id="return-13"><a class="header" href="#return-13">Return</a></h1>
+<p>Pointer to resource or <code>nullptr</code> in case resource does not exist in
+registry.</p>
+<h1 id="example-15"><a class="header" href="#example-15">Example</a></h1>
+<pre><code class="language-cpp">Systems-&gt;Resource&lt;UInventory&gt;()-&gt;AddItem(FItem{FItemType::Sword});
+</code></pre>
+</details>
+</li>
+<li>
+<h1 id="resourcedidchanged"><a class="header" href="#resourcedidchanged"><strong><code>ResourceDidChanged</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class T&gt;
+bool ResourceDidChanged() const;
+</code></pre>
+<details>
+<hr />
+<p>Tells if given resource type did changed in last game tick.</p>
+<p>Handy wrapper for <a href="/reference/classes/USystemsWorld.html#resourcedidchangedraw"><strong><code>USystemsWorld::ResourceDidChangedRaw</code></strong></a>.</p>
+</details>
+</li>
+<li>
+<h1 id="resourcedidchangedraw"><a class="header" href="#resourcedidchangedraw"><strong><code>ResourceDidChangedRaw</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool ResourceDidChangedRaw(
+    const UClass* Type
+) const;
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-12"><a class="header" href="#specifiers-12">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Tells if given resource type did changed in last game tick.</p>
+<p>See <a href="/reference/classes/USystemsWorld.html#markresourcechanged"><strong><code>USystemsWorld::MarkResourceChanged</code></strong></a>.</p>
+<hr />
+<h1 id="arguments-19"><a class="header" href="#arguments-19"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="type-5"><a class="header" href="#type-5"><strong><code>Type</code></strong></a></h2>
+<pre><code class="language-cpp">const UClass* Type
+</code></pre>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="resourceraw"><a class="header" href="#resourceraw"><strong><code>ResourceRaw</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+UObject* ResourceRaw(
+    const UClass* Type
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-13"><a class="header" href="#specifiers-13">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<h3 id="meta-specifiers-4"><a class="header" href="#meta-specifiers-4">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DisplayName</strong> = <em>Get Resource</em></li>
+</ul>
+<hr />
+<p>Tries to get pointer to resource by its class.</p>
+<h1 id="return-14"><a class="header" href="#return-14">Return</a></h1>
+<p>Pointer to resource or <code>nullptr</code> in case resource does not exist in
+registry.</p>
+<h1 id="example-16"><a class="header" href="#example-16">Example</a></h1>
+<pre><code class="language-cpp">auto* Inventory = Cast&lt;UInventory&gt;(Systems-&gt;ResourceRaw());
+if (IsValid(Inventory))
+{
+	Inventory-&gt;AddItem(FItem{FItemType::Sword});
+}
+</code></pre>
+<hr />
+<h1 id="arguments-20"><a class="header" href="#arguments-20"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="type-6"><a class="header" href="#type-6"><strong><code>Type</code></strong></a></h2>
+<pre><code class="language-cpp">const UClass* Type
+</code></pre>
+<p>Resource class.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="sealandinitialize"><a class="header" href="#sealandinitialize"><strong><code>SealAndInitialize</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void SealAndInitialize();
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-14"><a class="header" href="#specifiers-14">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Seal registry and initialize installed systems.</p>
+<p>Method called by: <a href="/reference/classes/USystemsSubsystem.html#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a>.</p>
+<p>When user doesn't use <a href="/reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a> as global systems
+world registry, or wants to handle systems world on their own, user
+should call this method after systems world setup (registering
+components, installation of systems and resources) and then call this
+method.</p>
+<h1 id="note-13"><a class="header" href="#note-13">Note</a></h1>
+<blockquote>
+<p>After calling this method, no further successful system or resource
+installation i possible, so make sure to install systems world
+components before sealing systems world!</p>
+</blockquote>
+<h1 id="example-17"><a class="header" href="#example-17">Example</a></h1>
+<pre><code class="language-cpp">	auto* Systems =
+		NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
+	if (IsValid(Systems) == false)
+	{
+		Systems-&gt;InstallResource&lt;USomeResource&gt;();
+
+		Systems-&gt;InstallLambdaSystem(
+			SomeSystem, FInstallSystemOptions(&quot;Something&quot;));
+
+		Systems-&gt;SealAndInitialize();
+	}
+</code></pre>
+</details>
+</li>
+<li>
+<h1 id="spawnquery"><a class="header" href="#spawnquery"><strong><code>SpawnQuery</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+UDynamicQuery* SpawnQuery(
+    const UClass* BundleType
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-15"><a class="header" href="#specifiers-15">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<h3 id="meta-specifiers-5"><a class="header" href="#meta-specifiers-5">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DisplayName</strong> = <em>Query</em></li>
+</ul>
+<hr />
+<p>Acquires lazy-iterator to dynamically query actor components.</p>
+<p>Because user cannot use templated types in blueprints, dynamic queries
+are a way to query systems world in blueprints. Also dynamic queries do
+not implement lazy-iterators so they are definitely not an ergonomic way
+to iterate over actor components and should be avoided in favor of
+<strong><code>USystems::Query</code></strong>.</p>
+<p>See <a href="/reference/classes/UDynamicQuery.html"><strong><code>UDynamicQuery</code></strong></a></p>
+<hr />
+<h1 id="arguments-21"><a class="header" href="#arguments-21"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="bundletype"><a class="header" href="#bundletype"><strong><code>BundleType</code></strong></a></h2>
+<pre><code class="language-cpp">const UClass* BundleType
+</code></pre>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="taggedquery"><a class="header" href="#taggedquery"><strong><code>TaggedQuery</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+template &lt;class... T&gt;
+TTaggedQuery&lt;T...&gt; TaggedQuery();
+</code></pre>
+<details>
+<hr />
+<p>Acquires lazy-iterator to query actor components with additional tag
+components.</p>
+<p>The difference between <a href="/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a> is that tagged queries
+allows to request existance of additional components on actor, ones that
+are not required for query to access - useful when user do not require
+any data of given components.</p>
+<p>See <a href="/reference/structs/TTaggedQuery.html"><strong><code>TTaggedQuery</code></strong></a></p>
+<h1 id="example-18"><a class="header" href="#example-18">Example</a></h1>
+<pre><code class="language-cpp">	Systems.TaggedQuery&lt;UVelocityComponent&gt;()
+		.With&lt;UBoidComponent&gt;()
+		.Iter()
+		.ForEach(
+			[](auto&amp; QueryItem)
+			{
+				auto* Actor = QueryItem.Get&lt;0&gt;();
+				const auto* Velocity = QueryItem.Get&lt;1&gt;();
+				const auto Position = Actor-&gt;GetActorLocation();
+
+				Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DletaTime);
+			});
+</code></pre>
+</details>
+</li>
+</ul>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../reference/classes/USystemsSubsystem.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../../reference/functions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../reference/classes/USystemsSubsystem.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../../reference/functions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
