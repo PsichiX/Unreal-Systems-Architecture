@@ -1,0 +1,15 @@
+input_dirs = [
+    "../Source/Systems/Public",
+    "./Snippets.h",
+    "./Book"
+]
+output_dir = "./Distribution"
+backend = "MdBook"
+
+[backend_mdbook]
+title = "Systems - Modular and scalable game architecture for orthogonal game logic"
+build = true
+cleanup = true
+# header = "header.md"
+# footer = "footer.md"
+# assets = "assets/"

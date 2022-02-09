@@ -1,0 +1,30 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Systems Query Debugger",
+	"Description": "Query debugger plugin for Systems architecture",
+	"Category": "Systems",
+	"CreatedBy": "Patryk \"PsichiX\" Budzynski",
+	"CreatedByURL": "https://github.com/PsichiX",
+	"DocsURL": "https://github.com/PsichiX/Unreal-Systems-Query-Debugger",
+	"MarketplaceURL": "",
+	"SupportURL": "https://github.com/PsichiX/Unreal-Systems-Query-Debugger/issues",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "SystemsQueryDebugger",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "Systems",
+			"Enabled": true
+		}
+	]
+}

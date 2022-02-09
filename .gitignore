@@ -1,0 +1,12 @@
+.vscode
+.ignore
+Binaries
+DerivedDataCache
+Intermediate
+Distribution
+Saved
+Script
+Documentation/Distribution
+Content/Collections
+Content/Developers
+*.code-workspace

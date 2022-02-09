@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Systems Architecture",
+	"Description": "Highly ergonomic and modular game development architecture",
+	"Category": "Framework",
+	"CreatedBy": "Patryk \"PsichiX\" Budzynski",
+	"CreatedByURL": "https://github.com/PsichiX",
+	"DocsURL": "https://github.com/PsichiX/Unreal-Systems-Architecture",
+	"MarketplaceURL": "",
+	"SupportURL": "https://github.com/PsichiX/Unreal-Systems-Architecture/issues",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "Systems",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
