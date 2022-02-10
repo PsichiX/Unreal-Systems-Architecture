@@ -10,7 +10,7 @@
 See [`struct: TSenderChannel`](), [`struct: TReceiverChannel`]().
 
 Shared channels are Single-Produce, Multiple-Consumer events that instead
-being executed ad the time of sending message (pushing), they are executed
+being executed at the time of sending message (pushing), they are executed
 at the time of receiving, which is an on-demand operation - user decides
 when to read messages received in event.
 
@@ -38,7 +38,7 @@ That's all, simple isn't it?
 
 # Problems that it solves
 
-There is only one but big problem that it solves - makind more
+There is only one but big problem that it solves - making more
 deterministic and ordered data flow between parts of game logic. That way
 we avoid situations where objects communicating with each other are
 dependend on proper order of messages being sent and received but we can't

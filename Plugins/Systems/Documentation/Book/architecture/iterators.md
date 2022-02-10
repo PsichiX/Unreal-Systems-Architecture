@@ -149,6 +149,6 @@ iter_adapter
 iter_adapt
 ```
 
-They differ from regular iterators in a way that they do not neet type aliases and their `Next` and
+They differ from regular iterators in a way that they do not need type aliases and their `Next` and
 `SizeHint` methods require reference to previous stage iterator so they both consume and process its
 yielded values.
