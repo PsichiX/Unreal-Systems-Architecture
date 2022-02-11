@@ -365,7 +365,7 @@ actions to make sure state is always valid and do not need to recalculate on eac
 cascade of instant changes in features that depend on it - <strong>TL;DR: user can see exact flow of data
 in one place and that makes it easy to reason about, no need for juggling around the whole codebase</strong>.</p>
 <p>In case user still wants to send data with events, but keep deterministic events execution, Systems
-Architecture provides feature called <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/channels.md">channels</a> which uses polling
+Architecture provides feature called <a href="/Unreal-Systems-Architecture/systems/book/architecture/channels.html">channels</a> which uses polling
 to get received messages and execute them at the exact moment system needs to, avoiding immediate
 message execution when broadcasting messages.</p>
 <p>There is also another benefit we gain from flat dependency graph, that we will discuss next:</p>

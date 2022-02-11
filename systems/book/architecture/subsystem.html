@@ -149,12 +149,12 @@
 </ul>
 <h1 id="explanation"><a class="header" href="#explanation">Explanation</a></h1>
 <p>For the sake of convenience Systems Architecture provides handy wrapper over
-<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md"><strong><code>USystemsWorld</code></strong></a> global instances as a <a href="/reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>
+<a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> global instances as a <a href="/reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>
 that is basically a registry of systems worlds accessible from any place in the code.</p>
 <p>All user needs to do is to register and setup systems world using
-<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a> when certain game phase starts
+<a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.html#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a> when certain game phase starts
 (either game, level, menu, etc) before adding/removing/querying actor components, and
-unregister systems world using <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md#releasesystemsworld"><strong><code>USystemsSubsystem::ReleaseSystemsWorld</code></strong></a>
+unregister systems world using <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.html#releasesystemsworld"><strong><code>USystemsSubsystem::ReleaseSystemsWorld</code></strong></a>
 when given game phase ends.</p>
 <h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
 <p>The most common game phases where systems might exists are game instance and game mode.</p>

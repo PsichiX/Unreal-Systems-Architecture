@@ -148,12 +148,12 @@
 <hr />
 <p>Set of options for installation of this system.</p>
 <p>It uses builder pattern to simplify setting options.</p>
-<p>Note that both <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md#runbefore"><strong><code>FInstallSystemOptions::RunBefore</code></strong></a> and
-<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md#runafter"><strong><code>FInstallSystemOptions::RunAfter</code></strong></a> methods are accumulative, which
+<p>Note that both <a href="/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.html#runbefore"><strong><code>FInstallSystemOptions::RunBefore</code></strong></a> and
+<a href="/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.html#runafter"><strong><code>FInstallSystemOptions::RunAfter</code></strong></a> methods are accumulative, which
 means you can specify with them multiple systems required to run before
 and/or after this one.</p>
-<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a>, <a href="/reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a>,
-<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a></p>
+<p>See <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a>, <a href="/reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a>,
+<a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a></p>
 <h1 id="example"><a class="header" href="#example">Example</a></h1>
 <pre><code class="language-cpp">Systems-&gt;InstallLambdaSystem(BoidsFaceDirectionSystem,
 	FInstallSystemOptions(&quot;BoidsFaceDirection&quot;)

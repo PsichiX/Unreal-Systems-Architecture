@@ -142,13 +142,13 @@ struct TTaggedQuery;
 </code></pre>
 <hr />
 <p>Systems world tagged query iterator.</p>
-<p>This is basically an extension to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a> that allows to ensure
+<p>This is basically an extension to <a href="/Unreal-Systems-Architecture/systems/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a> that allows to ensure
 additional components without the need for reading them - useful for tag
 components (ones that just mark actors and do not store any data).</p>
 <h1 id="note"><a class="header" href="#note">Note</a></h1>
 <blockquote>
 <p>User should rather construct queries with
-<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#taggedquery"><strong><code>USystemsWorld::TaggedQuery</code></strong></a> instead o constructing queries by
+<a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#taggedquery"><strong><code>USystemsWorld::TaggedQuery</code></strong></a> instead o constructing queries by
 hand.</p>
 </blockquote>
 <h1 id="example"><a class="header" href="#example">Example</a></h1>
@@ -164,7 +164,7 @@ TQuery&lt;T...&gt; Iter() const;
 </code></pre>
 <details>
 <hr />
-<p>Constructs <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a> from requested actor components and tag
+<p>Constructs <a href="/Unreal-Systems-Architecture/systems/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a> from requested actor components and tag
 components.</p>
 </details>
 </li>
@@ -178,7 +178,7 @@ TTaggedQuery(
 <details>
 <hr />
 <p>Constructs tagged query from systems.</p>
-<p>An equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#taggedquery"><strong><code>USystemsWorld::TaggedQuery</code></strong></a></p>
+<p>An equivalent of calling <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#taggedquery"><strong><code>USystemsWorld::TaggedQuery</code></strong></a></p>
 <hr />
 <h1 id="arguments"><a class="header" href="#arguments"><strong>Arguments</strong></a></h1>
 <ul>
@@ -200,7 +200,7 @@ void Tag();
 </code></pre>
 <details>
 <hr />
-<p>Handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.md#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>.</p>
 <h1 id="note-1"><a class="header" href="#note-1">Note</a></h1>
 <blockquote>
 <p>Make sure <code>W</code> inherits from <code>UActorComponent</code>.</p>
@@ -240,7 +240,7 @@ TTaggedQuery With();
 </code></pre>
 <details>
 <hr />
-<p>Handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.md#withraw"><strong><code>TTaggedQuery::WithRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#withraw"><strong><code>TTaggedQuery::WithRaw</code></strong></a>.</p>
 <h1 id="note-3"><a class="header" href="#note-3">Note</a></h1>
 <blockquote>
 <p>Make sure <code>W</code> inherits from <code>UActorComponent</code>.</p>
@@ -257,7 +257,7 @@ TTaggedQuery WithRaw(
 <details>
 <hr />
 <p>Adds given tag component type to the request.</p>
-<p>This is builder-pattern equivalent of <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.md#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>
+<p>This is builder-pattern equivalent of <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>
 that returns new query so you can chain multiple tagging methods
 together.</p>
 <h1 id="note-4"><a class="header" href="#note-4">Note</a></h1>

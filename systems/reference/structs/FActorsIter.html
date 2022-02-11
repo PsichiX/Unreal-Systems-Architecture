@@ -147,7 +147,7 @@
 </ul>
 <hr />
 <p>Query iterator over systems world actors.</p>
-<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#actors"><strong><code>USystemsWorld::Actors</code></strong></a>.</p>
+<p>See <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#actors"><strong><code>USystemsWorld::Actors</code></strong></a>.</p>
 <hr />
 <h1 id="methods"><a class="header" href="#methods"><strong>Methods</strong></a></h1>
 <ul>
@@ -403,7 +403,7 @@ FActorsIter(
 <details>
 <hr />
 <p>Constructs query from systems.</p>
-<p>An equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#actors"><strong><code>USystemsWorld::Actors</code></strong></a></p>
+<p>An equivalent of calling <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#actors"><strong><code>USystemsWorld::Actors</code></strong></a></p>
 <hr />
 <h1 id="arguments-5"><a class="header" href="#arguments-5"><strong>Arguments</strong></a></h1>
 <ul>
@@ -581,7 +581,7 @@ TOptional&lt;Item&gt; First();
 <details>
 <hr />
 <p>Returns first item in the iterator.</p>
-<p>This is an equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.md#next"><strong><code>FActorsIter::Next</code></strong></a>.</p>
+<p>This is an equivalent of calling <a href="/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.html#next"><strong><code>FActorsIter::Next</code></strong></a>.</p>
 <h1 id="example-12"><a class="header" href="#example-12">Example</a></h1>
 <pre><code class="language-cpp">// 5
 const int Result = IterRange(5, 10).First();
@@ -631,8 +631,8 @@ Item Fold(
 <p>Folding basically means going through all iterator items and collapsing them
 into single value. Example of folding can be sum/accumulation, or min/max,
 or anything like that - although for ones mentioned there are existing
-optimized iterator consumers: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.md#sum"><strong><code>FActorsIter::Sum</code></strong></a> and
-<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.md#comparedby"><strong><code>FActorsIter::ComparedBy</code></strong></a>.</p>
+optimized iterator consumers: <a href="/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.html#sum"><strong><code>FActorsIter::Sum</code></strong></a> and
+<a href="/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.html#comparedby"><strong><code>FActorsIter::ComparedBy</code></strong></a>.</p>
 <h1 id="note-12"><a class="header" href="#note-12">Note</a></h1>
 <blockquote>
 <p><code>RESULT</code> is the returned type, same as <code>Start</code> argument used as initial
@@ -813,7 +813,7 @@ TOptional&lt;Item&gt; Next();
 <details>
 <hr />
 <p>Yields pointers to next actor.</p>
-<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#next"><strong><code>TQuery::Next</code></strong></a>.</p>
+<p>See <a href="/Unreal-Systems-Architecture/systems/reference/structs/TQuery.html#next"><strong><code>TQuery::Next</code></strong></a>.</p>
 </details>
 </li>
 <li>
@@ -850,7 +850,7 @@ IterSizeHint SizeHint() const;
 <hr />
 <p>Gets hint about minimum and optional maximum items count this iterator
 can yield.</p>
-<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#sizehint"><strong><code>TQuery::SizeHint</code></strong></a>.</p>
+<p>See <a href="/Unreal-Systems-Architecture/systems/reference/structs/TQuery.html#sizehint"><strong><code>TQuery::SizeHint</code></strong></a>.</p>
 </details>
 </li>
 <li>

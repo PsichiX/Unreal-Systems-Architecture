@@ -148,7 +148,7 @@
 </ul>
 <hr />
 <p>Base class for unit of work over some data.</p>
-<p><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/systems.md">Architecture book page</a> explains more in
+<p><a href="/Unreal-Systems-Architecture/systems/book/architecture/systems.html">Architecture book page</a> explains more in
 depth systems.</p>
 <p>System's job is to process data. Usually it involves performing queries
 over game world and/or resources.</p>
@@ -206,7 +206,7 @@ virtual void Init(
 <details>
 <hr />
 <p>Override to initialize system (setup its internal state).</p>
-<p>This method is called by <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#sealandinitialize"><strong><code>USystemsWorld::SealAndInitialize</code></strong></a>,
+<p>This method is called by <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#sealandinitialize"><strong><code>USystemsWorld::SealAndInitialize</code></strong></a>,
 right after systems world is setup and sealed by the user.</p>
 <p>Here user can perform initialization of this system internal state, or
 do something useful with systems world (for example initialize some
@@ -259,7 +259,7 @@ virtual void Run(
 <hr />
 <p>Override to run system work logic (perform queries on world components
 and resources).</p>
-<p>This method is called by <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#process"><strong><code>USystemsWorld::Process</code></strong></a>.</p>
+<p>This method is called by <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#process"><strong><code>USystemsWorld::Process</code></strong></a>.</p>
 <p>Here user can perform system logic, usually performs single task such as
 apply velocity accumulated by other systems on actor location, or
 perform actors AI tasks, or kill actors that has 0 or less health -

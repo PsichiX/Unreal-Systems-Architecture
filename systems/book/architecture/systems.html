@@ -150,7 +150,7 @@
 </ul>
 <h1 id="explanation"><a class="header" href="#explanation">Explanation</a></h1>
 <p>Systems are small but precise units of work, work that's mainly about processing game world data
-using queries. These queries are processed using <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/iterators.md">iterators</a>,
+using queries. These queries are processed using <a href="/Unreal-Systems-Architecture/systems/book/architecture/iterators.html">iterators</a>,
 and that makes queries the whole point of systems ergonomics since they simplify both computational
 and comprehensive complexity and make that part of game logic really easy to reason about,
 which in turn makes adding, removing and changing game logic easy and quicker than with monolithic
@@ -160,7 +160,7 @@ code or features highly dependent on each other, scattered around the codebase.<
 and stateful (classes) systems.</p>
 <h2 id="stateless-systems"><a class="header" href="#stateless-systems">Stateless systems</a></h2>
 <p>These are the most common ones. Stateless systems are just lambdas/functions that expect reference
-to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md"><strong><code>USystemsWorld</code></strong></a> to operate on it. Stateless systems do not require any internal state
+to <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> to operate on it. Stateless systems do not require any internal state
 to operate.</p>
 <pre><code class="language-cpp">void MovementSystem(USystemsWorld&amp; Systems)
 {
