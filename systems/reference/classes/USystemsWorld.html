@@ -175,7 +175,7 @@ with <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWor
 all registered actors, but there are other usecases which can definitely
 be solved with regular component queries.</p>
 <p>Common usecase that would be wrong to query actors would be:</p>
-<pre><code class="language-cpp">Systems-&gt;Actors().ForEach(
+<pre><code class="language-cpp">Systems.Actors().ForEach(
 	[](const auto* Actor)
 	{
 		auto* ShiaActor = Cast&lt;AShiaActor&gt;(Actor);
@@ -189,7 +189,7 @@ be solved with regular component queries.</p>
 query actors using
 <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> to iterate only on these actors that
 are marked as &quot;Shia&quot; actor using actor component tag:</p>
-<pre><code class="language-cpp">Systems-&gt;Query&lt;UShiaComponent&gt;().ForEach(
+<pre><code class="language-cpp">Systems.Query&lt;UShiaComponent&gt;().ForEach(
 	[](const auto* Actor)
 	{
 		auto* ShiaActor = Cast&lt;AShiaActor&gt;(Actor);
@@ -259,11 +259,11 @@ after all systems complete their run on current game tick.</p>
 	this-&gt;bTagEnabled = !this-&gt;bTagEnabled;
 	if (this-&gt;bTagEnabled)
 	{
-		Systems-&gt;AddComponent(this, Tag);
+		Systems.AddComponent(this, Tag);
 	}
 	else
 	{
-		Systems-&gt;RemoveComponent(this, Tag);
+		Systems.RemoveComponent(this, Tag);
 	}
 }
 </code></pre>
@@ -299,7 +299,7 @@ registry.</p>
 <p><code>T</code> should inherit from <strong><code>UActorComponent</code></strong></p>
 </blockquote>
 <h1 id="example-1"><a class="header" href="#example-1">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;Component&lt;UShiaComponent&gt;(Actor)-&gt;JustDoIt();
+<pre><code class="language-cpp">Systems.Component&lt;UShiaComponent&gt;(Actor)-&gt;JustDoIt();
 </code></pre>
 <hr />
 <h1 id="arguments-1"><a class="header" href="#arguments-1"><strong>Arguments</strong></a></h1>
@@ -376,7 +376,7 @@ run.</p>
 <p>Pointer to component or <code>nullptr</code> in case component does not exist in
 registry.</p>
 <h1 id="example-2"><a class="header" href="#example-2">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;ComponentRaw(Actor, UShiaComponent::StaticClass())-&gt;JustDoIt();
+<pre><code class="language-cpp">Systems.ComponentRaw(Actor, UShiaComponent::StaticClass())-&gt;JustDoIt();
 </code></pre>
 <hr />
 <h1 id="arguments-3"><a class="header" href="#arguments-3"><strong>Arguments</strong></a></h1>
@@ -529,7 +529,7 @@ uint32 Count() const;
 <p><code>T</code> classes should inherit from <strong><code>UActorComponent</code></strong>!</p>
 </blockquote>
 <h1 id="example-3"><a class="header" href="#example-3">Example</a></h1>
-<pre><code class="language-cpp">const auto Result = Systems-&gt;Count&lt;UShiaComponent&gt;();
+<pre><code class="language-cpp">const auto Result = Systems.Count&lt;UShiaComponent&gt;();
 </code></pre>
 </details>
 </li>
@@ -548,17 +548,17 @@ uint32 CountRaw(
 <p>This is more performant way of counting actors with given set of
 components (although non-ergonomic for sure):</p>
 <pre><code class="language-cpp">	// Instead of this:
-	const auto A = Systems-&gt;Query&lt;UShiaComponent&gt;().Count();
+	const auto A = Systems.Query&lt;UShiaComponent&gt;().Count();
 
 	// You can do this:
 	auto Signature = FArchetypeSignature();
 	if (const auto Index =
-			Systems-&gt;ComponentTypeIndex(UShiaComponent::StaticClass()))
+			Systems.ComponentTypeIndex(UShiaComponent::StaticClass()))
 	{
 		Signature.EnableBit(Index.GetValue());
 	}
 
-	const auto B = Systems-&gt;Count(Signature);
+	const auto B = Systems.Count(Signature);
 </code></pre>
 <p>See <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#count"><strong><code>USystemsWorld::Count</code></strong></a> for more ergonomic use.</p>
 <h1 id="note-6"><a class="header" href="#note-6">Note</a></h1>
@@ -614,7 +614,7 @@ bool InstallDefaultResource(
 <h1 id="return-3"><a class="header" href="#return-3">Return</a></h1>
 <p>True if resource was successfully installed (registry is not sealed).</p>
 <h1 id="example-4"><a class="header" href="#example-4">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallDefaultResource(UInventory::StaticClass());
+<pre><code class="language-cpp">Systems.InstallDefaultResource(UInventory::StaticClass());
 </code></pre>
 <hr />
 <h1 id="arguments-9"><a class="header" href="#arguments-9"><strong>Arguments</strong></a></h1>
@@ -651,7 +651,7 @@ bool InstallDefaultSystem(
 <h1 id="return-4"><a class="header" href="#return-4">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-5"><a class="header" href="#example-5">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallDefaultSystem(
+<pre><code class="language-cpp">Systems.InstallDefaultSystem(
 	USomeSystem::StaticClass(), FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
@@ -708,7 +708,7 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 		});
 }
 </code></pre>
-<pre><code class="language-cpp">Systems-&gt;InstallLambdaSystem(
+<pre><code class="language-cpp">Systems.InstallLambdaSystem(
 	BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
 </code></pre>
 <hr />
@@ -747,7 +747,7 @@ bool InstallResource();
 <h1 id="return-6"><a class="header" href="#return-6">Return</a></h1>
 <p>True if resource was successfully installed (registry is not sealed).</p>
 <h1 id="example-7"><a class="header" href="#example-7">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallResource&lt;UInventory&gt;();
+<pre><code class="language-cpp">Systems.InstallResource&lt;UInventory&gt;();
 </code></pre>
 </details>
 </li>
@@ -778,7 +778,7 @@ object that has its lifetime managed by other object.</p>
 <h1 id="return-7"><a class="header" href="#return-7">Return</a></h1>
 <p>True if resource was successfully installed (registry is not sealed).</p>
 <h1 id="example-8"><a class="header" href="#example-8">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallResourceRaw(
+<pre><code class="language-cpp">Systems.InstallResourceRaw(
 	NewObject&lt;UInventory&gt;(Systems, UInventory::StaticClass()));
 </code></pre>
 <hr />
@@ -813,7 +813,7 @@ bool InstallSystem(
 <h1 id="return-8"><a class="header" href="#return-8">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-9"><a class="header" href="#example-9">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallSystem&lt;USomeSystem&gt;(FInstallSystemOptions(&quot;Something&quot;));
+<pre><code class="language-cpp">Systems.InstallSystem&lt;USomeSystem&gt;(FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
 <h1 id="arguments-13"><a class="header" href="#arguments-13"><strong>Arguments</strong></a></h1>
@@ -856,7 +856,7 @@ can install system by its instance.</p>
 <h1 id="return-9"><a class="header" href="#return-9">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-10"><a class="header" href="#example-10">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallSystemRaw(
+<pre><code class="language-cpp">Systems.InstallSystemRaw(
 	NewObject&lt;USomeSystem&gt;(Systems, USomeSystem::StaticClass()),
 	FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
@@ -1076,7 +1076,7 @@ registry haven't reached its capacity).</p>
 <p><code>T</code> has to be a component that inherits from <strong><code>UActorComponent</code></strong></p>
 </blockquote>
 <h1 id="example-12"><a class="header" href="#example-12">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;RegisterComponent&lt;USomeComponent&gt;();
+<pre><code class="language-cpp">Systems.RegisterComponent&lt;USomeComponent&gt;();
 </code></pre>
 </details>
 </li>
@@ -1109,7 +1109,7 @@ for that they has to be registered by their class.</p>
 <p>True if component was successfully installed (registry is not sealed and
 registry haven't reached its capacity).</p>
 <h1 id="example-13"><a class="header" href="#example-13">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;RegisterComponentRaw(USomeComponent::StaticClass());
+<pre><code class="language-cpp">Systems.RegisterComponentRaw(USomeComponent::StaticClass());
 </code></pre>
 <hr />
 <h1 id="arguments-17"><a class="header" href="#arguments-17"><strong>Arguments</strong></a></h1>
@@ -1160,11 +1160,11 @@ after all systems complete their run on current game tick.</p>
 	this-&gt;bTagEnabled = !this-&gt;bTagEnabled;
 	if (this-&gt;bTagEnabled)
 	{
-		Systems-&gt;AddComponent(this, Tag);
+		Systems.AddComponent(this, Tag);
 	}
 	else
 	{
-		Systems-&gt;RemoveComponent(this, Tag);
+		Systems.RemoveComponent(this, Tag);
 	}
 }
 </code></pre>
@@ -1193,7 +1193,7 @@ T* Resource();
 <p>Pointer to resource or <code>nullptr</code> in case resource does not exist in
 registry.</p>
 <h1 id="example-15"><a class="header" href="#example-15">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;Resource&lt;UInventory&gt;()-&gt;AddItem(FItem{FItemType::Sword});
+<pre><code class="language-cpp">Systems.Resource&lt;UInventory&gt;()-&gt;AddItem(FItem{FItemType::Sword});
 </code></pre>
 </details>
 </li>
@@ -1263,7 +1263,7 @@ UObject* ResourceRaw(
 <p>Pointer to resource or <code>nullptr</code> in case resource does not exist in
 registry.</p>
 <h1 id="example-16"><a class="header" href="#example-16">Example</a></h1>
-<pre><code class="language-cpp">auto* Inventory = Cast&lt;UInventory&gt;(Systems-&gt;ResourceRaw());
+<pre><code class="language-cpp">auto* Inventory = Cast&lt;UInventory&gt;(Systems.ResourceRaw());
 if (IsValid(Inventory))
 {
 	Inventory-&gt;AddItem(FItem{FItemType::Sword});

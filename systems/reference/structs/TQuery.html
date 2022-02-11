@@ -897,7 +897,7 @@ iteration over the query, but in case user has valid reasons to handle
 iteration different way, this is the single point that performs
 iteration and yields an item.</p>
 <h1 id="example-24"><a class="header" href="#example-24">Example</a></h1>
-<pre><code class="language-cpp">	auto Query = Systems-&gt;Query&lt;UShiaComponent&gt;();
+<pre><code class="language-cpp">	auto Query = Systems.Query&lt;UShiaComponent&gt;();
 	while (auto&amp; QueryItem = Query.Next())
 	{
 		// Note that we do not check if QueryItem optional value is set.

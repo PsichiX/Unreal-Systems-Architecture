@@ -183,20 +183,22 @@ to operate.</p>
 		});
 }
 </code></pre>
-<pre><code class="language-cpp">void UExampleGameInstance::Setup()
+<pre><code class="language-cpp">void UExampleGameInstance::Init()
 {
-	Super::Setup();
+	Super::Init();
 
-	auto* Systems = GetSystemsWorld();
-	if (IsValid(Systems) == false)
+	auto* Subsystem = USystemsSubsystem::Get(GetWorld());
+	if (IsValid(Subsystem))
 	{
-		return;
+		Subsystem-&gt;AcquireSystemsWorld(FName(),
+			[&amp;](auto&amp; Systems)
+			{
+				Systems.RegisterComponent&lt;UVelocityComponent&gt;();
+
+				Systems.InstallLambdaSystem(
+					MovementSystem, FInstallSystemOptions(&quot;Movement&quot;));
+			});
 	}
-
-	Systems-&gt;RegisterComponent&lt;UVelocityComponent&gt;();
-
-	Systems-&gt;InstallLambdaSystem(
-		MovementSystem, FInstallSystemOptions(&quot;Movement&quot;));
 }
 </code></pre>
 <h2 id="stateful-systems"><a class="header" href="#stateful-systems">Stateful systems</a></h2>
@@ -239,20 +241,22 @@ void ULogBirdsNumberChangeSystem::Run(USystemsWorld&amp; Systems)
 	}
 }
 </code></pre>
-<pre><code class="language-cpp">void UExampleGameInstance::Setup()
+<pre><code class="language-cpp">void UExampleGameInstance::Init()
 {
-	Super::Setup();
+	Super::Init();
 
-	auto* Systems = GetSystemsWorld();
-	if (IsValid(Systems) == false)
+	auto* Subsystem = USystemsSubsystem::Get(GetWorld());
+	if (IsValid(Subsystem))
 	{
-		return;
+		Subsystem-&gt;AcquireSystemsWorld(FName(),
+			[&amp;](auto&amp; Systems)
+			{
+				Systems.RegisterComponent&lt;UBirdComponent&gt;();
+
+				Systems.InstallSystem&lt;ULogBirdsNumberChangeSystem&gt;(
+					FInstallSystemOptions(&quot;LogBirdsNumberChange&quot;));
+			});
 	}
-
-	Systems-&gt;RegisterComponent&lt;UBirdComponent&gt;();
-
-	Systems-&gt;InstallSystem&lt;ULogBirdsNumberChangeSystem&gt;(
-		FInstallSystemOptions(&quot;LogBirdsNumberChange&quot;));
 }
 </code></pre>
 <h1 id="problems-that-it-solves"><a class="header" href="#problems-that-it-solves">Problems that it solves</a></h1>

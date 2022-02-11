@@ -173,7 +173,7 @@ term.</p>
 		UShiaComponent* Shia = nullptr;
 	};
 
-	auto Query = Systems-&gt;DynamicQuery&lt;UShiaQueryBundle&gt;();
+	auto Query = Systems.DynamicQuery&lt;UShiaQueryBundle&gt;();
 	auto* Bundle =
 		NewObject&lt;UShiaQueryBundle&gt;(this, UShiaQueryBundle::StaticClass());
 	while (Query-&gt;Next(Bundle))

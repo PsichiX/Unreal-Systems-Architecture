@@ -155,7 +155,7 @@ and/or after this one.</p>
 <p>See <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a>, <a href="/reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a>,
 <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a></p>
 <h1 id="example"><a class="header" href="#example">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallLambdaSystem(BoidsFaceDirectionSystem,
+<pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem,
 	FInstallSystemOptions(&quot;BoidsFaceDirection&quot;)
 		.RunBefore(&quot;BoidsFaceDirection&quot;)
 		.RunAfter(&quot;BoidsApplyImpulse&quot;));
@@ -174,7 +174,7 @@ FInstallSystemOptions(
 <hr />
 <p>Create new options object.</p>
 <h1 id="example-1"><a class="header" href="#example-1">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallLambdaSystem(BoidsFaceDirectionSystem,
+<pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem,
 	FInstallSystemOptions(&quot;BoidsFaceDirection&quot;)
 		.RunBefore(&quot;BoidsFaceDirection&quot;)
 		.RunAfter(&quot;BoidsApplyImpulse&quot;));
@@ -202,7 +202,7 @@ FInstallSystemOptions RunAfter(
 <hr />
 <p>Add named dependency system that installed system should run after.</p>
 <h1 id="example-2"><a class="header" href="#example-2">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallLambdaSystem(BoidsFaceDirectionSystem,
+<pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem,
 	FInstallSystemOptions(&quot;BoidsFaceDirection&quot;)
 		.RunBefore(&quot;BoidsFaceDirection&quot;)
 		.RunAfter(&quot;BoidsApplyImpulse&quot;));
@@ -230,7 +230,7 @@ FInstallSystemOptions RunBefore(
 <hr />
 <p>Add named dependency system that installed system should run before.</p>
 <h1 id="example-3"><a class="header" href="#example-3">Example</a></h1>
-<pre><code class="language-cpp">Systems-&gt;InstallLambdaSystem(BoidsFaceDirectionSystem,
+<pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem,
 	FInstallSystemOptions(&quot;BoidsFaceDirection&quot;)
 		.RunBefore(&quot;BoidsFaceDirection&quot;)
 		.RunAfter(&quot;BoidsApplyImpulse&quot;));

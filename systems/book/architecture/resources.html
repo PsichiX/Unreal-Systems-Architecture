@@ -177,23 +177,25 @@ public:
 	float TimeScale = 1;
 };
 
-void UExampleGameInstance::Setup()
+void UExampleGameInstance::Init()
 {
-	Super::Setup();
+	Super::Init();
 
-	auto* Systems = GetSystemsWorld();
-	if (IsValid(Systems) == false)
+	auto* Subsystem = USystemsSubsystem::Get(GetWorld());
+	if (IsValid(Subsystem))
 	{
-		return;
+		Subsystem-&gt;AcquireSystemsWorld(FName(),
+			[&amp;](auto&amp; Systems)
+			{
+				Systems.RegisterComponent&lt;UVelocityComponent&gt;();
+
+				// USettings asset set up in editor.
+				Systems.InstallResourceRaw(this-&gt;Settings);
+
+				Systems.InstallLambdaSystem(
+					MovementSystem, FInstallSystemOptions(&quot;Movement&quot;));
+			});
 	}
-
-	Systems-&gt;RegisterComponent&lt;UVelocityComponent&gt;();
-
-	// USettings asset set up in editor.
-	Systems-&gt;InstallResourceRaw(this-&gt;Settings);
-
-	Systems-&gt;InstallLambdaSystem(
-		MovementSystem, FInstallSystemOptions(&quot;Movement&quot;));
 }
 
 void MovementSystem(USystemsWorld&amp; Systems)

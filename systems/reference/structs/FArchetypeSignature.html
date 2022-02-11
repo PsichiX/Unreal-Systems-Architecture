@@ -160,17 +160,17 @@ perform more advanced operations.</p>
 </blockquote>
 <h1 id="example"><a class="header" href="#example">Example</a></h1>
 <pre><code class="language-cpp">	// Instead of this:
-	const auto A = Systems-&gt;Query&lt;UShiaComponent&gt;().Count();
+	const auto A = Systems.Query&lt;UShiaComponent&gt;().Count();
 
 	// You can do this:
 	auto Signature = FArchetypeSignature();
 	if (const auto Index =
-			Systems-&gt;ComponentTypeIndex(UShiaComponent::StaticClass()))
+			Systems.ComponentTypeIndex(UShiaComponent::StaticClass()))
 	{
 		Signature.EnableBit(Index.GetValue());
 	}
 
-	const auto B = Systems-&gt;Count(Signature);
+	const auto B = Systems.Count(Signature);
 </code></pre>
 <hr />
 <h1 id="methods"><a class="header" href="#methods"><strong>Methods</strong></a></h1>
