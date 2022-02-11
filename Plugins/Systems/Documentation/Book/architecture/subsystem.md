@@ -39,10 +39,10 @@ subsystem_game_instance
 
 ## Game mode
 
-When it comes to game mode, we should register systems world on `UGameModeBase::InitGame`
+When it comes to game mode, we should register systems world on `AGameModeBase::InitGame`
 (it runs before any actor `BeginPlay` - if we register it on `BeginPlay`, then some
 actors placed on level might try to register to yet non-existing systems world) and
-unregister it on `UGameModeBase::EndPlay`.
+unregister it on `AGameModeBase::EndPlay`.
 
 ```snippet
 subsystem_game_mode

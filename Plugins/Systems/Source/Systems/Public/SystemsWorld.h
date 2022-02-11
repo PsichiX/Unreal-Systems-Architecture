@@ -381,12 +381,12 @@ public:
 	/// Called in [`class: USystemsActorComponent::BeginPlay`]() and
 	/// [`class:USystemsSceneComponent::BeginPlay`]() methods so user doesn't
 	/// have to, but in case of user dynamically removing actor component to
-	/// achieve support for beavior toggling, adding components back to registry
+	/// achieve support for behavior toggling, adding components back to registry
 	/// can be achieved with this method.
 	///
 	/// # Note
 	/// > Actor components are not registered immediatelly to avoid undefined
-	/// behavior or even gam crashes when performing this while iterating
+	/// behavior or even game crashes when performing this while iterating
 	/// over systems world queries - rather they ar queued and registered
 	/// after all systems complete their run on current game tick.
 	///
@@ -407,7 +407,7 @@ public:
 	/// Called in [`class: USystemsActorComponent::EndPlay`]() and
 	/// [`class:USystemsSceneComponent::EndPlay`]() methods so user doesn't have
 	/// to, but in case of user dynamically adding actor component to achieve
-	/// support for beavior toggling, removing components from registry can be
+	/// support for behavior toggling, removing components from registry can be
 	/// achieved with this method.
 	///
 	/// # Note
@@ -649,7 +649,7 @@ public:
 		//// [/ignore]
 	}
 
-	/// Acquires lazy-iterator to dynamically query actor components.
+	/// Acquires lazy-iterator to dynamically queried actor components.
 	///
 	/// Handy shortcut for [`class: USystemsWorld::SpawnQuery`]().
 	///
@@ -662,7 +662,7 @@ public:
 		//// [/ignore]
 	}
 
-	/// Acquires lazy-iterator to dynamically query actor components.
+	/// Acquires lazy-iterator to dynamically queried actor components.
 	///
 	/// Because user cannot use templated types in blueprints, dynamic queries
 	/// are a way to query systems world in blueprints. Also dynamic queries do

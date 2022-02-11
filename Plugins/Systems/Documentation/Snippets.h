@@ -161,7 +161,7 @@ void main()
 		Signature.EnableBit(Index.GetValue());
 	}
 
-	const auto B = Systems.Count(Signature);
+	const auto B = Systems.CountRaw(Signature);
 	//// [/snippet]
 
 	//// [snippet: systems_world_count]
@@ -366,7 +366,7 @@ void main()
 
 	//// [snippet: iter_map]
 	// [0.0, 4.0, 16.0, 36.0, 64.0]
-	const TArray<int> Result =
+	const TArray<float> Result =
 		IterRange(0, 10)
 			.Filter([](const auto& Value) { return Value % 2 == 0; })
 			.Map<float>([](const auto& Value)
@@ -439,7 +439,7 @@ void main()
 	auto Receiver = Sender.Receiver(1);
 
 	Sender.Send(42);
-	while (const auto Message = Receiver.Receive())
+	while (const auto Value = Receiver.Receive())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Received value: %i"), Value);
 	}
@@ -506,7 +506,7 @@ void UExampleGameInstance::Init()
 			{
 				Systems.RegisterComponent<UShiaComponent>();
 
-				System.InstallResource<UShiaSettings>();
+				Systems.InstallResource<UShiaSettings>();
 
 				Systems.InstallLambdaSystem(
 					JustDoItSystem, FInstallSystemOptions("JustDoIt"));
@@ -517,7 +517,7 @@ void UExampleGameInstance::Init()
 
 //// [snippet: subsystem_game_mode]
 UCLASS()
-class EXAMPLE_API AExampleGameMode : public UGameModeBase
+class EXAMPLE_API AExampleGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
@@ -587,8 +587,8 @@ void ULogBirdsNumberChangeSystem::Run(USystemsWorld& Systems)
 
 	const auto Number =
 		static_cast<int>(Systems.Query<UBirdComponent>().Count());
-	const Difference = Number - this->Count;
-	this->Count = Number;
+	const Difference = Number - this->LastCount;
+	this->LastCount = Number;
 
 	if (Difference > 0)
 	{
