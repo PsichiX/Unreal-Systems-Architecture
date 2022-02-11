@@ -646,7 +646,7 @@ bool InstallDefaultSystem(
 </ul>
 <hr />
 <p>Install system.</p>
-<p>See <a href="/reference/classes/USystemsWorld.html#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a>,
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a>, <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>,
 <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-4"><a class="header" href="#return-4">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
@@ -805,7 +805,7 @@ bool InstallSystem(
 <hr />
 <p>Install system.</p>
 <p>Handy shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installdefaultsystem"><strong><code>USystemsWorld::InstallDefaultSystem</code></strong></a></p>
-<p>See <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a>, <a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="note-8"><a class="header" href="#note-8">Note</a></h1>
 <blockquote>
 <p>Make sure <code>T</code> is a class that inherits from <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a>!</p>
@@ -850,9 +850,9 @@ bool InstallSystemRaw(
 <hr />
 <p>Install system.</p>
 <p>Usually user would want to install systems using either
-<a href="/reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="/reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
 can install system by its instance.</p>
-<p>See <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a>, <a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-9"><a class="header" href="#return-9">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-10"><a class="header" href="#example-10">Example</a></h1>
@@ -1020,7 +1020,7 @@ TQuery&lt;T...&gt; Query();
 <details>
 <hr />
 <p>Acquires lazy-iterator to query actor components.</p>
-<p>More about iterators in <a href="/book/architecture/iterators.html">this architecture book
+<p>More about iterators in <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/iterators.md">this architecture book
 page</a>.</p>
 <p>Queries allow to yield tuples of actor and their components, and only
 those that comply to given query signature, so there is no iteration
@@ -1394,7 +1394,7 @@ any data of given components.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.3</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 
                     </main>
 
