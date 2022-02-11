@@ -148,8 +148,8 @@
 <li><a href="#problems-that-it-solves">Problems that it solves</a></li>
 </ul>
 <h1 id="explanation"><a class="header" href="#explanation">Explanation</a></h1>
-<p><a href="/reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> is a registry that stores <a href="/book/architecture/systems.html">systems</a>,
-<a href="/book/architecture/resources.html">resources</a> and <a href="/book/architecture/components.html">actor components</a>.
+<p><a href="/reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> is a registry that stores <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/systems.md">systems</a>,
+<a href="/book/architecture/resources.html">resources</a> and <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/components.md">actor components</a>.
 The first thing you do is you setup your systems world by installing systems, resources and
 registering actor components that will be used in systems queries to process and do something
 useful with resources and actor components.</p>
@@ -183,7 +183,7 @@ void UExampleGameInstance::Init()
 }
 </code></pre>
 <p>In example above we register systems world in game instance. We can of course create systems
-worlds at will without registering it into <a href="/reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>, this global registry
+worlds at will without registering it into <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md"><strong><code>USystemsSubsystem</code></strong></a>, this global registry
 is only a more convenient way to access and automate systems world management globally.</p>
 <p>Once per tick (when using subsystem approach) all systems gets to run in order they were
 installed (system installation options can provide additional hints about more precise order
@@ -211,15 +211,15 @@ dependency tree problems between seemingly unrelated parts of codebase.</p>
 				});
 	}
 </code></pre>
-<p>Queries are <a href="/book/architecture/iterators.html">iterators</a> that always yields a tuple of actor
+<p>Queries are <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/iterators.md">iterators</a> that always yields a tuple of actor
 components and can be chained with other iterators to produce more elaborated, yet easy to
 reason about data transformations. For example when you do <code>Systems.Query&lt;A, B, C&gt;</code>, values
 yielded by query iterator will be of type <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code>. it's also important
 to note that user should never cache query objects, rather consume queries in place.</p>
-<p>See <a href="/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a>.</p>
 <h2 id="archetypes"><a class="header" href="#archetypes">Archetypes</a></h2>
 <p>Internally all actor components are stored in buckets called archetypes. Given actor archetype
-is determined by its <a href="/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, which is calculated from the set of
+is determined by its <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a>, which is calculated from the set of
 components given actor owns. When actor registers its components, systems world searches through
 already existing archetypes and if it finds one, actor gets registered in that bucket, if not
 new archetype bucket gets created.</p>
@@ -243,7 +243,7 @@ forces user to make flat game logic with explicit order of execution, additional
 of work as small and as precise as possible to make it easy to reason about how game data gets
 processed.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 
                     </main>
 

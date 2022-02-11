@@ -143,9 +143,9 @@
 <li><a href="#problems-that-it-solves">Problems that it solves</a></li>
 </ul>
 <h1 id="explanation"><a class="header" href="#explanation">Explanation</a></h1>
-<p>See <a href="/reference/structs/TSenderChannel.html"><strong><code>TSenderChannel</code></strong></a>, <a href="/reference/structs/TReceiverChannel.html"><strong><code>TReceiverChannel</code></strong></a>.</p>
+<p>See <a href="/reference/structs/TSenderChannel.html"><strong><code>TSenderChannel</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TReceiverChannel.md"><strong><code>TReceiverChannel</code></strong></a>.</p>
 <p>Shared channels are Single-Produce, Multiple-Consumer events that instead
-being executed ad the time of sending message (pushing), they are executed
+being executed at the time of sending message (pushing), they are executed
 at the time of receiving, which is an on-demand operation - user decides
 when to read messages received in event.</p>
 <pre><code class="language-cpp">	auto Sender = TSenderChannel&lt;int&gt;();
@@ -174,7 +174,7 @@ stored, but not yet executed</strong>.</p>
 sequence of next messages in queue and do something useful with them.
 That's all, simple isn't it?</p>
 <h1 id="problems-that-it-solves"><a class="header" href="#problems-that-it-solves">Problems that it solves</a></h1>
-<p>There is only one but big problem that it solves - makind more
+<p>There is only one but big problem that it solves - making more
 deterministic and ordered data flow between parts of game logic. That way
 we avoid situations where objects communicating with each other are
 dependend on proper order of messages being sent and received but we can't
@@ -185,7 +185,7 @@ simply just situations where some data gets passed too early and
 invalidates dependent object state causing unnecessary state recalculations
 later by other objects trying to get some data out of it.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 
                     </main>
 

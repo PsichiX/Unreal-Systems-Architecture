@@ -148,7 +148,7 @@ types signature.</p>
 page</a>.</p>
 <h1 id="note"><a class="header" href="#note">Note</a></h1>
 <blockquote>
-<p>User should rather construct queries with <a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a>
+<p>User should rather construct queries with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a>
 instead o constructing queries by hand.</p>
 </blockquote>
 <blockquote>
@@ -660,7 +660,7 @@ TOptional&lt;Item&gt; First();
 <details>
 <hr />
 <p>Returns first item in the iterator.</p>
-<p>This is an equivalent of calling <a href="/reference/structs/TQuery.html#next"><strong><code>TQuery::Next</code></strong></a>.</p>
+<p>This is an equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#next"><strong><code>TQuery::Next</code></strong></a>.</p>
 <h1 id="example-17"><a class="header" href="#example-17">Example</a></h1>
 <pre><code class="language-cpp">// 5
 const int Result = IterRange(5, 10).First();
@@ -710,8 +710,8 @@ Item Fold(
 <p>Folding basically means going through all iterator items and collapsing them
 into single value. Example of folding can be sum/accumulation, or min/max,
 or anything like that - although for ones mentioned there are existing
-optimized iterator consumers: <a href="/reference/structs/TQuery.html#sum"><strong><code>TQuery::Sum</code></strong></a> and
-<a href="/reference/structs/TQuery.html#comparedby"><strong><code>TQuery::ComparedBy</code></strong></a>.</p>
+optimized iterator consumers: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#sum"><strong><code>TQuery::Sum</code></strong></a> and
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#comparedby"><strong><code>TQuery::ComparedBy</code></strong></a>.</p>
 <h1 id="note-13"><a class="header" href="#note-13">Note</a></h1>
 <blockquote>
 <p><code>RESULT</code> is the returned type, same as <code>Start</code> argument used as initial
@@ -949,7 +949,7 @@ can yield.</p>
 implement their own iterators, or iterator consumers, or just wants to
 preallocate some memory for later consumed iterator items, this method
 is really useful for these usecases.</p>
-<p>See <a href="/reference/structs/IterSizeHint.html"><strong><code>IterSizeHint</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/IterSizeHint.md"><strong><code>IterSizeHint</code></strong></a>.</p>
 <h1 id="example-26"><a class="header" href="#example-26">Example</a></h1>
 <pre><code class="language-cpp">template &lt;typename I&gt;
 void IterCollectIntoArray(I&amp;&amp; Iterator, TArray&lt;typename I::Item&gt;&amp; Result)
@@ -1008,7 +1008,7 @@ Item Sum(
 <blockquote>
 <p>Make sure that type of iterator values actually implement <code>operator+</code>!
 Also since iterator can work on non-numerical types, user has to provide
-initial value, tha makes it work like <a href="/reference/structs/TQuery.html#fold"><strong><code>TQuery::Fold</code></strong></a>.</p>
+initial value, tha makes it work like <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#fold"><strong><code>TQuery::Fold</code></strong></a>.</p>
 </blockquote>
 <h1 id="example-28"><a class="header" href="#example-28">Example</a></h1>
 <pre><code class="language-cpp">// 45
@@ -1040,7 +1040,7 @@ TQuery(
 <details>
 <hr />
 <p>Constructs query from systems.</p>
-<p>An equivalent of calling <a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a></p>
+<p>An equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a></p>
 <hr />
 <h1 id="arguments-18"><a class="header" href="#arguments-18"><strong>Arguments</strong></a></h1>
 <ul>
@@ -1134,7 +1134,7 @@ const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 
                     </main>
 

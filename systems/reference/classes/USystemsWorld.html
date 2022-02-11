@@ -149,7 +149,7 @@
 <hr />
 <p>Container that holds systems, resources and registry of components that
 belongs to actors.</p>
-<p><a href="/book/architecture/world.html">Architecture book page</a> explains more in depth
+<p><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/world.md">Architecture book page</a> explains more in depth
 what systems world is, but in a brief: systems world is a central point user
 interacts with using queries to resources and actor components. Think of it
 as database - actor components are records and resources are unique
@@ -166,11 +166,11 @@ FActorsIter Actors();
 <details>
 <hr />
 <p>Acquires lazy-iterator over all registered actors.</p>
-<p>This works similar to <a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> but it yields
+<p>This works similar to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a> but it yields
 only actors without their components, and <strong>it yields all actors</strong>. This
 method exists only for a last resort use cases - user should have a
 valid reason to query all actors and should always try to solve problem
-with <a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a>.</p>
+with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a>.</p>
 <p>The only use case i can think of is when user needs to for example count
 all registered actors, but there are other usecases which can definitely
 be solved with regular component queries.</p>
@@ -187,7 +187,7 @@ be solved with regular component queries.</p>
 </code></pre>
 <p>User should instead for example add <code>UShiaComponent</code> actor component and
 query actors using
-<a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> to iterate only on these actors that
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a> to iterate only on these actors that
 are marked as &quot;Shia&quot; actor using actor component tag:</p>
 <pre><code class="language-cpp">Systems-&gt;Query&lt;UShiaComponent&gt;().ForEach(
 	[](const auto* Actor)
@@ -239,8 +239,8 @@ bool AddComponent(
 </ul>
 <hr />
 <p>Add actor component to registry.</p>
-<p>Called in <a href="/reference/classes/USystemsActorComponent.html#beginplay"><strong><code>USystemsActorComponent::BeginPlay</code></strong></a> and
-<a href="/reference/classes/USystemsSceneComponent.html#beginplay"><strong><code>USystemsSceneComponent::BeginPlay</code></strong></a> methods so user doesn't
+<p>Called in <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.md#beginplay"><strong><code>USystemsActorComponent::BeginPlay</code></strong></a> and
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSceneComponent.md#beginplay"><strong><code>USystemsSceneComponent::BeginPlay</code></strong></a> methods so user doesn't
 have to, but in case of user dynamically removing actor component to
 achieve support for beavior toggling, adding components back to registry
 can be achieved with this method.</p>
@@ -290,7 +290,7 @@ T* Component(
 <details>
 <hr />
 <p>Tries to get pointer to registered actor component.</p>
-<p>Handy shortcut for <a href="/reference/classes/USystemsWorld.html#componentraw"><strong><code>USystemsWorld::ComponentRaw</code></strong></a></p>
+<p>Handy shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#componentraw"><strong><code>USystemsWorld::ComponentRaw</code></strong></a></p>
 <h1 id="return-1"><a class="header" href="#return-1">Return</a></h1>
 <p>Pointer to component or <code>nullptr</code> in case component does not exist in
 registry.</p>
@@ -323,9 +323,9 @@ TOptional&lt;uint32&gt; ComponentIndex(
 <details>
 <hr />
 <p>Get component registry index.</p>
-<p>Useful when working directly with <a href="/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
+<p>Useful when working directly with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a>, but
 user most likely won't have any high-level usecase for that.</p>
-<p>For getting component index by its class use: <a href="/reference/classes/USystemsWorld.html#componenttypeindex"><strong><code>USystemsWorld::ComponentTypeIndex</code></strong></a></p>
+<p>For getting component index by its class use: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#componenttypeindex"><strong><code>USystemsWorld::ComponentTypeIndex</code></strong></a></p>
 <hr />
 <h1 id="arguments-2"><a class="header" href="#arguments-2"><strong>Arguments</strong></a></h1>
 <ul>
@@ -364,11 +364,11 @@ UActorComponent* ComponentRaw(
 <blockquote>
 <p>Because components are registered after systems run this will always
 return <code>nullptr</code> whe trying to get actor component just after calling
-<a href="/reference/classes/USystemsWorld.html#addcomponent"><strong><code>USystemsWorld::AddComponent</code></strong></a></p>
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#addcomponent"><strong><code>USystemsWorld::AddComponent</code></strong></a></p>
 </blockquote>
 <blockquote>
 <p>Also when trying to get actor component just after calling
-<a href="/reference/classes/USystemsWorld.html#removecomponent"><strong><code>USystemsWorld::RemoveComponent</code></strong></a> will return given component
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#removecomponent"><strong><code>USystemsWorld::RemoveComponent</code></strong></a> will return given component
 instead o <code>nullptr</code> because components get unregistered after systems
 run.</p>
 </blockquote>
@@ -406,9 +406,9 @@ TOptional&lt;uint32&gt; ComponentTypeIndex(
 <details>
 <hr />
 <p>Get component registry index.</p>
-<p>Useful when working directly with <a href="/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
+<p>Useful when working directly with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a>, but
 user most likely won't have any high-level usecase for that.</p>
-<p>For getting component index by component: <a href="/reference/classes/USystemsWorld.html#componentindex"><strong><code>USystemsWorld::ComponentIndex</code></strong></a></p>
+<p>For getting component index by component: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#componentindex"><strong><code>USystemsWorld::ComponentIndex</code></strong></a></p>
 <hr />
 <h1 id="arguments-4"><a class="header" href="#arguments-4"><strong>Arguments</strong></a></h1>
 <ul>
@@ -431,11 +431,11 @@ TTuple&lt;T*...&gt; Components(
 <details>
 <hr />
 <p>Gets tuple of actor components.</p>
-<p>Handy wrapper for <a href="/reference/classes/USystemsWorld.html#component"><strong><code>USystemsWorld::Component</code></strong></a> in case of
+<p>Handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#component"><strong><code>USystemsWorld::Component</code></strong></a> in case of
 asking for more than one actor component.</p>
 <h1 id="note-3"><a class="header" href="#note-3">Note</a></h1>
 <blockquote>
-<p>Works similar way to <a href="/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> but do not put
+<p>Works similar way to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a> but do not put
 actor in its first tuple element, rather gives exactly the pointers to
 actor components user requests. It's worth noting that in case of
 component not being registered, it returns <code>nullptr</code> in tuple elements
@@ -461,7 +461,7 @@ bool ComponentsDidChanged() const;
 <details>
 <hr />
 <p>Tells if components changed during last game tick.</p>
-<p>handy wrapper for <a href="/reference/classes/USystemsWorld.html#componentsdidchangedraw"><strong><code>USystemsWorld::ComponentsDidChangedRaw</code></strong></a>.</p>
+<p>handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#componentsdidchangedraw"><strong><code>USystemsWorld::ComponentsDidChangedRaw</code></strong></a>.</p>
 </details>
 </li>
 <li>
@@ -501,7 +501,7 @@ FArchetypeSignature ComponentsSignature(
 <details>
 <hr />
 <p>Get archetype signature of given set of components.</p>
-<p>Useful when working directly with <a href="/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
+<p>Useful when working directly with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a>, but
 user most likely won't have any high-level usecase for that.</p>
 <hr />
 <h1 id="arguments-7"><a class="header" href="#arguments-7"><strong>Arguments</strong></a></h1>
@@ -523,7 +523,7 @@ uint32 Count() const;
 <details>
 <hr />
 <p>Counts actors that contain given archetype signature.</p>
-<p>This is ergonomic shortcut for <a href="/reference/classes/USystemsWorld.html#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a>.</p>
+<p>This is ergonomic shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a>.</p>
 <h1 id="note-5"><a class="header" href="#note-5">Note</a></h1>
 <blockquote>
 <p><code>T</code> classes should inherit from <strong><code>UActorComponent</code></strong>!</p>
@@ -560,7 +560,7 @@ components (although non-ergonomic for sure):</p>
 
 	const auto B = Systems-&gt;Count(Signature);
 </code></pre>
-<p>See <a href="/reference/classes/USystemsWorld.html#count"><strong><code>USystemsWorld::Count</code></strong></a> for more ergonomic use.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#count"><strong><code>USystemsWorld::Count</code></strong></a> for more ergonomic use.</p>
 <h1 id="note-6"><a class="header" href="#note-6">Note</a></h1>
 <blockquote>
 <p>For example if requested signature is: <code>&lt;A, B&gt;</code> and there are actors:
@@ -589,8 +589,8 @@ UDynamicQuery* DynamicQuery();
 <details>
 <hr />
 <p>Acquires lazy-iterator to dynamically query actor components.</p>
-<p>Handy shortcut for <a href="/reference/classes/USystemsWorld.html#spawnquery"><strong><code>USystemsWorld::SpawnQuery</code></strong></a>.</p>
-<p>See <a href="/reference/classes/UDynamicQuery.html"><strong><code>UDynamicQuery</code></strong></a></p>
+<p>Handy shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#spawnquery"><strong><code>USystemsWorld::SpawnQuery</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.md"><strong><code>UDynamicQuery</code></strong></a></p>
 </details>
 </li>
 <li>
@@ -610,7 +610,7 @@ bool InstallDefaultResource(
 </ul>
 <hr />
 <p>Register resource object.</p>
-<p>See <a href="/reference/classes/USystemsWorld.html#installresourceraw"><strong><code>USystemsWorld::InstallResourceRaw</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installresourceraw"><strong><code>USystemsWorld::InstallResourceRaw</code></strong></a></p>
 <h1 id="return-3"><a class="header" href="#return-3">Return</a></h1>
 <p>True if resource was successfully installed (registry is not sealed).</p>
 <h1 id="example-4"><a class="header" href="#example-4">Example</a></h1>
@@ -646,8 +646,8 @@ bool InstallDefaultSystem(
 </ul>
 <hr />
 <p>Install system.</p>
-<p>See <a href="/reference/classes/USystemsWorld.html#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a>, <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>,
-<a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>See <a href="/reference/classes/USystemsWorld.html#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a>,
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-4"><a class="header" href="#return-4">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-5"><a class="header" href="#example-5">Example</a></h1>
@@ -686,7 +686,7 @@ bool InstallLambdaSystem(
 <p>Stateless systems are the most common ones because usually what system
 does it only processes the data, so creating function/lambda systems
 brings more ergonomics into codebase.</p>
-<p>See <a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-5"><a class="header" href="#return-5">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-6"><a class="header" href="#example-6">Example</a></h1>
@@ -743,7 +743,7 @@ bool InstallResource();
 <details>
 <hr />
 <p>Register resource object.</p>
-<p>Handy shortcut for <a href="/reference/classes/USystemsWorld.html#installdefaultresource"><strong><code>USystemsWorld::InstallDefaultResource</code></strong></a></p>
+<p>Handy shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installdefaultresource"><strong><code>USystemsWorld::InstallDefaultResource</code></strong></a></p>
 <h1 id="return-6"><a class="header" href="#return-6">Return</a></h1>
 <p>True if resource was successfully installed (registry is not sealed).</p>
 <h1 id="example-7"><a class="header" href="#example-7">Example</a></h1>
@@ -804,11 +804,11 @@ bool InstallSystem(
 <details>
 <hr />
 <p>Install system.</p>
-<p>Handy shortcut for <a href="/reference/classes/USystemsWorld.html#installdefaultsystem"><strong><code>USystemsWorld::InstallDefaultSystem</code></strong></a></p>
-<p>See <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>Handy shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installdefaultsystem"><strong><code>USystemsWorld::InstallDefaultSystem</code></strong></a></p>
+<p>See <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="note-8"><a class="header" href="#note-8">Note</a></h1>
 <blockquote>
-<p>Make sure <code>T</code> is a class that inherits from <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>!</p>
+<p>Make sure <code>T</code> is a class that inherits from <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a>!</p>
 </blockquote>
 <h1 id="return-8"><a class="header" href="#return-8">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
@@ -850,9 +850,9 @@ bool InstallSystemRaw(
 <hr />
 <p>Install system.</p>
 <p>Usually user would want to install systems using either
-<a href="/reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="/reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
+<a href="/reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
 can install system by its instance.</p>
-<p>See <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>See <a href="/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-9"><a class="header" href="#return-9">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-10"><a class="header" href="#example-10">Example</a></h1>
@@ -963,7 +963,7 @@ manually mark resources as changed is for optimizations purposes, to
 mark deliberate changes in resources instead of markin them
 automatically, to avoid a lot of boilerplate of that automation, when
 most of the times systems and UI do not require to ask for changes.</p>
-<p>Use <a href="/reference/classes/USystemsWorld.html#resourcedidchanged"><strong><code>USystemsWorld::ResourceDidChanged</code></strong></a> to ask if some
+<p>Use <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#resourcedidchanged"><strong><code>USystemsWorld::ResourceDidChanged</code></strong></a> to ask if some
 resource has changed.</p>
 <hr />
 <h1 id="arguments-16"><a class="header" href="#arguments-16"><strong>Arguments</strong></a></h1>
@@ -1000,7 +1000,7 @@ void Process();
 <p>In case of registry not being sealed at the time of calling this method,
 none of steps above are gonna be performed.</p>
 <p>This method is called automatically for global systems world managed by
-<a href="/reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>, but in case of user managing systems
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md"><strong><code>USystemsSubsystem</code></strong></a>, but in case of user managing systems
 world on their own, user can do:</p>
 <pre><code class="language-cpp">	auto* Systems =
 		NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
@@ -1031,7 +1031,7 @@ constructed from types provided to query, as well as from types
 registered to systems world that belong to the same actor. Systems
 architecture focuses on performing queries as fast as possible and not
 iterating over actors that do not need to be queried was a priority.</p>
-<p>See <a href="/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a></p>
 <h1 id="note-10"><a class="header" href="#note-10">Note</a></h1>
 <blockquote>
 <p>Returned query iterator has always actor put as first item of item
@@ -1066,7 +1066,7 @@ bool RegisterComponent();
 <details>
 <hr />
 <p>Register component type.</p>
-<p>Templated shortcut for <a href="/reference/classes/USystemsWorld.html#registercomponentraw"><strong><code>USystemsWorld::RegisterComponentRaw</code></strong></a></p>
+<p>Templated shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#registercomponentraw"><strong><code>USystemsWorld::RegisterComponentRaw</code></strong></a></p>
 <p>See <strong><code>UActorComponent</code></strong></p>
 <h1 id="return-10"><a class="header" href="#return-10">Return</a></h1>
 <p>True if component was successfully installed (registry is not sealed and
@@ -1101,7 +1101,7 @@ bool RegisterComponentRaw(
 </ul>
 <hr />
 <p>Register component type.</p>
-<p>Prior to <a href="/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a> being usable for queries and
+<p>Prior to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a> being usable for queries and
 other architecture parts, it has to be able to identify components and
 for that they has to be registered by their class.</p>
 <p>See <strong><code>UActorComponent</code></strong></p>
@@ -1140,8 +1140,8 @@ bool RemoveComponent(
 </ul>
 <hr />
 <p>Remove actor component from registry.</p>
-<p>Called in <a href="/reference/classes/USystemsActorComponent.html#endplay"><strong><code>USystemsActorComponent::EndPlay</code></strong></a> and
-<a href="/reference/classes/USystemsSceneComponent.html#endplay"><strong><code>USystemsSceneComponent::EndPlay</code></strong></a> methods so user doesn't have
+<p>Called in <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.md#endplay"><strong><code>USystemsActorComponent::EndPlay</code></strong></a> and
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSceneComponent.md#endplay"><strong><code>USystemsSceneComponent::EndPlay</code></strong></a> methods so user doesn't have
 to, but in case of user dynamically adding actor component to achieve
 support for beavior toggling, removing components from registry can be
 achieved with this method.</p>
@@ -1206,7 +1206,7 @@ bool ResourceDidChanged() const;
 <details>
 <hr />
 <p>Tells if given resource type did changed in last game tick.</p>
-<p>Handy wrapper for <a href="/reference/classes/USystemsWorld.html#resourcedidchangedraw"><strong><code>USystemsWorld::ResourceDidChangedRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#resourcedidchangedraw"><strong><code>USystemsWorld::ResourceDidChangedRaw</code></strong></a>.</p>
 </details>
 </li>
 <li>
@@ -1226,7 +1226,7 @@ bool ResourceDidChangedRaw(
 </ul>
 <hr />
 <p>Tells if given resource type did changed in last game tick.</p>
-<p>See <a href="/reference/classes/USystemsWorld.html#markresourcechanged"><strong><code>USystemsWorld::MarkResourceChanged</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#markresourcechanged"><strong><code>USystemsWorld::MarkResourceChanged</code></strong></a>.</p>
 <hr />
 <h1 id="arguments-19"><a class="header" href="#arguments-19"><strong>Arguments</strong></a></h1>
 <ul>
@@ -1296,8 +1296,8 @@ void SealAndInitialize();
 </ul>
 <hr />
 <p>Seal registry and initialize installed systems.</p>
-<p>Method called by: <a href="/reference/classes/USystemsSubsystem.html#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a>.</p>
-<p>When user doesn't use <a href="/reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a> as global systems
+<p>Method called by: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a>.</p>
+<p>When user doesn't use <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md"><strong><code>USystemsSubsystem</code></strong></a> as global systems
 world registry, or wants to handle systems world on their own, user
 should call this method after systems world setup (registering
 components, installation of systems and resources) and then call this
@@ -1349,7 +1349,7 @@ are a way to query systems world in blueprints. Also dynamic queries do
 not implement lazy-iterators so they are definitely not an ergonomic way
 to iterate over actor components and should be avoided in favor of
 <strong><code>USystems::Query</code></strong>.</p>
-<p>See <a href="/reference/classes/UDynamicQuery.html"><strong><code>UDynamicQuery</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.md"><strong><code>UDynamicQuery</code></strong></a></p>
 <hr />
 <h1 id="arguments-21"><a class="header" href="#arguments-21"><strong>Arguments</strong></a></h1>
 <ul>
@@ -1371,11 +1371,11 @@ TTaggedQuery&lt;T...&gt; TaggedQuery();
 <hr />
 <p>Acquires lazy-iterator to query actor components with additional tag
 components.</p>
-<p>The difference between <a href="/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a> is that tagged queries
+<p>The difference between <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a> is that tagged queries
 allows to request existance of additional components on actor, ones that
 are not required for query to access - useful when user do not require
 any data of given components.</p>
-<p>See <a href="/reference/structs/TTaggedQuery.html"><strong><code>TTaggedQuery</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.md"><strong><code>TTaggedQuery</code></strong></a></p>
 <h1 id="example-18"><a class="header" href="#example-18">Example</a></h1>
 <pre><code class="language-cpp">	Systems.TaggedQuery&lt;UVelocityComponent&gt;()
 		.With&lt;UBoidComponent&gt;()
@@ -1394,7 +1394,7 @@ any data of given components.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 
                     </main>
 

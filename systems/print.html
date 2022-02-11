@@ -154,21 +154,21 @@ complexity of codebase and production process to bare minimum!</p>
 does it solve.</p>
 <h1 id="contents"><a class="header" href="#contents">Contents</a></h1>
 <ul>
-<li><a href="/book/index.html">Book</a></li>
-<li><a href="/reference.html">C++ API Reference</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/index.md">Book</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference.md">C++ API Reference</a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="book"><a class="header" href="#book">Book</a></h1>
 <p>This book covers explanation of Systems Architecture, as well as provides learning materials
 such as guidelines with best practices to keep your project healthy and your sanity in check,
 it also provides tutorial showing step-by-step how to use Systems Architecture in your game.</p>
 <h1 id="pages"><a class="header" href="#pages">Pages</a></h1>
 <ul>
-<li><a href="book/getting_started.html">Getting started</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/getting_started.md">Getting started</a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
 <p>Before we jump into the meat of Systems Architecture, let me quickly show you a
 snippet showcasing how working with Systems looks like in a gist:</p>
@@ -398,7 +398,7 @@ actions to make sure state is always valid and do not need to recalculate on eac
 cascade of instant changes in features that depend on it - <strong>TL;DR: user can see exact flow of data
 in one place and that makes it easy to reason about, no need for juggling around the whole codebase</strong>.</p>
 <p>In case user still wants to send data with events, but keep deterministic events execution, Systems
-Architecture provides feature called <a href="book//book/architecture/channels.html">channels</a> which uses polling
+Architecture provides feature called <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/channels.md">channels</a> which uses polling
 to get received messages and execute them at the exact moment system needs to, avoiding immediate
 message execution when broadcasting messages.</p>
 <p>There is also another benefit we gain from flat dependency graph, that we will discuss next:</p>
@@ -496,7 +496,7 @@ distraction-abstractions for that.</strong></p>
 </ul>
 <p>Then you'll keep your sanity after year of development on a single game title.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="architecture"><a class="header" href="#architecture">Architecture</a></h1>
 <p>This section will explain in-depth how Systems Architecture exactly works and how to abuse
 it to solve your problems the right way.</p>
@@ -567,16 +567,16 @@ and <strong>we make ourselves keep systems small, doing only only the work they 
 </ul>
 <h1 id="pages-1"><a class="header" href="#pages-1">Pages</a></h1>
 <ul>
-<li><a href="book/architecture/world.html">World</a></li>
-<li><a href="book/architecture/systems.html">Systems</a></li>
-<li><a href="book/architecture/components.html">Components</a></li>
-<li><a href="book/architecture/resources.html">Resources</a></li>
-<li><a href="book/architecture/subsystem.html">Subsystem</a></li>
-<li><a href="book/architecture/iterators.html">Iterators</a></li>
-<li><a href="book/architecture/channels.html">Channels</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/world.md">World</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/systems.md">Systems</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/components.md">Components</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/resources.md">Resources</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/subsystem.md">Subsystem</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/iterators.md">Iterators</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/channels.md">Channels</a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="world"><a class="header" href="#world">World</a></h1>
 <h1 id="table-of-contents-1"><a class="header" href="#table-of-contents-1">Table of contents</a></h1>
 <ul>
@@ -589,8 +589,8 @@ and <strong>we make ourselves keep systems small, doing only only the work they 
 <li><a href="book/architecture/world.html#problems-that-it-solves">Problems that it solves</a></li>
 </ul>
 <h1 id="explanation"><a class="header" href="#explanation">Explanation</a></h1>
-<p><a href="book/architecture//reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> is a registry that stores <a href="book/architecture//book/architecture/systems.html">systems</a>,
-<a href="book/architecture//book/architecture/resources.html">resources</a> and <a href="book/architecture//book/architecture/components.html">actor components</a>.
+<p><a href="book/architecture//reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> is a registry that stores <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/systems.md">systems</a>,
+<a href="book/architecture//book/architecture/resources.html">resources</a> and <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/components.md">actor components</a>.
 The first thing you do is you setup your systems world by installing systems, resources and
 registering actor components that will be used in systems queries to process and do something
 useful with resources and actor components.</p>
@@ -624,7 +624,7 @@ void UExampleGameInstance::Init()
 }
 </code></pre>
 <p>In example above we register systems world in game instance. We can of course create systems
-worlds at will without registering it into <a href="book/architecture//reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>, this global registry
+worlds at will without registering it into <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md"><strong><code>USystemsSubsystem</code></strong></a>, this global registry
 is only a more convenient way to access and automate systems world management globally.</p>
 <p>Once per tick (when using subsystem approach) all systems gets to run in order they were
 installed (system installation options can provide additional hints about more precise order
@@ -652,15 +652,15 @@ dependency tree problems between seemingly unrelated parts of codebase.</p>
 				});
 	}
 </code></pre>
-<p>Queries are <a href="book/architecture//book/architecture/iterators.html">iterators</a> that always yields a tuple of actor
+<p>Queries are <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/iterators.md">iterators</a> that always yields a tuple of actor
 components and can be chained with other iterators to produce more elaborated, yet easy to
 reason about data transformations. For example when you do <code>Systems.Query&lt;A, B, C&gt;</code>, values
 yielded by query iterator will be of type <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code>. it's also important
 to note that user should never cache query objects, rather consume queries in place.</p>
-<p>See <a href="book/architecture//reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a>.</p>
 <h2 id="archetypes"><a class="header" href="#archetypes">Archetypes</a></h2>
 <p>Internally all actor components are stored in buckets called archetypes. Given actor archetype
-is determined by its <a href="book/architecture//reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, which is calculated from the set of
+is determined by its <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a>, which is calculated from the set of
 components given actor owns. When actor registers its components, systems world searches through
 already existing archetypes and if it finds one, actor gets registered in that bucket, if not
 new archetype bucket gets created.</p>
@@ -684,7 +684,7 @@ forces user to make flat game logic with explicit order of execution, additional
 of work as small and as precise as possible to make it easy to reason about how game data gets
 processed.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="systems"><a class="header" href="#systems">Systems</a></h1>
 <h1 id="table-of-contents-2"><a class="header" href="#table-of-contents-2">Table of contents</a></h1>
 <ul>
@@ -699,7 +699,7 @@ processed.</p>
 </ul>
 <h1 id="explanation-1"><a class="header" href="#explanation-1">Explanation</a></h1>
 <p>Systems are small but precise units of work, work that's mainly about processing game world data
-using queries. These queries are processed using <a href="book/architecture//book/architecture/iterators.html">iterators</a>,
+using queries. These queries are processed using <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/iterators.md">iterators</a>,
 and that makes queries the whole point of systems ergonomics since they simplify both computational
 and comprehensive complexity and make that part of game logic really easy to reason about,
 which in turn makes adding, removing and changing game logic easy and quicker than with monolithic
@@ -709,7 +709,7 @@ code or features highly dependent on each other, scattered around the codebase.<
 and stateful (classes) systems.</p>
 <h2 id="stateless-systems"><a class="header" href="#stateless-systems">Stateless systems</a></h2>
 <p>These are the most common ones. Stateless systems are just lambdas/functions that expect reference
-to <a href="book/architecture//reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> to operate on it. Stateless systems do not require any internal state
+to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md"><strong><code>USystemsWorld</code></strong></a> to operate on it. Stateless systems do not require any internal state
 to operate.</p>
 <pre><code class="language-cpp">void MovementSystem(USystemsWorld&amp; Systems)
 {
@@ -819,7 +819,7 @@ do better than that.</p>
 making switching from prototype to actual implementation a matter of just swapping prototype
 systems with actual properly implemented systems, sometimes not even having to change them at all.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="components"><a class="header" href="#components">Components</a></h1>
 <h1 id="table-of-contents-3"><a class="header" href="#table-of-contents-3">Table of contents</a></h1>
 <ul>
@@ -827,7 +827,7 @@ systems with actual properly implemented systems, sometimes not even having to c
 <li><a href="book/architecture/components.html#problems-that-it-solves">Problems that it solves</a></li>
 </ul>
 <h1 id="explanation-2"><a class="header" href="#explanation-2">Explanation</a></h1>
-<p>See <a href="book/architecture//reference/classes/USystemsActorComponent.html"><strong><code>USystemsActorComponent</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.md"><strong><code>USystemsActorComponent</code></strong></a>.</p>
 <p>Systems Architecture treats game world as database that user can query. That enables us to
 perform same operations on a batch of actors and their requested components in-place.</p>
 <pre><code class="language-cpp">	const auto Count =
@@ -874,7 +874,7 @@ dependency tree.</p>
 <p>All of that could be avoided with splitting monolithic work per components, but we can do even
 better and <strong>copletely decouple data from logic that we put in small dedicated systems</strong>.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="resources"><a class="header" href="#resources">Resources</a></h1>
 <h1 id="table-of-contents-4"><a class="header" href="#table-of-contents-4">Table of contents</a></h1>
 <ul>
@@ -963,7 +963,7 @@ just need to interact with third-party game managers - these are useful usecases
 Architecture doesn't get rid of them, rather make their use more ergonomic, yet not giving
 them global lifetime like with dangerous singletons.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="subsystem"><a class="header" href="#subsystem">Subsystem</a></h1>
 <h1 id="table-of-contents-5"><a class="header" href="#table-of-contents-5">Table of contents</a></h1>
 <ul>
@@ -977,12 +977,12 @@ them global lifetime like with dangerous singletons.</p>
 </ul>
 <h1 id="explanation-4"><a class="header" href="#explanation-4">Explanation</a></h1>
 <p>For the sake of convenience Systems Architecture provides handy wrapper over
-<a href="book/architecture//reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> global instances as a <a href="book/architecture//reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>
+<a href="book/architecture//reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> global instances as a <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md"><strong><code>USystemsSubsystem</code></strong></a>
 that is basically a registry of systems worlds accessible from any place in the code.</p>
 <p>All user needs to do is to register and setup systems world using
-<a href="book/architecture//reference/classes/USystemsSubsystem.html#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a> when certain game phase starts
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a> when certain game phase starts
 (either game, level, menu, etc) before adding/removing/querying actor components, and
-unregister systems world using <a href="book/architecture//reference/classes/USystemsSubsystem.html#releasesystemsworld"><strong><code>USystemsSubsystem::ReleaseSystemsWorld</code></strong></a>
+unregister systems world using <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md#releasesystemsworld"><strong><code>USystemsSubsystem::ReleaseSystemsWorld</code></strong></a>
 when given game phase ends.</p>
 <h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
 <p>The most common game phases where systems might exists are game instance and game mode.</p>
@@ -1077,7 +1077,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 }
 </code></pre>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="iterators"><a class="header" href="#iterators">Iterators</a></h1>
 <h1 id="table-of-contents-6"><a class="header" href="#table-of-contents-6">Table of contents</a></h1>
 <ul>
@@ -1116,19 +1116,19 @@ const TOptional&lt;int&gt; Result =
 	IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
 </code></pre>
 <ul>
-<li><a href="book/architecture//reference/structs/TQuery.html#count"><strong><code>TQuery::Count</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#nth"><strong><code>TQuery::Nth</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#fold"><strong><code>TQuery::Fold</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#count"><strong><code>TQuery::Count</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#nth"><strong><code>TQuery::Nth</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#fold"><strong><code>TQuery::Fold</code></strong></a></li>
 <li><code>IterSum</code></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#nth"><strong><code>TQuery::Nth</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#find"><strong><code>TQuery::Find</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#findmap"><strong><code>TQuery::FindMap</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#first"><strong><code>TQuery::First</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#last"><strong><code>TQuery::Last</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#foreach"><strong><code>TQuery::ForEach</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#any"><strong><code>TQuery::Any</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#all"><strong><code>TQuery::All</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#comparedby"><strong><code>TQuery::ComparedBy</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#nth"><strong><code>TQuery::Nth</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#find"><strong><code>TQuery::Find</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#findmap"><strong><code>TQuery::FindMap</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#first"><strong><code>TQuery::First</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#last"><strong><code>TQuery::Last</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#foreach"><strong><code>TQuery::ForEach</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#any"><strong><code>TQuery::Any</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#all"><strong><code>TQuery::All</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#comparedby"><strong><code>TQuery::ComparedBy</code></strong></a></li>
 </ul>
 </li>
 <li>
@@ -1138,10 +1138,10 @@ all yielded values into commonly used collections such as <code>TArray</code>, <
 <pre><code class="language-cpp">const TArray&lt;int&gt; Result = IterRange(0, 10).CollectArray();
 </code></pre>
 <ul>
-<li><a href="book/architecture//reference/structs/TQuery.html#collectarray"><strong><code>TQuery::CollectArray</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#collectintoarray"><strong><code>TQuery::CollectIntoArray</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#collectset"><strong><code>TQuery::CollectSet</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#collectintoset"><strong><code>TQuery::CollectIntoSet</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#collectarray"><strong><code>TQuery::CollectArray</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#collectintoarray"><strong><code>TQuery::CollectIntoArray</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#collectset"><strong><code>TQuery::CollectSet</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#collectintoset"><strong><code>TQuery::CollectIntoSet</code></strong></a></li>
 <li><code>IterCollectMap</code></li>
 <li><code>IterCollectIntoMap</code></li>
 </ul>
@@ -1159,17 +1159,17 @@ const TArray&lt;int&gt; Result =
 		.CollectArray();
 </code></pre>
 <ul>
-<li><a href="book/architecture//reference/structs/TQuery.html#adapt"><strong><code>TQuery::Adapt</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#chain"><strong><code>TQuery::Chain</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#enumerate"><strong><code>TQuery::Enumerate</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#filter"><strong><code>TQuery::Filter</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#filtermap"><strong><code>TQuery::FilterMap</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#flatten"><strong><code>TQuery::Flatten</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#inspect"><strong><code>TQuery::Inspect</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#map"><strong><code>TQuery::Map</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#skip"><strong><code>TQuery::Skip</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#take"><strong><code>TQuery::Take</code></strong></a></li>
-<li><a href="book/architecture//reference/structs/TQuery.html#zip"><strong><code>TQuery::Zip</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#adapt"><strong><code>TQuery::Adapt</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#chain"><strong><code>TQuery::Chain</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#enumerate"><strong><code>TQuery::Enumerate</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#filter"><strong><code>TQuery::Filter</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#filtermap"><strong><code>TQuery::FilterMap</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#flatten"><strong><code>TQuery::Flatten</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#inspect"><strong><code>TQuery::Inspect</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#map"><strong><code>TQuery::Map</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#skip"><strong><code>TQuery::Skip</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#take"><strong><code>TQuery::Take</code></strong></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#zip"><strong><code>TQuery::Zip</code></strong></a></li>
 </ul>
 </li>
 </ul>
@@ -1257,7 +1257,7 @@ iterators that wraps other iterators can identify value type of previous one in 
 <p><code>Next</code> method</p>
 <p>Every iterator should implement <code>TOptional&lt;Item&gt; Next()</code> method. This method does the actual
 job of yielding a value.</p>
-<p>See <a href="book/architecture//reference/structs/TQuery.html#next"><strong><code>TQuery::Next</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#next"><strong><code>TQuery::Next</code></strong></a>.</p>
 </li>
 <li>
 <p><code>SizeHint</code> method.</p>
@@ -1266,7 +1266,7 @@ where yielded data will be stored. This at most removes reallocations when addin
 value into that collection, and at least reduces it to some reasonable number.</p>
 <p>Finite iterators will give lower bounds and upper bounds set, infinite iterators will give
 only lower bounds.</p>
-<p>See <a href="book/architecture//reference/structs/TQuery.html#sizehint"><strong><code>TQuery::SizeHint</code></strong></a>, <a href="book/architecture//reference/structs/IterSizeHint.html"><strong><code>IterSizeHint</code></strong></a>.</p>
+<p>See <a href="book/architecture//reference/structs/TQuery.html#sizehint"><strong><code>TQuery::SizeHint</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/IterSizeHint.md"><strong><code>IterSizeHint</code></strong></a>.</p>
 </li>
 <li>
 <p><code>ITER_IMPL</code> macro</p>
@@ -1301,11 +1301,11 @@ public:
 const TArray&lt;int&gt; Result =
 	IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
 </code></pre>
-<p>They differ from regular iterators in a way that they do not neet type aliases and their <code>Next</code> and
+<p>They differ from regular iterators in a way that they do not need type aliases and their <code>Next</code> and
 <code>SizeHint</code> methods require reference to previous stage iterator so they both consume and process its
 yielded values.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="channels"><a class="header" href="#channels">Channels</a></h1>
 <h1 id="table-of-contents-7"><a class="header" href="#table-of-contents-7">Table of contents</a></h1>
 <ul>
@@ -1313,9 +1313,9 @@ yielded values.</p>
 <li><a href="book/architecture/channels.html#problems-that-it-solves">Problems that it solves</a></li>
 </ul>
 <h1 id="explanation-6"><a class="header" href="#explanation-6">Explanation</a></h1>
-<p>See <a href="book/architecture//reference/structs/TSenderChannel.html"><strong><code>TSenderChannel</code></strong></a>, <a href="book/architecture//reference/structs/TReceiverChannel.html"><strong><code>TReceiverChannel</code></strong></a>.</p>
+<p>See <a href="book/architecture//reference/structs/TSenderChannel.html"><strong><code>TSenderChannel</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TReceiverChannel.md"><strong><code>TReceiverChannel</code></strong></a>.</p>
 <p>Shared channels are Single-Produce, Multiple-Consumer events that instead
-being executed ad the time of sending message (pushing), they are executed
+being executed at the time of sending message (pushing), they are executed
 at the time of receiving, which is an on-demand operation - user decides
 when to read messages received in event.</p>
 <pre><code class="language-cpp">	auto Sender = TSenderChannel&lt;int&gt;();
@@ -1344,7 +1344,7 @@ stored, but not yet executed</strong>.</p>
 sequence of next messages in queue and do something useful with them.
 That's all, simple isn't it?</p>
 <h1 id="problems-that-it-solves-4"><a class="header" href="#problems-that-it-solves-4">Problems that it solves</a></h1>
-<p>There is only one but big problem that it solves - makind more
+<p>There is only one but big problem that it solves - making more
 deterministic and ordered data flow between parts of game logic. That way
 we avoid situations where objects communicating with each other are
 dependend on proper order of messages being sent and received but we can't
@@ -1355,83 +1355,83 @@ simply just situations where some data gets passed too early and
 invalidates dependent object state causing unnecessary state recalculations
 later by other objects trying to get some data out of it.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="learning-materials"><a class="header" href="#learning-materials">Learning materials</a></h1>
 <h1 id="pages-2"><a class="header" href="#pages-2">Pages</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tutorial"><a class="header" href="#tutorial">Tutorial</a></h1>
 <h1 id="pages-3"><a class="header" href="#pages-3">Pages</a></h1>
 <ul>
-<li><a href="book/learning_materials/tutorial/installation.html">Installation</a></li>
-<li><a href="book/learning_materials/tutorial/setup_game.html">Setup game</a></li>
-<li><a href="book/learning_materials/tutorial/setup_actors.html">Setup actors</a></li>
-<li><a href="book/learning_materials/tutorial/spawn_system.html">Spawn system</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/learning_materials/tutorial/installation.md">Installation</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/learning_materials/tutorial/setup_game.md">Setup game</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/learning_materials/tutorial/setup_actors.md">Setup actors</a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/learning_materials/tutorial/spawn_system.md">Spawn system</a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="setup-game"><a class="header" href="#setup-game">Setup game</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="setup-actors"><a class="header" href="#setup-actors">Setup actors</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="spawn-system"><a class="header" href="#spawn-system">Spawn system</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="c-api-reference"><a class="header" href="#c-api-reference">C++ API Reference</a></h1>
 <h2 id="structs"><a class="header" href="#structs">Structs</a></h2>
 <ul>
-<li><a href="reference/structs/FActorsIter.html"><code>FActorsIter</code></a></li>
-<li><a href="reference/structs/FArchetypeSignature.html"><code>FArchetypeSignature</code></a></li>
-<li><a href="reference/structs/FInstallSystemOptions.html"><code>FInstallSystemOptions</code></a></li>
-<li><a href="reference/structs/FMetronome.html"><code>FMetronome</code></a></li>
-<li><a href="reference/structs/IterSizeHint.html"><code>IterSizeHint</code></a></li>
-<li><a href="reference/structs/TQuery.html"><code>TQuery</code></a></li>
-<li><a href="reference/structs/TReceiverChannel.html"><code>TReceiverChannel</code></a></li>
-<li><a href="reference/structs/TSenderChannel.html"><code>TSenderChannel</code></a></li>
-<li><a href="reference/structs/TTaggedQuery.html"><code>TTaggedQuery</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.md"><code>FActorsIter</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><code>FArchetypeSignature</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><code>FInstallSystemOptions</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FMetronome.md"><code>FMetronome</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/IterSizeHint.md"><code>IterSizeHint</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><code>TQuery</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TReceiverChannel.md"><code>TReceiverChannel</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TSenderChannel.md"><code>TSenderChannel</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.md"><code>TTaggedQuery</code></a></li>
 </ul>
 <h2 id="classes"><a class="header" href="#classes">Classes</a></h2>
 <ul>
-<li><a href="reference/classes/UDynamicQuery.html"><code>UDynamicQuery</code></a></li>
-<li><a href="reference/classes/ULambdaSystem.html"><code>ULambdaSystem</code></a></li>
-<li><a href="reference/classes/UScriptableSystem.html"><code>UScriptableSystem</code></a></li>
-<li><a href="reference/classes/USystem.html"><code>USystem</code></a></li>
-<li><a href="reference/classes/USystemsActorComponent.html"><code>USystemsActorComponent</code></a></li>
-<li><a href="reference/classes/USystemsSceneComponent.html"><code>USystemsSceneComponent</code></a></li>
-<li><a href="reference/classes/USystemsStatics.html"><code>USystemsStatics</code></a></li>
-<li><a href="reference/classes/USystemsSubsystem.html"><code>USystemsSubsystem</code></a></li>
-<li><a href="reference/classes/USystemsWorld.html"><code>USystemsWorld</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.md"><code>UDynamicQuery</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/ULambdaSystem.md"><code>ULambdaSystem</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/UScriptableSystem.md"><code>UScriptableSystem</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><code>USystem</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.md"><code>USystemsActorComponent</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSceneComponent.md"><code>USystemsSceneComponent</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsStatics.md"><code>USystemsStatics</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md"><code>USystemsSubsystem</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md"><code>USystemsWorld</code></a></li>
 </ul>
 <h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
 <ul>
-<li><a href="reference/functions/IterGenerate.html"><code>IterGenerate</code></a></li>
-<li><a href="reference/functions/IterOnce.html"><code>IterOnce</code></a></li>
-<li><a href="reference/functions/IterRange.html"><code>IterRange</code></a></li>
-<li><a href="reference/functions/IterRepeat.html"><code>IterRepeat</code></a></li>
-<li><a href="reference/functions/IterStd.html"><code>IterStd</code></a></li>
-<li><a href="reference/functions/IterStdConst.html"><code>IterStdConst</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/functions/IterGenerate.md"><code>IterGenerate</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/functions/IterOnce.md"><code>IterOnce</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/functions/IterRange.md"><code>IterRange</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/functions/IterRepeat.md"><code>IterRepeat</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/functions/IterStd.md"><code>IterStd</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/functions/IterStdConst.md"><code>IterStdConst</code></a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="structs-1"><a class="header" href="#structs-1">Structs</a></h1>
 <ul>
-<li><a href="reference/reference/structs/FActorsIter.html"><code>FActorsIter</code></a></li>
-<li><a href="reference/reference/structs/FArchetypeSignature.html"><code>FArchetypeSignature</code></a></li>
-<li><a href="reference/reference/structs/FInstallSystemOptions.html"><code>FInstallSystemOptions</code></a></li>
-<li><a href="reference/reference/structs/FMetronome.html"><code>FMetronome</code></a></li>
-<li><a href="reference/reference/structs/IterSizeHint.html"><code>IterSizeHint</code></a></li>
-<li><a href="reference/reference/structs/TQuery.html"><code>TQuery</code></a></li>
-<li><a href="reference/reference/structs/TReceiverChannel.html"><code>TReceiverChannel</code></a></li>
-<li><a href="reference/reference/structs/TSenderChannel.html"><code>TSenderChannel</code></a></li>
-<li><a href="reference/reference/structs/TTaggedQuery.html"><code>TTaggedQuery</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/structs/FActorsIter.md"><code>FActorsIter</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/structs/FArchetypeSignature.md"><code>FArchetypeSignature</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/structs/FInstallSystemOptions.md"><code>FInstallSystemOptions</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/structs/FMetronome.md"><code>FMetronome</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/structs/IterSizeHint.md"><code>IterSizeHint</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/structs/TQuery.md"><code>TQuery</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/structs/TReceiverChannel.md"><code>TReceiverChannel</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/structs/TSenderChannel.md"><code>TSenderChannel</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/structs/TTaggedQuery.md"><code>TTaggedQuery</code></a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-factorsiter"><a class="header" href="#struct-factorsiter"><strong>Struct: <code>FActorsIter</code></strong></a></h1>
 <pre><code class="language-cpp">struct SYSTEMS_API FActorsIter;
 </code></pre>
@@ -1443,7 +1443,7 @@ later by other objects trying to get some data out of it.</p>
 </ul>
 <hr />
 <p>Query iterator over systems world actors.</p>
-<p>See <a href="reference/structs//reference/classes/USystemsWorld.html#actors"><strong><code>USystemsWorld::Actors</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#actors"><strong><code>USystemsWorld::Actors</code></strong></a>.</p>
 <hr />
 <h1 id="methods"><a class="header" href="#methods"><strong>Methods</strong></a></h1>
 <ul>
@@ -1699,7 +1699,7 @@ FActorsIter(
 <details>
 <hr />
 <p>Constructs query from systems.</p>
-<p>An equivalent of calling <a href="reference/structs//reference/classes/USystemsWorld.html#actors"><strong><code>USystemsWorld::Actors</code></strong></a></p>
+<p>An equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#actors"><strong><code>USystemsWorld::Actors</code></strong></a></p>
 <hr />
 <h1 id="arguments-5"><a class="header" href="#arguments-5"><strong>Arguments</strong></a></h1>
 <ul>
@@ -1877,7 +1877,7 @@ TOptional&lt;Item&gt; First();
 <details>
 <hr />
 <p>Returns first item in the iterator.</p>
-<p>This is an equivalent of calling <a href="reference/structs//reference/structs/FActorsIter.html#next"><strong><code>FActorsIter::Next</code></strong></a>.</p>
+<p>This is an equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.md#next"><strong><code>FActorsIter::Next</code></strong></a>.</p>
 <h1 id="example-12"><a class="header" href="#example-12">Example</a></h1>
 <pre><code class="language-cpp">// 5
 const int Result = IterRange(5, 10).First();
@@ -1927,8 +1927,8 @@ Item Fold(
 <p>Folding basically means going through all iterator items and collapsing them
 into single value. Example of folding can be sum/accumulation, or min/max,
 or anything like that - although for ones mentioned there are existing
-optimized iterator consumers: <a href="reference/structs//reference/structs/FActorsIter.html#sum"><strong><code>FActorsIter::Sum</code></strong></a> and
-<a href="reference/structs//reference/structs/FActorsIter.html#comparedby"><strong><code>FActorsIter::ComparedBy</code></strong></a>.</p>
+optimized iterator consumers: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.md#sum"><strong><code>FActorsIter::Sum</code></strong></a> and
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FActorsIter.md#comparedby"><strong><code>FActorsIter::ComparedBy</code></strong></a>.</p>
 <h1 id="note-12"><a class="header" href="#note-12">Note</a></h1>
 <blockquote>
 <p><code>RESULT</code> is the returned type, same as <code>Start</code> argument used as initial
@@ -2109,7 +2109,7 @@ TOptional&lt;Item&gt; Next();
 <details>
 <hr />
 <p>Yields pointers to next actor.</p>
-<p>See <a href="reference/structs//reference/structs/TQuery.html#next"><strong><code>TQuery::Next</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#next"><strong><code>TQuery::Next</code></strong></a>.</p>
 </details>
 </li>
 <li>
@@ -2146,7 +2146,7 @@ IterSizeHint SizeHint() const;
 <hr />
 <p>Gets hint about minimum and optional maximum items count this iterator
 can yield.</p>
-<p>See <a href="reference/structs//reference/structs/TQuery.html#sizehint"><strong><code>TQuery::SizeHint</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#sizehint"><strong><code>TQuery::SizeHint</code></strong></a>.</p>
 </details>
 </li>
 <li>
@@ -2257,7 +2257,7 @@ const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-farchetypesignature"><a class="header" href="#struct-farchetypesignature"><strong>Struct: <code>FArchetypeSignature</code></strong></a></h1>
 <pre><code class="language-cpp">struct SYSTEMS_API FArchetypeSignature;
 </code></pre>
@@ -2267,7 +2267,7 @@ const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 <p>Signature of actor components set.</p>
 <p>More in depth about archetype signatures in <a href="reference/structs//book/architecture/world.html">this architecture book
 section</a>.</p>
-<p>Signatures are used internally by <a href="reference/structs//reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a> to allow
+<p>Signatures are used internally by <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md"><strong><code>USystemsWorld</code></strong></a> to allow
 identification of to which buckets (archetypes) given set of components
 belongs to - that allows for querying iterators over only these actor
 components that contain all requested components and omiting ones that
@@ -2318,7 +2318,7 @@ bool ContainsAll(
 <hr />
 <p>Checks if this signature fully contain component set of another
 signature.</p>
-<p>Used by <a href="reference/structs//reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> to filter archetypes that are
+<p>Used by <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a> to filter archetypes that are
 valid for iteration.</p>
 <hr />
 <h1 id="arguments-18"><a class="header" href="#arguments-18"><strong>Arguments</strong></a></h1>
@@ -2587,7 +2587,7 @@ signatures.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-finstallsystemoptions"><a class="header" href="#struct-finstallsystemoptions"><strong>Struct: <code>FInstallSystemOptions</code></strong></a></h1>
 <pre><code class="language-cpp">struct SYSTEMS_API FInstallSystemOptions;
 </code></pre>
@@ -2600,12 +2600,12 @@ signatures.</p>
 <hr />
 <p>Set of options for installation of this system.</p>
 <p>It uses builder pattern to simplify setting options.</p>
-<p>Note that both <a href="reference/structs//reference/structs/FInstallSystemOptions.html#runbefore"><strong><code>FInstallSystemOptions::RunBefore</code></strong></a> and
-<a href="reference/structs//reference/structs/FInstallSystemOptions.html#runafter"><strong><code>FInstallSystemOptions::RunAfter</code></strong></a> methods are accumulative, which
+<p>Note that both <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md#runbefore"><strong><code>FInstallSystemOptions::RunBefore</code></strong></a> and
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md#runafter"><strong><code>FInstallSystemOptions::RunAfter</code></strong></a> methods are accumulative, which
 means you can specify with them multiple systems required to run before
 and/or after this one.</p>
-<p>See <a href="reference/structs//reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a>, <a href="reference/structs//reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a>,
-<a href="reference/structs//reference/classes/USystemsWorld.html#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a></p>
+<p>See <a href="reference/structs//reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a>,
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a></p>
 <h1 id="example-25"><a class="header" href="#example-25">Example</a></h1>
 <pre><code class="language-cpp">Systems-&gt;InstallLambdaSystem(BoidsFaceDirectionSystem,
 	FInstallSystemOptions(&quot;BoidsFaceDirection&quot;)
@@ -2701,7 +2701,7 @@ FInstallSystemOptions RunBefore(
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-fmetronome"><a class="header" href="#struct-fmetronome"><strong>Struct: <code>FMetronome</code></strong></a></h1>
 <pre><code class="language-cpp">struct SYSTEMS_API FMetronome;
 </code></pre>
@@ -2785,7 +2785,7 @@ bool ConsumeTicked();
 </code></pre>
 <details>
 <hr />
-<p>Chechs if metronome ticked and consumes <a href="reference/structs//reference/structs/FMetronome.html#bticked"><strong><code>FMetronome::bTicked</code></strong></a>
+<p>Chechs if metronome ticked and consumes <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FMetronome.md#bticked"><strong><code>FMetronome::bTicked</code></strong></a>
 (sets it to <code>false</code>).</p>
 </details>
 </li>
@@ -2798,7 +2798,7 @@ void Progress(
 </code></pre>
 <details>
 <hr />
-<p>Performs <a href="reference/structs//reference/structs/FMetronome.html#accumulator"><strong><code>FMetronome::Accumulator</code></strong></a> accumulation by
+<p>Performs <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FMetronome.md#accumulator"><strong><code>FMetronome::Accumulator</code></strong></a> accumulation by
 <code>DeltaTime</code> value.</p>
 <hr />
 <h1 id="arguments-32"><a class="header" href="#arguments-32"><strong>Arguments</strong></a></h1>
@@ -2818,20 +2818,20 @@ void Randomize();
 </code></pre>
 <details>
 <hr />
-<p>Tries to uniformly randomize <a href="reference/structs//reference/structs/FMetronome.html#accumulator"><strong><code>FMetronome::Accumulator</code></strong></a> value
-in range from 0 to <a href="reference/structs//reference/structs/FMetronome.html#limit"><strong><code>FMetronome::Limit</code></strong></a>.</p>
+<p>Tries to uniformly randomize <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FMetronome.md#accumulator"><strong><code>FMetronome::Accumulator</code></strong></a> value
+in range from 0 to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FMetronome.md#limit"><strong><code>FMetronome::Limit</code></strong></a>.</p>
 </details>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-itersizehint"><a class="header" href="#struct-itersizehint"><strong>Struct: <code>IterSizeHint</code></strong></a></h1>
 <pre><code class="language-cpp">struct IterSizeHint;
 </code></pre>
 <hr />
 <p>Hint about minimum and optionally maximum number of items iterator can
 yield.</p>
-<p>See <a href="reference/structs//reference/structs/TQuery.html#sizehint"><strong><code>TQuery::SizeHint</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#sizehint"><strong><code>TQuery::SizeHint</code></strong></a>.</p>
 <h1 id="example-30"><a class="header" href="#example-30">Example</a></h1>
 <pre><code class="language-cpp">template &lt;typename I&gt;
 void IterCollectIntoArray(I&amp;&amp; Iterator, TArray&lt;typename I::Item&gt;&amp; Result)
@@ -2867,7 +2867,7 @@ uint32 Minimum;
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-tquery"><a class="header" href="#struct-tquery"><strong>Struct: <code>TQuery</code></strong></a></h1>
 <pre><code class="language-cpp">template &lt;class... T&gt;
 struct TQuery;
@@ -2880,7 +2880,7 @@ types signature.</p>
 page</a>.</p>
 <h1 id="note-17"><a class="header" href="#note-17">Note</a></h1>
 <blockquote>
-<p>User should rather construct queries with <a href="reference/structs//reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a>
+<p>User should rather construct queries with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a>
 instead o constructing queries by hand.</p>
 </blockquote>
 <blockquote>
@@ -3392,7 +3392,7 @@ TOptional&lt;Item&gt; First();
 <details>
 <hr />
 <p>Returns first item in the iterator.</p>
-<p>This is an equivalent of calling <a href="reference/structs//reference/structs/TQuery.html#next"><strong><code>TQuery::Next</code></strong></a>.</p>
+<p>This is an equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#next"><strong><code>TQuery::Next</code></strong></a>.</p>
 <h1 id="example-48"><a class="header" href="#example-48">Example</a></h1>
 <pre><code class="language-cpp">// 5
 const int Result = IterRange(5, 10).First();
@@ -3442,8 +3442,8 @@ Item Fold(
 <p>Folding basically means going through all iterator items and collapsing them
 into single value. Example of folding can be sum/accumulation, or min/max,
 or anything like that - although for ones mentioned there are existing
-optimized iterator consumers: <a href="reference/structs//reference/structs/TQuery.html#sum"><strong><code>TQuery::Sum</code></strong></a> and
-<a href="reference/structs//reference/structs/TQuery.html#comparedby"><strong><code>TQuery::ComparedBy</code></strong></a>.</p>
+optimized iterator consumers: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#sum"><strong><code>TQuery::Sum</code></strong></a> and
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#comparedby"><strong><code>TQuery::ComparedBy</code></strong></a>.</p>
 <h1 id="note-30"><a class="header" href="#note-30">Note</a></h1>
 <blockquote>
 <p><code>RESULT</code> is the returned type, same as <code>Start</code> argument used as initial
@@ -3681,7 +3681,7 @@ can yield.</p>
 implement their own iterators, or iterator consumers, or just wants to
 preallocate some memory for later consumed iterator items, this method
 is really useful for these usecases.</p>
-<p>See <a href="reference/structs//reference/structs/IterSizeHint.html"><strong><code>IterSizeHint</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/IterSizeHint.md"><strong><code>IterSizeHint</code></strong></a>.</p>
 <h1 id="example-57"><a class="header" href="#example-57">Example</a></h1>
 <pre><code class="language-cpp">template &lt;typename I&gt;
 void IterCollectIntoArray(I&amp;&amp; Iterator, TArray&lt;typename I::Item&gt;&amp; Result)
@@ -3740,7 +3740,7 @@ Item Sum(
 <blockquote>
 <p>Make sure that type of iterator values actually implement <code>operator+</code>!
 Also since iterator can work on non-numerical types, user has to provide
-initial value, tha makes it work like <a href="reference/structs//reference/structs/TQuery.html#fold"><strong><code>TQuery::Fold</code></strong></a>.</p>
+initial value, tha makes it work like <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md#fold"><strong><code>TQuery::Fold</code></strong></a>.</p>
 </blockquote>
 <h1 id="example-59"><a class="header" href="#example-59">Example</a></h1>
 <pre><code class="language-cpp">// 45
@@ -3772,7 +3772,7 @@ TQuery(
 <details>
 <hr />
 <p>Constructs query from systems.</p>
-<p>An equivalent of calling <a href="reference/structs//reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a></p>
+<p>An equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a></p>
 <hr />
 <h1 id="arguments-51"><a class="header" href="#arguments-51"><strong>Arguments</strong></a></h1>
 <ul>
@@ -3866,14 +3866,14 @@ const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-treceiverchannel"><a class="header" href="#struct-treceiverchannel"><strong>Struct: <code>TReceiverChannel</code></strong></a></h1>
 <pre><code class="language-cpp">template &lt;typename T&gt;
 struct TReceiverChannel;
 </code></pre>
 <hr />
 <p>SPMC (single-prodicer, multiple-consumer) receiver channel.</p>
-<p>See <a href="reference/structs//reference/structs/TSenderChannel.html"><strong><code>TSenderChannel</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TSenderChannel.md"><strong><code>TSenderChannel</code></strong></a>.</p>
 <h1 id="example-63"><a class="header" href="#example-63">Example</a></h1>
 <pre><code class="language-cpp">	auto Sender = TSenderChannel&lt;int&gt;();
 	auto Receiver = Sender.Receiver(1);
@@ -3947,7 +3947,7 @@ on demand, useful in more advanced scenarios.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-tsenderchannel"><a class="header" href="#struct-tsenderchannel"><strong>Struct: <code>TSenderChannel</code></strong></a></h1>
 <pre><code class="language-cpp">template &lt;typename T&gt;
 struct TSenderChannel;
@@ -4048,20 +4048,20 @@ void Send(
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-ttaggedquery"><a class="header" href="#struct-ttaggedquery"><strong>Struct: <code>TTaggedQuery</code></strong></a></h1>
 <pre><code class="language-cpp">template &lt;class... T&gt;
 struct TTaggedQuery;
 </code></pre>
 <hr />
 <p>Systems world tagged query iterator.</p>
-<p>This is basically an extension to <a href="reference/structs//reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a> that allows to ensure
+<p>This is basically an extension to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a> that allows to ensure
 additional components without the need for reading them - useful for tag
 components (ones that just mark actors and do not store any data).</p>
 <h1 id="note-36"><a class="header" href="#note-36">Note</a></h1>
 <blockquote>
 <p>User should rather construct queries with
-<a href="reference/structs//reference/classes/USystemsWorld.html#taggedquery"><strong><code>USystemsWorld::TaggedQuery</code></strong></a> instead o constructing queries by
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#taggedquery"><strong><code>USystemsWorld::TaggedQuery</code></strong></a> instead o constructing queries by
 hand.</p>
 </blockquote>
 <h1 id="example-66"><a class="header" href="#example-66">Example</a></h1>
@@ -4077,7 +4077,7 @@ TQuery&lt;T...&gt; Iter() const;
 </code></pre>
 <details>
 <hr />
-<p>Constructs <a href="reference/structs//reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a> from requested actor components and tag
+<p>Constructs <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a> from requested actor components and tag
 components.</p>
 </details>
 </li>
@@ -4091,7 +4091,7 @@ TTaggedQuery(
 <details>
 <hr />
 <p>Constructs tagged query from systems.</p>
-<p>An equivalent of calling <a href="reference/structs//reference/classes/USystemsWorld.html#taggedquery"><strong><code>USystemsWorld::TaggedQuery</code></strong></a></p>
+<p>An equivalent of calling <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#taggedquery"><strong><code>USystemsWorld::TaggedQuery</code></strong></a></p>
 <hr />
 <h1 id="arguments-56"><a class="header" href="#arguments-56"><strong>Arguments</strong></a></h1>
 <ul>
@@ -4113,7 +4113,7 @@ void Tag();
 </code></pre>
 <details>
 <hr />
-<p>Handy wrapper for <a href="reference/structs//reference/structs/TTaggedQuery.html#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.md#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>.</p>
 <h1 id="note-37"><a class="header" href="#note-37">Note</a></h1>
 <blockquote>
 <p>Make sure <code>W</code> inherits from <code>UActorComponent</code>.</p>
@@ -4153,7 +4153,7 @@ TTaggedQuery With();
 </code></pre>
 <details>
 <hr />
-<p>Handy wrapper for <a href="reference/structs//reference/structs/TTaggedQuery.html#withraw"><strong><code>TTaggedQuery::WithRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.md#withraw"><strong><code>TTaggedQuery::WithRaw</code></strong></a>.</p>
 <h1 id="note-39"><a class="header" href="#note-39">Note</a></h1>
 <blockquote>
 <p>Make sure <code>W</code> inherits from <code>UActorComponent</code>.</p>
@@ -4170,7 +4170,7 @@ TTaggedQuery WithRaw(
 <details>
 <hr />
 <p>Adds given tag component type to the request.</p>
-<p>This is builder-pattern equivalent of <a href="reference/structs//reference/structs/TTaggedQuery.html#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>
+<p>This is builder-pattern equivalent of <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.md#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>
 that returns new query so you can chain multiple tagging methods
 together.</p>
 <h1 id="note-40"><a class="header" href="#note-40">Note</a></h1>
@@ -4190,21 +4190,21 @@ together.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="classes-1"><a class="header" href="#classes-1">Classes</a></h1>
 <ul>
-<li><a href="reference/reference/classes/UDynamicQuery.html"><code>UDynamicQuery</code></a></li>
-<li><a href="reference/reference/classes/ULambdaSystem.html"><code>ULambdaSystem</code></a></li>
-<li><a href="reference/reference/classes/UScriptableSystem.html"><code>UScriptableSystem</code></a></li>
-<li><a href="reference/reference/classes/USystem.html"><code>USystem</code></a></li>
-<li><a href="reference/reference/classes/USystemsActorComponent.html"><code>USystemsActorComponent</code></a></li>
-<li><a href="reference/reference/classes/USystemsSceneComponent.html"><code>USystemsSceneComponent</code></a></li>
-<li><a href="reference/reference/classes/USystemsStatics.html"><code>USystemsStatics</code></a></li>
-<li><a href="reference/reference/classes/USystemsSubsystem.html"><code>USystemsSubsystem</code></a></li>
-<li><a href="reference/reference/classes/USystemsWorld.html"><code>USystemsWorld</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/classes/UDynamicQuery.md"><code>UDynamicQuery</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/classes/ULambdaSystem.md"><code>ULambdaSystem</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/classes/UScriptableSystem.md"><code>UScriptableSystem</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/classes/USystem.md"><code>USystem</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsActorComponent.md"><code>USystemsActorComponent</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsSceneComponent.md"><code>USystemsSceneComponent</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsStatics.md"><code>USystemsStatics</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsSubsystem.md"><code>USystemsSubsystem</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsWorld.md"><code>USystemsWorld</code></a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-udynamicquery"><a class="header" href="#class-udynamicquery"><strong>Class: <code>UDynamicQuery</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API UDynamicQuery
     : public UObject;
@@ -4227,7 +4227,7 @@ process and being able to quickly test the idea - it makes failing quicker
 than it would without technical game designers getting their hands dirty
 once in a while, which is beneficial to the whole production process in long
 term.</p>
-<p>See <a href="reference/classes//reference/classes/USystemsWorld.html#spawnquery"><strong><code>USystemsWorld::SpawnQuery</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#spawnquery"><strong><code>USystemsWorld::SpawnQuery</code></strong></a>.</p>
 <h1 id="example-67"><a class="header" href="#example-67">Example</a></h1>
 <pre><code class="language-cpp">	UCLASS(BlueprintType)
 	class EXAMPLE_API UShiaQueryBundle
@@ -4306,7 +4306,7 @@ void NextBranched(
 </ul>
 <hr />
 <p>Performs iteration and stores yielded values in provided object.</p>
-<p>Handy wrapper for <a href="reference/classes//reference/classes/UDynamicQuery.html#next"><strong><code>UDynamicQuery::Next</code></strong></a> for use in
+<p>Handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.md#next"><strong><code>UDynamicQuery::Next</code></strong></a> for use in
 blueprints, where iteration can branch to <code>yielded</code> and <code>completed</code>
 execution nodes.</p>
 <hr />
@@ -4358,7 +4358,7 @@ components are gonna be stored.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-ulambdasystem"><a class="header" href="#class-ulambdasystem"><strong>Class: <code>ULambdaSystem</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API ULambdaSystem
     : public USystem;
@@ -4372,7 +4372,7 @@ components are gonna be stored.</p>
 </ul>
 <hr />
 <p>Handy wrapper for state-less systems (functions or lambdas).</p>
-<p>See <a href="reference/classes//reference/classes/USystem.html"><strong><code>USystem</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a></p>
 <h1 id="example-68"><a class="header" href="#example-68">Example</a></h1>
 <pre><code class="language-cpp">UFUNCTION()
 void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems);
@@ -4408,7 +4408,7 @@ void Bind(
 <details>
 <hr />
 <p>Binds given function/lambda that runs some system logic.</p>
-<p>Method called by <a href="reference/classes//reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a></p>
+<p>Method called by <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a></p>
 <hr />
 <h1 id="arguments-62"><a class="header" href="#arguments-62"><strong>Arguments</strong></a></h1>
 <ul>
@@ -4432,7 +4432,7 @@ void Unbind();
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-uscriptablesystem"><a class="header" href="#class-uscriptablesystem"><strong>Class: <code>UScriptableSystem</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API UScriptableSystem
     : public USystem;
@@ -4448,7 +4448,7 @@ void Unbind();
 <p>Variant of system that works with blueprints.</p>
 <p>User can override OnInit method for system initialization, as well as
 OnRun for performing system logic.</p>
-<p>See <a href="reference/classes//reference/classes/USystem.html"><strong><code>USystem</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a></p>
 <hr />
 <h1 id="methods-10"><a class="header" href="#methods-10"><strong>Methods</strong></a></h1>
 <ul>
@@ -4470,7 +4470,7 @@ void OnInit(
 </ul>
 <hr />
 <p>Override to initialize system (setup its internal state).</p>
-<p>See <a href="reference/classes//reference/classes/USystem.html#init"><strong><code>USystem::Init</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md#init"><strong><code>USystem::Init</code></strong></a></p>
 <hr />
 <h1 id="arguments-63"><a class="header" href="#arguments-63"><strong>Arguments</strong></a></h1>
 <ul>
@@ -4501,7 +4501,7 @@ void OnRun(
 <hr />
 <p>Override to run system work logic (perform queries on world components
 and resources).</p>
-<p>See <a href="reference/classes//reference/classes/USystem.html#run"><strong><code>USystem::Run</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md#run"><strong><code>USystem::Run</code></strong></a></p>
 <hr />
 <h1 id="arguments-64"><a class="header" href="#arguments-64"><strong>Arguments</strong></a></h1>
 <ul>
@@ -4515,7 +4515,7 @@ and resources).</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystem"><a class="header" href="#class-usystem"><strong>Class: <code>USystem</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystem
     : public UObject;
@@ -4528,7 +4528,7 @@ and resources).</p>
 </ul>
 <hr />
 <p>Base class for unit of work over some data.</p>
-<p><a href="reference/classes//book/architecture/systems.html">Architecture book page</a> explains more in
+<p><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/systems.md">Architecture book page</a> explains more in
 depth systems.</p>
 <p>System's job is to process data. Usually it involves performing queries
 over game world and/or resources.</p>
@@ -4586,7 +4586,7 @@ virtual void Init(
 <details>
 <hr />
 <p>Override to initialize system (setup its internal state).</p>
-<p>This method is called by <a href="reference/classes//reference/classes/USystemsWorld.html#sealandinitialize"><strong><code>USystemsWorld::SealAndInitialize</code></strong></a>,
+<p>This method is called by <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#sealandinitialize"><strong><code>USystemsWorld::SealAndInitialize</code></strong></a>,
 right after systems world is setup and sealed by the user.</p>
 <p>Here user can perform initialization of this system internal state, or
 do something useful with systems world (for example initialize some
@@ -4639,7 +4639,7 @@ virtual void Run(
 <hr />
 <p>Override to run system work logic (perform queries on world components
 and resources).</p>
-<p>This method is called by <a href="reference/classes//reference/classes/USystemsWorld.html#process"><strong><code>USystemsWorld::Process</code></strong></a>.</p>
+<p>This method is called by <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#process"><strong><code>USystemsWorld::Process</code></strong></a>.</p>
 <p>Here user can perform system logic, usually performs single task such as
 apply velocity accumulated by other systems on actor location, or
 perform actors AI tasks, or kill actors that has 0 or less health -
@@ -4695,7 +4695,7 @@ void UBoidsMovementSystem::Run(USystemsWorld&amp; Systems)
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemsactorcomponent"><a class="header" href="#class-usystemsactorcomponent"><strong>Class: <code>USystemsActorComponent</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsActorComponent
     : public UActorComponent;
@@ -4714,12 +4714,12 @@ void UBoidsMovementSystem::Run(USystemsWorld&amp; Systems)
 </ul>
 <hr />
 <p>Base class for systems actor components.</p>
-<p><a href="reference/classes//book/architecture/components.html">Architecture book page</a> explains more in
+<p><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/components.md">Architecture book page</a> explains more in
 depth actor components relation with systems world but in a brief: they are
 data stored in game world actors. You should inherit from this class any new
 component class that should get automatically registered to and unregistered
-from globally accessible systems worlds in <a href="reference/classes//reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>
-and then can be queried using <a href="reference/classes//reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a>. You can of
+from globally accessible systems worlds in <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md"><strong><code>USystemsSubsystem</code></strong></a>
+and then can be queried using <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a>. You can of
 course not inherit components from this class and manually register or
 unregister this component at will to any systems world if you want to make
 it available from custom or just non-globally accessible systems world, this
@@ -4799,7 +4799,7 @@ internal <code>bRegister</code> gets set to true in editor.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemsscenecomponent"><a class="header" href="#class-usystemsscenecomponent"><strong>Class: <code>USystemsSceneComponent</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsSceneComponent
     : public USceneComponent;
@@ -4818,7 +4818,7 @@ internal <code>bRegister</code> gets set to true in editor.</p>
 </ul>
 <hr />
 <p>Base class for systems scene components.</p>
-<p>This is scene component equivalent to <a href="reference/classes//reference/classes/USystemsActorComponent.html"><strong><code>USystemsActorComponent</code></strong></a> -
+<p>This is scene component equivalent to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.md"><strong><code>USystemsActorComponent</code></strong></a> -
 scene componets are useful where given component should have transformation
 relative to actor.</p>
 <hr />
@@ -4896,7 +4896,7 @@ internal <code>bRegister</code> gets set to true in editor.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemsstatics"><a class="header" href="#class-usystemsstatics"><strong>Class: <code>USystemsStatics</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsStatics
     : public UBlueprintFunctionLibrary;
@@ -5062,7 +5062,7 @@ static UObject* GetResourceRaw(
 <hr />
 <p>Gets resource from globally registered systems world by its label.</p>
 <p>This is a handy shortcut for <strong><code>Self::GetSystemsWorld</code></strong> and then
-<a href="reference/classes//reference/classes/USystemsWorld.html#getresourceraw"><strong><code>USystemsWorld::GetResourceRaw</code></strong></a> on it.</p>
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#getresourceraw"><strong><code>USystemsWorld::GetResourceRaw</code></strong></a> on it.</p>
 <hr />
 <h1 id="arguments-72"><a class="header" href="#arguments-72"><strong>Arguments</strong></a></h1>
 <ul>
@@ -5176,7 +5176,7 @@ components to make them auto removed from global systems worlds on
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemssubsystem"><a class="header" href="#class-usystemssubsystem"><strong>Class: <code>USystemsSubsystem</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsSubsystem
     : public UGameInstanceSubsystem;
@@ -5185,7 +5185,7 @@ components to make them auto removed from global systems worlds on
 <p><strong><em>Reflection-enabled</em></strong></p>
 <hr />
 <p>Global accessible registry of systems worlds.</p>
-<p><a href="reference/classes//book/architecture/subsystem.html">Architecture book page</a> explains more in
+<p><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/subsystem.md">Architecture book page</a> explains more in
 depth how to interact with systems subsystem, but in a brief: This is a
 registry of globally accessible systems worlds game can have at any time.</p>
 <h1 id="example-72"><a class="header" href="#example-72">Example</a></h1>
@@ -5507,7 +5507,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemsworld"><a class="header" href="#class-usystemsworld"><strong>Class: <code>USystemsWorld</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsWorld
     : public UObject;
@@ -5521,7 +5521,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 <hr />
 <p>Container that holds systems, resources and registry of components that
 belongs to actors.</p>
-<p><a href="reference/classes//book/architecture/world.html">Architecture book page</a> explains more in depth
+<p><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/book/architecture/world.md">Architecture book page</a> explains more in depth
 what systems world is, but in a brief: systems world is a central point user
 interacts with using queries to resources and actor components. Think of it
 as database - actor components are records and resources are unique
@@ -5538,11 +5538,11 @@ FActorsIter Actors();
 <details>
 <hr />
 <p>Acquires lazy-iterator over all registered actors.</p>
-<p>This works similar to <a href="reference/classes//reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> but it yields
+<p>This works similar to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a> but it yields
 only actors without their components, and <strong>it yields all actors</strong>. This
 method exists only for a last resort use cases - user should have a
 valid reason to query all actors and should always try to solve problem
-with <a href="reference/classes//reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a>.</p>
+with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a>.</p>
 <p>The only use case i can think of is when user needs to for example count
 all registered actors, but there are other usecases which can definitely
 be solved with regular component queries.</p>
@@ -5559,7 +5559,7 @@ be solved with regular component queries.</p>
 </code></pre>
 <p>User should instead for example add <code>UShiaComponent</code> actor component and
 query actors using
-<a href="reference/classes//reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> to iterate only on these actors that
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a> to iterate only on these actors that
 are marked as &quot;Shia&quot; actor using actor component tag:</p>
 <pre><code class="language-cpp">Systems-&gt;Query&lt;UShiaComponent&gt;().ForEach(
 	[](const auto* Actor)
@@ -5611,8 +5611,8 @@ bool AddComponent(
 </ul>
 <hr />
 <p>Add actor component to registry.</p>
-<p>Called in <a href="reference/classes//reference/classes/USystemsActorComponent.html#beginplay"><strong><code>USystemsActorComponent::BeginPlay</code></strong></a> and
-<a href="reference/classes//reference/classes/USystemsSceneComponent.html#beginplay"><strong><code>USystemsSceneComponent::BeginPlay</code></strong></a> methods so user doesn't
+<p>Called in <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.md#beginplay"><strong><code>USystemsActorComponent::BeginPlay</code></strong></a> and
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSceneComponent.md#beginplay"><strong><code>USystemsSceneComponent::BeginPlay</code></strong></a> methods so user doesn't
 have to, but in case of user dynamically removing actor component to
 achieve support for beavior toggling, adding components back to registry
 can be achieved with this method.</p>
@@ -5662,7 +5662,7 @@ T* Component(
 <details>
 <hr />
 <p>Tries to get pointer to registered actor component.</p>
-<p>Handy shortcut for <a href="reference/classes//reference/classes/USystemsWorld.html#componentraw"><strong><code>USystemsWorld::ComponentRaw</code></strong></a></p>
+<p>Handy shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#componentraw"><strong><code>USystemsWorld::ComponentRaw</code></strong></a></p>
 <h1 id="return-1"><a class="header" href="#return-1">Return</a></h1>
 <p>Pointer to component or <code>nullptr</code> in case component does not exist in
 registry.</p>
@@ -5695,9 +5695,9 @@ TOptional&lt;uint32&gt; ComponentIndex(
 <details>
 <hr />
 <p>Get component registry index.</p>
-<p>Useful when working directly with <a href="reference/classes//reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
+<p>Useful when working directly with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a>, but
 user most likely won't have any high-level usecase for that.</p>
-<p>For getting component index by its class use: <a href="reference/classes//reference/classes/USystemsWorld.html#componenttypeindex"><strong><code>USystemsWorld::ComponentTypeIndex</code></strong></a></p>
+<p>For getting component index by its class use: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#componenttypeindex"><strong><code>USystemsWorld::ComponentTypeIndex</code></strong></a></p>
 <hr />
 <h1 id="arguments-83"><a class="header" href="#arguments-83"><strong>Arguments</strong></a></h1>
 <ul>
@@ -5736,11 +5736,11 @@ UActorComponent* ComponentRaw(
 <blockquote>
 <p>Because components are registered after systems run this will always
 return <code>nullptr</code> whe trying to get actor component just after calling
-<a href="reference/classes//reference/classes/USystemsWorld.html#addcomponent"><strong><code>USystemsWorld::AddComponent</code></strong></a></p>
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#addcomponent"><strong><code>USystemsWorld::AddComponent</code></strong></a></p>
 </blockquote>
 <blockquote>
 <p>Also when trying to get actor component just after calling
-<a href="reference/classes//reference/classes/USystemsWorld.html#removecomponent"><strong><code>USystemsWorld::RemoveComponent</code></strong></a> will return given component
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#removecomponent"><strong><code>USystemsWorld::RemoveComponent</code></strong></a> will return given component
 instead o <code>nullptr</code> because components get unregistered after systems
 run.</p>
 </blockquote>
@@ -5778,9 +5778,9 @@ TOptional&lt;uint32&gt; ComponentTypeIndex(
 <details>
 <hr />
 <p>Get component registry index.</p>
-<p>Useful when working directly with <a href="reference/classes//reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
+<p>Useful when working directly with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a>, but
 user most likely won't have any high-level usecase for that.</p>
-<p>For getting component index by component: <a href="reference/classes//reference/classes/USystemsWorld.html#componentindex"><strong><code>USystemsWorld::ComponentIndex</code></strong></a></p>
+<p>For getting component index by component: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#componentindex"><strong><code>USystemsWorld::ComponentIndex</code></strong></a></p>
 <hr />
 <h1 id="arguments-85"><a class="header" href="#arguments-85"><strong>Arguments</strong></a></h1>
 <ul>
@@ -5803,11 +5803,11 @@ TTuple&lt;T*...&gt; Components(
 <details>
 <hr />
 <p>Gets tuple of actor components.</p>
-<p>Handy wrapper for <a href="reference/classes//reference/classes/USystemsWorld.html#component"><strong><code>USystemsWorld::Component</code></strong></a> in case of
+<p>Handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#component"><strong><code>USystemsWorld::Component</code></strong></a> in case of
 asking for more than one actor component.</p>
 <h1 id="note-49"><a class="header" href="#note-49">Note</a></h1>
 <blockquote>
-<p>Works similar way to <a href="reference/classes//reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> but do not put
+<p>Works similar way to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#query"><strong><code>USystemsWorld::Query</code></strong></a> but do not put
 actor in its first tuple element, rather gives exactly the pointers to
 actor components user requests. It's worth noting that in case of
 component not being registered, it returns <code>nullptr</code> in tuple elements
@@ -5833,7 +5833,7 @@ bool ComponentsDidChanged() const;
 <details>
 <hr />
 <p>Tells if components changed during last game tick.</p>
-<p>handy wrapper for <a href="reference/classes//reference/classes/USystemsWorld.html#componentsdidchangedraw"><strong><code>USystemsWorld::ComponentsDidChangedRaw</code></strong></a>.</p>
+<p>handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#componentsdidchangedraw"><strong><code>USystemsWorld::ComponentsDidChangedRaw</code></strong></a>.</p>
 </details>
 </li>
 <li>
@@ -5873,7 +5873,7 @@ FArchetypeSignature ComponentsSignature(
 <details>
 <hr />
 <p>Get archetype signature of given set of components.</p>
-<p>Useful when working directly with <a href="reference/classes//reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
+<p>Useful when working directly with <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a>, but
 user most likely won't have any high-level usecase for that.</p>
 <hr />
 <h1 id="arguments-88"><a class="header" href="#arguments-88"><strong>Arguments</strong></a></h1>
@@ -5895,7 +5895,7 @@ uint32 Count() const;
 <details>
 <hr />
 <p>Counts actors that contain given archetype signature.</p>
-<p>This is ergonomic shortcut for <a href="reference/classes//reference/classes/USystemsWorld.html#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a>.</p>
+<p>This is ergonomic shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a>.</p>
 <h1 id="note-51"><a class="header" href="#note-51">Note</a></h1>
 <blockquote>
 <p><code>T</code> classes should inherit from <strong><code>UActorComponent</code></strong>!</p>
@@ -5932,7 +5932,7 @@ components (although non-ergonomic for sure):</p>
 
 	const auto B = Systems-&gt;Count(Signature);
 </code></pre>
-<p>See <a href="reference/classes//reference/classes/USystemsWorld.html#count"><strong><code>USystemsWorld::Count</code></strong></a> for more ergonomic use.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#count"><strong><code>USystemsWorld::Count</code></strong></a> for more ergonomic use.</p>
 <h1 id="note-52"><a class="header" href="#note-52">Note</a></h1>
 <blockquote>
 <p>For example if requested signature is: <code>&lt;A, B&gt;</code> and there are actors:
@@ -5961,8 +5961,8 @@ UDynamicQuery* DynamicQuery();
 <details>
 <hr />
 <p>Acquires lazy-iterator to dynamically query actor components.</p>
-<p>Handy shortcut for <a href="reference/classes//reference/classes/USystemsWorld.html#spawnquery"><strong><code>USystemsWorld::SpawnQuery</code></strong></a>.</p>
-<p>See <a href="reference/classes//reference/classes/UDynamicQuery.html"><strong><code>UDynamicQuery</code></strong></a></p>
+<p>Handy shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#spawnquery"><strong><code>USystemsWorld::SpawnQuery</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.md"><strong><code>UDynamicQuery</code></strong></a></p>
 </details>
 </li>
 <li>
@@ -5982,7 +5982,7 @@ bool InstallDefaultResource(
 </ul>
 <hr />
 <p>Register resource object.</p>
-<p>See <a href="reference/classes//reference/classes/USystemsWorld.html#installresourceraw"><strong><code>USystemsWorld::InstallResourceRaw</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installresourceraw"><strong><code>USystemsWorld::InstallResourceRaw</code></strong></a></p>
 <h1 id="return-3"><a class="header" href="#return-3">Return</a></h1>
 <p>True if resource was successfully installed (registry is not sealed).</p>
 <h1 id="example-79"><a class="header" href="#example-79">Example</a></h1>
@@ -6018,8 +6018,8 @@ bool InstallDefaultSystem(
 </ul>
 <hr />
 <p>Install system.</p>
-<p>See <a href="reference/classes//reference/classes/USystemsWorld.html#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a>, <a href="reference/classes//reference/classes/USystem.html"><strong><code>USystem</code></strong></a>,
-<a href="reference/classes//reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>See <a href="reference/classes//reference/classes/USystemsWorld.html#installsystemraw"><strong><code>USystemsWorld::InstallSystemRaw</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a>,
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-4"><a class="header" href="#return-4">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-80"><a class="header" href="#example-80">Example</a></h1>
@@ -6058,7 +6058,7 @@ bool InstallLambdaSystem(
 <p>Stateless systems are the most common ones because usually what system
 does it only processes the data, so creating function/lambda systems
 brings more ergonomics into codebase.</p>
-<p>See <a href="reference/classes//reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-5"><a class="header" href="#return-5">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-81"><a class="header" href="#example-81">Example</a></h1>
@@ -6115,7 +6115,7 @@ bool InstallResource();
 <details>
 <hr />
 <p>Register resource object.</p>
-<p>Handy shortcut for <a href="reference/classes//reference/classes/USystemsWorld.html#installdefaultresource"><strong><code>USystemsWorld::InstallDefaultResource</code></strong></a></p>
+<p>Handy shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installdefaultresource"><strong><code>USystemsWorld::InstallDefaultResource</code></strong></a></p>
 <h1 id="return-6"><a class="header" href="#return-6">Return</a></h1>
 <p>True if resource was successfully installed (registry is not sealed).</p>
 <h1 id="example-82"><a class="header" href="#example-82">Example</a></h1>
@@ -6176,11 +6176,11 @@ bool InstallSystem(
 <details>
 <hr />
 <p>Install system.</p>
-<p>Handy shortcut for <a href="reference/classes//reference/classes/USystemsWorld.html#installdefaultsystem"><strong><code>USystemsWorld::InstallDefaultSystem</code></strong></a></p>
-<p>See <a href="reference/classes//reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="reference/classes//reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>Handy shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installdefaultsystem"><strong><code>USystemsWorld::InstallDefaultSystem</code></strong></a></p>
+<p>See <a href="reference/classes//reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="note-54"><a class="header" href="#note-54">Note</a></h1>
 <blockquote>
-<p>Make sure <code>T</code> is a class that inherits from <a href="reference/classes//reference/classes/USystem.html"><strong><code>USystem</code></strong></a>!</p>
+<p>Make sure <code>T</code> is a class that inherits from <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystem.md"><strong><code>USystem</code></strong></a>!</p>
 </blockquote>
 <h1 id="return-8"><a class="header" href="#return-8">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
@@ -6222,9 +6222,9 @@ bool InstallSystemRaw(
 <hr />
 <p>Install system.</p>
 <p>Usually user would want to install systems using either
-<a href="reference/classes//reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="reference/classes//reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
+<a href="reference/classes//reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
 can install system by its instance.</p>
-<p>See <a href="reference/classes//reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="reference/classes//reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
+<p>See <a href="reference/classes//reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.md"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-9"><a class="header" href="#return-9">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-85"><a class="header" href="#example-85">Example</a></h1>
@@ -6335,7 +6335,7 @@ manually mark resources as changed is for optimizations purposes, to
 mark deliberate changes in resources instead of markin them
 automatically, to avoid a lot of boilerplate of that automation, when
 most of the times systems and UI do not require to ask for changes.</p>
-<p>Use <a href="reference/classes//reference/classes/USystemsWorld.html#resourcedidchanged"><strong><code>USystemsWorld::ResourceDidChanged</code></strong></a> to ask if some
+<p>Use <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#resourcedidchanged"><strong><code>USystemsWorld::ResourceDidChanged</code></strong></a> to ask if some
 resource has changed.</p>
 <hr />
 <h1 id="arguments-97"><a class="header" href="#arguments-97"><strong>Arguments</strong></a></h1>
@@ -6372,7 +6372,7 @@ void Process();
 <p>In case of registry not being sealed at the time of calling this method,
 none of steps above are gonna be performed.</p>
 <p>This method is called automatically for global systems world managed by
-<a href="reference/classes//reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>, but in case of user managing systems
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md"><strong><code>USystemsSubsystem</code></strong></a>, but in case of user managing systems
 world on their own, user can do:</p>
 <pre><code class="language-cpp">	auto* Systems =
 		NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
@@ -6403,7 +6403,7 @@ constructed from types provided to query, as well as from types
 registered to systems world that belong to the same actor. Systems
 architecture focuses on performing queries as fast as possible and not
 iterating over actors that do not need to be queried was a priority.</p>
-<p>See <a href="reference/classes//reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a></p>
 <h1 id="note-56"><a class="header" href="#note-56">Note</a></h1>
 <blockquote>
 <p>Returned query iterator has always actor put as first item of item
@@ -6438,7 +6438,7 @@ bool RegisterComponent();
 <details>
 <hr />
 <p>Register component type.</p>
-<p>Templated shortcut for <a href="reference/classes//reference/classes/USystemsWorld.html#registercomponentraw"><strong><code>USystemsWorld::RegisterComponentRaw</code></strong></a></p>
+<p>Templated shortcut for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#registercomponentraw"><strong><code>USystemsWorld::RegisterComponentRaw</code></strong></a></p>
 <p>See <strong><code>UActorComponent</code></strong></p>
 <h1 id="return-10"><a class="header" href="#return-10">Return</a></h1>
 <p>True if component was successfully installed (registry is not sealed and
@@ -6473,7 +6473,7 @@ bool RegisterComponentRaw(
 </ul>
 <hr />
 <p>Register component type.</p>
-<p>Prior to <a href="reference/classes//reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a> being usable for queries and
+<p>Prior to <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.md"><strong><code>FArchetypeSignature</code></strong></a> being usable for queries and
 other architecture parts, it has to be able to identify components and
 for that they has to be registered by their class.</p>
 <p>See <strong><code>UActorComponent</code></strong></p>
@@ -6512,8 +6512,8 @@ bool RemoveComponent(
 </ul>
 <hr />
 <p>Remove actor component from registry.</p>
-<p>Called in <a href="reference/classes//reference/classes/USystemsActorComponent.html#endplay"><strong><code>USystemsActorComponent::EndPlay</code></strong></a> and
-<a href="reference/classes//reference/classes/USystemsSceneComponent.html#endplay"><strong><code>USystemsSceneComponent::EndPlay</code></strong></a> methods so user doesn't have
+<p>Called in <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.md#endplay"><strong><code>USystemsActorComponent::EndPlay</code></strong></a> and
+<a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSceneComponent.md#endplay"><strong><code>USystemsSceneComponent::EndPlay</code></strong></a> methods so user doesn't have
 to, but in case of user dynamically adding actor component to achieve
 support for beavior toggling, removing components from registry can be
 achieved with this method.</p>
@@ -6578,7 +6578,7 @@ bool ResourceDidChanged() const;
 <details>
 <hr />
 <p>Tells if given resource type did changed in last game tick.</p>
-<p>Handy wrapper for <a href="reference/classes//reference/classes/USystemsWorld.html#resourcedidchangedraw"><strong><code>USystemsWorld::ResourceDidChangedRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#resourcedidchangedraw"><strong><code>USystemsWorld::ResourceDidChangedRaw</code></strong></a>.</p>
 </details>
 </li>
 <li>
@@ -6598,7 +6598,7 @@ bool ResourceDidChangedRaw(
 </ul>
 <hr />
 <p>Tells if given resource type did changed in last game tick.</p>
-<p>See <a href="reference/classes//reference/classes/USystemsWorld.html#markresourcechanged"><strong><code>USystemsWorld::MarkResourceChanged</code></strong></a>.</p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.md#markresourcechanged"><strong><code>USystemsWorld::MarkResourceChanged</code></strong></a>.</p>
 <hr />
 <h1 id="arguments-100"><a class="header" href="#arguments-100"><strong>Arguments</strong></a></h1>
 <ul>
@@ -6668,8 +6668,8 @@ void SealAndInitialize();
 </ul>
 <hr />
 <p>Seal registry and initialize installed systems.</p>
-<p>Method called by: <a href="reference/classes//reference/classes/USystemsSubsystem.html#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a>.</p>
-<p>When user doesn't use <a href="reference/classes//reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a> as global systems
+<p>Method called by: <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a>.</p>
+<p>When user doesn't use <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.md"><strong><code>USystemsSubsystem</code></strong></a> as global systems
 world registry, or wants to handle systems world on their own, user
 should call this method after systems world setup (registering
 components, installation of systems and resources) and then call this
@@ -6721,7 +6721,7 @@ are a way to query systems world in blueprints. Also dynamic queries do
 not implement lazy-iterators so they are definitely not an ergonomic way
 to iterate over actor components and should be avoided in favor of
 <strong><code>USystems::Query</code></strong>.</p>
-<p>See <a href="reference/classes//reference/classes/UDynamicQuery.html"><strong><code>UDynamicQuery</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.md"><strong><code>UDynamicQuery</code></strong></a></p>
 <hr />
 <h1 id="arguments-102"><a class="header" href="#arguments-102"><strong>Arguments</strong></a></h1>
 <ul>
@@ -6743,11 +6743,11 @@ TTaggedQuery&lt;T...&gt; TaggedQuery();
 <hr />
 <p>Acquires lazy-iterator to query actor components with additional tag
 components.</p>
-<p>The difference between <a href="reference/classes//reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a> is that tagged queries
+<p>The difference between <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TQuery.md"><strong><code>TQuery</code></strong></a> is that tagged queries
 allows to request existance of additional components on actor, ones that
 are not required for query to access - useful when user do not require
 any data of given components.</p>
-<p>See <a href="reference/classes//reference/structs/TTaggedQuery.html"><strong><code>TTaggedQuery</code></strong></a></p>
+<p>See <a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.md"><strong><code>TTaggedQuery</code></strong></a></p>
 <h1 id="example-93"><a class="header" href="#example-93">Example</a></h1>
 <pre><code class="language-cpp">	Systems.TaggedQuery&lt;UVelocityComponent&gt;()
 		.With&lt;UBoidComponent&gt;()
@@ -6766,18 +6766,18 @@ any data of given components.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="functions-1"><a class="header" href="#functions-1">Functions</a></h1>
 <ul>
-<li><a href="reference/reference/functions/IterGenerate.html"><code>IterGenerate</code></a></li>
-<li><a href="reference/reference/functions/IterOnce.html"><code>IterOnce</code></a></li>
-<li><a href="reference/reference/functions/IterRange.html"><code>IterRange</code></a></li>
-<li><a href="reference/reference/functions/IterRepeat.html"><code>IterRepeat</code></a></li>
-<li><a href="reference/reference/functions/IterStd.html"><code>IterStd</code></a></li>
-<li><a href="reference/reference/functions/IterStdConst.html"><code>IterStdConst</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/functions/IterGenerate.md"><code>IterGenerate</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/functions/IterOnce.md"><code>IterOnce</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/functions/IterRange.md"><code>IterRange</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/functions/IterRepeat.md"><code>IterRepeat</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/functions/IterStd.md"><code>IterStd</code></a></li>
+<li><a href="https://psichix.github.io/Unreal-Systems-Architecture/systems/reference/reference/functions/IterStdConst.md"><code>IterStdConst</code></a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-itergenerate"><a class="header" href="#function-itergenerate"><strong>Function: <code>IterGenerate</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T, typename F&gt;
@@ -6808,7 +6808,7 @@ const TArray&lt;int&gt; Result = IterGenerate&lt;int&gt;([]() { return FMath::Ra
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iteronce"><a class="header" href="#function-iteronce"><strong>Function: <code>IterOnce</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -6838,7 +6838,7 @@ const TArray&lt;int&gt; Result = IterRange(0, 5)
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iterrange"><a class="header" href="#function-iterrange"><strong>Function: <code>IterRange</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -6881,7 +6881,7 @@ const TArray&lt;int&gt; Result = IterRange(0, 10).CollectArray();
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iterrepeat"><a class="header" href="#function-iterrepeat"><strong>Function: <code>IterRepeat</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -6908,7 +6908,7 @@ const TArray&lt;int&gt; Result = IterRepeat(1).Take(5).CollectArray();
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iterstd"><a class="header" href="#function-iterstd"><strong>Function: <code>IterStd</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -6936,7 +6936,7 @@ IterStd(Result).ForEach([](auto&amp; Value) { Value = Value * Value; });
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iterstdconst"><a class="header" href="#function-iterstdconst"><strong>Function: <code>IterStdConst</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -6964,7 +6964,7 @@ const TArray&lt;int&gt; ResultB = IterStd(ResultA).CollectArray();
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code></strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.2</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 
                     </main>
 
