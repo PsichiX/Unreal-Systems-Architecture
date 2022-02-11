@@ -25,7 +25,7 @@ jobs:
       - name: Show mdbook version
         run: mdbook --version
       - name: Bake Systems Architecture docs
-        run: UNREAL_DOC_MDBOOK_SITE_URL="https://psichix.github.io/Unreal-Systems-Architecture/systems/" unreal-doc -i ./Plugins/Systems/Documentation/UnrealDoc.toml
+        run: UNREAL_DOC_MDBOOK_SITE_URL="/Unreal-Systems-Architecture/systems/" unreal-doc -i ./Plugins/Systems/Documentation/UnrealDoc.toml
       - name: Setup output location
         run: mkdir ./PublicDocs
       - name: Move Systems Architecture docs to output location
