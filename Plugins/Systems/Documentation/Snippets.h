@@ -10,12 +10,12 @@ void main()
 	//// [/snippet]
 
 	//// [snippet: install_lambda_system]
-	Systems->InstallLambdaSystem(
+	Systems.InstallLambdaSystem(
 		BoidsFaceDirectionSystem, FInstallSystemOptions("BoidsFaceDirection"));
 	//// [/snippet]
 
 	//// [snippet: install_system_options]
-	Systems->InstallLambdaSystem(BoidsFaceDirectionSystem,
+	Systems.InstallLambdaSystem(BoidsFaceDirectionSystem,
 		FInstallSystemOptions("BoidsFaceDirection")
 			.RunBefore("BoidsFaceDirection")
 			.RunAfter("BoidsApplyImpulse"));
@@ -36,43 +36,43 @@ void main()
 	//// [/snippet]
 
 	//// [snippet: systems_world_register_component_raw]
-	Systems->RegisterComponentRaw(USomeComponent::StaticClass());
+	Systems.RegisterComponentRaw(USomeComponent::StaticClass());
 	//// [/snippet]
 
 	//// [snippet: systems_world_register_component]
-	Systems->RegisterComponent<USomeComponent>();
+	Systems.RegisterComponent<USomeComponent>();
 	//// [/snippet]
 
 	//// [snippet: systems_world_install_resource_raw]
-	Systems->InstallResourceRaw(
+	Systems.InstallResourceRaw(
 		NewObject<UInventory>(Systems, UInventory::StaticClass()));
 	//// [/snippet]
 
 	//// [snippet: systems_world_install_default_resource]
-	Systems->InstallDefaultResource(UInventory::StaticClass());
+	Systems.InstallDefaultResource(UInventory::StaticClass());
 	//// [/snippet]
 
 	//// [snippet: systems_world_install_resource]
-	Systems->InstallResource<UInventory>();
+	Systems.InstallResource<UInventory>();
 	//// [/snippet]
 
 	//// [snippet: systems_world_install_system_raw]
-	Systems->InstallSystemRaw(
+	Systems.InstallSystemRaw(
 		NewObject<USomeSystem>(Systems, USomeSystem::StaticClass()),
 		FInstallSystemOptions("Something"));
 	//// [/snippet]
 
 	//// [snippet: systems_world_install_default_system]
-	Systems->InstallDefaultSystem(
+	Systems.InstallDefaultSystem(
 		USomeSystem::StaticClass(), FInstallSystemOptions("Something"));
 	//// [/snippet]
 
 	//// [snippet: systems_world_install_system]
-	Systems->InstallSystem<USomeSystem>(FInstallSystemOptions("Something"));
+	Systems.InstallSystem<USomeSystem>(FInstallSystemOptions("Something"));
 	//// [/snippet]
 
 	//// [snippet: systems_world_resource_raw]
-	auto* Inventory = Cast<UInventory>(Systems->ResourceRaw());
+	auto* Inventory = Cast<UInventory>(Systems.ResourceRaw());
 	if (IsValid(Inventory))
 	{
 		Inventory->AddItem(FItem{FItemType::Sword});
@@ -80,15 +80,15 @@ void main()
 	//// [/snippet]
 
 	//// [snippet: systems_world_resource]
-	Systems->Resource<UInventory>()->AddItem(FItem{FItemType::Sword});
+	Systems.Resource<UInventory>()->AddItem(FItem{FItemType::Sword});
 	//// [/snippet]
 
 	//// [snippet: systems_world_component_raw]
-	Systems->ComponentRaw(Actor, UShiaComponent::StaticClass())->JustDoIt();
+	Systems.ComponentRaw(Actor, UShiaComponent::StaticClass())->JustDoIt();
 	//// [/snippet]
 
 	//// [snippet: systems_world_component]
-	Systems->Component<UShiaComponent>(Actor)->JustDoIt();
+	Systems.Component<UShiaComponent>(Actor)->JustDoIt();
 	//// [/snippet]
 
 	//// [snippet: systems_world_query]
@@ -126,7 +126,7 @@ void main()
 	//// [/snippet]
 
 	//// [snippet: systems_world_bad_actors_query]
-	Systems->Actors().ForEach(
+	Systems.Actors().ForEach(
 		[](const auto* Actor)
 		{
 			auto* ShiaActor = Cast<AShiaActor>(Actor);
@@ -138,7 +138,7 @@ void main()
 	//// [/snippet]
 
 	//// [snippet: systems_world_good_components_query]
-	Systems->Query<UShiaComponent>().ForEach(
+	Systems.Query<UShiaComponent>().ForEach(
 		[](const auto* Actor)
 		{
 			auto* ShiaActor = Cast<AShiaActor>(Actor);
@@ -151,25 +151,25 @@ void main()
 
 	//// [snippet: systems_world_count_raw]
 	// Instead of this:
-	const auto A = Systems->Query<UShiaComponent>().Count();
+	const auto A = Systems.Query<UShiaComponent>().Count();
 
 	// You can do this:
 	auto Signature = FArchetypeSignature();
 	if (const auto Index =
-			Systems->ComponentTypeIndex(UShiaComponent::StaticClass()))
+			Systems.ComponentTypeIndex(UShiaComponent::StaticClass()))
 	{
 		Signature.EnableBit(Index.GetValue());
 	}
 
-	const auto B = Systems->Count(Signature);
+	const auto B = Systems.Count(Signature);
 	//// [/snippet]
 
 	//// [snippet: systems_world_count]
-	const auto Result = Systems->Count<UShiaComponent>();
+	const auto Result = Systems.Count<UShiaComponent>();
 	//// [/snippet]
 
 	//// [snippet: query_next]
-	auto Query = Systems->Query<UShiaComponent>();
+	auto Query = Systems.Query<UShiaComponent>();
 	while (auto& QueryItem = Query.Next())
 	{
 		// Note that we do not check if QueryItem optional value is set.
@@ -459,7 +459,7 @@ void main()
 		UShiaComponent* Shia = nullptr;
 	};
 
-	auto Query = Systems->DynamicQuery<UShiaQueryBundle>();
+	auto Query = Systems.DynamicQuery<UShiaQueryBundle>();
 	auto* Bundle =
 		NewObject<UShiaQueryBundle>(this, UShiaQueryBundle::StaticClass());
 	while (Query->Next(Bundle))
@@ -686,11 +686,11 @@ void ASomeActor::ToggleTagComponent(USystemsWorld& Systems, UTagComponent* Tag)
 	this->bTagEnabled = !this->bTagEnabled;
 	if (this->bTagEnabled)
 	{
-		Systems->AddComponent(this, Tag);
+		Systems.AddComponent(this, Tag);
 	}
 	else
 	{
-		Systems->RemoveComponent(this, Tag);
+		Systems.RemoveComponent(this, Tag);
 	}
 }
 //// [/snippet]
@@ -863,23 +863,25 @@ public:
 	float TimeScale = 1;
 };
 
-void UExampleGameInstance::Setup()
+void UExampleGameInstance::Init()
 {
-	Super::Setup();
+	Super::Init();
 
-	auto* Systems = GetSystemsWorld();
-	if (IsValid(Systems) == false)
+	auto* Subsystem = USystemsSubsystem::Get(GetWorld());
+	if (IsValid(Subsystem))
 	{
-		return;
+		Subsystem->AcquireSystemsWorld(FName(),
+			[&](auto& Systems)
+			{
+				Systems.RegisterComponent<UVelocityComponent>();
+
+				// USettings asset set up in editor.
+				Systems.InstallResourceRaw(this->Settings);
+
+				Systems.InstallLambdaSystem(
+					MovementSystem, FInstallSystemOptions("Movement"));
+			});
 	}
-
-	Systems->RegisterComponent<UVelocityComponent>();
-
-	// USettings asset set up in editor.
-	Systems->InstallResourceRaw(this->Settings);
-
-	Systems->InstallLambdaSystem(
-		MovementSystem, FInstallSystemOptions("Movement"));
 }
 
 void MovementSystem(USystemsWorld& Systems)
@@ -990,37 +992,42 @@ void MovementSystem(USystemsWorld& Systems)
 //// [/snippet]
 
 //// [snippet: install_stateless_system]
-void UExampleGameInstance::Setup()
+void UExampleGameInstance::Init()
 {
-	Super::Setup();
+	Super::Init();
 
-	auto* Systems = GetSystemsWorld();
-	if (IsValid(Systems) == false)
+	auto* Subsystem = USystemsSubsystem::Get(GetWorld());
+	if (IsValid(Subsystem))
 	{
-		return;
+		Subsystem->AcquireSystemsWorld(FName(),
+			[&](auto& Systems)
+			{
+				Systems.RegisterComponent<UVelocityComponent>();
+
+				Systems.InstallLambdaSystem(
+					MovementSystem, FInstallSystemOptions("Movement"));
+			});
 	}
-
-	Systems->RegisterComponent<UVelocityComponent>();
-
-	Systems->InstallLambdaSystem(
-		MovementSystem, FInstallSystemOptions("Movement"));
 }
+
 //// [/snippet]
 
 //// [snippet: install_stateful_system]
-void UExampleGameInstance::Setup()
+void UExampleGameInstance::Init()
 {
-	Super::Setup();
+	Super::Init();
 
-	auto* Systems = GetSystemsWorld();
-	if (IsValid(Systems) == false)
+	auto* Subsystem = USystemsSubsystem::Get(GetWorld());
+	if (IsValid(Subsystem))
 	{
-		return;
+		Subsystem->AcquireSystemsWorld(FName(),
+			[&](auto& Systems)
+			{
+				Systems.RegisterComponent<UBirdComponent>();
+
+				Systems.InstallSystem<ULogBirdsNumberChangeSystem>(
+					FInstallSystemOptions("LogBirdsNumberChange"));
+			});
 	}
-
-	Systems->RegisterComponent<UBirdComponent>();
-
-	Systems->InstallSystem<ULogBirdsNumberChangeSystem>(
-		FInstallSystemOptions("LogBirdsNumberChange"));
 }
 //// [/snippet]
