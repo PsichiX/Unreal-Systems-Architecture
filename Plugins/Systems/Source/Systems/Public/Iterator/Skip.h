@@ -75,6 +75,6 @@ template <typename I>
 TIterSkip<I> IterSkip(I&& Iter, uint32 Count)
 {
 	//// [ignore]
-	return TIterSkip<I>(MoveTemp(Iter), Count);
+	return TIterSkip<I>(MoveTempIfPossible(Iter), Count);
 	//// [/ignore]
 }

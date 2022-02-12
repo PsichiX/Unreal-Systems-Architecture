@@ -67,6 +67,6 @@ template <typename I>
 TIterTake<I> IterTake(I&& Iter, uint32 Count)
 {
 	//// [ignore]
-	return TIterTake<I>(MoveTemp(Iter), Count);
+	return TIterTake<I>(MoveTempIfPossible(Iter), Count);
 	//// [/ignore]
 }

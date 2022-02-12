@@ -59,6 +59,6 @@ template <typename T, typename I, typename F>
 TIterMap<T, I, F> IterMap(I&& Iter, F Functor)
 {
 	//// [ignore]
-	return TIterMap<T, I, F>(MoveTemp(Iter), Functor);
+	return TIterMap<T, I, F>(MoveTempIfPossible(Iter), Functor);
 	//// [/ignore]
 }

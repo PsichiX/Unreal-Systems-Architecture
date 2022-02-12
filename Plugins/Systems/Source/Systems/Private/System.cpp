@@ -22,7 +22,7 @@ void UScriptableSystem::Run(USystemsWorld& Systems)
 
 void ULambdaSystem::Bind(TFunction<ThisClass::FunctorType>&& Func)
 {
-	this->Functor.Emplace(MoveTemp(Func));
+	this->Functor.Emplace(MoveTempIfPossible(Func));
 }
 
 void ULambdaSystem::Unbind()

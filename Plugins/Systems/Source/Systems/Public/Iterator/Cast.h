@@ -57,6 +57,6 @@ template <typename T, typename I>
 TIterCast<T, I> IterCast(I&& Iter)
 {
 	//// [ignore]
-	return TIterCast<T, I>(MoveTemp(Iter));
+	return TIterCast<T, I>(MoveTempIfPossible(Iter));
 	//// [/ignore]
 }

@@ -60,6 +60,6 @@ template <typename I, typename F>
 TIterFilter<I, F> IterFilter(I&& Iter, F Functor)
 {
 	//// [ignore]
-	return TIterFilter<I, F>(MoveTemp(Iter), Functor);
+	return TIterFilter<I, F>(MoveTempIfPossible(Iter), Functor);
 	//// [/ignore]
 }

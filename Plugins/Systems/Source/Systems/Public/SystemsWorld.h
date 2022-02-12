@@ -308,7 +308,7 @@ public:
 		FInstallSystemOptions Options)
 	{
 		//// [ignore]
-		return InstallDefaultSystem(T::StaticClass(), MoveTemp(Options));
+		return InstallDefaultSystem(T::StaticClass(), MoveTempIfPossible(Options));
 		//// [/ignore]
 	}
 

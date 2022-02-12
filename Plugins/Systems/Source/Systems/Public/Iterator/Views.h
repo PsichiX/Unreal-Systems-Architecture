@@ -86,6 +86,6 @@ template <typename I, uint32 C>
 TIterViews<I, C> IterViews(I&& Iter)
 {
 	//// [ignore]
-	return TIterViews<I, C>(MoveTemp(Iter));
+	return TIterViews<I, C>(MoveTempIfPossible(Iter));
 	//// [/ignore]
 }

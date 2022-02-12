@@ -58,6 +58,6 @@ template <typename I>
 TIterEnumerate<I> IterEnumerate(I&& Iter)
 {
 	//// [ignore]
-	return TIterEnumerate<I>(MoveTemp(Iter));
+	return TIterEnumerate<I>(MoveTempIfPossible(Iter));
 	//// [/ignore]
 }

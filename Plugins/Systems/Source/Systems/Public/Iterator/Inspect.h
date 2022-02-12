@@ -56,6 +56,6 @@ template <typename I, typename F>
 TIterInspect<I, F> IterInspect(I&& Iter, F Functor)
 {
 	//// [ignore]
-	return TIterInspect<I, F>(MoveTemp(Iter), Functor);
+	return TIterInspect<I, F>(MoveTempIfPossible(Iter), Functor);
 	//// [/ignore]
 }

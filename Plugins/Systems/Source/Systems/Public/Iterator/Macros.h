@@ -14,7 +14,7 @@
 #define ITER_IMPL_COUNT                      \
 	uint32 Count()                           \
 	{                                        \
-		return ::IterCount(MoveTemp(*this)); \
+		return ::IterCount(MoveTempIfPossible(*this)); \
 	}
 
 /// Returns Nth item in the iterator.
@@ -29,7 +29,7 @@
 #define ITER_IMPL_NTH                             \
 	TOptional<Item> Nth(uint32 Index)             \
 	{                                             \
-		return ::IterNth(MoveTemp(*this), Index); \
+		return ::IterNth(MoveTempIfPossible(*this), Index); \
 	}
 
 /// Folds iterator into single value.
@@ -59,7 +59,7 @@
 	template <typename RESULT, typename FUNCTOR>         \
 	RESULT Fold(RESULT Start, FUNCTOR Func)              \
 	{                                                    \
-		return ::IterFold(MoveTemp(*this), Start, Func); \
+		return ::IterFold(MoveTempIfPossible(*this), Start, Func); \
 	}
 
 /// Returns sum of values that iterator can yield.
@@ -83,7 +83,7 @@
 #define ITER_IMPL_SUM                                    \
 	Item Sum(Item InitialValue)                          \
 	{                                                    \
-		return ::IterSum(MoveTemp(*this), InitialValue); \
+		return ::IterSum(MoveTempIfPossible(*this), InitialValue); \
 	}
 
 /// Finds and returns value in this iterator that passes `FUNCTOR` predicate.
@@ -104,7 +104,7 @@
 	template <typename FUNCTOR>                   \
 	TOptional<Item> Find(FUNCTOR Func)            \
 	{                                             \
-		return ::IterFind(MoveTemp(*this), Func); \
+		return ::IterFind(MoveTempIfPossible(*this), Func); \
 	}
 
 /// Finds and returns value in this iterator that passes `FUNCTOR` predicate,
@@ -129,7 +129,7 @@
 	template <typename RESULT, typename FUNCTOR>             \
 	TOptional<RESULT> FindMap(FUNCTOR Func)                  \
 	{                                                        \
-		return ::IterFindMap<RESULT>(MoveTemp(*this), Func); \
+		return ::IterFindMap<RESULT>(MoveTempIfPossible(*this), Func); \
 	}
 
 /// Returns first item in the iterator.
@@ -146,7 +146,7 @@
 #define ITER_IMPL_FIRST                      \
 	TOptional<Item> First()                  \
 	{                                        \
-		return ::IterFirst(MoveTemp(*this)); \
+		return ::IterFirst(MoveTempIfPossible(*this)); \
 	}
 
 /// Returns last item in the iterator.
@@ -161,7 +161,7 @@
 #define ITER_IMPL_LAST                      \
 	TOptional<Item> Last()                  \
 	{                                       \
-		return ::IterLast(MoveTemp(*this)); \
+		return ::IterLast(MoveTempIfPossible(*this)); \
 	}
 
 /// Consumes iterator and yields its values for user to process.
@@ -187,7 +187,7 @@
 	template <typename FUNCTOR>               \
 	void ForEach(FUNCTOR Func)                \
 	{                                         \
-		::IterForEach(MoveTemp(*this), Func); \
+		::IterForEach(MoveTempIfPossible(*this), Func); \
 	}
 
 /// Checks if any value yielded by this iterator passes predicate.
@@ -208,7 +208,7 @@
 	template <typename FUNCTOR>                  \
 	bool Any(FUNCTOR Func)                       \
 	{                                            \
-		return ::IterAny(MoveTemp(*this), Func); \
+		return ::IterAny(MoveTempIfPossible(*this), Func); \
 	}
 
 /// Checks if all values yielded by this iterator passes predicate.
@@ -229,7 +229,7 @@
 	template <typename FUNCTOR>                  \
 	bool All(FUNCTOR Func)                       \
 	{                                            \
-		return ::IterAll(MoveTemp(*this), Func); \
+		return ::IterAll(MoveTempIfPossible(*this), Func); \
 	}
 
 /// Finds iterator value that compared to other items gets greater "score".
@@ -254,7 +254,7 @@
 	template <typename FUNCTOR>                         \
 	TOptional<Item> ComparedBy(FUNCTOR Func)            \
 	{                                                   \
-		return ::IterComparedBy(MoveTemp(*this), Func); \
+		return ::IterComparedBy(MoveTempIfPossible(*this), Func); \
 	}
 
 /// Consumes iterator and stores its values into provided array.
@@ -269,7 +269,7 @@
 #define ITER_IMPL_COLLECT_INTO_ARRAY                     \
 	void CollectIntoArray(TArray<Item>& Result)          \
 	{                                                    \
-		::IterCollectIntoArray(MoveTemp(*this), Result); \
+		::IterCollectIntoArray(MoveTempIfPossible(*this), Result); \
 	}
 
 /// Consumes iterator and returns an array with its values.
@@ -284,7 +284,7 @@
 #define ITER_IMPL_COLLECT_ARRAY                     \
 	TArray<Item> CollectArray()                     \
 	{                                               \
-		return ::IterCollectArray(MoveTemp(*this)); \
+		return ::IterCollectArray(MoveTempIfPossible(*this)); \
 	}
 
 /// Consumes iterator and stores its values into provided set.
@@ -299,7 +299,7 @@
 #define ITER_IMPL_COLLECT_INTO_SET                     \
 	void CollectIntoSet(TSet<Item>& Result)            \
 	{                                                  \
-		::IterCollectIntoSet(MoveTemp(*this), Result); \
+		::IterCollectIntoSet(MoveTempIfPossible(*this), Result); \
 	}
 
 /// Consumes iterator and returns a set with its values.
@@ -314,19 +314,19 @@
 #define ITER_IMPL_COLLECT_SET                     \
 	TSet<Item> CollectSet()                       \
 	{                                             \
-		return ::IterCollectSet(MoveTemp(*this)); \
+		return ::IterCollectSet(MoveTempIfPossible(*this)); \
 	}
 
 #define ITER_IMPL_COLLECT_INTO_MAP(KEY, VALUE)                     \
 	void CollectIntoMap(TMap<KEY, VALUE>& Result)                  \
 	{                                                              \
-		::IterCollectIntoMap<KEY, VALUE>(MoveTemp(*this), Result); \
+		::IterCollectIntoMap<KEY, VALUE>(MoveTempIfPossible(*this), Result); \
 	}
 
 #define ITER_IMPL_COLLECT_MAP(KEY, VALUE)                     \
 	TMap<KEY, VALUE> CollectMap()                             \
 	{                                                         \
-		return ::IterCollectMap<KEY, VALUE>(MoveTemp(*this)); \
+		return ::IterCollectMap<KEY, VALUE>(MoveTempIfPossible(*this)); \
 	}
 
 /// Injects custom iterator adapter into the chain of iteration.
@@ -353,7 +353,7 @@
 	template <typename ADAPTER>                       \
 	TIterAdapt<Self, ADAPTER> Adapt(ADAPTER Adapter)  \
 	{                                                 \
-		return ::IterAdapt(MoveTemp(*this), Adapter); \
+		return ::IterAdapt(MoveTempIfPossible(*this), Adapter); \
 	}
 
 /// Casts yielded values to another type.
@@ -376,7 +376,7 @@
 	template <typename RESULT>                      \
 	TIterCast<typename RESULT, Self> Cast()         \
 	{                                               \
-		return ::IterCast<RESULT>(MoveTemp(*this)); \
+		return ::IterCast<RESULT>(MoveTempIfPossible(*this)); \
 	}
 
 /// Appends another iterator at the end of this iterator.
@@ -400,7 +400,7 @@
 	template <typename ITER>                                 \
 	TIterChain<Self, ITER> Chain(ITER&& Iter)                \
 	{                                                        \
-		return ::IterChain(MoveTemp(*this), MoveTemp(Iter)); \
+		return ::IterChain(MoveTempIfPossible(*this), MoveTempIfPossible(Iter)); \
 	}
 
 /// Enumerates values in this iterator.
@@ -421,7 +421,7 @@
 #define ITER_IMPL_ENUMERATE                      \
 	TIterEnumerate<Self> Enumerate()             \
 	{                                            \
-		return ::IterEnumerate(MoveTemp(*this)); \
+		return ::IterEnumerate(MoveTempIfPossible(*this)); \
 	}
 
 /// Filters values in the iterator by predicate.
@@ -442,7 +442,7 @@
 	template <typename FUNCTOR>                              \
 	TIterFilter<Self, typename FUNCTOR> Filter(FUNCTOR Func) \
 	{                                                        \
-		return ::IterFilter(MoveTemp(*this), Func);          \
+		return ::IterFilter(MoveTempIfPossible(*this), Func);          \
 	}
 
 /// Filters values in the iterator by predicate and maps them to another type.
@@ -467,7 +467,7 @@
 	TIterFilterMap<typename RESULT, Self, typename FUNCTOR> FilterMap( \
 		FUNCTOR Func)                                                  \
 	{                                                                  \
-		return ::IterFilterMap<RESULT>(MoveTemp(*this), Func);         \
+		return ::IterFilterMap<RESULT>(MoveTempIfPossible(*this), Func);         \
 	}
 
 /// Flattens nested iterators.
@@ -493,7 +493,7 @@
 	template <typename RESULT>                         \
 	TIterFlatten<typename RESULT, Self> Flatten()      \
 	{                                                  \
-		return ::IterFlatten<RESULT>(MoveTemp(*this)); \
+		return ::IterFlatten<RESULT>(MoveTempIfPossible(*this)); \
 	}
 
 /// Inspects yielded values.
@@ -517,7 +517,7 @@
 	template <typename FUNCTOR>                                \
 	TIterInspect<Self, typename FUNCTOR> Inspect(FUNCTOR Func) \
 	{                                                          \
-		return ::IterInspect(MoveTemp(*this), Func);           \
+		return ::IterInspect(MoveTempIfPossible(*this), Func);           \
 	}
 
 /// Maps yielded values to another type.
@@ -541,7 +541,7 @@
 	template <typename RESULT, typename FUNCTOR>                        \
 	TIterMap<typename RESULT, Self, typename FUNCTOR> Map(FUNCTOR Func) \
 	{                                                                   \
-		return ::IterMap<RESULT>(MoveTemp(*this), Func);                \
+		return ::IterMap<RESULT>(MoveTempIfPossible(*this), Func);                \
 	}
 
 /// Skips iteration by number of elements.
@@ -560,7 +560,7 @@
 #define ITER_IMPL_SKIP                             \
 	TIterSkip<Self> Skip(uint32 Count)             \
 	{                                              \
-		return ::IterSkip(MoveTemp(*this), Count); \
+		return ::IterSkip(MoveTempIfPossible(*this), Count); \
 	}
 
 /// Limits iterator to at most number of iterations.
@@ -579,7 +579,7 @@
 #define ITER_IMPL_TAKE                             \
 	TIterTake<Self> Take(uint32 Count)             \
 	{                                              \
-		return ::IterTake(MoveTemp(*this), Count); \
+		return ::IterTake(MoveTempIfPossible(*this), Count); \
 	}
 
 /// Yields sequences of consecutive views over set of values.
@@ -600,7 +600,7 @@
 	template <uint32 COUNT>                               \
 	TIterViews<Self, COUNT> Views()                       \
 	{                                                     \
-		return ::IterViews<Self, COUNT>(MoveTemp(*this)); \
+		return ::IterViews<Self, COUNT>(MoveTempIfPossible(*this)); \
 	}
 
 /// Combines two iterators to make one that yields pair of both iterator values
@@ -618,7 +618,7 @@
 	template <typename ITER>                               \
 	TIterZip<Self, ITER> Zip(ITER&& Iter)                  \
 	{                                                      \
-		return ::IterZip(MoveTemp(*this), MoveTemp(Iter)); \
+		return ::IterZip(MoveTempIfPossible(*this), MoveTempIfPossible(Iter)); \
 	}
 
 #define ITER_IMPL_CONVERTERS   \

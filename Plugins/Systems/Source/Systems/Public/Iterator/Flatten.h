@@ -78,6 +78,6 @@ template <typename T, typename I>
 TIterFlatten<T, I> IterFlatten(I&& Iter)
 {
 	//// [ignore]
-	return TIterFlatten<T, I>(MoveTemp(Iter));
+	return TIterFlatten<T, I>(MoveTempIfPossible(Iter));
 	//// [/ignore]
 }

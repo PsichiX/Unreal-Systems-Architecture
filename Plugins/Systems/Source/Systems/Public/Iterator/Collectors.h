@@ -22,7 +22,7 @@ TArray<typename I::Item> IterCollectArray(I&& Iterator)
 {
 	//// [ignore]
 	auto Result = TArray<I::Item>();
-	IterCollectIntoArray<I>(MoveTemp(Iterator), Result);
+	IterCollectIntoArray<I>(MoveTempIfPossible(Iterator), Result);
 	return Result;
 	//// [/ignore]
 }
@@ -47,7 +47,7 @@ TSet<typename I::Item> IterCollectSet(I&& Iterator)
 {
 	//// [ignore]
 	auto Result = TSet<I::Item>();
-	IterCollectIntoSet<I>(MoveTemp(Iterator), Result);
+	IterCollectIntoSet<I>(MoveTempIfPossible(Iterator), Result);
 	return Result;
 	//// [/ignore]
 }
@@ -73,7 +73,7 @@ TMap<K, V> IterCollectMap(I&& Iterator)
 {
 	//// [ignore]
 	auto Result = TMap<K, V>();
-	IterCollectIntoMap<K, V, I>(MoveTemp(Iterator), Result);
+	IterCollectIntoMap<K, V, I>(MoveTempIfPossible(Iterator), Result);
 	return Result;
 	//// [/ignore]
 }

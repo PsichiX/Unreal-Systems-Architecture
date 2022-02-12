@@ -18,9 +18,9 @@ FInstallSystemOptions::FInstallSystemOptions(FName Name)
 FInstallSystemOptions FInstallSystemOptions::RunBefore(FName Name)
 {
 	FInstallSystemOptions Result;
-	Result.Label = MoveTemp(this->Label);
-	Result.Before = MoveTemp(this->Before);
-	Result.After = MoveTemp(this->After);
+	Result.Label = MoveTempIfPossible(this->Label);
+	Result.Before = MoveTempIfPossible(this->Before);
+	Result.After = MoveTempIfPossible(this->After);
 	Result.Before.Add(Name);
 	return Result;
 }
@@ -28,9 +28,9 @@ FInstallSystemOptions FInstallSystemOptions::RunBefore(FName Name)
 FInstallSystemOptions FInstallSystemOptions::RunAfter(FName Name)
 {
 	FInstallSystemOptions Result;
-	Result.Label = MoveTemp(this->Label);
-	Result.Before = MoveTemp(this->Before);
-	Result.After = MoveTemp(this->After);
+	Result.Label = MoveTempIfPossible(this->Label);
+	Result.Before = MoveTempIfPossible(this->Before);
+	Result.After = MoveTempIfPossible(this->After);
 	Result.After.Add(Name);
 	return Result;
 }
@@ -147,7 +147,7 @@ bool USystemsWorld::InstallSystemRaw(USystem* System,
 bool USystemsWorld::InstallDefaultSystem(const UClass* Type,
 	FInstallSystemOptions Options)
 {
-	return InstallSystemRaw(NewObject<USystem>(this, Type), MoveTemp(Options));
+	return InstallSystemRaw(NewObject<USystem>(this, Type), MoveTempIfPossible(Options));
 }
 
 bool USystemsWorld::InstallLambdaSystem(
@@ -157,8 +157,8 @@ bool USystemsWorld::InstallLambdaSystem(
 	auto* System = NewObject<ULambdaSystem>();
 	if (IsValid(System))
 	{
-		System->Bind(MoveTemp(Functor));
-		return InstallSystemRaw(System, MoveTemp(Options));
+		System->Bind(MoveTempIfPossible(Functor));
+		return InstallSystemRaw(System, MoveTempIfPossible(Options));
 	}
 	return false;
 }

@@ -11,9 +11,16 @@
 			"AdditionalDependencies": [
 				"Systems",
 				"ReactiveUserInterfaceSystems",
+				"SystemsUnitTests",
 				"Engine",
 				"UMG"
 			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "EditorTests",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [

@@ -50,6 +50,6 @@ template <typename I, typename A>
 TIterAdapt<I, A> IterAdapt(I&& Iter, A Adapter)
 {
 	//// [ignore]
-	return TIterAdapt<I, A>(MoveTemp(Iter), Adapter);
+	return TIterAdapt<I, A>(MoveTempIfPossible(Iter), Adapter);
 	//// [/ignore]
 }
