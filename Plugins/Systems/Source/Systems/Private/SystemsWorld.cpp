@@ -15,24 +15,33 @@ FInstallSystemOptions::FInstallSystemOptions(FName Name)
 {
 }
 
-FInstallSystemOptions FInstallSystemOptions::RunBefore(FName Name)
+FInstallSystemOptions& FInstallSystemOptions::RunBefore(FName Name)
 {
-	FInstallSystemOptions Result;
-	Result.Label = MoveTempIfPossible(this->Label);
-	Result.Before = MoveTempIfPossible(this->Before);
-	Result.After = MoveTempIfPossible(this->After);
-	Result.Before.Add(Name);
-	return Result;
+	this->Before.Add(Name);
+	return *this;
 }
 
-FInstallSystemOptions FInstallSystemOptions::RunAfter(FName Name)
+FInstallSystemOptions& FInstallSystemOptions::RunAfter(FName Name)
 {
-	FInstallSystemOptions Result;
-	Result.Label = MoveTempIfPossible(this->Label);
-	Result.Before = MoveTempIfPossible(this->Before);
-	Result.After = MoveTempIfPossible(this->After);
-	Result.After.Add(Name);
-	return Result;
+	this->After.Add(Name);
+	return *this;
+}
+
+FInstallSystemOptions& FInstallSystemOptions::MultiplayerRunOn(
+	ESystemMultiplayerRunOn Mode)
+{
+	this->MultiplayerRunOnMode = Mode;
+	return *this;
+}
+
+bool FSystemData::MultiplayerCanRunOn(bool bIsServer) const
+{
+	if (this->MultiplayerRunOnMode == ESystemMultiplayerRunOn::ServerAndClient)
+	{
+		return true;
+	}
+	return bIsServer ==
+		(this->MultiplayerRunOnMode == ESystemMultiplayerRunOn::ServerOnly);
 }
 
 void USystemsWorld::SealAndInitialize()
@@ -127,19 +136,26 @@ bool USystemsWorld::InstallSystemRaw(USystem* System,
 		{
 			return false;
 		}
-		this->Systems.Insert({System, Options.Label}, After.GetValue() + 1);
+		this->Systems.Insert(
+			{System, Options.Label, Options.MultiplayerRunOnMode},
+			After.GetValue() + 1);
 	}
 	if (Before.IsSet())
 	{
-		this->Systems.Insert({System, Options.Label}, Before.GetValue());
+		this->Systems.Insert(
+			{System, Options.Label, Options.MultiplayerRunOnMode},
+			Before.GetValue());
 	}
 	if (After.IsSet())
 	{
-		this->Systems.Insert({System, Options.Label}, After.GetValue() + 1);
+		this->Systems.Insert(
+			{System, Options.Label, Options.MultiplayerRunOnMode},
+			After.GetValue() + 1);
 	}
 	else
 	{
-		this->Systems.Add({System, Options.Label});
+		this->Systems.Add(
+			{System, Options.Label, Options.MultiplayerRunOnMode});
 	}
 	return true;
 }
@@ -147,7 +163,8 @@ bool USystemsWorld::InstallSystemRaw(USystem* System,
 bool USystemsWorld::InstallDefaultSystem(const UClass* Type,
 	FInstallSystemOptions Options)
 {
-	return InstallSystemRaw(NewObject<USystem>(this, Type), MoveTempIfPossible(Options));
+	return InstallSystemRaw(
+		NewObject<USystem>(this, Type), MoveTempIfPossible(Options));
 }
 
 bool USystemsWorld::InstallLambdaSystem(
@@ -421,9 +438,13 @@ void USystemsWorld::Process()
 		}
 	}
 
+	const auto bIsServer = GetWorld()->IsServer();
 	for (auto& Data : this->Systems)
 	{
-		Data.System->Run(*this);
+		if (Data.MultiplayerCanRunOn(bIsServer))
+		{
+			Data.System->Run(*this);
+		}
 	}
 }
 

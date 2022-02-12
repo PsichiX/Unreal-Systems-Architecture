@@ -18,7 +18,8 @@ void main()
 	Systems.InstallLambdaSystem(BoidsFaceDirectionSystem,
 		FInstallSystemOptions("BoidsFaceDirection")
 			.RunBefore("BoidsFaceDirection")
-			.RunAfter("BoidsApplyImpulse"));
+			.RunAfter("BoidsApplyImpulse")
+			.MultiplayerRunOn(ESystemMultiplayerRunOn::ServerAndClient));
 	//// [/snippet]
 
 	//// [snippet: systems_world_seal_and_initialize]
