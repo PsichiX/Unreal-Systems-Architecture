@@ -10,18 +10,6 @@
 
 #include "SystemsWorld.generated.h"
 
-/// Tells if given system should run on client, server or both.
-///
-/// Useful in case of making multiplayer game to make given system run only in
-/// proper networking mode.
-UENUM(BlueprintType)
-enum class ESystemMultiplayerRunOn : uint8
-{
-	ServerOnly,
-	ClientOnly,
-	ServerAndClient,
-};
-
 /// Set of options for installation of this system.
 ///
 /// It uses builder pattern to simplify setting options.
@@ -79,13 +67,6 @@ public:
 		/// Name of other system.
 		FName Name);
 
-	/// Tell in what multiplayer mode this system should run.
-	///
-	/// ```snippet
-	/// install_system_options
-	/// ```
-	FInstallSystemOptions& MultiplayerRunOn(ESystemMultiplayerRunOn Mode);
-
 private:
 	UPROPERTY()
 	FName Label = {};
@@ -95,10 +76,6 @@ private:
 
 	UPROPERTY()
 	TSet<FName> After = {};
-
-	UPROPERTY()
-	ESystemMultiplayerRunOn MultiplayerRunOnMode =
-		ESystemMultiplayerRunOn::ServerAndClient;
 };
 
 USTRUCT()
@@ -106,18 +83,11 @@ struct SYSTEMS_API FSystemData
 {
 	GENERATED_BODY()
 
-public:
-	bool MultiplayerCanRunOn(bool bIsServer) const;
-
 	UPROPERTY()
 	USystem* System = nullptr;
 
 	UPROPERTY()
 	FName Label = {};
-
-	UPROPERTY()
-	ESystemMultiplayerRunOn MultiplayerRunOnMode =
-		ESystemMultiplayerRunOn::ServerAndClient;
 };
 
 /// Container that holds systems, resources and registry of components that
@@ -849,6 +819,8 @@ public:
 
 	FArchetypeSignature ComponentsIdsSignature(
 		const TArrayView<uint32>& View) const;
+
+	TOptional<FArchetypeSignature> ActorSignature(AActor* Actor) const;
 
 	const TArray<const UClass*>& RegisteredComponentClasses() const
 	{

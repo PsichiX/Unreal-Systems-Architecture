@@ -7,6 +7,8 @@
 
 #include "SystemsComponent.generated.h"
 
+class USystemsWorld;
+
 /// Base class for systems actor components.
 ///
 /// [Architecture book page](/book/architecture/components.md) explains more in
@@ -60,6 +62,21 @@ public:
 	/// registered systems world.
 	UPROPERTY(EditAnywhere, Category = "Systems|Component|Actor")
 	TSet<FName> SystemsWorlds = {};
+
+	/// Tells if given component can be automatically registered into systems
+	/// worlds.
+	///
+	/// Useful to override when component has to meet certain conditions to get
+	/// considered for automatic registration, conditions such as for example
+	/// being owned by server game instance, or actor being a pawn.
+	///
+	/// By default this method always returns `true`.
+	virtual bool CanBeRegisteredToSystemsWorld() const
+	{
+		//// [ignore]
+		return true;
+		//// [/ignore]
+	}
 
 protected:
 	virtual void BeginPlay() override;
@@ -117,6 +134,21 @@ public:
 	/// registered systems world.
 	UPROPERTY(EditAnywhere, Category = "Systems|Component|Scene")
 	TSet<FName> SystemsWorlds = {};
+
+	/// Tells if given component can be automatically registered into systems
+	/// worlds.
+	///
+	/// Useful to override when component has to meet certain conditions to get
+	/// considered for automatic registration, conditions such as for example
+	/// being owned by server game instance, or actor being a pawn.
+	///
+	/// By default this method always returns `true`.
+	virtual bool CanBeRegisteredToSystemsWorld() const
+	{
+		//// [ignore]
+		return true;
+		//// [/ignore]
+	}
 
 protected:
 	virtual void BeginPlay() override;

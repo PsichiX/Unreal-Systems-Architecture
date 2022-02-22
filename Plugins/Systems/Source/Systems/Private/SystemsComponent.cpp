@@ -14,10 +14,15 @@ USystemsActorComponent::USystemsActorComponent()
 
 void USystemsActorComponent::SetRegistered(bool bMode, bool bForced)
 {
+	if (bMode && CanBeRegisteredToSystemsWorld() == false)
+	{
+		bMode = false;
+	}
+
 	if (bForced || (this->bRegister != bMode))
 	{
 		this->bRegister = bMode;
-		if (bMode)
+		if (this->bRegister)
 		{
 			if (this->SystemsWorlds.Num() > 0)
 			{
@@ -58,10 +63,15 @@ USystemsSceneComponent::USystemsSceneComponent()
 
 void USystemsSceneComponent::SetRegistered(bool bMode, bool bForced)
 {
+	if (bMode && CanBeRegisteredToSystemsWorld() == false)
+	{
+		bMode = false;
+	}
+
 	if (bForced || (this->bRegister != bMode))
 	{
 		this->bRegister = bMode;
-		if (bMode)
+		if (this->bRegister)
 		{
 			if (this->SystemsWorlds.Num() > 0)
 			{

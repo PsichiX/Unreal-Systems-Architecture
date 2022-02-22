@@ -10,6 +10,8 @@
 #include "SystemsQueryDebugger/Public/WidgetSystemsQueryComponent.h"
 #include "UnrealEd.h"
 
+FString GetWorldDescription(UWorld* World);
+
 void UWidgetSystemsQueryDebugger::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -128,13 +130,11 @@ void UWidgetSystemsQueryDebugger::OnDiscoverSystemsWorldsClicked()
 		}
 
 		const auto SystemsName = Systems->GetName();
-		const auto OwnerName = IsValid(Systems->GetOuter())
-			? Systems->GetOuter()->GetName()
-			: FString(TEXT("<INVALID SYSTEMS WORLD>"));
+		const auto WorldName = GetWorldDescription(Systems->GetWorld());
 
 		this->SystemsWorlds.Add(Systems);
 		this->SelectSystemsWorldComboBox->AddOption(
-			FString::Printf(TEXT("%s (%s)"), *SystemsName, *OwnerName));
+			FString::Printf(TEXT("%s (%s)"), *SystemsName, *WorldName));
 	}
 
 	if (this->SystemsWorlds.Num() > 0)
@@ -239,4 +239,51 @@ void UWidgetSystemsQueryDebugger::ResetActorsList()
 	{
 		this->QueryActorsCountText->SetText(FText::AsNumber(0));
 	}
+}
+
+FString GetWorldDescription(UWorld* World)
+{
+	if (IsValid(World))
+	{
+		const auto WorldName = World->GetFName().GetPlainNameString();
+
+		auto InstanceIndex = TOptional<int>();
+		for (const auto& Context : GEngine->GetWorldContexts())
+		{
+			if (Context.World() == World)
+			{
+				InstanceIndex = Context.PIEInstance - 1;
+				break;
+			}
+		}
+
+		if (World->WorldType == EWorldType::PIE)
+		{
+			switch (World->GetNetMode())
+			{
+				case NM_Client:
+					if (InstanceIndex.IsSet())
+					{
+						return FString::Printf(TEXT("%s: Client %i"),
+							*WorldName,
+							InstanceIndex.GetValue());
+					}
+					else
+					{
+						return FString::Printf(TEXT("%s: Client"), *WorldName);
+					}
+				case NM_DedicatedServer:
+				case NM_ListenServer:
+					return FString::Printf(TEXT("%s: Server"), *WorldName);
+				case NM_Standalone:
+					return FString::Printf(TEXT("%s: PIE"), *WorldName);
+			}
+		}
+		else if (World->WorldType == EWorldType::Editor)
+		{
+			return FString::Printf(TEXT("%s: Editor"), *WorldName);
+		}
+	}
+
+	return FString(TEXT("<NO WORLD>"));
 }

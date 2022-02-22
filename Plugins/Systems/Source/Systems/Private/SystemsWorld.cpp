@@ -27,23 +27,6 @@ FInstallSystemOptions& FInstallSystemOptions::RunAfter(FName Name)
 	return *this;
 }
 
-FInstallSystemOptions& FInstallSystemOptions::MultiplayerRunOn(
-	ESystemMultiplayerRunOn Mode)
-{
-	this->MultiplayerRunOnMode = Mode;
-	return *this;
-}
-
-bool FSystemData::MultiplayerCanRunOn(bool bIsServer) const
-{
-	if (this->MultiplayerRunOnMode == ESystemMultiplayerRunOn::ServerAndClient)
-	{
-		return true;
-	}
-	return bIsServer ==
-		(this->MultiplayerRunOnMode == ESystemMultiplayerRunOn::ServerOnly);
-}
-
 void USystemsWorld::SealAndInitialize()
 {
 	if (this->bSealed)
@@ -136,26 +119,19 @@ bool USystemsWorld::InstallSystemRaw(USystem* System,
 		{
 			return false;
 		}
-		this->Systems.Insert(
-			{System, Options.Label, Options.MultiplayerRunOnMode},
-			After.GetValue() + 1);
+		this->Systems.Insert({System, Options.Label}, After.GetValue() + 1);
 	}
 	if (Before.IsSet())
 	{
-		this->Systems.Insert(
-			{System, Options.Label, Options.MultiplayerRunOnMode},
-			Before.GetValue());
+		this->Systems.Insert({System, Options.Label}, Before.GetValue());
 	}
 	if (After.IsSet())
 	{
-		this->Systems.Insert(
-			{System, Options.Label, Options.MultiplayerRunOnMode},
-			After.GetValue() + 1);
+		this->Systems.Insert({System, Options.Label}, After.GetValue() + 1);
 	}
 	else
 	{
-		this->Systems.Add(
-			{System, Options.Label, Options.MultiplayerRunOnMode});
+		this->Systems.Add({System, Options.Label});
 	}
 	return true;
 }
@@ -441,10 +417,7 @@ void USystemsWorld::Process()
 	const auto bIsServer = GetWorld()->IsServer();
 	for (auto& Data : this->Systems)
 	{
-		if (Data.MultiplayerCanRunOn(bIsServer))
-		{
-			Data.System->Run(*this);
-		}
+		Data.System->Run(*this);
 	}
 }
 
@@ -525,6 +498,19 @@ FArchetypeSignature USystemsWorld::ComponentsIdsSignature(
 		}
 	}
 	return Result;
+}
+
+TOptional<FArchetypeSignature> USystemsWorld::ActorSignature(
+	AActor* Actor) const
+{
+	for (const auto& Pair : this->Archetypes)
+	{
+		if (const auto Found = Pair.Value.FindActorIndex(Actor))
+		{
+			return TOptional<FArchetypeSignature>(Pair.Key);
+		}
+	}
+	return TOptional<FArchetypeSignature>();
 }
 
 TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorComponents(

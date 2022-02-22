@@ -59,6 +59,7 @@ template <typename IA, typename IB>
 TIterChain<IA, IB> IterChain(IA&& IterA, IB&& IterB)
 {
 	//// [ignore]
-	return TIterChain<IA, IB>(MoveTempIfPossible(IterA), MoveTempIfPossible(IterB));
+	return TIterChain<IA, IB>(
+		MoveTempIfPossible(IterA), MoveTempIfPossible(IterB));
 	//// [/ignore]
 }

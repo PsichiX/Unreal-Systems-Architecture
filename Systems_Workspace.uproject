@@ -5,7 +5,17 @@
 	"Description": "",
 	"Modules": [
 		{
-			"Name": "Systems_Workspace",
+			"Name": "Shared",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Systems",
+				"Engine",
+				"UMG"
+			]
+		},
+		{
+			"Name": "Boids",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
@@ -13,7 +23,42 @@
 				"ReactiveUserInterfaceSystems",
 				"SystemsUnitTests",
 				"Engine",
-				"UMG"
+				"UMG",
+				"Shared"
+			]
+		},
+		{
+			"Name": "Life",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Systems",
+				"ReactiveUserInterfaceSystems",
+				"Engine",
+				"UMG",
+				"Shared"
+			]
+		},
+		{
+			"Name": "Multiplayer",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Systems",
+				"Engine",
+				"UMG",
+				"Shared"
+			]
+		},
+		{
+			"Name": "Tutorial",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Systems",
+				"Engine",
+				"UMG",
+				"Shared"
 			]
 		}
 	],

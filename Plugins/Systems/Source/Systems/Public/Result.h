@@ -10,154 +10,294 @@ struct TResultOk
 	T Value;
 };
 
-template <typename T>
+template <typename E>
 struct TResultError
 {
-	T Error;
+	E Error;
 };
 
-// TODO: document.
+/// Result type that can wrap either `T` value or `E` error data.
+///
+/// Useful for return types in functions that can return either valid value or
+/// some error. Given implementation tries to match `TOptional` API as much as
+/// possible.
+///
+/// # Example
+/// ```snippet
+/// result
+/// ```
 template <typename T, typename E>
 struct TResult
 {
 public:
+	//// [ignore]
 	TResult() = delete;
+	//// [/ignore]
 
-	TResult(const T& Value) : Inner()
+	/// Copy constructor.
+	TResult(
+		/// Value data to copy from.
+		const T& Value)
+		: Inner()
 	{
+		//// [ignore]
 		this->Inner.Set<TResultOk<T>>({Value});
+		//// [/ignore]
 	}
 
-	TResult(T&& Value) : Inner()
+	/// Move constructor.
+	TResult(
+		/// Value to consume.
+		T&& Value)
+		: Inner()
 	{
+		//// [ignore]
 		this->Inner.Set<TResultOk<T>>({MoveTempIfPossible(Value)});
+		//// [/ignore]
 	}
 
-	TResult(const E& Error) : Inner()
+	/// Copy constructor.
+	TResult(
+		/// Error to copy from.
+		const E& Error)
+		: Inner()
 	{
+		//// [ignore]
 		this->Inner.Set<TResultError<E>>({Error});
+		//// [/ignore]
 	}
 
-	TResult(E&& Error) : Inner()
+	/// Move constructor.
+	TResult(
+		/// Error to consume.
+		E&& Error)
+		: Inner()
 	{
+		//// [ignore]
 		this->Inner.Set<TResultError<E>>({MoveTempIfPossible(Error)});
+		//// [/ignore]
 	}
 
-	TResult(const TResult& Other)
+	/// Copy constructor.
+	TResult(
+		/// Result to copy from.
+		const TResult& Other)
 	{
+		//// [ignore]
 		this->Inner = Other;
+		//// [/ignore]
 	}
 
-	TResult(TResult&& Other)
+	/// Move constructor.
+	TResult(
+		/// Result to consume.
+		TResult&& Other)
 	{
+		//// [ignore]
 		this->Inner = MoveTempIfPossible(Other);
+		//// [/ignore]
 	}
 
+	/// Tells if result wraps value data.
 	bool IsOk() const
 	{
+		//// [ignore]
 		return this->Inner.IsType<TResultOk<T>>();
+		//// [/ignore]
 	}
 
+	/// Tells if result wraps error data.
 	bool IsError() const
 	{
+		//// [ignore]
 		return this->Inner.IsType<TResultError<E>>();
+		//// [/ignore]
 	}
 
+	/// Returns reference to internal value.
+	///
+	/// # Note
+	/// > It panics if result wraps error data.
 	T& GetOk()
 	{
+		//// [ignore]
 		check(IsOk());
 		return this->Inner.Get<TResultOk<T>>().Value;
+		//// [/ignore]
 	}
 
+	/// Returns reference to internal value.
+	///
+	/// # Note
+	/// > It panics if result wraps error data.
 	const T& GetOk() const
 	{
+		//// [ignore]
 		check(IsOk());
 		return this->Inner.Get<TResultOk<T>>().Value;
+		//// [/ignore]
 	}
 
+	/// Returns reference to internal error.
+	///
+	/// # Note
+	/// > It panics if result wraps value data.
 	E& GetError()
 	{
+		//// [ignore]
 		check(IsError());
 		return this->Inner.Get<TResultError<E>>().Error;
+		//// [/ignore]
 	}
 
+	/// Returns reference to internal error.
+	///
+	/// # Note
+	/// > It panics if result wraps value data.
 	const E& GetError() const
 	{
+		//// [ignore]
 		check(IsError());
 		return this->Inner.Get<TResultError<E>>().Error;
+		//// [/ignore]
 	}
 
-	TOptional<T> Ok() const
+	/// Returns option with cloned value data.
+	///
+	/// In case of result wrapping error data, it returns none.
+	TOptional<T> AsOk() const
 	{
+		//// [ignore]
 		return IsOk() ? TOptional<T>(this->Inner.Get<TResultOk<T>>().Value)
 					  : TOptional<T>();
+		//// [/ignore]
 	}
 
-	TOptional<E> Error() const
+	/// Returns option with cloned error data.
+	///
+	/// In case of result wrapping value data, it returns none.
+	TOptional<E> AsError() const
 	{
+		//// [ignore]
 		return IsError()
 			? TOptional<E>(this->Inner.Get<TResultError<E>>().Error)
 			: TOptional<E>();
+		//// [/ignore]
 	}
 
-	void SetOk(const T& Value)
+	/// Replaces internal data with cloned value data.
+	void SetOk(
+		/// Value to copy from.
+		const T& Value)
 	{
+		//// [ignore]
 		this->Inner.Set<TResultOk<T>>({Value});
+		//// [/ignore]
 	}
 
-	void SetOk(T&& Value)
+	/// Replaces internal data with moved value data.
+	void SetOk(
+		/// Value to consume.
+		T&& Value)
 	{
+		//// [ignore]
 		this->Inner.Set<TResultOk<T>>({MoveTempIfPossible(Value)});
+		//// [/ignore]
 	}
 
-	void SetError(const E& Error)
+	/// Replaces internal data with cloned error data.
+	void SetError(
+		/// Error to copy from.
+		const E& Error)
 	{
+		//// [ignore]
 		this->Inner.Set<TResultError<E>>({Error});
+		//// [/ignore]
 	}
 
-	void SetError(E&& Error)
+	/// Replaces internal data with moved error data.
+	void SetError(
+		/// Error to consume.
+		E&& Error)
 	{
+		//// [ignore]
 		this->Inner.Set<TResultError<E>>({MoveTempIfPossible(Error)});
+		//// [/ignore]
 	}
 
-	TResult& operator=(const TResult& Other)
+	/// Copies other result.
+	TResult& operator=(
+		/// Result to copy from.
+		const TResult& Other)
 	{
+		//// [ignore]
 		this->Inner = Other.Inner;
 		return *this;
+		//// [/ignore]
 	}
 
-	TResult& operator=(TResult&& Other)
+	/// Consumes other result.
+	TResult& operator=(
+		/// Result to consume.
+		TResult&& Other)
 	{
+		//// [ignore]
 		this->Inner = MoveTempIfPossible(Other.Inner);
 		return *this;
+		//// [/ignore]
 	}
 
-	TResult& operator=(const T& Value)
+	/// Replaces internal data with cloned value data.
+	TResult& operator=(
+		/// Value to copy from.
+		const T& Value)
 	{
+		//// [ignore]
 		this->Inner.Set<TResultOk<T>>({Value});
 		return *this;
+		//// [/ignore]
 	}
 
-	TResult& operator=(T&& Value)
+	/// Replaces internal data with moved value data.
+	TResult& operator=(
+		/// Value to consume.
+		T&& Value)
 	{
+		//// [ignore]
 		this->Inner.Set<TResultOk<T>>({MoveTempIfPossible(Value)});
 		return *this;
+		//// [/ignore]
 	}
 
-	TResult& operator=(const E& Error)
+	/// Replaces internal data with cloned error data.
+	TResult& operator=(
+		/// Error to copy from.
+		const E& Error)
 	{
+		//// [ignore]
 		this->Inner.Set<TResultError<E>>({Error});
 		return *this;
+		//// [/ignore]
 	}
 
-	TResult& operator=(E&& Error)
+	/// Replaces internal data with cloned error data.
+	TResult& operator=(
+		/// Error to consume.
+		E&& Error)
 	{
+		//// [ignore]
 		this->Inner.Set<TResultError<E>>({MoveTempIfPossible(Error)});
 		return *this;
+		//// [/ignore]
 	}
 
+	/// Tells if two results are equal.
+	///
+	/// Two results must both wrap either value or error, and if they do then
+	/// their data is compared.
 	friend bool operator==(const TResult& Lhs, const TResult& Rhs)
 	{
+		//// [ignore]
 		if (Lhs.IsOk() && Rhs.IsOk())
 		{
 			return Lhs.GetOk() == Rhs.GetOk();
@@ -167,17 +307,38 @@ public:
 			return Lhs.GetError() == Rhs.GetError();
 		}
 		return false;
+		//// [/ignore]
 	}
 
+	/// Tells if two results aren't equal.
+	///
+	/// Two results must both wrap either value or error, and if they do then
+	/// their data is compared.
 	friend bool operator!=(const TResult& Lhs, const TResult& Rhs)
 	{
+		//// [ignore]
 		return !(Lhs == Rhs);
+		//// [/ignore]
 	}
 
+	/// Serializes given result.
 	friend FArchive& operator<<(FArchive& Ar, TResult& Result)
 	{
+		//// [ignore]
 		Ar << Result.Inner;
 		return Ar;
+		//// [/ignore]
+	}
+
+	/// Cast to boolean.
+	///
+	/// Handy shortcut for [`struct: TResult::IsOk`]().
+	/// Useful when used in if statement condition.
+	explicit operator bool() const
+	{
+		//// [ignore]
+		return IsOk();
+		//// [/ignore]
 	}
 
 private:

@@ -62,6 +62,7 @@ template <typename IA, typename IB>
 TIterZip<IA, IB> IterZip(IA&& IterA, IB&& IterB)
 {
 	//// [ignore]
-	return TIterZip<IA, IB>(MoveTempIfPossible(IterA), MoveTempIfPossible(IterB));
+	return TIterZip<IA, IB>(
+		MoveTempIfPossible(IterA), MoveTempIfPossible(IterB));
 	//// [/ignore]
 }

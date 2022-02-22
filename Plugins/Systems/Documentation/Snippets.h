@@ -350,7 +350,8 @@ void main()
 				{
 					// Prints values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
 					UE_LOG(LogTemp,
-						Warning TEXT("Inspected item before: %i"),
+						Warning,
+						TEXT("Inspected item before: %i"),
 						Value);
 				})
 			.Filter([](const auto& Value) { return Value % 2 == 0; })
@@ -359,7 +360,8 @@ void main()
 				{
 					// Prints values: 0, 2, 4, 6, 8.
 					UE_LOG(LogTemp,
-						Warning TEXT("Inspected item after: %i"),
+						Warning,
+						TEXT("Inspected item after: %i"),
 						Value);
 				})
 			.CollectArray();
@@ -544,7 +546,7 @@ void AExampleGameMode::InitGame(const FString& MapName,
 			{
 				Systems.RegisterComponent<UShiaComponent>();
 
-				System.InstallResource<UShiaSettings>();
+				Systems.InstallResource<UShiaSettings>();
 
 				Systems.InstallLambdaSystem(
 					JustDoItSystem, FInstallSystemOptions("JustDoIt"));
@@ -559,7 +561,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	auto* Subsystem = USystemsSubsystem::Get(GetWorld());
 	if (IsValid(Subsystem))
 	{
-		Subsystem->ReleaseSystemsWorld(FName());
+		Subsystem->ReleaseSystemsWorld(ThisClass::SYSTEMS_WORLD);
 	}
 }
 //// [/snippet]
@@ -604,7 +606,7 @@ void ULogBirdsNumberChangeSystem::Run(USystemsWorld& Systems)
 
 //// [snippet: system_init]
 UCLASS()
-class SYSTEMS_WORKSPACE_API UBoidsMovementSystem : public USystem
+class BOIDS_API UBoidsMovementSystem : public USystem
 {
 	GENERATED_BODY()
 
@@ -629,7 +631,7 @@ void UBoidsMovementSystem::Init(USystemsWorld& Systems)
 
 //// [snippet: system_run]
 UCLASS()
-class SYSTEMS_WORKSPACE_API UBoidsMovementSystem : public USystem
+class BOIDS_API UBoidsMovementSystem : public USystem
 {
 	GENERATED_BODY()
 
@@ -1029,6 +1031,74 @@ void UExampleGameInstance::Init()
 				Systems.InstallSystem<ULogBirdsNumberChangeSystem>(
 					FInstallSystemOptions("LogBirdsNumberChange"));
 			});
+	}
+}
+//// [/snippet]
+
+//// [snippet: result]
+UENUM()
+enum class EGuessError : uint8
+{
+	TooHigh,
+	TooLow,
+};
+
+USTRUCT()
+struct FShiaTheSecretKeeper
+{
+	GENERATED_BODY()
+
+public:
+	FShiaTheSecretKeeper() : Secret(), Password()
+	{
+	}
+
+	FShiaTheSecretKeeper(FString InSecret, int InPassword)
+		: Secret(InSecret), Password(InPassword)
+	{
+	}
+
+	TResult<FString, EGuessError> TryGuess(int GuessPassword)
+	{
+		if (GuessPassword == this->Password)
+		{
+			return TResult<FString, EGuessError>(this->Secret);
+		}
+		else if (GuessPassword < this->Password)
+		{
+			return TResult<FString, EGuessError>(EGuessError::TooLow);
+		}
+		else
+		{
+			return TResult<FString, EGuessError>(EGuessError::TooHigh);
+		}
+	}
+
+private:
+	FString Secret = {};
+	int Password = {};
+};
+
+int Main()
+{
+	const auto Shia = FShiaTheSecretKeeper("Just do it!", 42);
+	const auto Result = Shia.TryGuess(42);
+	if (Result.IsOk())
+	{
+		UE_LOG(LogTemp, Info, TEXT("Guessed! Secret: %s"), *Result.GetOk());
+	}
+	else
+	{
+		switch (Result.GetError())
+		{
+			case EGuessError::TooHigh:
+				UE_LOG(LogTemp, Error, TEXT("Too high!"));
+				break;
+
+			case EGuessError::TooLow:
+				UE_LOG(LogTemp, Error, TEXT("Too low!"));
+				break;
+		}
 	}
 }
 //// [/snippet]

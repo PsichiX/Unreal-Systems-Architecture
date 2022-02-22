@@ -11,9 +11,9 @@
 //// [proxy: iter_count, iter, iter_consumers_base, iter_consumers]
 //// uint32 Count();
 //// [/proxy]
-#define ITER_IMPL_COUNT                      \
-	uint32 Count()                           \
-	{                                        \
+#define ITER_IMPL_COUNT                                \
+	uint32 Count()                                     \
+	{                                                  \
 		return ::IterCount(MoveTempIfPossible(*this)); \
 	}
 
@@ -26,9 +26,9 @@
 //// [proxy: iter_nth, iter, iter_consumers_base, iter_consumers]
 //// TOptional<Item> Nth(uint32 Index);
 //// [/proxy]
-#define ITER_IMPL_NTH                             \
-	TOptional<Item> Nth(uint32 Index)             \
-	{                                             \
+#define ITER_IMPL_NTH                                       \
+	TOptional<Item> Nth(uint32 Index)                       \
+	{                                                       \
 		return ::IterNth(MoveTempIfPossible(*this), Index); \
 	}
 
@@ -55,10 +55,10 @@
 //// template <typename FUNCTOR>
 //// Item Fold(Item Start, FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_FOLD(FUNCTOR)                          \
-	template <typename RESULT, typename FUNCTOR>         \
-	RESULT Fold(RESULT Start, FUNCTOR Func)              \
-	{                                                    \
+#define ITER_IMPL_FOLD(FUNCTOR)                                    \
+	template <typename RESULT, typename FUNCTOR>                   \
+	RESULT Fold(RESULT Start, FUNCTOR Func)                        \
+	{                                                              \
 		return ::IterFold(MoveTempIfPossible(*this), Start, Func); \
 	}
 
@@ -80,9 +80,9 @@
 //// [proxy: iter_sum, iter, iter_consumers]
 //// Item Sum(Item InitialValue);
 //// [/proxy]
-#define ITER_IMPL_SUM                                    \
-	Item Sum(Item InitialValue)                          \
-	{                                                    \
+#define ITER_IMPL_SUM                                              \
+	Item Sum(Item InitialValue)                                    \
+	{                                                              \
 		return ::IterSum(MoveTempIfPossible(*this), InitialValue); \
 	}
 
@@ -100,10 +100,10 @@
 //// template <typename FUNCTOR>
 //// TOptional<Item> Find(FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_FIND(FUNCTOR)                   \
-	template <typename FUNCTOR>                   \
-	TOptional<Item> Find(FUNCTOR Func)            \
-	{                                             \
+#define ITER_IMPL_FIND(FUNCTOR)                             \
+	template <typename FUNCTOR>                             \
+	TOptional<Item> Find(FUNCTOR Func)                      \
+	{                                                       \
 		return ::IterFind(MoveTempIfPossible(*this), Func); \
 	}
 
@@ -125,10 +125,10 @@
 //// template <typename RESULT, typename FUNCTOR>
 //// TOptional<RESULT> FindMap(FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_FIND_MAP(RESULT, FUNCTOR)                  \
-	template <typename RESULT, typename FUNCTOR>             \
-	TOptional<RESULT> FindMap(FUNCTOR Func)                  \
-	{                                                        \
+#define ITER_IMPL_FIND_MAP(RESULT, FUNCTOR)                            \
+	template <typename RESULT, typename FUNCTOR>                       \
+	TOptional<RESULT> FindMap(FUNCTOR Func)                            \
+	{                                                                  \
 		return ::IterFindMap<RESULT>(MoveTempIfPossible(*this), Func); \
 	}
 
@@ -143,9 +143,9 @@
 //// [proxy: iter_first, iter, iter_consumers_base, iter_consumers]
 //// TOptional<Item> First();
 //// [/proxy]
-#define ITER_IMPL_FIRST                      \
-	TOptional<Item> First()                  \
-	{                                        \
+#define ITER_IMPL_FIRST                                \
+	TOptional<Item> First()                            \
+	{                                                  \
 		return ::IterFirst(MoveTempIfPossible(*this)); \
 	}
 
@@ -158,9 +158,9 @@
 //// [proxy: iter_last, iter, iter_consumers_base, iter_consumers]
 //// TOptional<Item> Last();
 //// [/proxy]
-#define ITER_IMPL_LAST                      \
-	TOptional<Item> Last()                  \
-	{                                       \
+#define ITER_IMPL_LAST                                \
+	TOptional<Item> Last()                            \
+	{                                                 \
 		return ::IterLast(MoveTempIfPossible(*this)); \
 	}
 
@@ -183,10 +183,10 @@
 //// template <typename FUNCTOR>
 //// void ForEach(FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_FOR_EACH(FUNCTOR)           \
-	template <typename FUNCTOR>               \
-	void ForEach(FUNCTOR Func)                \
-	{                                         \
+#define ITER_IMPL_FOR_EACH(FUNCTOR)                     \
+	template <typename FUNCTOR>                         \
+	void ForEach(FUNCTOR Func)                          \
+	{                                                   \
 		::IterForEach(MoveTempIfPossible(*this), Func); \
 	}
 
@@ -204,10 +204,10 @@
 //// template <typename FUNCTOR>
 //// bool Any(FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_ANY(FUNCTOR)                   \
-	template <typename FUNCTOR>                  \
-	bool Any(FUNCTOR Func)                       \
-	{                                            \
+#define ITER_IMPL_ANY(FUNCTOR)                             \
+	template <typename FUNCTOR>                            \
+	bool Any(FUNCTOR Func)                                 \
+	{                                                      \
 		return ::IterAny(MoveTempIfPossible(*this), Func); \
 	}
 
@@ -225,10 +225,10 @@
 //// template <typename FUNCTOR>
 //// bool All(FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_ALL(FUNCTOR)                   \
-	template <typename FUNCTOR>                  \
-	bool All(FUNCTOR Func)                       \
-	{                                            \
+#define ITER_IMPL_ALL(FUNCTOR)                             \
+	template <typename FUNCTOR>                            \
+	bool All(FUNCTOR Func)                                 \
+	{                                                      \
 		return ::IterAll(MoveTempIfPossible(*this), Func); \
 	}
 
@@ -250,10 +250,10 @@
 //// template <typename FUNCTOR>
 //// TOptional<Item> ComparedBy(FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_COMPARED_BY(FUNCTOR)                  \
-	template <typename FUNCTOR>                         \
-	TOptional<Item> ComparedBy(FUNCTOR Func)            \
-	{                                                   \
+#define ITER_IMPL_COMPARED_BY(FUNCTOR)                            \
+	template <typename FUNCTOR>                                   \
+	TOptional<Item> ComparedBy(FUNCTOR Func)                      \
+	{                                                             \
 		return ::IterComparedBy(MoveTempIfPossible(*this), Func); \
 	}
 
@@ -266,9 +266,9 @@
 //// [proxy: iter_collect_into_array, iter, iter_collectors]
 //// void CollectIntoArray(TArray<Item>& Result);
 //// [/proxy]
-#define ITER_IMPL_COLLECT_INTO_ARRAY                     \
-	void CollectIntoArray(TArray<Item>& Result)          \
-	{                                                    \
+#define ITER_IMPL_COLLECT_INTO_ARRAY                               \
+	void CollectIntoArray(TArray<Item>& Result)                    \
+	{                                                              \
 		::IterCollectIntoArray(MoveTempIfPossible(*this), Result); \
 	}
 
@@ -281,9 +281,9 @@
 //// [proxy: iter_collect_array, iter, iter_collectors]
 //// TArray<Item> CollectArray();
 //// [/proxy]
-#define ITER_IMPL_COLLECT_ARRAY                     \
-	TArray<Item> CollectArray()                     \
-	{                                               \
+#define ITER_IMPL_COLLECT_ARRAY                               \
+	TArray<Item> CollectArray()                               \
+	{                                                         \
 		return ::IterCollectArray(MoveTempIfPossible(*this)); \
 	}
 
@@ -296,9 +296,9 @@
 //// [proxy: iter_collect_into_set, iter, iter_collectors]
 //// void CollectIntoSet(TSet<Item>& Result);
 //// [/proxy]
-#define ITER_IMPL_COLLECT_INTO_SET                     \
-	void CollectIntoSet(TSet<Item>& Result)            \
-	{                                                  \
+#define ITER_IMPL_COLLECT_INTO_SET                               \
+	void CollectIntoSet(TSet<Item>& Result)                      \
+	{                                                            \
 		::IterCollectIntoSet(MoveTempIfPossible(*this), Result); \
 	}
 
@@ -311,21 +311,21 @@
 //// [proxy: iter_collect_set, iter, iter_collectors]
 //// TSet<Item> CollectSet();
 //// [/proxy]
-#define ITER_IMPL_COLLECT_SET                     \
-	TSet<Item> CollectSet()                       \
-	{                                             \
+#define ITER_IMPL_COLLECT_SET                               \
+	TSet<Item> CollectSet()                                 \
+	{                                                       \
 		return ::IterCollectSet(MoveTempIfPossible(*this)); \
 	}
 
-#define ITER_IMPL_COLLECT_INTO_MAP(KEY, VALUE)                     \
-	void CollectIntoMap(TMap<KEY, VALUE>& Result)                  \
-	{                                                              \
+#define ITER_IMPL_COLLECT_INTO_MAP(KEY, VALUE)                               \
+	void CollectIntoMap(TMap<KEY, VALUE>& Result)                            \
+	{                                                                        \
 		::IterCollectIntoMap<KEY, VALUE>(MoveTempIfPossible(*this), Result); \
 	}
 
-#define ITER_IMPL_COLLECT_MAP(KEY, VALUE)                     \
-	TMap<KEY, VALUE> CollectMap()                             \
-	{                                                         \
+#define ITER_IMPL_COLLECT_MAP(KEY, VALUE)                               \
+	TMap<KEY, VALUE> CollectMap()                                       \
+	{                                                                   \
 		return ::IterCollectMap<KEY, VALUE>(MoveTempIfPossible(*this)); \
 	}
 
@@ -349,10 +349,10 @@
 //// template <typename ADAPTER>
 //// TIterAdapt<Self, ADAPTER> Adapt(ADAPTER Adapter);
 //// [/proxy]
-#define ITER_IMPL_ADAPT(ADAPTER)                      \
-	template <typename ADAPTER>                       \
-	TIterAdapt<Self, ADAPTER> Adapt(ADAPTER Adapter)  \
-	{                                                 \
+#define ITER_IMPL_ADAPT(ADAPTER)                                \
+	template <typename ADAPTER>                                 \
+	TIterAdapt<Self, ADAPTER> Adapt(ADAPTER Adapter)            \
+	{                                                           \
 		return ::IterAdapt(MoveTempIfPossible(*this), Adapter); \
 	}
 
@@ -372,10 +372,10 @@
 //// template <typename RESULT>
 //// TIterCast<typename RESULT, Self> Cast();
 //// [/proxy]
-#define ITER_IMPL_CAST(RESULT)                      \
-	template <typename RESULT>                      \
-	TIterCast<typename RESULT, Self> Cast()         \
-	{                                               \
+#define ITER_IMPL_CAST(RESULT)                                \
+	template <typename RESULT>                                \
+	TIterCast<typename RESULT, Self> Cast()                   \
+	{                                                         \
 		return ::IterCast<RESULT>(MoveTempIfPossible(*this)); \
 	}
 
@@ -396,11 +396,12 @@
 //// template <typename ITER>
 //// TIterChain<Self, ITER> Chain(ITER&& Iter);
 //// [/proxy]
-#define ITER_IMPL_CHAIN(ITER)                                \
-	template <typename ITER>                                 \
-	TIterChain<Self, ITER> Chain(ITER&& Iter)                \
-	{                                                        \
-		return ::IterChain(MoveTempIfPossible(*this), MoveTempIfPossible(Iter)); \
+#define ITER_IMPL_CHAIN(ITER)                                     \
+	template <typename ITER>                                      \
+	TIterChain<Self, ITER> Chain(ITER&& Iter)                     \
+	{                                                             \
+		return ::IterChain(                                       \
+			MoveTempIfPossible(*this), MoveTempIfPossible(Iter)); \
 	}
 
 /// Enumerates values in this iterator.
@@ -418,9 +419,9 @@
 //// [proxy: iter_enumerate, iter, iter_converters]
 //// TIterEnumerate<Self> Enumerate();
 //// [/proxy]
-#define ITER_IMPL_ENUMERATE                      \
-	TIterEnumerate<Self> Enumerate()             \
-	{                                            \
+#define ITER_IMPL_ENUMERATE                                \
+	TIterEnumerate<Self> Enumerate()                       \
+	{                                                      \
 		return ::IterEnumerate(MoveTempIfPossible(*this)); \
 	}
 
@@ -438,11 +439,11 @@
 //// template <typename FUNCTOR>
 //// TIterFilter<Self, typename FUNCTOR> Filter(FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_FILTER(FUNCTOR)                            \
-	template <typename FUNCTOR>                              \
-	TIterFilter<Self, typename FUNCTOR> Filter(FUNCTOR Func) \
-	{                                                        \
-		return ::IterFilter(MoveTempIfPossible(*this), Func);          \
+#define ITER_IMPL_FILTER(FUNCTOR)                             \
+	template <typename FUNCTOR>                               \
+	TIterFilter<Self, typename FUNCTOR> Filter(FUNCTOR Func)  \
+	{                                                         \
+		return ::IterFilter(MoveTempIfPossible(*this), Func); \
 	}
 
 /// Filters values in the iterator by predicate and maps them to another type.
@@ -462,12 +463,12 @@
 //// TIterFilterMap<typename RESULT, Self, typename FUNCTOR>
 //// FilterMap(FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_FILTER_MAP(RESULT, FUNCTOR)                          \
-	template <typename RESULT, typename FUNCTOR>                       \
-	TIterFilterMap<typename RESULT, Self, typename FUNCTOR> FilterMap( \
-		FUNCTOR Func)                                                  \
-	{                                                                  \
-		return ::IterFilterMap<RESULT>(MoveTempIfPossible(*this), Func);         \
+#define ITER_IMPL_FILTER_MAP(RESULT, FUNCTOR)                            \
+	template <typename RESULT, typename FUNCTOR>                         \
+	TIterFilterMap<typename RESULT, Self, typename FUNCTOR> FilterMap(   \
+		FUNCTOR Func)                                                    \
+	{                                                                    \
+		return ::IterFilterMap<RESULT>(MoveTempIfPossible(*this), Func); \
 	}
 
 /// Flattens nested iterators.
@@ -489,10 +490,10 @@
 //// template <typename RESULT>
 //// TIterFlatten<typename RESULT, Self> Flatten();
 //// [/proxy]
-#define ITER_IMPL_FLATTEN(RESULT)                      \
-	template <typename RESULT>                         \
-	TIterFlatten<typename RESULT, Self> Flatten()      \
-	{                                                  \
+#define ITER_IMPL_FLATTEN(RESULT)                                \
+	template <typename RESULT>                                   \
+	TIterFlatten<typename RESULT, Self> Flatten()                \
+	{                                                            \
 		return ::IterFlatten<RESULT>(MoveTempIfPossible(*this)); \
 	}
 
@@ -517,7 +518,7 @@
 	template <typename FUNCTOR>                                \
 	TIterInspect<Self, typename FUNCTOR> Inspect(FUNCTOR Func) \
 	{                                                          \
-		return ::IterInspect(MoveTempIfPossible(*this), Func);           \
+		return ::IterInspect(MoveTempIfPossible(*this), Func); \
 	}
 
 /// Maps yielded values to another type.
@@ -541,7 +542,7 @@
 	template <typename RESULT, typename FUNCTOR>                        \
 	TIterMap<typename RESULT, Self, typename FUNCTOR> Map(FUNCTOR Func) \
 	{                                                                   \
-		return ::IterMap<RESULT>(MoveTempIfPossible(*this), Func);                \
+		return ::IterMap<RESULT>(MoveTempIfPossible(*this), Func);      \
 	}
 
 /// Skips iteration by number of elements.
@@ -557,9 +558,9 @@
 //// [proxy: iter_skip, iter, iter_converters]
 //// TIterSkip<Self> Skip(uint32 Count);
 //// [/proxy]
-#define ITER_IMPL_SKIP                             \
-	TIterSkip<Self> Skip(uint32 Count)             \
-	{                                              \
+#define ITER_IMPL_SKIP                                       \
+	TIterSkip<Self> Skip(uint32 Count)                       \
+	{                                                        \
 		return ::IterSkip(MoveTempIfPossible(*this), Count); \
 	}
 
@@ -576,9 +577,9 @@
 //// [proxy: iter_take, iter, iter_converters]
 //// TIterTake<Self> Take(uint32 Count);
 //// [/proxy]
-#define ITER_IMPL_TAKE                             \
-	TIterTake<Self> Take(uint32 Count)             \
-	{                                              \
+#define ITER_IMPL_TAKE                                       \
+	TIterTake<Self> Take(uint32 Count)                       \
+	{                                                        \
 		return ::IterTake(MoveTempIfPossible(*this), Count); \
 	}
 
@@ -596,10 +597,10 @@
 //// template <uint32 COUNT>
 //// TIterViews<Self, COUNT> Views();
 //// [/proxy]
-#define ITER_IMPL_VIEWS(COUNT)                            \
-	template <uint32 COUNT>                               \
-	TIterViews<Self, COUNT> Views()                       \
-	{                                                     \
+#define ITER_IMPL_VIEWS(COUNT)                                      \
+	template <uint32 COUNT>                                         \
+	TIterViews<Self, COUNT> Views()                                 \
+	{                                                               \
 		return ::IterViews<Self, COUNT>(MoveTempIfPossible(*this)); \
 	}
 
@@ -614,10 +615,10 @@
 //// template <typename ITER>
 //// TIterZip<Self, ITER> Zip(ITER&& Iter);
 //// [/proxy]
-#define ITER_IMPL_ZIP(ITER)                                \
-	template <typename ITER>                               \
-	TIterZip<Self, ITER> Zip(ITER&& Iter)                  \
-	{                                                      \
+#define ITER_IMPL_ZIP(ITER)                                                    \
+	template <typename ITER>                                                   \
+	TIterZip<Self, ITER> Zip(ITER&& Iter)                                      \
+	{                                                                          \
 		return ::IterZip(MoveTempIfPossible(*this), MoveTempIfPossible(Iter)); \
 	}
 

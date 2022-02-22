@@ -28,7 +28,7 @@ setup and use Systems Architecture in your game:
     Boids are somewhat standard way to showcase database-like approach to game
     architecture in a nutshell.
 
-    - [C++ Code](Source/Systems_Workspace/Boids/)
+    - [C++ Code](Source/Boids/)
     - [Content](Content/Boids/)
 
 - Life simulation demo
@@ -36,7 +36,7 @@ setup and use Systems Architecture in your game:
     Small simulation-like demo where player is a god and watches over humans and
     animals running around doing their business.
 
-    - [C++ Code](Source/Systems_Workspace/Life/)
+    - [C++ Code](Source/Life/)
     - [Content](Content/Life/)
 
 ## Installation
@@ -60,7 +60,7 @@ and open level for mini-game you want to play:
 
     ```c++
     UCLASS(BlueprintType, Blueprintable, Meta = (BlueprintSpawnableComponent))
-    class SYSTEMS_WORKSPACE_API UVelocityComponent : public USystemsActorComponent
+    class SHARED_API UVelocityComponent : public USystemsActorComponent
     {
         GENERATED_BODY()
 
@@ -74,7 +74,7 @@ and open level for mini-game you want to play:
 
     ```c++
     UCLASS(BlueprintType, Blueprintable, Meta = (BlueprintSpawnableComponent))
-    class SYSTEMS_WORKSPACE_API UBoidComponent : public USystemsActorComponent
+    class BOIDS_API UBoidComponent : public USystemsActorComponent
     {
         GENERATED_BODY()
     };

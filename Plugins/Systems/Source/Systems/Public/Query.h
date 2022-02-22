@@ -201,7 +201,8 @@ public:
 	TTaggedQuery WithRaw(const UClass* Type)
 	{
 		//// [ignore]
-		auto Result = TTaggedQuery(this->Systems, MoveTempIfPossible(this->Tags));
+		auto Result =
+			TTaggedQuery(this->Systems, MoveTempIfPossible(this->Tags));
 		Result.TagRaw(Type);
 		return Result;
 		//// [/ignore]
