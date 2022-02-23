@@ -1,9 +1,9 @@
 #include "Life/Systems/Persistent/HungerSystem.h"
 
+#include "Shared/Components/HungerComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Life/Resources/LifeSettings.h"
-#include "Shared/Components/HungerComponent.h"
 
 void HungerSystem(USystemsWorld& Systems)
 {

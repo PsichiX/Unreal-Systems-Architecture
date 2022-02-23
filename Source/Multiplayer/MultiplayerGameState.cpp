@@ -1,5 +1,7 @@
 #include "Multiplayer/MultiplayerGameState.h"
 
+#include "Shared/Components/SpeedComponent.h"
+#include "Shared/Components/VelocityComponent.h"
 #include "Systems/Public/SystemsSubsystem.h"
 #include "Systems/Public/SystemsWorld.h"
 
@@ -14,8 +16,6 @@
 #include "Multiplayer/Systems/Persistent/MultiplayerApplyInputSystem.h"
 #include "Multiplayer/Systems/Persistent/MultiplayerMovementSystem.h"
 #include "Multiplayer/Systems/Persistent/MultiplayerSpawnRocketSystem.h"
-#include "Shared/Components/SpeedComponent.h"
-#include "Shared/Components/VelocityComponent.h"
 
 void AMultiplayerGameState::PostInitializeComponents()
 {

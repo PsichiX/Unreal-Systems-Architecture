@@ -1,11 +1,11 @@
 #include "Life/Systems/Persistent/MoveCameraSystem.h"
 
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Shared/Components/SpaceBoundsComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Life/Components/GodComponent.h"
 #include "Life/Resources/LifeSettings.h"
-#include "Shared/Components/SpaceBoundsComponent.h"
 
 const float TRACE_RANGE = 10000.0f;
 

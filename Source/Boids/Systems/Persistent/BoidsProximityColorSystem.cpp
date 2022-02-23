@@ -1,12 +1,12 @@
 #include "Boids/Systems/Persistent/BoidsProximityColorSystem.h"
 
+#include "Shared/Components/FoodComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Components/ColorComponent.h"
 #include "Boids/Resources/BoidsSettings.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
-#include "Shared/Components/FoodComponent.h"
 
 template <class T>
 void ApplyColors(USystemsWorld& Systems, float PerceptionRange)

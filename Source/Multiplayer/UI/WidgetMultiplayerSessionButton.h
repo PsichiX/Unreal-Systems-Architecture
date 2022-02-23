@@ -23,7 +23,7 @@ public:
 
 UCLASS()
 class MULTIPLAYER_API UWidgetMultiplayerSessionButton : public UUserWidget,
-															  public IUserObjectListEntry
+														public IUserObjectListEntry
 {
 	GENERATED_BODY()
 

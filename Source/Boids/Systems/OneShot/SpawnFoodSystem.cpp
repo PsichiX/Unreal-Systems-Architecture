@@ -1,9 +1,9 @@
 #include "Boids/Systems/OneShot/SpawnFoodSystem.h"
 
+#include "Shared/Components/SpaceBoundsComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/Resources/BoidsSettings.h"
-#include "Shared/Components/SpaceBoundsComponent.h"
 
 void SpawnFoodSystem(USystemsWorld& Systems, uint32 Amount)
 {

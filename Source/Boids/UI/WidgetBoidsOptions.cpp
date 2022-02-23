@@ -1,13 +1,13 @@
 #include "Boids/UI/WidgetBoidsOptions.h"
 
 #include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "Shared/UI/WidgetScalarParameter.h"
+#include "Shared/UI/WidgetVariantParameter.h"
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/BoidsGameMode.h"
 #include "Boids/Resources/BoidsSettings.h"
-#include "Shared/UI/WidgetScalarParameter.h"
-#include "Shared/UI/WidgetVariantParameter.h"
 
 void UWidgetBoidsOptions::NativeConstruct()
 {

@@ -1,5 +1,6 @@
 #include "Multiplayer/Systems/Persistent/MultiplayerSpawnRocketSystem.h"
 
+#include "Shared/Components/VelocityComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Multiplayer/Components/MultiPlayerComponent.h"
@@ -7,7 +8,6 @@
 #include "Multiplayer/Components/MultiplayerSpawnRocketComponent.h"
 #include "Multiplayer/Resources/MultiPlayerInput.h"
 #include "Multiplayer/Resources/MultiplayerCommands.h"
-#include "Shared/Components/VelocityComponent.h"
 
 void MultiplayerSpawnRocketSystem(USystemsWorld& Systems)
 {

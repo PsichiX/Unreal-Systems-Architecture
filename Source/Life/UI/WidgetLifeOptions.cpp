@@ -1,14 +1,14 @@
 #include "Life/UI/WidgetLifeOptions.h"
 
 #include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "Shared/UI/WidgetCheckbox.h"
+#include "Shared/UI/WidgetScalarParameter.h"
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Life/LifeGameMode.h"
 #include "Life/Resources/LifeSettings.h"
 #include "Life/Systems/OneShot/HumansClearVisionSystem.h"
-#include "Shared/UI/WidgetCheckbox.h"
-#include "Shared/UI/WidgetScalarParameter.h"
 
 void UWidgetLifeOptions::NativeConstruct()
 {

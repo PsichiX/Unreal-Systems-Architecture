@@ -1,12 +1,12 @@
 #include "Boids/UI/WidgetRunCriteria.h"
 
 #include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "Shared/UI/WidgetCheckbox.h"
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/BoidsGameMode.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
-#include "Shared/UI/WidgetCheckbox.h"
 
 void UWidgetRunCriteria::NativeConstruct()
 {

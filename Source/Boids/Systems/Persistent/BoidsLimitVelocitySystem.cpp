@@ -1,11 +1,11 @@
 #include "Boids/Systems/Persistent/BoidsLimitVelocitySystem.h"
 
+#include "Shared/Components/VelocityComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Resources/BoidsSettings.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
-#include "Shared/Components/VelocityComponent.h"
 
 void BoidsLimitVelocitySystem(USystemsWorld& Systems)
 {

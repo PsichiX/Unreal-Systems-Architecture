@@ -1,14 +1,14 @@
 #include "Multiplayer/Systems/Persistent/MultiplayerApplyInputSystem.h"
 
 #include "EngineUtils.h"
+#include "Shared/Components/SpeedComponent.h"
+#include "Shared/Components/VelocityComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Multiplayer/Components/MultiPlayerComponent.h"
 #include "Multiplayer/Components/MultiplayerInputComponent.h"
 #include "Multiplayer/Components/MultiplayerLocalControlComponent.h"
 #include "Multiplayer/Resources/MultiPlayerInput.h"
-#include "Shared/Components/SpeedComponent.h"
-#include "Shared/Components/VelocityComponent.h"
 
 void MultiplayerApplyInputSystemInner(USystemsWorld& Systems, const UMultiPlayerInput& PlayerInput)
 {

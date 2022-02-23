@@ -1,11 +1,11 @@
 #include "Boids/Systems/Persistent/BoidsHungerSystem.h"
 
+#include "Shared/Components/HungerComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Resources/BoidsSettings.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
-#include "Shared/Components/HungerComponent.h"
 
 void BoidsHungerSystem(USystemsWorld& Systems)
 {

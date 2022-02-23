@@ -1,9 +1,9 @@
+#include "Shared/Components/VelocityComponent.h"
 #include "SystemsUnitTests/Public/SystemsUnitTest.h"
 
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Resources/BoidsSettings.h"
 #include "Boids/Systems/Persistent/BoidsLimitVelocitySystem.h"
-#include "Shared/Components/VelocityComponent.h"
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FBoidsLimitVelocityTest,
 	"Boids.LimitVelocity",

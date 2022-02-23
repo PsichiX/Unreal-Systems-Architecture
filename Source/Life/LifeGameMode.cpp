@@ -1,6 +1,10 @@
 #include "Life/LifeGameMode.h"
 
 #include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "Shared/Components/FoodComponent.h"
+#include "Shared/Components/HungerComponent.h"
+#include "Shared/Components/SpaceBoundsComponent.h"
+#include "Shared/Components/SpeedComponent.h"
 #include "Systems/Public/SystemsSubsystem.h"
 #include "Systems/Public/SystemsWorld.h"
 
@@ -45,10 +49,6 @@
 #include "Life/Systems/Persistent/SpawnSystem.h"
 #include "Life/Systems/Persistent/WaterSystem.h"
 #include "Life/Systems/Persistent/ZoomCameraSystem.h"
-#include "Shared/Components/FoodComponent.h"
-#include "Shared/Components/HungerComponent.h"
-#include "Shared/Components/SpaceBoundsComponent.h"
-#include "Shared/Components/SpeedComponent.h"
 
 const FName ALifeGameMode::SYSTEMS_WORLD = FName(TEXT("Life"));
 

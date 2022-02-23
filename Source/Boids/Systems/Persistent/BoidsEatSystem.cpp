@@ -1,13 +1,13 @@
 #include "Boids/Systems/Persistent/BoidsEatSystem.h"
 
+#include "Shared/Components/FoodComponent.h"
+#include "Shared/Components/HungerComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Components/RadiusComponent.h"
 #include "Boids/Resources/BoidsSettings.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
-#include "Shared/Components/FoodComponent.h"
-#include "Shared/Components/HungerComponent.h"
 
 const float CONSUMPTION_SCALE = 10;
 

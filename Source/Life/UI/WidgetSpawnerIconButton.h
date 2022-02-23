@@ -15,8 +15,7 @@ class UBorder;
 class USystemsWorld;
 
 UCLASS()
-class LIFE_API UWidgetSpawnerIconButton : public UUserWidget,
-													   public IUserObjectListEntry
+class LIFE_API UWidgetSpawnerIconButton : public UUserWidget, public IUserObjectListEntry
 {
 	GENERATED_BODY()
 

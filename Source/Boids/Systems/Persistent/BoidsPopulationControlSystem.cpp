@@ -1,12 +1,12 @@
 #include "Boids/Systems/Persistent/BoidsPopulationControlSystem.h"
 
+#include "Shared/Components/SpaceBoundsComponent.h"
+#include "Shared/Components/VelocityComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Resources/BoidsSettings.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
-#include "Shared/Components/SpaceBoundsComponent.h"
-#include "Shared/Components/VelocityComponent.h"
 
 void BoidsPopulationControlSystem(USystemsWorld& Systems)
 {

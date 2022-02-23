@@ -1,10 +1,10 @@
 #include "Life/Systems/Persistent/FollowPathSystem.h"
 
+#include "Shared/Components/SpeedComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Life/Components/FlatMovementComponent.h"
 #include "Life/Components/FollowPathComponent.h"
-#include "Shared/Components/SpeedComponent.h"
 
 void FollowPathSystem(USystemsWorld& Systems)
 {

@@ -1,13 +1,13 @@
 #include "Boids/Systems/Persistent/BoidsApplyImpulseSystem.h"
 
+#include "Shared/Components/VelocityComponent.h"
+#include "Shared/Utils.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Components/ImpulseComponent.h"
 #include "Boids/Resources/BoidsSettings.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
-#include "Shared/Components/VelocityComponent.h"
-#include "Shared/Utils.h"
 
 void BoidsApplyImpulseSystem(USystemsWorld& Systems)
 {

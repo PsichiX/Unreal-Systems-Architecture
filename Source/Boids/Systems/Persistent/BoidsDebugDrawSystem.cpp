@@ -1,11 +1,11 @@
 #include "Boids/Systems/Persistent/BoidsDebugDrawSystem.h"
 
 #include "DrawDebugHelpers.h"
+#include "Shared/Components/VelocityComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
-#include "Shared/Components/VelocityComponent.h"
 
 const float ARROW_LENGTH = 20;
 const float THICKNESS = 8;

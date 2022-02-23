@@ -1,9 +1,9 @@
 #include "Tutorial/TutorialGameMode.h"
 
+#include "Shared/Components/SpeedComponent.h"
 #include "Systems/Public/SystemsSubsystem.h"
 #include "Systems/Public/SystemsWorld.h"
 
-#include "Shared/Components/SpeedComponent.h"
 #include "Tutorial/Components/TutorialHighlightComponent.h"
 #include "Tutorial/Components/TutorialMovementComponent.h"
 #include "Tutorial/Components/TutorialNpcComponent.h"

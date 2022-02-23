@@ -414,7 +414,6 @@ void USystemsWorld::Process()
 		}
 	}
 
-	const auto bIsServer = GetWorld()->IsServer();
 	for (auto& Data : this->Systems)
 	{
 		Data.System->Run(*this);

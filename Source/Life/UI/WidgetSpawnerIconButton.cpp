@@ -5,13 +5,13 @@
 #include "Components/Image.h"
 #include "PaperSprite.h"
 #include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "Shared/Utils.h"
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Life/LifeGameMode.h"
 #include "Life/Resources/LifeSettings.h"
 #include "Life/Resources/LifeSpawner.h"
-#include "Shared/Utils.h"
 
 void UWidgetSpawnerIconButton::NativeConstruct()
 {

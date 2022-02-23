@@ -1,8 +1,7 @@
 #include "Multiplayer/Systems/Persistent/MultiplayerMovementSystem.h"
 
-#include "Systems/Public/SystemsWorld.h"
-
 #include "Shared/Components/VelocityComponent.h"
+#include "Systems/Public/SystemsWorld.h"
 
 void MultiplayerMovementSystem(USystemsWorld& Systems)
 {

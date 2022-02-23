@@ -1,14 +1,14 @@
 #include "Boids/Systems/Persistent/BoidsHuntSystem.h"
 
+#include "Shared/Components/FoodComponent.h"
+#include "Shared/Components/HungerComponent.h"
+#include "Shared/Utils.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Components/ImpulseComponent.h"
 #include "Boids/Resources/BoidsSettings.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
-#include "Shared/Components/FoodComponent.h"
-#include "Shared/Components/HungerComponent.h"
-#include "Shared/Utils.h"
 
 struct Meta
 {

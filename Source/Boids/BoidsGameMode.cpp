@@ -1,6 +1,10 @@
 #include "Boids/BoidsGameMode.h"
 
 #include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "Shared/Components/FoodComponent.h"
+#include "Shared/Components/HungerComponent.h"
+#include "Shared/Components/SpaceBoundsComponent.h"
+#include "Shared/Components/VelocityComponent.h"
 #include "Systems/Public/SystemsSubsystem.h"
 #include "Systems/Public/SystemsWorld.h"
 
@@ -26,10 +30,6 @@
 #include "Boids/Systems/Persistent/BoidsPopulationControlSystem.h"
 #include "Boids/Systems/Persistent/BoidsProximityColorSystem.h"
 #include "Boids/Systems/Persistent/BoidsSeparationSystem.h"
-#include "Shared/Components/FoodComponent.h"
-#include "Shared/Components/HungerComponent.h"
-#include "Shared/Components/SpaceBoundsComponent.h"
-#include "Shared/Components/VelocityComponent.h"
 
 const FName ABoidsGameMode::SYSTEMS_WORLD = FName(TEXT("Boids"));
 

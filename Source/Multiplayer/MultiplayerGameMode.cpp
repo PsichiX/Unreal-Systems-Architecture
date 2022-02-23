@@ -2,6 +2,8 @@
 
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
+#include "Shared/Components/SpeedComponent.h"
+#include "Shared/Components/VelocityComponent.h"
 #include "Systems/Public/SystemsSubsystem.h"
 #include "Systems/Public/SystemsWorld.h"
 
@@ -20,8 +22,6 @@
 #include "Multiplayer/Systems/Persistent/MultiplayerMovementSystem.h"
 #include "Multiplayer/Systems/Persistent/MultiplayerRocketsLifetimeSystem.h"
 #include "Multiplayer/Systems/Persistent/MultiplayerSpawnRocketSystem.h"
-#include "Shared/Components/SpeedComponent.h"
-#include "Shared/Components/VelocityComponent.h"
 
 const FName AMultiplayerGameMode::SYSTEMS_WORLD = FName(TEXT("MultiplayerGameplay"));
 const FName AMultiplayerGameMode::LEVEL_NAME = FName(TEXT("MultiplayerGameMap"));

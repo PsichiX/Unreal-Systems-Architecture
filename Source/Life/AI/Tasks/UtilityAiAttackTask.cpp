@@ -2,13 +2,13 @@
 
 #include "NavigationPath.h"
 #include "NavigationSystem.h"
+#include "Shared/Components/FoodComponent.h"
+#include "Shared/Components/HungerComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "Life/AI/Reasoner/UtilityAiMemory.h"
 #include "Life/Components/HealthComponent.h"
 #include "Life/Components/StrengthComponent.h"
-#include "Shared/Components/FoodComponent.h"
-#include "Shared/Components/HungerComponent.h"
 
 bool UUtilityAiAttackTask::OnEnter(AActor* Actor,
 	USystemsWorld& Systems,
