@@ -39,6 +39,22 @@ setup and use Systems Architecture in your game:
     - [C++ Code](Source/Life/)
     - [Content](Content/Life/)
 
+- Multiplayer demo
+
+    Example of how to combine Systems Architecture with multiplayer essentials
+    (For now with no client-side predicition and server-side reconciliation).
+
+    - [C++ Code](Source/Multiplayer/)
+    - [Content](Content/Multiplayer/)
+
+- Tutorial
+
+    Learning project that will be later used in documentation to teach users how
+    to work with Systems Architecture.
+
+    - [C++ Code](Source/Tutorial/)
+    - [Content](Content/Tutorial/)
+
 ## Installation
 
 For now until plugin gets accepted into Epic Marketplace, you should download
@@ -50,9 +66,7 @@ installation rules).
 ## Testing demos
 
 If you want to test demo mini-games, please clone this entire repo, compile game
-and open level for mini-game you want to play:
-- Boids - `/Content/Boids/Maps/BoidsMap.umap`
-- Life - `/Content/Life/Maps/LifeMap.umap`
+and open default level (`/Content/Shared/Maps/GameSelectionMap.umap`).
 
 ## Quick showcase
 
