@@ -87,6 +87,11 @@ bool USystemsWorld::InstallSystemRaw(USystem* System,
 		return false;
 	}
 
+	if (Options.Label.IsNone())
+	{
+		Options.Label = FName(FGuid::NewGuid().ToString());
+	}
+
 	const auto Before =
 		IterStdConst(Options.Before)
 			.FilterMap<int>(

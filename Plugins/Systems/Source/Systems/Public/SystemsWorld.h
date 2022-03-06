@@ -249,6 +249,10 @@ public:
 	/// USystemsWorld::InstallLambdaSystem`]() but in case of valid reasons user
 	/// can install system by its instance.
 	///
+	/// # Note
+	/// > In case of [`struct: FInstallSystemOptions::Label`]() being empty, it
+	/// will generate random label from new GUID.
+	///
 	/// See [`class: USystem`](), [`struct: FInstallSystemOptions`]()
 	///
 	/// # Return
@@ -340,7 +344,7 @@ public:
 		/// `void(USystemsWorld&)`
 		TFunction<LambdaSystemType>&& Functor,
 		/// System install options.
-		FInstallSystemOptions Options);
+		FInstallSystemOptions Options = FInstallSystemOptions());
 
 	/// Tries to get pointer to resource by its class.
 	///

@@ -35,13 +35,10 @@ void ATutorialGameMode::InitGame(const FString& MapName,
 				Systems.RegisterComponent<UTutorialHighlightComponent>();
 				Systems.RegisterComponent<USpeedComponent>();
 
-				Systems.InstallLambdaSystem(
-					TutorialMoveTowardsTargetSystem, FInstallSystemOptions("MoveTowardsTarget"));
-				Systems.InstallLambdaSystem(
-					TutorialMovementSystem, FInstallSystemOptions("Movement"));
-				Systems.InstallLambdaSystem(
-					TutorialSelectActorsSystem, FInstallSystemOptions("SelectActors"));
-				Systems.InstallLambdaSystem(TutorialGoToSystem, FInstallSystemOptions("GoTo"));
+				Systems.InstallLambdaSystem(TutorialMoveTowardsTargetSystem);
+				Systems.InstallLambdaSystem(TutorialMovementSystem);
+				Systems.InstallLambdaSystem(TutorialSelectActorsSystem);
+				Systems.InstallLambdaSystem(TutorialGoToSystem);
 			});
 	}
 }
