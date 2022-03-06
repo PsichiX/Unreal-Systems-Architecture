@@ -193,14 +193,14 @@ iterate on.</p>
 </details>
 </li>
 <li>
-<h1 id="tag"><a class="header" href="#tag"><strong><code>Tag</code></strong></a></h1>
+<h1 id="with"><a class="header" href="#with"><strong><code>With</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;class W&gt;
-void Tag();
+TTaggedQuery&amp; With();
 </code></pre>
 <details>
 <hr />
-<p>Handy wrapper for <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#withraw"><strong><code>TTaggedQuery::WithRaw</code></strong></a>.</p>
 <h1 id="note-1"><a class="header" href="#note-1">Note</a></h1>
 <blockquote>
 <p>Make sure <code>W</code> inherits from <code>UActorComponent</code>.</p>
@@ -208,15 +208,16 @@ void Tag();
 </details>
 </li>
 <li>
-<h1 id="tagraw"><a class="header" href="#tagraw"><strong><code>TagRaw</code></strong></a></h1>
+<h1 id="withraw"><a class="header" href="#withraw"><strong><code>WithRaw</code></strong></a></h1>
 <pre><code class="language-cpp">public:
-void TagRaw(
+TTaggedQuery&amp; WithRaw(
     const UClass* Type
 );
 </code></pre>
 <details>
 <hr />
-<p>Adds given tag component type to the request.</p>
+<p>Request given component type to exists in queried actor without accesing
+its contents.</p>
 <h1 id="note-2"><a class="header" href="#note-2">Note</a></h1>
 <blockquote>
 <p>Make sure <code>Type</code> inherits from <code>UActorComponent</code>.</p>
@@ -233,14 +234,14 @@ void TagRaw(
 </details>
 </li>
 <li>
-<h1 id="with"><a class="header" href="#with"><strong><code>With</code></strong></a></h1>
+<h1 id="without"><a class="header" href="#without"><strong><code>Without</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;class W&gt;
-TTaggedQuery With();
+TTaggedQuery&amp; Without();
 </code></pre>
 <details>
 <hr />
-<p>Handy wrapper for <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#withraw"><strong><code>TTaggedQuery::WithRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#withoutraw"><strong><code>TTaggedQuery::WithoutRaw</code></strong></a>.</p>
 <h1 id="note-3"><a class="header" href="#note-3">Note</a></h1>
 <blockquote>
 <p>Make sure <code>W</code> inherits from <code>UActorComponent</code>.</p>
@@ -248,18 +249,15 @@ TTaggedQuery With();
 </details>
 </li>
 <li>
-<h1 id="withraw"><a class="header" href="#withraw"><strong><code>WithRaw</code></strong></a></h1>
+<h1 id="withoutraw"><a class="header" href="#withoutraw"><strong><code>WithoutRaw</code></strong></a></h1>
 <pre><code class="language-cpp">public:
-TTaggedQuery WithRaw(
+TTaggedQuery&amp; WithoutRaw(
     const UClass* Type
 );
 </code></pre>
 <details>
 <hr />
-<p>Adds given tag component type to the request.</p>
-<p>This is builder-pattern equivalent of <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>
-that returns new query so you can chain multiple tagging methods
-together.</p>
+<p>Request given component type to not exists in queried actors.</p>
 <h1 id="note-4"><a class="header" href="#note-4">Note</a></h1>
 <blockquote>
 <p>Make sure <code>Type</code> inherits from <code>UActorComponent</code>.</p>

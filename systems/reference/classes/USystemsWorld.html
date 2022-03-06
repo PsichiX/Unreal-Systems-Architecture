@@ -523,7 +523,8 @@ uint32 Count() const;
 <details>
 <hr />
 <p>Counts actors that contain given archetype signature.</p>
-<p>This is ergonomic shortcut for <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a>.</p>
+<p>This is ergonomic shortcut for <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a> that
+only counts types that should be included.</p>
 <h1 id="note-5"><a class="header" href="#note-5">Note</a></h1>
 <blockquote>
 <p><code>T</code> classes should inherit from <strong><code>UActorComponent</code></strong>!</p>
@@ -537,14 +538,16 @@ uint32 Count() const;
 <h1 id="countraw"><a class="header" href="#countraw"><strong><code>CountRaw</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 uint32 CountRaw(
-    const FArchetypeSignature&amp; Signature
+    const FArchetypeSignature&amp; IncludeSignature,
+    const FArchetypeSignature&amp; ExcludeSignature
 ) const;
 </code></pre>
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
 <hr />
-<p>Counts actors that contain given archetype signature.</p>
+<p>Counts actors that contain given archetype include signature and do not
+contains exclude signature.</p>
 <p>This is more performant way of counting actors with given set of
 components (although non-ergonomic for sure):</p>
 <pre><code class="language-cpp">	// Instead of this:
@@ -571,11 +574,18 @@ since only this one contains entirel requested signature.</p>
 <h1 id="arguments-8"><a class="header" href="#arguments-8"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="signature-1"><a class="header" href="#signature-1"><strong><code>Signature</code></strong></a></h2>
-<pre><code class="language-cpp">const FArchetypeSignature&amp; Signature
+<h2 id="includesignature"><a class="header" href="#includesignature"><strong><code>IncludeSignature</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; IncludeSignature
 </code></pre>
 <p>Archetype signature with minimal set of components that counted
 actors should contain.</p>
+</li>
+<li>
+<h2 id="excludesignature"><a class="header" href="#excludesignature"><strong><code>ExcludeSignature</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; ExcludeSignature
+</code></pre>
+<p>Archetype signature with minimal set of components that counted
+actors should not contain.</p>
 </li>
 </ul>
 </details>

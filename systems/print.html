@@ -4751,14 +4751,14 @@ iterate on.</p>
 </details>
 </li>
 <li>
-<h1 id="tag"><a class="header" href="#tag"><strong><code>Tag</code></strong></a></h1>
+<h1 id="with"><a class="header" href="#with"><strong><code>With</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;class W&gt;
-void Tag();
+TTaggedQuery&amp; With();
 </code></pre>
 <details>
 <hr />
-<p>Handy wrapper for <a href="reference/structs//Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="reference/structs//Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#withraw"><strong><code>TTaggedQuery::WithRaw</code></strong></a>.</p>
 <h1 id="note-41"><a class="header" href="#note-41">Note</a></h1>
 <blockquote>
 <p>Make sure <code>W</code> inherits from <code>UActorComponent</code>.</p>
@@ -4766,15 +4766,16 @@ void Tag();
 </details>
 </li>
 <li>
-<h1 id="tagraw"><a class="header" href="#tagraw"><strong><code>TagRaw</code></strong></a></h1>
+<h1 id="withraw"><a class="header" href="#withraw"><strong><code>WithRaw</code></strong></a></h1>
 <pre><code class="language-cpp">public:
-void TagRaw(
+TTaggedQuery&amp; WithRaw(
     const UClass* Type
 );
 </code></pre>
 <details>
 <hr />
-<p>Adds given tag component type to the request.</p>
+<p>Request given component type to exists in queried actor without accesing
+its contents.</p>
 <h1 id="note-42"><a class="header" href="#note-42">Note</a></h1>
 <blockquote>
 <p>Make sure <code>Type</code> inherits from <code>UActorComponent</code>.</p>
@@ -4791,14 +4792,14 @@ void TagRaw(
 </details>
 </li>
 <li>
-<h1 id="with"><a class="header" href="#with"><strong><code>With</code></strong></a></h1>
+<h1 id="without"><a class="header" href="#without"><strong><code>Without</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;class W&gt;
-TTaggedQuery With();
+TTaggedQuery&amp; Without();
 </code></pre>
 <details>
 <hr />
-<p>Handy wrapper for <a href="reference/structs//Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#withraw"><strong><code>TTaggedQuery::WithRaw</code></strong></a>.</p>
+<p>Handy wrapper for <a href="reference/structs//Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#withoutraw"><strong><code>TTaggedQuery::WithoutRaw</code></strong></a>.</p>
 <h1 id="note-43"><a class="header" href="#note-43">Note</a></h1>
 <blockquote>
 <p>Make sure <code>W</code> inherits from <code>UActorComponent</code>.</p>
@@ -4806,18 +4807,15 @@ TTaggedQuery With();
 </details>
 </li>
 <li>
-<h1 id="withraw"><a class="header" href="#withraw"><strong><code>WithRaw</code></strong></a></h1>
+<h1 id="withoutraw"><a class="header" href="#withoutraw"><strong><code>WithoutRaw</code></strong></a></h1>
 <pre><code class="language-cpp">public:
-TTaggedQuery WithRaw(
+TTaggedQuery&amp; WithoutRaw(
     const UClass* Type
 );
 </code></pre>
 <details>
 <hr />
-<p>Adds given tag component type to the request.</p>
-<p>This is builder-pattern equivalent of <a href="reference/structs//Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html#tagraw"><strong><code>TTaggedQuery::TagRaw</code></strong></a>
-that returns new query so you can chain multiple tagging methods
-together.</p>
+<p>Request given component type to not exists in queried actors.</p>
 <h1 id="note-44"><a class="header" href="#note-44">Note</a></h1>
 <blockquote>
 <p>Make sure <code>Type</code> inherits from <code>UActorComponent</code>.</p>
@@ -6570,7 +6568,8 @@ uint32 Count() const;
 <details>
 <hr />
 <p>Counts actors that contain given archetype signature.</p>
-<p>This is ergonomic shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a>.</p>
+<p>This is ergonomic shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a> that
+only counts types that should be included.</p>
 <h1 id="note-55"><a class="header" href="#note-55">Note</a></h1>
 <blockquote>
 <p><code>T</code> classes should inherit from <strong><code>UActorComponent</code></strong>!</p>
@@ -6584,14 +6583,16 @@ uint32 Count() const;
 <h1 id="countraw"><a class="header" href="#countraw"><strong><code>CountRaw</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 uint32 CountRaw(
-    const FArchetypeSignature&amp; Signature
+    const FArchetypeSignature&amp; IncludeSignature,
+    const FArchetypeSignature&amp; ExcludeSignature
 ) const;
 </code></pre>
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
 <hr />
-<p>Counts actors that contain given archetype signature.</p>
+<p>Counts actors that contain given archetype include signature and do not
+contains exclude signature.</p>
 <p>This is more performant way of counting actors with given set of
 components (although non-ergonomic for sure):</p>
 <pre><code class="language-cpp">	// Instead of this:
@@ -6618,11 +6619,18 @@ since only this one contains entirel requested signature.</p>
 <h1 id="arguments-108"><a class="header" href="#arguments-108"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="signature-1"><a class="header" href="#signature-1"><strong><code>Signature</code></strong></a></h2>
-<pre><code class="language-cpp">const FArchetypeSignature&amp; Signature
+<h2 id="includesignature"><a class="header" href="#includesignature"><strong><code>IncludeSignature</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; IncludeSignature
 </code></pre>
 <p>Archetype signature with minimal set of components that counted
 actors should contain.</p>
+</li>
+<li>
+<h2 id="excludesignature"><a class="header" href="#excludesignature"><strong><code>ExcludeSignature</code></strong></a></h2>
+<pre><code class="language-cpp">const FArchetypeSignature&amp; ExcludeSignature
+</code></pre>
+<p>Archetype signature with minimal set of components that counted
+actors should not contain.</p>
 </li>
 </ul>
 </details>
