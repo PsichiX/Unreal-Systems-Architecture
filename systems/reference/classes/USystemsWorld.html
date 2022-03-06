@@ -687,7 +687,7 @@ bool InstallDefaultSystem(
 <pre><code class="language-cpp">public:
 bool InstallLambdaSystem(
     TFunction&lt;LambdaSystemType&gt;&amp;&amp; Functor,
-    FInstallSystemOptions Options
+    FInstallSystemOptions Options = FInstallSystemOptions()
 );
 </code></pre>
 <details>
@@ -737,7 +737,7 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 </li>
 <li>
 <h2 id="options-1"><a class="header" href="#options-1"><strong><code>Options</code></strong></a></h2>
-<pre><code class="language-cpp">FInstallSystemOptions Options
+<pre><code class="language-cpp">FInstallSystemOptions Options = FInstallSystemOptions()
 </code></pre>
 <p>System install options.</p>
 </li>
@@ -862,6 +862,11 @@ bool InstallSystemRaw(
 <p>Usually user would want to install systems using either
 <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="/reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
 can install system by its instance.</p>
+<h1 id="note-9"><a class="header" href="#note-9">Note</a></h1>
+<blockquote>
+<p>In case of <a href="/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.html#label"><strong><code>FInstallSystemOptions::Label</code></strong></a> being empty, it
+will generate random label from new GUID.</p>
+</blockquote>
 <p>See <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="/reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-9"><a class="header" href="#return-9">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
@@ -933,7 +938,7 @@ void MarkComponentChanged(
 </ul>
 <hr />
 <p>Marks component as changed.</p>
-<h1 id="note-9"><a class="header" href="#note-9">Note</a></h1>
+<h1 id="note-10"><a class="header" href="#note-10">Note</a></h1>
 <blockquote>
 <p>This will mark component type, not component instance, as changed. The
 need for component iinstance here is purely to ensure we do not mark
@@ -1042,7 +1047,7 @@ registered to systems world that belong to the same actor. Systems
 architecture focuses on performing queries as fast as possible and not
 iterating over actors that do not need to be queried was a priority.</p>
 <p>See <a href="/Unreal-Systems-Architecture/systems/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a></p>
-<h1 id="note-10"><a class="header" href="#note-10">Note</a></h1>
+<h1 id="note-11"><a class="header" href="#note-11">Note</a></h1>
 <blockquote>
 <p>Returned query iterator has always actor put as first item of item
 tuple and then follow requested components. So <code>Systems-&gt;Query&lt;A, B, C&gt;()</code> iterator will yield given tuple <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code></p>
@@ -1081,7 +1086,7 @@ bool RegisterComponent();
 <h1 id="return-10"><a class="header" href="#return-10">Return</a></h1>
 <p>True if component was successfully installed (registry is not sealed and
 registry haven't reached its capacity).</p>
-<h1 id="note-11"><a class="header" href="#note-11">Note</a></h1>
+<h1 id="note-12"><a class="header" href="#note-12">Note</a></h1>
 <blockquote>
 <p><code>T</code> has to be a component that inherits from <strong><code>UActorComponent</code></strong></p>
 </blockquote>
@@ -1155,7 +1160,7 @@ bool RemoveComponent(
 to, but in case of user dynamically adding actor component to achieve
 support for behavior toggling, removing components from registry can be
 achieved with this method.</p>
-<h1 id="note-12"><a class="header" href="#note-12">Note</a></h1>
+<h1 id="note-13"><a class="header" href="#note-13">Note</a></h1>
 <blockquote>
 <p>Actor components are not unregistered immediatelly to avoid undefined
 behavior or eve game crashes when performing this while iterating
@@ -1312,7 +1317,7 @@ world registry, or wants to handle systems world on their own, user
 should call this method after systems world setup (registering
 components, installation of systems and resources) and then call this
 method.</p>
-<h1 id="note-13"><a class="header" href="#note-13">Note</a></h1>
+<h1 id="note-14"><a class="header" href="#note-14">Note</a></h1>
 <blockquote>
 <p>After calling this method, no further successful system or resource
 installation i possible, so make sure to install systems world

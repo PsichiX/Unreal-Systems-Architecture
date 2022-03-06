@@ -6732,7 +6732,7 @@ bool InstallDefaultSystem(
 <pre><code class="language-cpp">public:
 bool InstallLambdaSystem(
     TFunction&lt;LambdaSystemType&gt;&amp;&amp; Functor,
-    FInstallSystemOptions Options
+    FInstallSystemOptions Options = FInstallSystemOptions()
 );
 </code></pre>
 <details>
@@ -6782,7 +6782,7 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 </li>
 <li>
 <h2 id="options-1"><a class="header" href="#options-1"><strong><code>Options</code></strong></a></h2>
-<pre><code class="language-cpp">FInstallSystemOptions Options
+<pre><code class="language-cpp">FInstallSystemOptions Options = FInstallSystemOptions()
 </code></pre>
 <p>System install options.</p>
 </li>
@@ -6907,6 +6907,11 @@ bool InstallSystemRaw(
 <p>Usually user would want to install systems using either
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="reference/classes//reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
 can install system by its instance.</p>
+<h1 id="note-59"><a class="header" href="#note-59">Note</a></h1>
+<blockquote>
+<p>In case of <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.html#label"><strong><code>FInstallSystemOptions::Label</code></strong></a> being empty, it
+will generate random label from new GUID.</p>
+</blockquote>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="reference/classes//reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
 <h1 id="return-9"><a class="header" href="#return-9">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
@@ -6978,7 +6983,7 @@ void MarkComponentChanged(
 </ul>
 <hr />
 <p>Marks component as changed.</p>
-<h1 id="note-59"><a class="header" href="#note-59">Note</a></h1>
+<h1 id="note-60"><a class="header" href="#note-60">Note</a></h1>
 <blockquote>
 <p>This will mark component type, not component instance, as changed. The
 need for component iinstance here is purely to ensure we do not mark
@@ -7087,7 +7092,7 @@ registered to systems world that belong to the same actor. Systems
 architecture focuses on performing queries as fast as possible and not
 iterating over actors that do not need to be queried was a priority.</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a></p>
-<h1 id="note-60"><a class="header" href="#note-60">Note</a></h1>
+<h1 id="note-61"><a class="header" href="#note-61">Note</a></h1>
 <blockquote>
 <p>Returned query iterator has always actor put as first item of item
 tuple and then follow requested components. So <code>Systems-&gt;Query&lt;A, B, C&gt;()</code> iterator will yield given tuple <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code></p>
@@ -7126,7 +7131,7 @@ bool RegisterComponent();
 <h1 id="return-10"><a class="header" href="#return-10">Return</a></h1>
 <p>True if component was successfully installed (registry is not sealed and
 registry haven't reached its capacity).</p>
-<h1 id="note-61"><a class="header" href="#note-61">Note</a></h1>
+<h1 id="note-62"><a class="header" href="#note-62">Note</a></h1>
 <blockquote>
 <p><code>T</code> has to be a component that inherits from <strong><code>UActorComponent</code></strong></p>
 </blockquote>
@@ -7200,7 +7205,7 @@ bool RemoveComponent(
 to, but in case of user dynamically adding actor component to achieve
 support for behavior toggling, removing components from registry can be
 achieved with this method.</p>
-<h1 id="note-62"><a class="header" href="#note-62">Note</a></h1>
+<h1 id="note-63"><a class="header" href="#note-63">Note</a></h1>
 <blockquote>
 <p>Actor components are not unregistered immediatelly to avoid undefined
 behavior or eve game crashes when performing this while iterating
@@ -7357,7 +7362,7 @@ world registry, or wants to handle systems world on their own, user
 should call this method after systems world setup (registering
 components, installation of systems and resources) and then call this
 method.</p>
-<h1 id="note-63"><a class="header" href="#note-63">Note</a></h1>
+<h1 id="note-64"><a class="header" href="#note-64">Note</a></h1>
 <blockquote>
 <p>After calling this method, no further successful system or resource
 installation i possible, so make sure to install systems world
@@ -7538,7 +7543,7 @@ TIterRange&lt;T&gt; IterRange(
 <li>exclusive upper bound.
 For range from 0 to 5 it means yielding values: 0, 1, 2, 3, 4.</li>
 </ul>
-<h1 id="note-64"><a class="header" href="#note-64">Note</a></h1>
+<h1 id="note-65"><a class="header" href="#note-65">Note</a></h1>
 <blockquote>
 <p>This iterator is value type agnostic, all it requires from type is for it
 to implemen <code>operator++</code> and <code>operator-</code>;</p>
