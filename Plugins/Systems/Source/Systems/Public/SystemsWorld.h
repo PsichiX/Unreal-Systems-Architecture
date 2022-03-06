@@ -710,7 +710,8 @@ public:
 	/// sufficient compromise.
 	FActorsIter Actors();
 
-	/// Counts actors that contain given archetype signature.
+	/// Counts actors that contain given archetype include signature and do not
+	/// contains exclude signature.
 	///
 	/// This is more performant way of counting actors with given set of
 	/// components (although non-ergonomic for sure):
@@ -728,11 +729,15 @@ public:
 	uint32 CountRaw(
 		/// Archetype signature with minimal set of components that counted
 		/// actors should contain.
-		const FArchetypeSignature& Signature) const;
+		const FArchetypeSignature& IncludeSignature,
+		/// Archetype signature with minimal set of components that counted
+		/// actors should not contain.
+		const FArchetypeSignature& ExcludeSignature) const;
 
 	/// Counts actors that contain given archetype signature.
 	///
-	/// This is ergonomic shortcut for [`class: USystemsWorld::CountRaw`]().
+	/// This is ergonomic shortcut for [`class: USystemsWorld::CountRaw`]() that
+	/// only counts types that should be included.
 	///
 	/// # Note
 	/// > `T` classes should inherit from [`class: UActorComponent`]()!
@@ -837,7 +842,8 @@ private:
 
 	UFUNCTION()
 	TArray<FArchetypeSignature> FindQueryArchetypes(
-		const FArchetypeSignature& Signature) const;
+		const FArchetypeSignature& IncludeSignature,
+		const FArchetypeSignature& ExcludeSignature) const;
 
 	UFUNCTION()
 	TArray<FArchetypeSignature> AllArchetypes() const;

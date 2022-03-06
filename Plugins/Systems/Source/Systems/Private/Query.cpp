@@ -21,7 +21,8 @@ void UDynamicQuery::Setup(USystemsWorld* Systems, const UClass* Type)
 	if (IsValid(Systems) && IsValid(Type))
 	{
 		SignatureFromBundle(Systems, Type);
-		this->CachedArchetypes = Systems->FindQueryArchetypes(this->Signature);
+		this->CachedArchetypes = Systems->FindQueryArchetypes(
+			this->Signature, FArchetypeSignature());
 		if (this->CachedArchetypes.Num() > 0)
 		{
 			this->State.Set<FStartQueryState>({Systems});

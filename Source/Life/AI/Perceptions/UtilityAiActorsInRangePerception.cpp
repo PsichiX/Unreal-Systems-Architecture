@@ -13,7 +13,7 @@ void UUtilityAiActorsInRangePerception::Perceive(AActor* Actor,
 	auto Query = Systems.TaggedQuery();
 	for (const auto& Type : this->RequiredComponents)
 	{
-		Query.TagRaw(Type.Get());
+		Query.WithRaw(Type.Get());
 	}
 
 	const auto RangeMinSquared = this->RangeMin * this->RangeMin;

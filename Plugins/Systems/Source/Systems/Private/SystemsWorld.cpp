@@ -299,12 +299,14 @@ FActorsIter USystemsWorld::Actors()
 	return FActorsIter(this);
 }
 
-uint32 USystemsWorld::CountRaw(const FArchetypeSignature& Signature) const
+uint32 USystemsWorld::CountRaw(const FArchetypeSignature& IncludeSignature,
+	const FArchetypeSignature& ExcludeSignature) const
 {
 	auto Result = 0;
 	for (const auto& Pair : this->Archetypes)
 	{
-		if (Pair.Key.ContainsAll(Signature))
+		if (Pair.Key.ContainsAll(IncludeSignature) &&
+			Pair.Key.ContainsAny(ExcludeSignature) == false)
 		{
 			Result += Pair.Value.Actors.Num();
 		}
@@ -541,13 +543,15 @@ TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorIdComponents(
 }
 
 TArray<FArchetypeSignature> USystemsWorld::FindQueryArchetypes(
-	const FArchetypeSignature& Signature) const
+	const FArchetypeSignature& IncludeSignature,
+	const FArchetypeSignature& ExcludeSignature) const
 {
 	auto Result = TArray<FArchetypeSignature>();
 	Result.Reserve(this->Archetypes.Num());
 	for (const auto& Pair : this->Archetypes)
 	{
-		if (Pair.Key.ContainsAll(Signature))
+		if (Pair.Key.ContainsAll(IncludeSignature) &&
+			Pair.Key.ContainsAny(ExcludeSignature) == false)
 		{
 			Result.Add(Pair.Key);
 		}

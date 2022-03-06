@@ -164,7 +164,7 @@ void UWidgetSystemsQueryDebugger::OnPerformQueryClicked()
 	{
 		if (IsValid(Info) && Info->bEnabled && IsValid(Info->Type))
 		{
-			TaggedQuery.TagRaw(Info->Type);
+			TaggedQuery.WithRaw(Info->Type);
 		}
 	}
 

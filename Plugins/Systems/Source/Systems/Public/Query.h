@@ -160,51 +160,20 @@ public:
 		/// Pointer to systems world of which actor components user wants to
 		/// iterate on.
 		USystemsWorld* InSystems)
-		: Systems(InSystems), Tags()
+		: Systems(InSystems), WithTypes()
 	{
 	}
 
-	/// Adds given tag component type to the request.
+	/// Request given component type to exists in queried actor without accesing
+	/// its contents.
 	///
 	/// # Note
 	/// > Make sure `Type` inherits from `UActorComponent`.
-	void TagRaw(const UClass* Type)
+	TTaggedQuery& WithRaw(const UClass* Type)
 	{
 		//// [ignore]
-		if (IsValid(Type))
-		{
-			this->Tags.Add(Type);
-		}
-		//// [/ignore]
-	}
-
-	/// Handy wrapper for [`struct: TTaggedQuery::TagRaw`]().
-	///
-	/// # Note
-	/// > Make sure `W` inherits from `UActorComponent`.
-	template <class W>
-	void Tag()
-	{
-		//// [ignore]
-		TagRaw(W::StaticClass());
-		//// [/ignore]
-	}
-
-	/// Adds given tag component type to the request.
-	///
-	/// This is builder-pattern equivalent of [`struct:TTaggedQuery::TagRaw`]()
-	/// that returns new query so you can chain multiple tagging methods
-	/// together.
-	///
-	/// # Note
-	/// > Make sure `Type` inherits from `UActorComponent`.
-	TTaggedQuery WithRaw(const UClass* Type)
-	{
-		//// [ignore]
-		auto Result =
-			TTaggedQuery(this->Systems, MoveTempIfPossible(this->Tags));
-		Result.TagRaw(Type);
-		return Result;
+		this->WithTypes.Add(Type);
+		return *this;
 		//// [/ignore]
 	}
 
@@ -213,10 +182,34 @@ public:
 	/// # Note
 	/// > Make sure `W` inherits from `UActorComponent`.
 	template <class W>
-	TTaggedQuery With()
+	TTaggedQuery& With()
 	{
 		//// [ignore]
 		return WithRaw(W::StaticClass());
+		//// [/ignore]
+	}
+
+	/// Request given component type to not exists in queried actors.
+	///
+	/// # Note
+	/// > Make sure `Type` inherits from `UActorComponent`.
+	TTaggedQuery& WithoutRaw(const UClass* Type)
+	{
+		//// [ignore]
+		this->WithoutTypes.Add(Type);
+		return *this;
+		//// [/ignore]
+	}
+
+	/// Handy wrapper for [`struct: TTaggedQuery::WithoutRaw`]().
+	///
+	/// # Note
+	/// > Make sure `W` inherits from `UActorComponent`.
+	template <class W>
+	TTaggedQuery& Without()
+	{
+		//// [ignore]
+		return WithoutRaw(W::StaticClass());
 		//// [/ignore]
 	}
 
@@ -234,12 +227,16 @@ public:
 			{
 				Result.IncludeType(Systems, Type);
 			}
-			for (const auto* Type : this->Tags)
+			for (const auto* Type : this->WithTypes)
 			{
 				Result.IncludeType(Systems, Type);
 			}
-			Result.CachedArchetypes =
-				Systems->FindQueryArchetypes(Result.Signature);
+			for (const auto* Type : this->WithoutTypes)
+			{
+				Result.ExcludeType(Systems, Type);
+			}
+			Result.CachedArchetypes = Systems->FindQueryArchetypes(
+				Result.IncludeSignature, Result.ExcludeSignature);
 			if (Result.CachedArchetypes.Num() > 0)
 			{
 				Result.State.Set<FStartQueryState>({this->Systems});
@@ -252,7 +249,9 @@ public:
 private:
 	USystemsWorld* Systems = nullptr;
 
-	TSet<const UClass*> Tags = {};
+	TSet<const UClass*> WithTypes = {};
+
+	TSet<const UClass*> WithoutTypes = {};
 };
 
 /// Systems world query iterator.
@@ -285,7 +284,8 @@ public:
 	using Self = TQuery<T...>;
 	using Item = TTuple<AActor*, T*...>;
 
-	TQuery() : Signature(), CachedArchetypes(), State()
+	TQuery()
+		: IncludeSignature(), ExcludeSignature(), CachedArchetypes(), State()
 	{
 		//// [ignore]
 		this->State.Set<FEndQueryState>({});
@@ -299,7 +299,7 @@ public:
 		/// Pointer to systems world of which actor components user wants to
 		/// iterate on.
 		USystemsWorld* Systems)
-		: Signature(), CachedArchetypes(), State()
+		: IncludeSignature(), ExcludeSignature(), CachedArchetypes(), State()
 	{
 		//// [ignore]
 		this->State.Set<FEndQueryState>({});
@@ -310,8 +310,8 @@ public:
 			{
 				IncludeType(Systems, Type);
 			}
-			this->CachedArchetypes =
-				Systems->FindQueryArchetypes(this->Signature);
+			this->CachedArchetypes = Systems->FindQueryArchetypes(
+				this->IncludeSignature, FArchetypeSignature());
 			if (this->CachedArchetypes.Num() > 0)
 			{
 				this->State.Set<FStartQueryState>({Systems});
@@ -368,7 +368,8 @@ public:
 			const auto& Data = this->State.Get<FStartQueryState>();
 			if (IsValid(Data.Owner))
 			{
-				const auto Count = Data.Owner->CountRaw(this->Signature);
+				const auto Count = Data.Owner->CountRaw(
+					this->IncludeSignature, this->ExcludeSignature);
 				return IterSizeHint{0, TOptional<uint32>(Count)};
 			}
 		}
@@ -377,7 +378,8 @@ public:
 			const auto& Data = this->State.Get<FCurrentQueryState>();
 			if (IsValid(Data.Owner))
 			{
-				const auto Count = Data.Owner->CountRaw(this->Signature);
+				const auto Count = Data.Owner->CountRaw(
+					this->IncludeSignature, this->ExcludeSignature);
 				return IterSizeHint{0, TOptional<uint32>(Count)};
 			}
 		}
@@ -393,7 +395,18 @@ private:
 		checkf(Found.IsSet(),
 			TEXT("Trying to query non-registered component: %s"),
 			*Type->GetName());
-		this->Signature.EnableBit(Found.GetValue());
+		this->IncludeSignature.EnableBit(Found.GetValue());
+		//// [/ignore]
+	}
+
+	void ExcludeType(const USystemsWorld* Owner, const UClass* Type)
+	{
+		//// [ignore]
+		const auto Found = Owner->ComponentTypeIndex(Type);
+		checkf(Found.IsSet(),
+			TEXT("Trying to query non-registered component: %s"),
+			*Type->GetName());
+		this->ExcludeSignature.EnableBit(Found.GetValue());
 		//// [/ignore]
 	}
 
@@ -454,7 +467,9 @@ private:
 		//// [/ignore]
 	}
 
-	FArchetypeSignature Signature = {};
+	FArchetypeSignature IncludeSignature = {};
+
+	FArchetypeSignature ExcludeSignature = {};
 
 	TArray<FArchetypeSignature> CachedArchetypes = {};
 
@@ -499,7 +514,9 @@ public:
 
 private:
 	TOptional<Item> NextNone();
+
 	TOptional<Item> NextStart(FStartQueryState& Data);
+
 	TOptional<Item> NextCurrent(FCurrentQueryState& Data);
 
 	TArray<FArchetypeSignature> CachedArchetypes = {};
