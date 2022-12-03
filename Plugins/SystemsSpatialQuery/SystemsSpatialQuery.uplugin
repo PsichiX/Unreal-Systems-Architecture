@@ -4,7 +4,7 @@
 	"VersionName": "1.0",
 	"FriendlyName": "SystemsSpatialQuery",
 	"Description": "Systems Spatial Query",
-	"Category": "Other",
+	"Category": "Systems",
 	"CreatedBy": "Patryk \"PsichiX\" Budzynski",
 	"CreatedByURL": "https://github.com/PsichiX",
 	"DocsURL": "https://github.com/PsichiX/Unreal-Systems-Architecture",
