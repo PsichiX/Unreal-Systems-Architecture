@@ -1,5 +1,6 @@
 .vscode
 .ignore
+.vs
 Binaries
 DerivedDataCache
 Intermediate
@@ -10,3 +11,4 @@ Documentation/Distribution
 Content/Collections
 Content/Developers
 *.code-workspace
+*.sln
