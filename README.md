@@ -1,5 +1,5 @@
 # Unreal Systems Architecture
-Systems Architecture plugin for Unreal Engine.
+Systems Architecture plugin for **Unreal Engine 5.1**.
 
 ## Table of contents
 
@@ -121,4 +121,5 @@ for more in-depth explanation and examples please visit plugin documentation.
 
 - [Systems Architecture](https://psichix.github.io/Unreal-Systems-Architecture/systems)
 - [Systems Query Debugger]() (TODO)
+- [Systems Spatial Query]() (TODO)
 - [Reactive UI Systems]() (TODO)
