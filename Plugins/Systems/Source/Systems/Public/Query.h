@@ -311,7 +311,7 @@ public:
 				IncludeType(Systems, Type);
 			}
 			this->CachedArchetypes = Systems->FindQueryArchetypes(
-				this->IncludeSignature, FArchetypeSignature());
+				this->IncludeSignature, this->ExcludeSignature);
 			if (this->CachedArchetypes.Num() > 0)
 			{
 				this->State.Set<FStartQueryState>({Systems});

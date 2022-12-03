@@ -31,7 +31,7 @@ void TutorialSelectActorsSystem(USystemsWorld& Systems)
 	if (PlayerController->GetHitResultUnderCursor(
 			ECollisionChannel::ECC_GameTraceChannel2, true, Hit))
 	{
-		auto* Actor = Hit.Actor.Get();
+		auto* Actor = Hit.GetActor();
 		if (IsValid(Actor))
 		{
 			auto* Selected = Actor->FindComponentByClass<UTutorialSelectedComponent>();

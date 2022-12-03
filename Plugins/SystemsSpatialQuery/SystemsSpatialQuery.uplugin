@@ -1,0 +1,30 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "SystemsSpatialQuery",
+	"Description": "Systems Spatial Query",
+	"Category": "Other",
+	"CreatedBy": "Patryk \"PsichiX\" Budzynski",
+	"CreatedByURL": "https://github.com/PsichiX",
+	"DocsURL": "https://github.com/PsichiX/Unreal-Systems-Architecture",
+	"MarketplaceURL": "",
+	"SupportURL": "https://github.com/PsichiX/Unreal-Systems-Architecture/issues",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "SystemsSpatialQuery",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "Systems",
+			"Enabled": true
+		}
+	]
+}

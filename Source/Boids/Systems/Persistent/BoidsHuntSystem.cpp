@@ -12,7 +12,7 @@
 
 struct Meta
 {
-	float Distance = 0;
+	double Distance = 0;
 	FVector Position = FVector(0);
 };
 

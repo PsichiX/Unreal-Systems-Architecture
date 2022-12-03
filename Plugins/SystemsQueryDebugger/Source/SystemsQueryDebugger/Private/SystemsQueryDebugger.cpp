@@ -38,8 +38,9 @@ void FSystemsQueryDebuggerModule::RegisterMenus()
 		[]()
 		{
 			auto AssetData = IAssetRegistry::GetChecked().GetAssetByObjectPath(
-				"/SystemsQueryDebugger/"
-				"EWBP_SystemsQueryDebugger.EWBP_SystemsQueryDebugger");
+				FSoftObjectPath(FString(TEXT(
+					"/SystemsQueryDebugger/"
+					"EWBP_SystemsQueryDebugger.EWBP_SystemsQueryDebugger"))));
 			auto* EditorWidget =
 				Cast<UEditorUtilityWidgetBlueprint>(AssetData.GetAsset());
 

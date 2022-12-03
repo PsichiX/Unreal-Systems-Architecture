@@ -13,7 +13,7 @@ const float CONSUMPTION_SCALE = 10;
 
 struct Meta
 {
-	float Distance = 0;
+	double Distance = 0;
 	UFoodComponent* Food = nullptr;
 };
 

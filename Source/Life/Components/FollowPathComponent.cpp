@@ -4,8 +4,8 @@
 
 struct Meta
 {
-	float DistanceSquared = 0;
-	float LocationAlongPath = 0;
+	double DistanceSquared = 0;
+	double LocationAlongPath = 0;
 };
 
 void UFollowPathComponent::SetPathFromPointsList(const TArray<FVector>& Points)

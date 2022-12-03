@@ -736,7 +736,7 @@ public:
 		const FArchetypeSignature& IncludeSignature,
 		/// Archetype signature with minimal set of components that counted
 		/// actors should not contain.
-		const FArchetypeSignature& ExcludeSignature) const;
+		const FArchetypeSignature& ExcludeSignature = {}) const;
 
 	/// Counts actors that contain given archetype signature.
 	///

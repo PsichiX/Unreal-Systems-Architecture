@@ -57,7 +57,7 @@ void UGodComponent::BeginPlay()
 
 	GetOwner()->EnableInput(GetWorld()->GetFirstPlayerController());
 
-	auto* Input = GetOwner()->InputComponent;
+	auto& Input = GetOwner()->InputComponent;
 	if (IsValid(Input))
 	{
 		Input->BindAction(CAMERA_ZOOM_ROTATE_MODE_BINDING,
@@ -98,7 +98,7 @@ void UGodComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
-	auto* Input = GetOwner()->InputComponent;
+	auto& Input = GetOwner()->InputComponent;
 	if (IsValid(Input))
 	{
 		Input->ClearActionBindings();

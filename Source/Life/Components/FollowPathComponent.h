@@ -24,7 +24,7 @@ struct FFollowPathSegment
 	FVector2D Difference = FVector2D(0);
 
 	UPROPERTY()
-	float Length = 0;
+	double Length = 0;
 };
 
 UCLASS(BlueprintType, Blueprintable, Meta = (BlueprintSpawnableComponent))

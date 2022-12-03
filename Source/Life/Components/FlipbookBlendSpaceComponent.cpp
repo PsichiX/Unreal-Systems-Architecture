@@ -4,7 +4,7 @@
 
 struct Meta
 {
-	float WeightedDistanceSquared = 0;
+	double WeightedDistanceSquared = 0;
 	UPaperFlipbook* Flipbook = nullptr;
 };
 

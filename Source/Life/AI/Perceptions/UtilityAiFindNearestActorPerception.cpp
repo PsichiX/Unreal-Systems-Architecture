@@ -6,7 +6,7 @@
 
 struct Meta
 {
-	float DistanceSquared = 0;
+	double DistanceSquared = 0;
 	AActor* Actor = nullptr;
 };
 

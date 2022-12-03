@@ -6,6 +6,7 @@ public class Life : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         bUseUnity = false;
+        IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 
         PublicDependencyModuleNames.AddRange(new string[] {
             "Core",
@@ -17,7 +18,7 @@ public class Life : ModuleRules
             "UMG",
             "Paper2D",
             "NavigationSystem",
-            "AiModule",
+            "AIModule",
             "Systems",
             "ReactiveUserInterfaceSystems",
             "Shared",
