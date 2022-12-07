@@ -1,2 +1,0 @@
-@REM NOTE: This command do not run tests from command line, so if anyone do have any idea how to make it work, please send PR.
-@REM "D:\Applications\Epic Games\UE_4.27\Engine\Binaries\Win64\UE4Editor.exe" %CD%\..\Systems_Workspace.uproject -AutomationTests="Boids.LimitVelocity"
