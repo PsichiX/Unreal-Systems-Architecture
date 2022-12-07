@@ -37,11 +37,13 @@ bool FArea::Overlaps(FVector Center, FVector::FReal Radius) const
 	const auto SelfExtents = this->Extents();
 	const auto AxisDist = (Center - SelfCenter).GetAbs();
 	if ((AxisDist.X > SelfExtents.X + Radius) ||
-		(AxisDist.Y > SelfExtents.Y + Radius))
+		(AxisDist.Y > SelfExtents.Y + Radius) ||
+		(AxisDist.Z > SelfExtents.Z + Radius))
 	{
 		return false;
 	}
-	if ((AxisDist.X < SelfExtents.X) || (AxisDist.Y < SelfExtents.Y))
+	if ((AxisDist.X < SelfExtents.X) || (AxisDist.Y < SelfExtents.Y) ||
+		(AxisDist.Z < SelfExtents.Z))
 	{
 		return true;
 	}
