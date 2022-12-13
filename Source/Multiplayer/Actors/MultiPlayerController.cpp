@@ -2,18 +2,8 @@
 
 #include "Systems/Public/SystemsStatics.h"
 
-#include "Multiplayer/MultiplayerGameMode.h"
+#include "Multiplayer/Constants.h"
 #include "Multiplayer/Resources/MultiPlayerInput.h"
-
-const FName ACTION_BINDING = FName(TEXT("Action"));
-const FName CAMERA_RELATIVE_DIRECTION_HORIZONTAL_BINDING =
-	FName(TEXT("CameraRelativeDirectionHorizontal"));
-const FName CAMERA_RELATIVE_DIRECTION_VERTICAL_BINDING =
-	FName(TEXT("CameraRelativeDirectionVertical"));
-const FName CAMERA_RELATIVE_MOVEMENT_HORIZONTAL_BINDING =
-	FName(TEXT("CameraRelativeMovementHorizontal"));
-const FName CAMERA_RELATIVE_MOVEMENT_VERTICAL_BINDING =
-	FName(TEXT("CameraRelativeMovementVertical"));
 
 void AMultiPlayerController::SetupInputComponent()
 {
@@ -42,8 +32,7 @@ void AMultiPlayerController::SetupInputComponent()
 
 void AMultiPlayerController::OnActionPressed()
 {
-	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(
-		AMultiplayerGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(FName(), GetWorld());
 	if (IsValid(Input))
 	{
 		Input->bAction = true;
@@ -52,8 +41,7 @@ void AMultiPlayerController::OnActionPressed()
 
 void AMultiPlayerController::OnActionReleased()
 {
-	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(
-		AMultiplayerGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(FName(), GetWorld());
 	if (IsValid(Input))
 	{
 		Input->bAction = false;
@@ -62,8 +50,7 @@ void AMultiPlayerController::OnActionReleased()
 
 void AMultiPlayerController::OnRelativeDirectionHorizontal(float Delta)
 {
-	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(
-		AMultiplayerGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(FName(), GetWorld());
 	if (IsValid(Input))
 	{
 		Input->RelativeLook.X = Delta;
@@ -72,8 +59,7 @@ void AMultiPlayerController::OnRelativeDirectionHorizontal(float Delta)
 
 void AMultiPlayerController::OnRelativeDirectionVertical(float Delta)
 {
-	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(
-		AMultiplayerGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(FName(), GetWorld());
 	if (IsValid(Input))
 	{
 		Input->RelativeLook.Y = Delta;
@@ -82,8 +68,7 @@ void AMultiPlayerController::OnRelativeDirectionVertical(float Delta)
 
 void AMultiPlayerController::OnRelativeMovementHorizontal(float Delta)
 {
-	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(
-		AMultiplayerGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(FName(), GetWorld());
 	if (IsValid(Input))
 	{
 		Input->RelativeMovement.X = Delta;
@@ -92,8 +77,7 @@ void AMultiPlayerController::OnRelativeMovementHorizontal(float Delta)
 
 void AMultiPlayerController::OnRelativeMovementVertical(float Delta)
 {
-	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(
-		AMultiplayerGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Input = USystemsStatics::GetResource<UMultiPlayerInput>(FName(), GetWorld());
 	if (IsValid(Input))
 	{
 		Input->RelativeMovement.Y = Delta;

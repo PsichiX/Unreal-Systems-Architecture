@@ -7,13 +7,12 @@
 
 #include "Life/Components/AnimalComponent.h"
 #include "Life/Components/HumanComponent.h"
-#include "Life/LifeGameMode.h"
 
 void UWidgetLifeStats::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	auto* Systems = USystemsStatics::GetSystemsWorld(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* ChangeDetection = Systems->Resource<UUiChangeDetection>();
@@ -34,8 +33,7 @@ void UWidgetLifeStats::NativeDestruct()
 {
 	Super::NativeDestruct();
 
-	auto* ChangeDetection =
-		USystemsStatics::GetResource<UUiChangeDetection>(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);

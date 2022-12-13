@@ -12,26 +12,18 @@
 void MultiplayerSpawnRocketSystem(USystemsWorld& Systems)
 {
 	auto* PlayerInput = Systems.Resource<UMultiPlayerInput>();
-	if (IsValid(PlayerInput) == false)
+	if (IsValid(PlayerInput) == false || PlayerInput->bAction == false)
 	{
 		return;
 	}
+
+	PlayerInput->bAction = false;
 
 	Systems
 		.Query<UMultiplayerSpawnRocketComponent,
 			UMultiPlayerComponent,
 			UMultiplayerLocalControlComponent>()
-		.ForEach(
-			[&](auto& QueryItem)
-			{
-				if (PlayerInput->bAction)
-				{
-					PlayerInput->bAction = false;
-					auto* SpawnRocket = QueryItem.Get<1>();
-
-					SpawnRocket->ServerExecute();
-				}
-			});
+		.ForEach([&](auto& QueryItem) { QueryItem.Get<1>()->ServerExecute(); });
 }
 
 void MultiplayerSpawnRocketCooldownSystem(USystemsWorld& Systems)
@@ -39,12 +31,7 @@ void MultiplayerSpawnRocketCooldownSystem(USystemsWorld& Systems)
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 
 	Systems.Query<UMultiplayerSpawnRocketComponent, UMultiPlayerComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* SpawnRocket = QueryItem.Get<1>();
-
-			SpawnRocket->Cooldown -= DeltaTime;
-		});
+		[&](auto& QueryItem) { QueryItem.Get<1>()->Cooldown -= DeltaTime; });
 }
 
 void MultiplayerExecuteRocketSpawnsSystem(USystemsWorld& Systems)

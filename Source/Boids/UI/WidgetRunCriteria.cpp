@@ -5,15 +5,14 @@
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
-#include "Boids/BoidsGameMode.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
 
 void UWidgetRunCriteria::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	const auto* RunCriteria = USystemsStatics::GetResource<UBoidsSystemsRunCriteria>(
-		ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	const auto* RunCriteria =
+		USystemsStatics::GetResource<UBoidsSystemsRunCriteria>(FName(), GetWorld());
 
 	if (IsValid(this->RunPopulationControl))
 	{
@@ -78,8 +77,7 @@ void UWidgetRunCriteria::NativeConstruct()
 		this->RunDebugDraw->OnChanged().AddUniqueDynamic(this, &ThisClass::OnRunDebugDrawChanged);
 	}
 
-	auto* ChangeDetection =
-		USystemsStatics::GetResource<UUiChangeDetection>(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		auto Signature = FUiChangeSignature();
@@ -149,8 +147,7 @@ void UWidgetRunCriteria::NativeDestruct()
 		this->RunDebugDraw->OnChanged().RemoveAll(this);
 	}
 
-	auto* ChangeDetection =
-		USystemsStatics::GetResource<UUiChangeDetection>(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);
@@ -226,7 +223,7 @@ void UWidgetRunCriteria::OnRunCriteriaChanged(USystemsWorld& Systems)
 
 void UWidgetRunCriteria::OnRunPopulationControlChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -240,7 +237,7 @@ void UWidgetRunCriteria::OnRunPopulationControlChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunSeparationChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -254,7 +251,7 @@ void UWidgetRunCriteria::OnRunSeparationChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunAlignmentChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -268,7 +265,7 @@ void UWidgetRunCriteria::OnRunAlignmentChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunCohesionChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -282,7 +279,7 @@ void UWidgetRunCriteria::OnRunCohesionChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunHuntChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -296,7 +293,7 @@ void UWidgetRunCriteria::OnRunHuntChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunHungerChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -310,7 +307,7 @@ void UWidgetRunCriteria::OnRunHungerChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunEatChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -324,7 +321,7 @@ void UWidgetRunCriteria::OnRunEatChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunLimitVelocityChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -338,7 +335,7 @@ void UWidgetRunCriteria::OnRunLimitVelocityChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunKeepInSpaceBoundsChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -352,7 +349,7 @@ void UWidgetRunCriteria::OnRunKeepInSpaceBoundsChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunApplyImpulseChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -366,7 +363,7 @@ void UWidgetRunCriteria::OnRunApplyImpulseChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunMovementChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -380,7 +377,7 @@ void UWidgetRunCriteria::OnRunMovementChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunFaceDirectionChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -394,7 +391,7 @@ void UWidgetRunCriteria::OnRunFaceDirectionChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunProximityColorChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();
@@ -408,7 +405,7 @@ void UWidgetRunCriteria::OnRunProximityColorChanged(bool bIsChecked)
 
 void UWidgetRunCriteria::OnRunDebugDrawChanged(bool bIsChecked)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* RunCriteria = Systems->Resource<UBoidsSystemsRunCriteria>();

@@ -3,22 +3,21 @@
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
-#include "Multiplayer/MultiplayerGameMode.h"
+#include "Multiplayer/Constants.h"
 #include "Multiplayer/Resources/MultiplayerCommands.h"
 
 void UMultiplayerHitComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (GetWorld()->IsServer())
+	if (GetWorld()->GetNetMode() < NM_Client)
 	{
 		USystemsStatics::AddComponentEverywhere(this, GetWorld());
 	}
 
 	this->OnComponentBeginOverlap.AddUniqueDynamic(this, &ThisClass::OnOverlapBegin);
 
-	const auto* Systems =
-		USystemsStatics::GetSystemsWorld(AMultiplayerGameMode::SYSTEMS_WORLD, GetWorld());
+	const auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		this->RequiredSignature.Clear();
@@ -48,14 +47,13 @@ void UMultiplayerHitComponent::OnOverlapBegin(UPrimitiveComponent* OverlappedCom
 	bool bFromSweep,
 	const FHitResult& SweepResult)
 {
-	if (GetWorld()->IsServer() == false || OtherActor == GetOwner() ||
+	if (GetWorld()->GetNetMode() == NM_Client || OtherActor == GetOwner() ||
 		OtherActor == GetOwner()->GetInstigator())
 	{
 		return;
 	}
 
-	auto* Systems =
-		USystemsStatics::GetSystemsWorld(AMultiplayerGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems) == false)
 	{
 		return;

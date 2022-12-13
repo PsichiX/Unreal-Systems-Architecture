@@ -7,6 +7,8 @@ public class Systems_WorkspaceTarget : TargetRules
     {
         Type = TargetType.Game;
         DefaultBuildSettings = BuildSettingsVersion.V2;
+        IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
+
         ExtraModuleNames.Add("Boids");
         ExtraModuleNames.Add("Life");
         ExtraModuleNames.Add("Multiplayer");

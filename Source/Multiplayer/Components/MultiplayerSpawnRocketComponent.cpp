@@ -2,7 +2,7 @@
 
 #include "Systems/Public/SystemsStatics.h"
 
-#include "Multiplayer/MultiplayerGameMode.h"
+#include "Multiplayer/Constants.h"
 #include "Multiplayer/Resources/MultiplayerCommands.h"
 
 UMultiplayerSpawnRocketComponent::UMultiplayerSpawnRocketComponent()
@@ -13,8 +13,7 @@ UMultiplayerSpawnRocketComponent::UMultiplayerSpawnRocketComponent()
 
 void UMultiplayerSpawnRocketComponent::ServerExecute_Implementation()
 {
-	auto* Commands = USystemsStatics::GetResource<UMultiplayerCommands>(
-		AMultiplayerGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Commands = USystemsStatics::GetResource<UMultiplayerCommands>(FName(), GetWorld());
 	if (IsValid(GetOwner()) && IsValid(Commands) && this->Cooldown <= 0)
 	{
 		Commands->RocketsToSpawnForActors.Enqueue(GetOwner());

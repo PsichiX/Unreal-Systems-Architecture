@@ -5,7 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
-#include "Multiplayer/MultiplayerGameMode.h"
+#include "Multiplayer/Constants.h"
 
 void UWidgetMultiplayerMainMenu::NativeConstruct()
 {
@@ -49,7 +49,7 @@ void UWidgetMultiplayerMainMenu::NativeDestruct()
 
 void UWidgetMultiplayerMainMenu::OnHostGame()
 {
-	UGameplayStatics::OpenLevel(GetWorld(), AMultiplayerGameMode::LEVEL_NAME, true, "listen");
+	UGameplayStatics::OpenLevel(GetWorld(), LEVEL_NAME, true, "listen");
 }
 
 void UWidgetMultiplayerMainMenu::OnJoinGame()

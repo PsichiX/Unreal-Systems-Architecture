@@ -6,6 +6,7 @@ public class Tutorial : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         bUseUnity = false;
+        IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 
         PublicDependencyModuleNames.AddRange(new string[] {
             "Core",

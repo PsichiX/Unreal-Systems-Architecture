@@ -6,7 +6,6 @@
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
-#include "Boids/BoidsGameMode.h"
 #include "Boids/Resources/BoidsSettings.h"
 
 void UWidgetBoidsOptions::NativeConstruct()
@@ -80,8 +79,7 @@ void UWidgetBoidsOptions::NativeConstruct()
 			this, &ThisClass::OnProximityColorModeChanged);
 	}
 
-	auto* ChangeDetection =
-		USystemsStatics::GetResource<UUiChangeDetection>(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		auto Signature = FUiChangeSignature();
@@ -151,8 +149,7 @@ void UWidgetBoidsOptions::NativeDestruct()
 		this->ProximityColorMode->OnChanged().RemoveAll(this);
 	}
 
-	auto* ChangeDetection =
-		USystemsStatics::GetResource<UUiChangeDetection>(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);
@@ -228,7 +225,7 @@ void UWidgetBoidsOptions::OnBoidsSettingsChanged(USystemsWorld& Systems)
 
 void UWidgetBoidsOptions::OnTimeScaleChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -242,7 +239,7 @@ void UWidgetBoidsOptions::OnTimeScaleChanged(float InValue)
 
 void UWidgetBoidsOptions::OnSeparationPerceptionRangeChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -256,7 +253,7 @@ void UWidgetBoidsOptions::OnSeparationPerceptionRangeChanged(float InValue)
 
 void UWidgetBoidsOptions::OnAlignmentPerceptionRangeChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -270,7 +267,7 @@ void UWidgetBoidsOptions::OnAlignmentPerceptionRangeChanged(float InValue)
 
 void UWidgetBoidsOptions::OnCohesionPerceptionRangeChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -284,7 +281,7 @@ void UWidgetBoidsOptions::OnCohesionPerceptionRangeChanged(float InValue)
 
 void UWidgetBoidsOptions::OnHuntPerceptionRangeChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -298,7 +295,7 @@ void UWidgetBoidsOptions::OnHuntPerceptionRangeChanged(float InValue)
 
 void UWidgetBoidsOptions::OnVisibilityConeAngleDegreesChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -312,7 +309,7 @@ void UWidgetBoidsOptions::OnVisibilityConeAngleDegreesChanged(float InValue)
 
 void UWidgetBoidsOptions::OnAlignmentFactorChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -326,7 +323,7 @@ void UWidgetBoidsOptions::OnAlignmentFactorChanged(float InValue)
 
 void UWidgetBoidsOptions::OnCohesionFactorChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -340,7 +337,7 @@ void UWidgetBoidsOptions::OnCohesionFactorChanged(float InValue)
 
 void UWidgetBoidsOptions::OnHuntFactorChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -354,7 +351,7 @@ void UWidgetBoidsOptions::OnHuntFactorChanged(float InValue)
 
 void UWidgetBoidsOptions::OnSeparationFactorChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -368,7 +365,7 @@ void UWidgetBoidsOptions::OnSeparationFactorChanged(float InValue)
 
 void UWidgetBoidsOptions::OnMinVelocityChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -382,7 +379,7 @@ void UWidgetBoidsOptions::OnMinVelocityChanged(float InValue)
 
 void UWidgetBoidsOptions::OnMaxVelocityChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -396,7 +393,7 @@ void UWidgetBoidsOptions::OnMaxVelocityChanged(float InValue)
 
 void UWidgetBoidsOptions::OnPopulationNumberChanged(float InValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<UBoidsSettings>();
@@ -410,14 +407,13 @@ void UWidgetBoidsOptions::OnPopulationNumberChanged(float InValue)
 
 void UWidgetBoidsOptions::OnProximityColorModeChanged(FName InValue)
 {
-	const auto* Enum = FindObject<UEnum>(ANY_PACKAGE, TEXT("EBoidsProximityColorMode"), true);
+	const auto* Enum = FindObject<UEnum>(nullptr, TEXT("Boids.EBoidsProximityColorMode"), true);
 	if (IsValid(Enum))
 	{
 		const auto Value = Enum->GetValueByName(InValue);
 		if (Value != INDEX_NONE)
 		{
-			auto* Systems =
-				USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+			auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 			if (IsValid(Systems))
 			{
 				auto* Settings = Systems->Resource<UBoidsSettings>();

@@ -10,7 +10,7 @@
 #include "OnlineSubsystemUtils.h"
 #include "Systems/Public/Iterator.h"
 
-#include "Multiplayer/MultiplayerGameMode.h"
+#include "Multiplayer/Constants.h"
 #include "Multiplayer/UI/WidgetMultiplayerSessionButton.h"
 
 void UWidgetMultiplayerLobby::NativeConstruct()
@@ -117,9 +117,8 @@ void UWidgetMultiplayerLobby::OnCreateSession()
 		Settings.bShouldAdvertise = true;
 		Settings.bUsesPresence = true;
 		Settings.NumPublicConnections = 2;
-		Settings.Set(SETTING_MAPNAME,
-			AMultiplayerGameMode::LEVEL_NAME.ToString(),
-			EOnlineDataAdvertisementType::ViaOnlineService);
+		Settings.Set(
+			SETTING_MAPNAME, LEVEL_NAME.ToString(), EOnlineDataAdvertisementType::ViaOnlineService);
 
 		const auto Id = LocalPlayer->GetPreferredUniqueNetId();
 		this->bCreateSessionInProgress = Sessions->CreateSession(*Id, NAME_GameSession, Settings);
@@ -157,8 +156,7 @@ void UWidgetMultiplayerLobby::OnSessionStarted(FName Name, bool bSuccess)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("=== SESSION STARTED"));
 
-			UGameplayStatics::OpenLevel(
-				GetWorld(), AMultiplayerGameMode::LEVEL_NAME, true, "listen");
+			UGameplayStatics::OpenLevel(GetWorld(), LEVEL_NAME, true, "listen");
 		}
 	}
 }

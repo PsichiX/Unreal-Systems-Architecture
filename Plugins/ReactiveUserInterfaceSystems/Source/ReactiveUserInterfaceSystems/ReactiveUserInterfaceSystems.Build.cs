@@ -6,6 +6,7 @@ public class ReactiveUserInterfaceSystems : ModuleRules
     {
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
         bUseUnity = false;
+        IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 
         // NOTE: uncomment to ensure code conform to IWYU rules.
         // PCHUsage = ModuleRules.PCHUsageMode.NoPCHs;

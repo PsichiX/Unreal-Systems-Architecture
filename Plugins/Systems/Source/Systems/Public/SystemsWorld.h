@@ -33,6 +33,7 @@ struct SYSTEMS_API FInstallSystemOptions
 	GENERATED_BODY()
 
 	friend class USystemsWorld;
+	friend class USystemsPipeline;
 
 public:
 	FInstallSystemOptions();
@@ -68,13 +69,13 @@ public:
 		FName Name);
 
 private:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	FName Label = {};
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	TSet<FName> Before = {};
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	TSet<FName> After = {};
 };
 

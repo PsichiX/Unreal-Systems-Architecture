@@ -9,7 +9,6 @@
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
-#include "Life/LifeGameMode.h"
 #include "Life/Resources/LifeSettings.h"
 #include "Life/Resources/LifeSpawner.h"
 
@@ -22,8 +21,7 @@ void UWidgetSpawnerIconButton::NativeConstruct()
 		this->Button->OnClicked.AddUniqueDynamic(this, &ThisClass::OnClicked);
 	}
 
-	auto* ChangeDetection =
-		USystemsStatics::GetResource<UUiChangeDetection>(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		auto Signature = FUiChangeSignature();
@@ -41,8 +39,7 @@ void UWidgetSpawnerIconButton::NativeDestruct()
 		this->Button->OnClicked.RemoveAll(this);
 	}
 
-	auto* ChangeDetection =
-		USystemsStatics::GetResource<UUiChangeDetection>(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);
@@ -52,7 +49,7 @@ void UWidgetSpawnerIconButton::NativeDestruct()
 void UWidgetSpawnerIconButton::NativeOnListItemObjectSet(UObject* ListItemObject)
 {
 	auto* Item = Cast<UClass>(ListItemObject);
-	auto* Systems = USystemsStatics::GetSystemsWorld(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 
 	if (IsValid(Item) && IsValid(Systems) && IsValid(this->Icon) && IsValid(this->Border))
 	{
@@ -93,7 +90,7 @@ void UWidgetSpawnerIconButton::OnLifeSpawnerChanged(USystemsWorld& Systems)
 
 void UWidgetSpawnerIconButton::OnClicked()
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Spawner = Systems->Resource<ULifeSpawner>();

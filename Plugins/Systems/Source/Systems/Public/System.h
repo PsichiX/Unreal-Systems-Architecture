@@ -25,7 +25,7 @@ class USystemsWorld;
 /// ```snippet
 /// system
 /// ```
-UCLASS(Abstract)
+UCLASS(Abstract, EditInlineNew)
 class SYSTEMS_API USystem : public UObject
 {
 	GENERATED_BODY()
@@ -136,7 +136,17 @@ public:
 	void Unbind();
 
 private:
+	virtual void Init(USystemsWorld& Systems) override;
+
 	virtual void Run(USystemsWorld& Systems) override;
+
+	/// Name of function system registered into reflection.
+	///
+	/// When not None, this system will run system function found in reflection
+	/// registry.
+	UPROPERTY(EditAnywhere,
+		Meta = (GetOptions = "Systems.SystemsReflection.GetOptions"))
+	FName FunctionName = FName();
 
 	TOptional<TFunction<FunctorType>> Functor = {};
 };

@@ -6,7 +6,6 @@
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
-#include "Life/LifeGameMode.h"
 #include "Life/Resources/LifeSettings.h"
 #include "Life/Systems/OneShot/HumansClearVisionSystem.h"
 
@@ -25,8 +24,7 @@ void UWidgetLifeOptions::NativeConstruct()
 		TimeScale->OnChanged().AddUniqueDynamic(this, &ThisClass::OnTimeScaleChanged);
 	}
 
-	auto* ChangeDetection =
-		USystemsStatics::GetResource<UUiChangeDetection>(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		auto Signature = FUiChangeSignature();
@@ -49,8 +47,7 @@ void UWidgetLifeOptions::NativeDestruct()
 		TimeScale->OnChanged().RemoveAll(this);
 	}
 
-	auto* ChangeDetection =
-		USystemsStatics::GetResource<UUiChangeDetection>(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);
@@ -73,7 +70,7 @@ void UWidgetLifeOptions::OnLifeSettingsChanged(USystemsWorld& Systems)
 
 void UWidgetLifeOptions::OnHumansClearVisionChanged(bool bValue)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<ULifeSettings>();
@@ -88,7 +85,7 @@ void UWidgetLifeOptions::OnHumansClearVisionChanged(bool bValue)
 
 void UWidgetLifeOptions::OnTimeScaleChanged(float Value)
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ALifeGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		auto* Settings = Systems->Resource<ULifeSettings>();

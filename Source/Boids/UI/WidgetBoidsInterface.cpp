@@ -4,7 +4,6 @@
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
-#include "Boids/BoidsGameMode.h"
 #include "Boids/Resources/GameEvents.h"
 #include "Boids/Systems/OneShot/SpawnFoodSystem.h"
 
@@ -40,8 +39,7 @@ void UWidgetBoidsInterface::NativeDestruct()
 
 void UWidgetBoidsInterface::OnMovementStepAction()
 {
-	auto* GameEvents =
-		USystemsStatics::GetResource<UGameEvents>(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* GameEvents = USystemsStatics::GetResource<UGameEvents>(FName(), GetWorld());
 	if (IsValid(GameEvents))
 	{
 		GameEvents->MovementStep.Send(FMovementStep{});
@@ -50,7 +48,7 @@ void UWidgetBoidsInterface::OnMovementStepAction()
 
 void UWidgetBoidsInterface::OnSpawnFoodAction()
 {
-	auto* Systems = USystemsStatics::GetSystemsWorld(ABoidsGameMode::SYSTEMS_WORLD, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
 		SpawnFoodSystem(*Systems);

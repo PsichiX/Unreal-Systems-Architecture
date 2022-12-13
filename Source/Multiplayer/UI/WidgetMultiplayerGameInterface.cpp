@@ -8,7 +8,7 @@ void UWidgetMultiplayerGameInterface::NativeConstruct()
 
 	if (IsValid(this->MultiplayerModeText))
 	{
-		this->MultiplayerModeText->SetText(GetWorld()->IsServer()
+		this->MultiplayerModeText->SetText(GetWorld()->GetNetMode() < NM_Client
 				? FText::AsCultureInvariant("IS SERVER")
 				: FText::AsCultureInvariant("IS CLIENT"));
 	}
