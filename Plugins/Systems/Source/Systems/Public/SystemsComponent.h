@@ -21,10 +21,7 @@ class USystemsWorld;
 /// unregister this component at will to any systems world if you want to make
 /// it available from custom or just non-globally accessible systems world, this
 /// class is useful only for automation of registering/unregistering components.
-UCLASS(BlueprintType,
-	Blueprintable,
-	Abstract,
-	Meta = (BlueprintSpawnableComponent))
+UCLASS(BlueprintType, Blueprintable, Abstract, Meta = (BlueprintSpawnableComponent))
 class SYSTEMS_API USystemsActorComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -93,10 +90,7 @@ private:
 ///	This is scene component equivalent to [`class: USystemsActorComponent`]() -
 /// scene componets are useful where given component should have transformation
 /// relative to actor.
-UCLASS(BlueprintType,
-	Blueprintable,
-	Abstract,
-	Meta = (BlueprintSpawnableComponent))
+UCLASS(BlueprintType, Blueprintable, Abstract, Meta = (BlueprintSpawnableComponent))
 class SYSTEMS_API USystemsSceneComponent : public USceneComponent
 {
 	GENERATED_BODY()

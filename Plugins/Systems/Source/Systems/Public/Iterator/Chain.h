@@ -39,9 +39,8 @@ public:
 		//// [ignore]
 		const auto A = this->InnerA.SizeHint();
 		const auto B = this->InnerB.SizeHint();
-		const auto Limit = A.Maximum.IsSet() && B.Maximum.IsSet()
-			? A.Maximum.GetValue() + B.Maximum.GetValue()
-			: TOptional<uint32>();
+		const auto Limit =
+			A.Maximum.IsSet() && B.Maximum.IsSet() ? A.Maximum.GetValue() + B.Maximum.GetValue() : TOptional<uint32>();
 		return IterSizeHint{A.Minimum + B.Minimum, Limit};
 		//// [/ignore]
 	}
@@ -59,7 +58,6 @@ template <typename IA, typename IB>
 TIterChain<IA, IB> IterChain(IA&& IterA, IB&& IterB)
 {
 	//// [ignore]
-	return TIterChain<IA, IB>(
-		MoveTempIfPossible(IterA), MoveTempIfPossible(IterB));
+	return TIterChain<IA, IB>(MoveTempIfPossible(IterA), MoveTempIfPossible(IterB));
 	//// [/ignore]
 }

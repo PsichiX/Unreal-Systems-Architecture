@@ -21,8 +21,7 @@ public:
 
 	TIterStd(T& Container)
 		//// [ignore]
-		: Inner(Container.CreateIterator())
-		, Num(static_cast<uint32>(Container.Num()))
+		: Inner(Container.CreateIterator()), Num(static_cast<uint32>(Container.Num()))
 	//// [/ignore]
 	{
 	}
@@ -89,8 +88,7 @@ public:
 
 	TIterStdConst(const T& Container)
 		//// [ignore]
-		: Inner(Container.CreateConstIterator())
-		, Num(static_cast<uint32>(Container.Num()))
+		: Inner(Container.CreateConstIterator()), Num(static_cast<uint32>(Container.Num()))
 	//// [/ignore]
 	{
 	}

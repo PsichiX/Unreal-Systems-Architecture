@@ -17,11 +17,9 @@ USystemsSubsystem* USystemsSubsystem::Get(UWorld* World)
 	return nullptr;
 }
 
-void USystemsSubsystem::AcquireSystemsWorld(FName Id,
-	TFunction<ThisClass::SystemSetupFunctor> SetupFunctor)
+void USystemsSubsystem::AcquireSystemsWorld(FName Id, TFunction<ThisClass::SystemSetupFunctor> SetupFunctor)
 {
-	auto* Systems =
-		NewObject<USystemsWorld>(this, USystemsWorld::StaticClass());
+	auto* Systems = NewObject<USystemsWorld>(this, USystemsWorld::StaticClass());
 
 	if (IsValid(Systems))
 	{
@@ -31,11 +29,9 @@ void USystemsSubsystem::AcquireSystemsWorld(FName Id,
 	}
 }
 
-void USystemsSubsystem::BlueprintAcquireSystemsWorld(FName Id,
-	FOnSetupSystemsWorld SetupDelegate)
+void USystemsSubsystem::BlueprintAcquireSystemsWorld(FName Id, FOnSetupSystemsWorld SetupDelegate)
 {
-	AcquireSystemsWorld(
-		Id, [&](auto& Systems) { SetupDelegate.ExecuteIfBound(&Systems); });
+	AcquireSystemsWorld(Id, [&](auto& Systems) { SetupDelegate.ExecuteIfBound(&Systems); });
 }
 
 void USystemsSubsystem::ReleaseSystemsWorld(FName Id)
@@ -66,8 +62,7 @@ void USystemsSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 
 	if (IsValid(GetGameInstance()))
 	{
-		GetGameInstance()->GetTimerManager().SetTimerForNextTick(
-			this, &ThisClass::OnTick);
+		GetGameInstance()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::OnTick);
 	}
 }
 
@@ -99,6 +94,5 @@ void USystemsSubsystem::OnTick()
 		}
 	}
 
-	GetGameInstance()->GetTimerManager().SetTimerForNextTick(
-		this, &ThisClass::OnTick);
+	GetGameInstance()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::OnTick);
 }

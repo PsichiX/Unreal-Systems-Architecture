@@ -10,8 +10,7 @@
 bool SYSTEMSUNITTESTS_API SystemsUnitTest(TFunction<bool(UWorld*)> Functor);
 
 // TODO: document.
-USystemsWorld SYSTEMSUNITTESTS_API* AcquireMockWorld(UWorld* TheWorld,
-	TFunction<void(USystemsWorld&)> Setup);
+USystemsWorld SYSTEMSUNITTESTS_API* AcquireMockWorld(UWorld* TheWorld, TFunction<void(USystemsWorld&)> Setup);
 
 // TODO: document.
 template <class T>

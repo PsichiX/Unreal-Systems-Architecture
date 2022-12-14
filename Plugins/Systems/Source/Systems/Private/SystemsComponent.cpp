@@ -26,8 +26,7 @@ void USystemsActorComponent::SetRegistered(bool bMode, bool bForced)
 		{
 			if (this->SystemsWorlds.Num() > 0)
 			{
-				USystemsStatics::AddComponent(
-					this, this->SystemsWorlds, GetWorld());
+				USystemsStatics::AddComponent(this, this->SystemsWorlds, GetWorld());
 			}
 			else
 			{
@@ -75,8 +74,7 @@ void USystemsSceneComponent::SetRegistered(bool bMode, bool bForced)
 		{
 			if (this->SystemsWorlds.Num() > 0)
 			{
-				USystemsStatics::AddComponent(
-					this, this->SystemsWorlds, GetWorld());
+				USystemsStatics::AddComponent(this, this->SystemsWorlds, GetWorld());
 			}
 			else
 			{

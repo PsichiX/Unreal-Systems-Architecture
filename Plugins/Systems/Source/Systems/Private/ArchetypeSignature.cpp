@@ -65,16 +65,14 @@ bool FArchetypeSignature::HasBit(uint32 Index) const
 {
 	const auto Bucket = Index / 32;
 	const auto Bit = Index % 32;
-	return Bucket < SYSTEMS_ARCHETYPE_BUCKETS_COUNT &&
-		(this->Buckets[Bucket] & 1 << Bit) > 0;
+	return Bucket < SYSTEMS_ARCHETYPE_BUCKETS_COUNT && (this->Buckets[Bucket] & 1 << Bit) > 0;
 }
 
 bool FArchetypeSignature::ContainsAll(const FArchetypeSignature& Other) const
 {
 	for (auto Index = 0; Index < SYSTEMS_ARCHETYPE_BUCKETS_COUNT; ++Index)
 	{
-		if ((this->Buckets[Index] & Other.Buckets[Index]) !=
-			Other.Buckets[Index])
+		if ((this->Buckets[Index] & Other.Buckets[Index]) != Other.Buckets[Index])
 		{
 			return false;
 		}
@@ -94,8 +92,7 @@ bool FArchetypeSignature::ContainsAny(const FArchetypeSignature& Other) const
 	return false;
 }
 
-FArchetypeSignature FArchetypeSignature::Include(
-	const FArchetypeSignature& Other) const
+FArchetypeSignature FArchetypeSignature::Include(const FArchetypeSignature& Other) const
 {
 	FArchetypeSignature Result;
 	for (auto Index = 0; Index < SYSTEMS_ARCHETYPE_BUCKETS_COUNT; ++Index)
@@ -105,8 +102,7 @@ FArchetypeSignature FArchetypeSignature::Include(
 	return Result;
 }
 
-FArchetypeSignature FArchetypeSignature::Exclude(
-	const FArchetypeSignature& Other) const
+FArchetypeSignature FArchetypeSignature::Exclude(const FArchetypeSignature& Other) const
 {
 	FArchetypeSignature Result;
 	for (auto Index = 0; Index < SYSTEMS_ARCHETYPE_BUCKETS_COUNT; ++Index)
@@ -116,8 +112,7 @@ FArchetypeSignature FArchetypeSignature::Exclude(
 	return Result;
 }
 
-FArchetypeSignature FArchetypeSignature::Union(
-	const FArchetypeSignature& Other) const
+FArchetypeSignature FArchetypeSignature::Union(const FArchetypeSignature& Other) const
 {
 	FArchetypeSignature Result;
 	for (auto Index = 0; Index < SYSTEMS_ARCHETYPE_BUCKETS_COUNT; ++Index)
@@ -127,8 +122,7 @@ FArchetypeSignature FArchetypeSignature::Union(
 	return Result;
 }
 
-FArchetypeSignature FArchetypeSignature::Difference(
-	const FArchetypeSignature& Other) const
+FArchetypeSignature FArchetypeSignature::Difference(const FArchetypeSignature& Other) const
 {
 	FArchetypeSignature Result;
 	for (auto Index = 0; Index < SYSTEMS_ARCHETYPE_BUCKETS_COUNT; ++Index)

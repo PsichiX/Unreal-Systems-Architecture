@@ -38,8 +38,7 @@ struct SYSTEMSSPATIALQUERY_API FArea
 	{
 	}
 
-	FArea(FVector Center, FVector::FReal Radius)
-		: Lower(Center - FVector(Radius)), Upper(Center + FVector(Radius))
+	FArea(FVector Center, FVector::FReal Radius) : Lower(Center - FVector(Radius)), Upper(Center + FVector(Radius))
 	{
 	}
 
@@ -55,8 +54,7 @@ struct SYSTEMSSPATIALQUERY_API FArea
 
 	bool Overlaps(FVector Center, FVector::FReal Radius) const;
 
-	ESpatialPreferedPlane SubdividePreferedAxis(
-		ESpatialPreferedPlane PreferedPlane) const;
+	ESpatialPreferedPlane SubdividePreferedAxis(ESpatialPreferedPlane PreferedPlane) const;
 
 	void Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
 		FVector Center,
@@ -95,8 +93,7 @@ using FSpatialContent = TVariant<FSpatialActors, FSpatialLeafs>;
 
 struct FSpatialNodeClosest
 {
-	FSpatialNodeClosest(TObjectPtr<AActor> InActor, FVector::FReal InDistance)
-		: Actor(InActor), Distance(InDistance)
+	FSpatialNodeClosest(TObjectPtr<AActor> InActor, FVector::FReal InDistance) : Actor(InActor), Distance(InDistance)
 	{
 	}
 
@@ -107,9 +104,7 @@ struct FSpatialNodeClosest
 
 struct FSpatialNode
 {
-	FSpatialNode(FArea InArea,
-		uint32 Capacity,
-		ESpatialPreferedPlane InPreferedPlane)
+	FSpatialNode(FArea InArea, uint32 Capacity, ESpatialPreferedPlane InPreferedPlane)
 		: Area(InArea), Signature({}), Count(0), PreferedPlane(InPreferedPlane)
 	{
 		this->Content.Set<FSpatialActors>(Capacity);
@@ -134,8 +129,7 @@ struct FSpatialNode
 
 	const FSpatialNode* FindNode(FVector Position) const;
 
-	bool FindNodesPath(TArray<const FSpatialNode*>& Result,
-		FVector Position) const;
+	bool FindNodesPath(TArray<const FSpatialNode*>& Result, FVector Position) const;
 
 	void ForEachArea(const TFunction<void(const FArea&, bool)> Callback) const;
 
@@ -164,9 +158,7 @@ struct FSpatialQueryLimitsRadius
 	FVector::FReal Radius = 0.0;
 };
 
-using FSpatialQueryLimits = TVariant<FSpatialQueryLimitsNone,
-	FSpatialQueryLimitsArea,
-	FSpatialQueryLimitsRadius>;
+using FSpatialQueryLimits = TVariant<FSpatialQueryLimitsNone, FSpatialQueryLimitsArea, FSpatialQueryLimitsRadius>;
 
 template <class... T>
 struct TSpatialQuery
@@ -175,13 +167,7 @@ public:
 	using Self = TSpatialQuery<T...>;
 	using Item = TTuple<AActor*, FVector::FReal, T*...>;
 
-	TSpatialQuery()
-		: Systems(nullptr)
-		, Partitioning(nullptr)
-		, Limits()
-		, Signature()
-		, Visited()
-		, Position(0.0)
+	TSpatialQuery() : Systems(nullptr), Partitioning(nullptr), Limits(), Signature(), Visited(), Position(0.0)
 	{
 	}
 
@@ -220,31 +206,25 @@ public:
 					return false;
 				}
 				const auto Location = Actor->GetActorLocation();
-				const auto Distance =
-					FVector::Distance(this->Position, Location);
+				const auto Distance = FVector::Distance(this->Position, Location);
 				if (this->Limits.IsType<FSpatialQueryLimitsArea>() &&
-					this->Limits.Get<FSpatialQueryLimitsArea>().Area.Contains(
-						Location) == false)
+					this->Limits.Get<FSpatialQueryLimitsArea>().Area.Contains(Location) == false)
 				{
 					return false;
 				}
 				else if (this->Limits.IsType<FSpatialQueryLimitsRadius>() &&
-					Distance >
-						this->Limits.Get<FSpatialQueryLimitsRadius>().Radius)
+					Distance > this->Limits.Get<FSpatialQueryLimitsRadius>().Radius)
 				{
 					return false;
 				}
 				const auto Signature = this->Systems->ActorSignature(Actor);
-				return Signature.IsSet() &&
-					Signature.GetValue().ContainsAll(this->Signature);
+				return Signature.IsSet() && Signature.GetValue().ContainsAll(this->Signature);
 			});
 		if (Found)
 		{
-			const auto Distance =
-				FVector::Distance(Found->GetActorLocation(), this->Position);
+			const auto Distance = FVector::Distance(Found->GetActorLocation(), this->Position);
 			this->Visited.Add(Found);
-			return MakeTuple(
-				Found.Get(), Distance, this->Systems->Component<T>(Found)...);
+			return MakeTuple(Found.Get(), Distance, this->Systems->Component<T>(Found)...);
 		}
 		return {};
 	}
@@ -258,9 +238,7 @@ private:
 	void IncludeType(const USystemsWorld* Owner, const UClass* Type)
 	{
 		const auto Found = Owner->ComponentTypeIndex(Type);
-		checkf(Found.IsSet(),
-			TEXT("Trying to query non-registered component: %s"),
-			*Type->GetName());
+		checkf(Found.IsSet(), TEXT("Trying to query non-registered component: %s"), *Type->GetName());
 		this->Signature.EnableBit(Found.GetValue());
 	}
 
@@ -286,9 +264,7 @@ class SYSTEMSSPATIALQUERY_API USpatialPartitioning : public UObject
 	GENERATED_BODY()
 
 public:
-	void Reset(const FArea& Area,
-		uint32 Capacity,
-		ESpatialPreferedPlane PreferedPlane = ESpatialPreferedPlane::Any);
+	void Reset(const FArea& Area, uint32 Capacity, ESpatialPreferedPlane PreferedPlane = ESpatialPreferedPlane::Any);
 
 	uint32 GetCount() const;
 
@@ -303,8 +279,7 @@ public:
 		FVector::FReal Radius,
 		const TFunction<bool(AActor*)>& Validator = {}) const;
 
-	TObjectPtr<AActor> FindClosestActor(FVector Position,
-		const TFunction<bool(AActor*)>& Validator = {}) const;
+	TObjectPtr<AActor> FindClosestActor(FVector Position, const TFunction<bool(AActor*)>& Validator = {}) const;
 
 	void ForEachArea(const TFunction<void(const FArea&, bool)> Callback) const;
 
@@ -315,9 +290,7 @@ public:
 	}
 
 	template <class... T>
-	TSpatialQuery<T...> QueryInArea(USystemsWorld& Systems,
-		FVector Position,
-		FArea Area)
+	TSpatialQuery<T...> QueryInArea(USystemsWorld& Systems, FVector Position, FArea Area)
 	{
 		FSpatialQueryLimits Limits = {};
 		Limits.Set<FSpatialQueryLimitsArea>({Area});
@@ -325,9 +298,7 @@ public:
 	}
 
 	template <class... T>
-	TSpatialQuery<T...> QueryInRadius(USystemsWorld& Systems,
-		FVector Position,
-		FVector::FReal Radius)
+	TSpatialQuery<T...> QueryInRadius(USystemsWorld& Systems, FVector Position, FVector::FReal Radius)
 	{
 		FSpatialQueryLimits Limits = {};
 		Limits.Set<FSpatialQueryLimitsRadius>({Radius});

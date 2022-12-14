@@ -72,12 +72,10 @@ void USystemsPipeline::Install(UWorld* World) const
 					continue;
 				}
 #endif
-				auto* Instance =
-					DuplicateObject<USystem>(Data.Template, &Systems);
+				auto* Instance = DuplicateObject<USystem>(Data.Template, &Systems);
 				if (IsValid(Instance))
 				{
-					Systems.InstallSystemRaw(
-						Instance, FInstallSystemOptions(Instance->GetFName()));
+					Systems.InstallSystemRaw(Instance, FInstallSystemOptions(Instance->GetFName()));
 				}
 			}
 
@@ -93,8 +91,7 @@ void USystemsPipeline::Install(UWorld* World) const
 					continue;
 				}
 #endif
-				auto* Instance =
-					DuplicateObject<USystem>(Data.Template, &Systems);
+				auto* Instance = DuplicateObject<USystem>(Data.Template, &Systems);
 				if (IsValid(Instance))
 				{
 					Instance->Init(Systems);
@@ -124,8 +121,7 @@ void USystemsPipeline::Uninstall(UWorld* World) const
 					continue;
 				}
 #endif
-				auto* Instance =
-					DuplicateObject<USystem>(Data.Template, Systems);
+				auto* Instance = DuplicateObject<USystem>(Data.Template, Systems);
 				if (IsValid(Instance))
 				{
 					Instance->Init(*Systems);

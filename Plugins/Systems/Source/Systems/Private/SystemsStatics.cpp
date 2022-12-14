@@ -10,9 +10,7 @@ USystemsWorld* USystemsStatics::GetSystemsWorld(FName Id, UWorld* World)
 	return IsValid(Subsystem) ? Subsystem->GetSystemsWorld(Id) : nullptr;
 }
 
-void USystemsStatics::AddComponent(UActorComponent* Component,
-	const TSet<FName>& SystemsWorlds,
-	UWorld* World)
+void USystemsStatics::AddComponent(UActorComponent* Component, const TSet<FName>& SystemsWorlds, UWorld* World)
 {
 	auto* Subsystem = USystemsSubsystem::Get(World);
 	if (IsValid(Subsystem))
@@ -28,8 +26,7 @@ void USystemsStatics::AddComponent(UActorComponent* Component,
 	}
 }
 
-void USystemsStatics::AddComponentEverywhere(UActorComponent* Component,
-	UWorld* World)
+void USystemsStatics::AddComponentEverywhere(UActorComponent* Component, UWorld* World)
 {
 	auto* Subsystem = USystemsSubsystem::Get(World);
 	if (IsValid(Subsystem))
@@ -65,9 +62,7 @@ void USystemsStatics::RemoveComponent(UActorComponent* Component, UWorld* World)
 	}
 }
 
-UObject* USystemsStatics::GetResourceRaw(FName Id,
-	const UClass* Type,
-	UWorld* World)
+UObject* USystemsStatics::GetResourceRaw(FName Id, const UClass* Type, UWorld* World)
 {
 	auto* Systems = ThisClass::GetSystemsWorld(Id, World);
 	return IsValid(Systems) ? Systems->ResourceRaw(Type) : nullptr;

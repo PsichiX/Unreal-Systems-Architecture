@@ -19,16 +19,14 @@ FVector FArea::Dimensions() const
 
 bool FArea::Contains(FVector Position) const
 {
-	return Position.X >= this->Lower.X && Position.X <= this->Upper.X &&
-		Position.Y >= this->Lower.Y && Position.Y <= this->Upper.Y &&
-		Position.Z >= this->Lower.Z && Position.Z <= this->Upper.Z;
+	return Position.X >= this->Lower.X && Position.X <= this->Upper.X && Position.Y >= this->Lower.Y &&
+		Position.Y <= this->Upper.Y && Position.Z >= this->Lower.Z && Position.Z <= this->Upper.Z;
 }
 
 bool FArea::Overlaps(const FArea& Other) const
 {
-	return this->Lower.X <= Other.Upper.X && this->Upper.X >= Other.Lower.X &&
-		this->Lower.Y <= Other.Upper.Y && this->Upper.Y >= Other.Lower.Y &&
-		this->Lower.Z <= Other.Upper.Z && this->Upper.Z >= Other.Lower.Z;
+	return this->Lower.X <= Other.Upper.X && this->Upper.X >= Other.Lower.X && this->Lower.Y <= Other.Upper.Y &&
+		this->Upper.Y >= Other.Lower.Y && this->Lower.Z <= Other.Upper.Z && this->Upper.Z >= Other.Lower.Z;
 }
 
 bool FArea::Overlaps(FVector Center, FVector::FReal Radius) const
@@ -36,14 +34,12 @@ bool FArea::Overlaps(FVector Center, FVector::FReal Radius) const
 	const auto SelfCenter = this->Center();
 	const auto SelfExtents = this->Extents();
 	const auto AxisDist = (Center - SelfCenter).GetAbs();
-	if ((AxisDist.X > SelfExtents.X + Radius) ||
-		(AxisDist.Y > SelfExtents.Y + Radius) ||
+	if ((AxisDist.X > SelfExtents.X + Radius) || (AxisDist.Y > SelfExtents.Y + Radius) ||
 		(AxisDist.Z > SelfExtents.Z + Radius))
 	{
 		return false;
 	}
-	if ((AxisDist.X < SelfExtents.X) || (AxisDist.Y < SelfExtents.Y) ||
-		(AxisDist.Z < SelfExtents.Z))
+	if ((AxisDist.X < SelfExtents.X) || (AxisDist.Y < SelfExtents.Y) || (AxisDist.Z < SelfExtents.Z))
 	{
 		return true;
 	}
@@ -51,13 +47,10 @@ bool FArea::Overlaps(FVector Center, FVector::FReal Radius) const
 	return CornerSquared <= Radius * Radius;
 }
 
-ESpatialPreferedPlane FArea::SubdividePreferedAxis(
-	ESpatialPreferedPlane PreferedPlane) const
+ESpatialPreferedPlane FArea::SubdividePreferedAxis(ESpatialPreferedPlane PreferedPlane) const
 {
-	if (PreferedPlane == ESpatialPreferedPlane::None ||
-		PreferedPlane == ESpatialPreferedPlane::X ||
-		PreferedPlane == ESpatialPreferedPlane::Y ||
-		PreferedPlane == ESpatialPreferedPlane::Z)
+	if (PreferedPlane == ESpatialPreferedPlane::None || PreferedPlane == ESpatialPreferedPlane::X ||
+		PreferedPlane == ESpatialPreferedPlane::Y || PreferedPlane == ESpatialPreferedPlane::Z)
 	{
 		return ESpatialPreferedPlane::None;
 	}
@@ -123,40 +116,34 @@ void FArea::Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
 
 	if (Axis == ESpatialPreferedPlane::X)
 	{
-		Result[0] = MakeUnique<FSpatialNode>(
-			FArea(FVector(this->Lower.X, this->Lower.Y, this->Lower.Z),
-				FVector(Center.X, this->Upper.Y, this->Upper.Z)),
+		Result[0] = MakeUnique<FSpatialNode>(FArea(FVector(this->Lower.X, this->Lower.Y, this->Lower.Z),
+												 FVector(Center.X, this->Upper.Y, this->Upper.Z)),
 			Capacity,
 			PreferedPlane);
-		Result[1] = MakeUnique<FSpatialNode>(
-			FArea(FVector(Center.X, this->Lower.Y, this->Lower.Z),
-				FVector(this->Upper.X, this->Upper.Y, this->Upper.Z)),
+		Result[1] = MakeUnique<FSpatialNode>(FArea(FVector(Center.X, this->Lower.Y, this->Lower.Z),
+												 FVector(this->Upper.X, this->Upper.Y, this->Upper.Z)),
 			Capacity,
 			PreferedPlane);
 	}
 	else if (Axis == ESpatialPreferedPlane::Y)
 	{
-		Result[0] = MakeUnique<FSpatialNode>(
-			FArea(FVector(this->Lower.X, this->Lower.Y, this->Lower.Z),
-				FVector(this->Upper.X, Center.Y, this->Upper.Z)),
+		Result[0] = MakeUnique<FSpatialNode>(FArea(FVector(this->Lower.X, this->Lower.Y, this->Lower.Z),
+												 FVector(this->Upper.X, Center.Y, this->Upper.Z)),
 			Capacity,
 			PreferedPlane);
-		Result[1] = MakeUnique<FSpatialNode>(
-			FArea(FVector(this->Lower.X, Center.Y, this->Lower.Z),
-				FVector(this->Upper.X, this->Upper.Y, this->Upper.Z)),
+		Result[1] = MakeUnique<FSpatialNode>(FArea(FVector(this->Lower.X, Center.Y, this->Lower.Z),
+												 FVector(this->Upper.X, this->Upper.Y, this->Upper.Z)),
 			Capacity,
 			PreferedPlane);
 	}
 	else
 	{
-		Result[0] = MakeUnique<FSpatialNode>(
-			FArea(FVector(this->Lower.X, this->Lower.Y, this->Lower.Z),
-				FVector(this->Upper.X, this->Upper.Y, Center.Z)),
+		Result[0] = MakeUnique<FSpatialNode>(FArea(FVector(this->Lower.X, this->Lower.Y, this->Lower.Z),
+												 FVector(this->Upper.X, this->Upper.Y, Center.Z)),
 			Capacity,
 			PreferedPlane);
-		Result[1] = MakeUnique<FSpatialNode>(
-			FArea(FVector(this->Lower.X, this->Lower.Y, Center.Z),
-				FVector(this->Upper.X, this->Upper.Y, this->Upper.Z)),
+		Result[1] = MakeUnique<FSpatialNode>(FArea(FVector(this->Lower.X, this->Lower.Y, Center.Z),
+												 FVector(this->Upper.X, this->Upper.Y, this->Upper.Z)),
 			Capacity,
 			PreferedPlane);
 	}
@@ -175,8 +162,7 @@ uint32 FSpatialNode::GetCount() const
 	return this->Count;
 }
 
-bool FSpatialNode::Add(TObjectPtr<AActor> Actor,
-	FArchetypeSignature InSignature)
+bool FSpatialNode::Add(TObjectPtr<AActor> Actor, FArchetypeSignature InSignature)
 {
 	if (Actor == false)
 	{
@@ -206,8 +192,7 @@ bool FSpatialNode::Add(TObjectPtr<AActor> Actor,
 			}
 			Center /= Num;
 			TUniquePtr<FSpatialNode> Leafs[2];
-			this->Area.Subdivide(
-				Leafs, Center, Data.Actors.Max(), this->PreferedPlane);
+			this->Area.Subdivide(Leafs, Center, Data.Actors.Max(), this->PreferedPlane);
 			while (Data.Actors.Num() > 0)
 			{
 				const auto Current = Data.Actors[0];
@@ -292,8 +277,7 @@ void FSpatialNode::GetActorsInRadius(TSet<TObjectPtr<AActor>>& Result,
 		for (const auto& Actor : Data.Actors)
 		{
 			const auto Location = Actor->GetActorLocation();
-			if (FVector::Distance(Center, Location) <= Radius &&
-				(!Validator || Validator(Actor)))
+			if (FVector::Distance(Center, Location) <= Radius && (!Validator || Validator(Actor)))
 			{
 				Result.Add(Actor);
 			}
@@ -318,8 +302,7 @@ void FSpatialNode::FindClosestActor(FVector Position,
 	TOptional<FSpatialNodeClosest>& State,
 	const TFunction<bool(AActor*)>& Validator) const
 {
-	if (State.IsSet() &&
-		this->Area.Overlaps(Position, State.GetValue().Distance) == false)
+	if (State.IsSet() && this->Area.Overlaps(Position, State.GetValue().Distance) == false)
 	{
 		return;
 	}
@@ -385,8 +368,7 @@ const FSpatialNode* FSpatialNode::FindNode(FVector Position) const
 	return this;
 }
 
-bool FSpatialNode::FindNodesPath(TArray<const FSpatialNode*>& Result,
-	FVector Position) const
+bool FSpatialNode::FindNodesPath(TArray<const FSpatialNode*>& Result, FVector Position) const
 {
 	if (this->Area.Contains(Position) == false)
 	{
@@ -408,8 +390,7 @@ bool FSpatialNode::FindNodesPath(TArray<const FSpatialNode*>& Result,
 	return false;
 }
 
-void FSpatialNode::ForEachArea(
-	const TFunction<void(const FArea&, bool)> Callback) const
+void FSpatialNode::ForEachArea(const TFunction<void(const FArea&, bool)> Callback) const
 {
 	if (this->Content.IsType<FSpatialActors>())
 	{
@@ -426,9 +407,7 @@ void FSpatialNode::ForEachArea(
 	}
 }
 
-void USpatialPartitioning::Reset(const FArea& Area,
-	uint32 Capacity,
-	ESpatialPreferedPlane PreferedPlane)
+void USpatialPartitioning::Reset(const FArea& Area, uint32 Capacity, ESpatialPreferedPlane PreferedPlane)
 {
 	Capacity = FMath::Max(Capacity, (uint32) 1);
 	this->Root = MakeUnique<FSpatialNode>(Area, Capacity, PreferedPlane);
@@ -439,8 +418,7 @@ uint32 USpatialPartitioning::GetCount() const
 	return this->Root.IsValid() ? this->Root->GetCount() : 0;
 }
 
-bool USpatialPartitioning::Add(const USystemsWorld& Systems,
-	TObjectPtr<AActor> Actor)
+bool USpatialPartitioning::Add(const USystemsWorld& Systems, TObjectPtr<AActor> Actor)
 {
 	if (this->Root.IsValid())
 	{
@@ -489,8 +467,7 @@ TObjectPtr<AActor> USpatialPartitioning::FindClosestActor(FVector Position,
 	return {};
 }
 
-void USpatialPartitioning::ForEachArea(
-	const TFunction<void(const FArea&, bool)> Callback) const
+void USpatialPartitioning::ForEachArea(const TFunction<void(const FArea&, bool)> Callback) const
 {
 	if (this->Root.IsValid())
 	{

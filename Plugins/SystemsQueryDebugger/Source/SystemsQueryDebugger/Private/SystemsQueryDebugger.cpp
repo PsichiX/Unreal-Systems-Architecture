@@ -15,8 +15,7 @@
 void FSystemsQueryDebuggerModule::StartupModule()
 {
 	UToolMenus::RegisterStartupCallback(
-		FSimpleMulticastDelegate::FDelegate::CreateRaw(
-			this, &FSystemsQueryDebuggerModule::RegisterMenus));
+		FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FSystemsQueryDebuggerModule::RegisterMenus));
 }
 
 void FSystemsQueryDebuggerModule::ShutdownModule()
@@ -31,23 +30,19 @@ void FSystemsQueryDebuggerModule::RegisterMenus()
 	FToolMenuOwnerScoped OwnerScoped(this);
 
 	auto* Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu.Window");
-	auto& Section = Menu->AddSection(
-		"Systems", FText::FromString(TEXT("Systems Architecture")));
+	auto& Section = Menu->AddSection("Systems", FText::FromString(TEXT("Systems Architecture")));
 	auto Action = FExecuteAction();
 	Action.BindLambda(
 		[]()
 		{
 			auto AssetData = IAssetRegistry::GetChecked().GetAssetByObjectPath(
-				FSoftObjectPath(FString(TEXT(
-					"/SystemsQueryDebugger/"
-					"EWBP_SystemsQueryDebugger.EWBP_SystemsQueryDebugger"))));
-			auto* EditorWidget =
-				Cast<UEditorUtilityWidgetBlueprint>(AssetData.GetAsset());
+				FSoftObjectPath(FString(TEXT("/SystemsQueryDebugger/"
+											 "EWBP_SystemsQueryDebugger.EWBP_SystemsQueryDebugger"))));
+			auto* EditorWidget = Cast<UEditorUtilityWidgetBlueprint>(AssetData.GetAsset());
 
 			if (IsValid(EditorWidget))
 			{
-				GEditor->GetEditorSubsystem<UEditorUtilitySubsystem>()
-					->SpawnAndRegisterTab(EditorWidget);
+				GEditor->GetEditorSubsystem<UEditorUtilitySubsystem>()->SpawnAndRegisterTab(EditorWidget);
 			}
 		});
 

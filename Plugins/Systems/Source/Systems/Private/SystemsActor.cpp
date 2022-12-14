@@ -17,8 +17,7 @@ void ASystemsActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto* Systems =
-		USystemsStatics::GetSystemsWorld(this->SystemsWorld, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(this->SystemsWorld, GetWorld());
 	if (IsValid(Systems) == false)
 	{
 		return;
@@ -26,8 +25,7 @@ void ASystemsActor::BeginPlay()
 
 	for (auto* Component : GetComponents())
 	{
-		if (Component->GetClass()->IsChildOf<USystemsActorComponent>() ==
-				false &&
+		if (Component->GetClass()->IsChildOf<USystemsActorComponent>() == false &&
 			Component->ComponentHasTag(SYSTEMS_TAG))
 		{
 			Systems->AddComponent(Component);
@@ -39,8 +37,7 @@ void ASystemsActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
-	auto* Systems =
-		USystemsStatics::GetSystemsWorld(this->SystemsWorld, GetWorld());
+	auto* Systems = USystemsStatics::GetSystemsWorld(this->SystemsWorld, GetWorld());
 	if (IsValid(Systems) == false)
 	{
 		return;
@@ -48,8 +45,7 @@ void ASystemsActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 	for (auto* Component : GetComponents())
 	{
-		if (Component->GetClass()->IsChildOf<USystemsActorComponent>() ==
-				false &&
+		if (Component->GetClass()->IsChildOf<USystemsActorComponent>() == false &&
 			Component->ComponentHasTag(SYSTEMS_TAG))
 		{
 			Systems->RemoveComponent(Component);

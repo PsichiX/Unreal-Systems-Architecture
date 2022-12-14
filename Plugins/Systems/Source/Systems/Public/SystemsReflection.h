@@ -61,12 +61,12 @@ class SYSTEMS_API USystemsReflection : public UBlueprintFunctionLibrary
 // Should be called in module `StartupModule` method to register all systems
 // provided by given module.
 //
-// > NOTE: Make sure `SYSTEMS_NAMESPACE` define is set to module name string
+// # Note
+// > Make sure `SYSTEMS_NAMESPACE` define is set to module name string
 // since it is required to properly prefix registered function names.
-#define REGISTER_SYSTEM_FUNCTION(Function)                \
-	{                                                     \
-		FSystemsReflection::Get().Register(               \
-			(SYSTEMS_NAMESPACE "." #Function), Function); \
+#define REGISTER_SYSTEM_FUNCTION(Function)                                               \
+	{                                                                                    \
+		FSystemsReflection::Get().Register((SYSTEMS_NAMESPACE "." #Function), Function); \
 	}
 
 // Handy wrapper to unregister system function under its function name.
@@ -76,8 +76,7 @@ class SYSTEMS_API USystemsReflection : public UBlueprintFunctionLibrary
 //
 // > NOTE: Make sure `SYSTEMS_NAMESPACE` define is set to module name string
 // since it is required to properly prefix registered function names.
-#define UNREGISTER_SYSTEM_FUNCTION(Function)    \
-	{                                           \
-		FSystemsReflection::Get().Unregister(   \
-			(SYSTEMS_NAMESPACE "." #Function)); \
+#define UNREGISTER_SYSTEM_FUNCTION(Function)                                     \
+	{                                                                            \
+		FSystemsReflection::Get().Unregister((SYSTEMS_NAMESPACE "." #Function)); \
 	}

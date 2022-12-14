@@ -6,16 +6,12 @@ FMockActorBuilder::FMockActorBuilder() : Actor(nullptr)
 {
 }
 
-FMockActorBuilder::FMockActorBuilder(UWorld* TheWorld,
-	UClass* ActorType,
-	FVector Position,
-	FRotator Rotation)
+FMockActorBuilder::FMockActorBuilder(UWorld* TheWorld, UClass* ActorType, FVector Position, FRotator Rotation)
 	: Actor(nullptr)
 {
 	if (IsValid(TheWorld))
 	{
-		auto* NewActor =
-			TheWorld->SpawnActor<AActor>(ActorType, Position, Rotation);
+		auto* NewActor = TheWorld->SpawnActor<AActor>(ActorType, Position, Rotation);
 		if (IsValid(NewActor))
 		{
 			this->Actor = NewActor;
@@ -23,14 +19,11 @@ FMockActorBuilder::FMockActorBuilder(UWorld* TheWorld,
 	}
 }
 
-FMockActorBuilder& FMockActorBuilder::AddComponentRaw(
-	const UClass* ComponentType)
+FMockActorBuilder& FMockActorBuilder::AddComponentRaw(const UClass* ComponentType)
 {
-	if (IsValid(this->Actor) && IsValid(ComponentType) &&
-		ComponentType->IsChildOf<UActorComponent>())
+	if (IsValid(this->Actor) && IsValid(ComponentType) && ComponentType->IsChildOf<UActorComponent>())
 	{
-		auto* Component =
-			NewObject<UActorComponent>(this->Actor, ComponentType);
+		auto* Component = NewObject<UActorComponent>(this->Actor, ComponentType);
 		if (IsValid(Component))
 		{
 			Component->CreationMethod = EComponentCreationMethod::Native;
@@ -38,8 +31,7 @@ FMockActorBuilder& FMockActorBuilder::AddComponentRaw(
 			if (IsValid(SceneComponent))
 			{
 				SceneComponent->AttachToComponent(
-					this->Actor->GetRootComponent(),
-					FAttachmentTransformRules::KeepRelativeTransform);
+					this->Actor->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 			}
 			Component->RegisterComponent();
 		}

@@ -15,8 +15,7 @@ class USystemsWorld;
 class UWidgetSystemsQueryComponentInfo;
 
 UCLASS()
-class SYSTEMSQUERYDEBUGGER_API UWidgetSystemsQueryDebugger
-	: public UEditorUtilityWidget
+class SYSTEMSQUERYDEBUGGER_API UWidgetSystemsQueryDebugger : public UEditorUtilityWidget
 {
 	GENERATED_BODY()
 
@@ -26,8 +25,7 @@ private:
 	virtual void NativeDestruct() override;
 
 	UFUNCTION()
-	void OnSelectedSystemsWorldChanged(FString SelectedItem,
-		ESelectInfo::Type SelectionType);
+	void OnSelectedSystemsWorldChanged(FString SelectedItem, ESelectInfo::Type SelectionType);
 
 	UFUNCTION()
 	void OnDiscoverSystemsWorldsClicked();

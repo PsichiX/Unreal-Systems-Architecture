@@ -10,7 +10,8 @@ class USystemsPipeline;
 
 /// Base class for game state that has to install [`class: USystemsPipeline`]().
 ///
-/// > Note: Given pipeline will be installed only on client.
+/// # Note
+/// > Given pipeline will be installed only on client.
 UCLASS()
 class SYSTEMS_API ASystemsGameState : public AGameStateBase
 {

@@ -154,9 +154,7 @@ public:
 	/// ```snippet
 	/// systems_world_register_component_raw
 	/// ```
-	UFUNCTION(BlueprintCallable,
-		Category = Systems,
-		Meta = (DisplayName = "Register Component"))
+	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Register Component"))
 	bool RegisterComponentRaw(
 		/// Class of component that has to inherit from [`class:
 		/// UActorComponent`]()
@@ -201,9 +199,7 @@ public:
 	/// ```snippet
 	/// systems_world_install_resource_raw
 	/// ```
-	UFUNCTION(BlueprintCallable,
-		Category = Systems,
-		Meta = (DisplayName = "Install Resource"))
+	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Install Resource"))
 	bool InstallResourceRaw(
 		/// Resource object to get registered and managed by this systems world.
 		UObject* Resource);
@@ -263,9 +259,7 @@ public:
 	/// ```snippet
 	/// systems_world_install_system_raw
 	/// ```
-	UFUNCTION(BlueprintCallable,
-		Category = Systems,
-		Meta = (DisplayName = "Install System"))
+	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Install System"))
 	bool InstallSystemRaw(
 		/// Pointer to system being installed.
 		USystem* System,
@@ -313,8 +307,7 @@ public:
 		FInstallSystemOptions Options)
 	{
 		//// [ignore]
-		return InstallDefaultSystem(
-			T::StaticClass(), MoveTempIfPossible(Options));
+		return InstallDefaultSystem(T::StaticClass(), MoveTempIfPossible(Options));
 		//// [/ignore]
 	}
 
@@ -357,9 +350,7 @@ public:
 	/// ```snippet
 	/// systems_world_resource_raw
 	/// ```
-	UFUNCTION(BlueprintCallable,
-		Category = Systems,
-		Meta = (DisplayName = "Get Resource"))
+	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Get Resource"))
 	UObject* ResourceRaw(
 		/// Resource class.
 		const UClass* Type);
@@ -546,9 +537,7 @@ public:
 	/// ```snippet
 	/// systems_world_component_raw
 	/// ```
-	UFUNCTION(BlueprintCallable,
-		Category = Systems,
-		Meta = (DisplayName = "Get Component"))
+	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Get Component"))
 	UActorComponent* ComponentRaw(
 		/// Actor owning given component.
 		AActor* Actor,
@@ -677,9 +666,7 @@ public:
 	/// [`class: USystems::Query`]().
 	///
 	/// See [`class: UDynamicQuery`]()
-	UFUNCTION(BlueprintCallable,
-		Category = Systems,
-		Meta = (DisplayName = "Query"))
+	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Query"))
 	UDynamicQuery* SpawnQuery(const UClass* BundleType);
 
 	/// Acquires lazy-iterator over all registered actors.
@@ -795,8 +782,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Systems)
 	void Process();
 
-	TOptional<FActorArchetypeLocation> FindActorArchetypeLocation(
-		AActor* Actor) const;
+	TOptional<FActorArchetypeLocation> FindActorArchetypeLocation(AActor* Actor) const;
 
 	/// Get component registry index.
 	///
@@ -824,11 +810,9 @@ public:
 	///
 	/// Useful when working directly with [`struct: FArchetypeSignature`](), but
 	/// user most likely won't have any high-level usecase for that.
-	FArchetypeSignature ComponentsSignature(
-		const TArrayView<UActorComponent*>& View) const;
+	FArchetypeSignature ComponentsSignature(const TArrayView<UActorComponent*>& View) const;
 
-	FArchetypeSignature ComponentsIdsSignature(
-		const TArrayView<uint32>& View) const;
+	FArchetypeSignature ComponentsIdsSignature(const TArrayView<uint32>& View) const;
 
 	TOptional<FArchetypeSignature> ActorSignature(AActor* Actor) const;
 
@@ -840,14 +824,12 @@ public:
 	}
 
 private:
-	TOptional<FConsumedActorComponents> ConsumeSwapActorComponents(
-		AActor* Actor);
+	TOptional<FConsumedActorComponents> ConsumeSwapActorComponents(AActor* Actor);
 
 	TOptional<FConsumedActorComponents> ConsumeSwapActorIdComponents(uint32 Id);
 
 	UFUNCTION()
-	TArray<FArchetypeSignature> FindQueryArchetypes(
-		const FArchetypeSignature& IncludeSignature,
+	TArray<FArchetypeSignature> FindQueryArchetypes(const FArchetypeSignature& IncludeSignature,
 		const FArchetypeSignature& ExcludeSignature) const;
 
 	UFUNCTION()

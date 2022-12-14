@@ -10,8 +10,7 @@ FInstallSystemOptions::FInstallSystemOptions() : Label(), Before(), After()
 {
 }
 
-FInstallSystemOptions::FInstallSystemOptions(FName Name)
-	: Label(Name), Before(), After()
+FInstallSystemOptions::FInstallSystemOptions(FName Name) : Label(Name), Before(), After()
 {
 }
 
@@ -50,8 +49,7 @@ void USystemsWorld::SealAndInitialize()
 
 bool USystemsWorld::RegisterComponentRaw(const UClass* Type)
 {
-	if (this->bSealed || IsValid(Type) == false ||
-		this->ComponentTypesCount >= SYSTEMS_COMPONENTS_COUNT)
+	if (this->bSealed || IsValid(Type) == false || this->ComponentTypesCount >= SYSTEMS_COMPONENTS_COUNT)
 	{
 		return false;
 	}
@@ -77,12 +75,10 @@ bool USystemsWorld::InstallDefaultResource(const UClass* Type)
 	return InstallResourceRaw(NewObject<UObject>(this, Type));
 }
 
-bool USystemsWorld::InstallSystemRaw(USystem* System,
-	FInstallSystemOptions Options)
+bool USystemsWorld::InstallSystemRaw(USystem* System, FInstallSystemOptions Options)
 {
 	if (this->bSealed || IsValid(System) == false ||
-		this->Systems.ContainsByPredicate(
-			[&](const auto& Data) { return Data.System == System; }))
+		this->Systems.ContainsByPredicate([&](const auto& Data) { return Data.System == System; }))
 	{
 		return false;
 	}
@@ -92,31 +88,27 @@ bool USystemsWorld::InstallSystemRaw(USystem* System,
 		Options.Label = FName(FGuid::NewGuid().ToString());
 	}
 
-	const auto Before =
-		IterStdConst(Options.Before)
-			.FilterMap<int>(
-				[&](const auto& Name)
-				{
-					const auto Index = this->Systems.IndexOfByPredicate(
-						[&](const auto& Data) { return Data.Label == Name; });
+	const auto Before = IterStdConst(Options.Before)
+							.FilterMap<int>(
+								[&](const auto& Name)
+								{
+									const auto Index = this->Systems.IndexOfByPredicate(
+										[&](const auto& Data) { return Data.Label == Name; });
 
-					return Index >= 0 ? TOptional<int>(Index)
-									  : TOptional<int>();
-				})
-			.ComparedBy([](const auto A, const auto B) { return A < B; });
+									return Index >= 0 ? TOptional<int>(Index) : TOptional<int>();
+								})
+							.ComparedBy([](const auto A, const auto B) { return A < B; });
 
-	const auto After =
-		IterStdConst(Options.After)
-			.FilterMap<int>(
-				[&](const auto& Name)
-				{
-					const auto Index = this->Systems.IndexOfByPredicate(
-						[&](const auto& Data) { return Data.Label == Name; });
+	const auto After = IterStdConst(Options.After)
+						   .FilterMap<int>(
+							   [&](const auto& Name)
+							   {
+								   const auto Index = this->Systems.IndexOfByPredicate(
+									   [&](const auto& Data) { return Data.Label == Name; });
 
-					return Index >= 0 ? TOptional<int>(Index)
-									  : TOptional<int>();
-				})
-			.ComparedBy([](const auto A, const auto B) { return A > B; });
+								   return Index >= 0 ? TOptional<int>(Index) : TOptional<int>();
+							   })
+						   .ComparedBy([](const auto A, const auto B) { return A > B; });
 
 	if (Before.IsSet() && After.IsSet())
 	{
@@ -141,16 +133,12 @@ bool USystemsWorld::InstallSystemRaw(USystem* System,
 	return true;
 }
 
-bool USystemsWorld::InstallDefaultSystem(const UClass* Type,
-	FInstallSystemOptions Options)
+bool USystemsWorld::InstallDefaultSystem(const UClass* Type, FInstallSystemOptions Options)
 {
-	return InstallSystemRaw(
-		NewObject<USystem>(this, Type), MoveTempIfPossible(Options));
+	return InstallSystemRaw(NewObject<USystem>(this, Type), MoveTempIfPossible(Options));
 }
 
-bool USystemsWorld::InstallLambdaSystem(
-	TFunction<ThisClass::LambdaSystemType>&& Functor,
-	FInstallSystemOptions Options)
+bool USystemsWorld::InstallLambdaSystem(TFunction<ThisClass::LambdaSystemType>&& Functor, FInstallSystemOptions Options)
 {
 	auto* System = NewObject<ULambdaSystem>();
 	if (IsValid(System))
@@ -257,8 +245,7 @@ void USystemsWorld::MarkResourceChanged(UObject* Resource)
 
 bool USystemsWorld::ResourceDidChangedRaw(const UClass* Type) const
 {
-	return IsValid(Type) &&
-		this->CachedLastResourcesChanged.Contains(Type->GetUniqueID());
+	return IsValid(Type) && this->CachedLastResourcesChanged.Contains(Type->GetUniqueID());
 }
 
 void USystemsWorld::MarkComponentChanged(UActorComponent* Component)
@@ -273,8 +260,7 @@ void USystemsWorld::MarkComponentChanged(UActorComponent* Component)
 	}
 }
 
-bool USystemsWorld::ComponentsDidChangedRaw(
-	const FArchetypeSignature& Signature) const
+bool USystemsWorld::ComponentsDidChangedRaw(const FArchetypeSignature& Signature) const
 {
 	return this->CachedLastComponentsChanged.ContainsAny(Signature);
 }
@@ -310,8 +296,7 @@ uint32 USystemsWorld::CountRaw(const FArchetypeSignature& IncludeSignature,
 	auto Result = 0;
 	for (const auto& Pair : this->Archetypes)
 	{
-		if (Pair.Key.ContainsAll(IncludeSignature) &&
-			Pair.Key.ContainsAny(ExcludeSignature) == false)
+		if (Pair.Key.ContainsAll(IncludeSignature) && Pair.Key.ContainsAny(ExcludeSignature) == false)
 		{
 			Result += Pair.Value.Actors.Num();
 		}
@@ -356,22 +341,14 @@ void USystemsWorld::Process()
 		auto SignatureAdded = ComponentsSignature(Added);
 		const auto SignatureRemoved = ComponentsIdsSignature(Removed);
 
-		this->ComponentsBeingChanged =
-			this->ComponentsBeingChanged.Include(SignatureAdded)
-				.Include(SignatureRemoved);
+		this->ComponentsBeingChanged = this->ComponentsBeingChanged.Include(SignatureAdded).Include(SignatureRemoved);
 
 		if (const auto Consumed = ConsumeSwapActorIdComponents(ActorId))
 		{
-			SignatureAdded = Consumed.GetValue()
-								 .Signature.Include(SignatureAdded)
-								 .Exclude(SignatureRemoved);
+			SignatureAdded = Consumed.GetValue().Signature.Include(SignatureAdded).Exclude(SignatureRemoved);
 			Added.Append(Consumed.GetValue().Components);
-			Added.RemoveAllSwap(
-				[&](const auto* Component)
-				{
-					return IsValid(Component) == false ||
-						Removed.Contains(Component->GetUniqueID());
-				},
+			Added.RemoveAllSwap([&](const auto* Component)
+				{ return IsValid(Component) == false || Removed.Contains(Component->GetUniqueID()); },
 				false);
 		}
 
@@ -388,12 +365,10 @@ void USystemsWorld::Process()
 			Archetype.RebuildComponentTypesMap(*this);
 			ArchetypeFound = &this->Archetypes.Add(SignatureAdded, Archetype);
 		}
-		const auto ComponentsOffset =
-			ArchetypeFound->Actors.Num() * ArchetypeFound->Stride;
+		const auto ComponentsOffset = ArchetypeFound->Actors.Num() * ArchetypeFound->Stride;
 		ArchetypeFound->Actors.Add(Actor);
 		ArchetypeFound->ActorsIds.Add(Actor->GetUniqueID());
-		ArchetypeFound->Components.Reserve(
-			ArchetypeFound->Actors.Num() * ArchetypeFound->Stride);
+		ArchetypeFound->Components.Reserve(ArchetypeFound->Actors.Num() * ArchetypeFound->Stride);
 		for (uint32 Index = 0; Index < ArchetypeFound->Stride; ++Index)
 		{
 			ArchetypeFound->Components.Add(nullptr);
@@ -403,9 +378,7 @@ void USystemsWorld::Process()
 			const auto Offset = ArchetypeFound->ComponentOffset(Component);
 			if (Offset.IsSet())
 			{
-				ArchetypeFound
-					->Components[ComponentsOffset + Offset.GetValue()] =
-					Component;
+				ArchetypeFound->Components[ComponentsOffset + Offset.GetValue()] = Component;
 			}
 		}
 	}
@@ -427,8 +400,7 @@ void USystemsWorld::Process()
 	}
 }
 
-TOptional<FActorArchetypeLocation> USystemsWorld::FindActorArchetypeLocation(
-	AActor* Actor) const
+TOptional<FActorArchetypeLocation> USystemsWorld::FindActorArchetypeLocation(AActor* Actor) const
 {
 	for (const auto& Pair : this->Archetypes)
 	{
@@ -441,11 +413,9 @@ TOptional<FActorArchetypeLocation> USystemsWorld::FindActorArchetypeLocation(
 	return TOptional<FActorArchetypeLocation>();
 }
 
-TOptional<uint32> USystemsWorld::ComponentIndex(
-	const UActorComponent* Component) const
+TOptional<uint32> USystemsWorld::ComponentIndex(const UActorComponent* Component) const
 {
-	return IsValid(Component) ? ComponentTypeIndex(Component->GetClass())
-							  : TOptional<uint32>();
+	return IsValid(Component) ? ComponentTypeIndex(Component->GetClass()) : TOptional<uint32>();
 }
 
 TOptional<uint32> USystemsWorld::ComponentIdIndex(uint32 Id) const
@@ -463,12 +433,10 @@ TOptional<uint32> USystemsWorld::ComponentIdIndex(uint32 Id) const
 
 TOptional<uint32> USystemsWorld::ComponentTypeIndex(const UClass* Type) const
 {
-	return IsValid(Type) ? ComponentIdIndex(Type->GetUniqueID())
-						 : TOptional<uint32>();
+	return IsValid(Type) ? ComponentIdIndex(Type->GetUniqueID()) : TOptional<uint32>();
 }
 
-FArchetypeSignature USystemsWorld::ComponentsSignature(
-	const TArrayView<UActorComponent*>& View) const
+FArchetypeSignature USystemsWorld::ComponentsSignature(const TArrayView<UActorComponent*>& View) const
 {
 	auto Result = FArchetypeSignature();
 	if (this->bSealed)
@@ -488,8 +456,7 @@ FArchetypeSignature USystemsWorld::ComponentsSignature(
 	return Result;
 }
 
-FArchetypeSignature USystemsWorld::ComponentsIdsSignature(
-	const TArrayView<uint32>& View) const
+FArchetypeSignature USystemsWorld::ComponentsIdsSignature(const TArrayView<uint32>& View) const
 {
 	auto Result = FArchetypeSignature();
 	if (this->bSealed)
@@ -506,8 +473,7 @@ FArchetypeSignature USystemsWorld::ComponentsIdsSignature(
 	return Result;
 }
 
-TOptional<FArchetypeSignature> USystemsWorld::ActorSignature(
-	AActor* Actor) const
+TOptional<FArchetypeSignature> USystemsWorld::ActorSignature(AActor* Actor) const
 {
 	for (const auto& Pair : this->Archetypes)
 	{
@@ -519,8 +485,7 @@ TOptional<FArchetypeSignature> USystemsWorld::ActorSignature(
 	return TOptional<FArchetypeSignature>();
 }
 
-TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorComponents(
-	AActor* Actor)
+TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorComponents(AActor* Actor)
 {
 	for (auto& Pair : this->Archetypes)
 	{
@@ -533,8 +498,7 @@ TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorComponents(
 	return TOptional<FConsumedActorComponents>();
 }
 
-TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorIdComponents(
-	uint32 Id)
+TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorIdComponents(uint32 Id)
 {
 	for (auto& Pair : this->Archetypes)
 	{
@@ -547,16 +511,14 @@ TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorIdComponents(
 	return TOptional<FConsumedActorComponents>();
 }
 
-TArray<FArchetypeSignature> USystemsWorld::FindQueryArchetypes(
-	const FArchetypeSignature& IncludeSignature,
+TArray<FArchetypeSignature> USystemsWorld::FindQueryArchetypes(const FArchetypeSignature& IncludeSignature,
 	const FArchetypeSignature& ExcludeSignature) const
 {
 	auto Result = TArray<FArchetypeSignature>();
 	Result.Reserve(this->Archetypes.Num());
 	for (const auto& Pair : this->Archetypes)
 	{
-		if (Pair.Key.ContainsAll(IncludeSignature) &&
-			Pair.Key.ContainsAny(ExcludeSignature) == false)
+		if (Pair.Key.ContainsAll(IncludeSignature) && Pair.Key.ContainsAny(ExcludeSignature) == false)
 		{
 			Result.Add(Pair.Key);
 		}

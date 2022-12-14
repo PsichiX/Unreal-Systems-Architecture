@@ -24,9 +24,7 @@ public:
 };
 
 UCLASS()
-class SYSTEMSQUERYDEBUGGER_API UWidgetSystemsQueryComponent
-	: public UUserWidget,
-	  public IUserObjectListEntry
+class SYSTEMSQUERYDEBUGGER_API UWidgetSystemsQueryComponent : public UUserWidget, public IUserObjectListEntry
 {
 	GENERATED_BODY()
 

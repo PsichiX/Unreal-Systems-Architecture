@@ -24,14 +24,12 @@ void UWidgetSystemsQueryDebugger::NativeConstruct()
 
 	if (IsValid(this->DiscoverSystemsWorldsButton))
 	{
-		this->DiscoverSystemsWorldsButton->OnClicked.AddUniqueDynamic(
-			this, &ThisClass::OnDiscoverSystemsWorldsClicked);
+		this->DiscoverSystemsWorldsButton->OnClicked.AddUniqueDynamic(this, &ThisClass::OnDiscoverSystemsWorldsClicked);
 	}
 
 	if (IsValid(this->PerformQueryButton))
 	{
-		this->PerformQueryButton->OnClicked.AddUniqueDynamic(
-			this, &ThisClass::OnPerformQueryClicked);
+		this->PerformQueryButton->OnClicked.AddUniqueDynamic(this, &ThisClass::OnPerformQueryClicked);
 	}
 
 	FEditorDelegates::ResumePIE.AddUObject(this, &ThisClass::OnResumePie);
@@ -65,19 +63,15 @@ void UWidgetSystemsQueryDebugger::NativeDestruct()
 	FEditorDelegates::EndPIE.RemoveAll(this);
 }
 
-void UWidgetSystemsQueryDebugger::OnSelectedSystemsWorldChanged(
-	FString SelectedItem,
-	ESelectInfo::Type SelectionType)
+void UWidgetSystemsQueryDebugger::OnSelectedSystemsWorldChanged(FString SelectedItem, ESelectInfo::Type SelectionType)
 {
-	if (IsValid(this->SelectSystemsWorldComboBox) == false ||
-		IsValid(this->QueryComponentsGroup) == false)
+	if (IsValid(this->SelectSystemsWorldComboBox) == false || IsValid(this->QueryComponentsGroup) == false)
 	{
 		ResetState();
 		return;
 	}
 
-	const auto Found =
-		this->SelectSystemsWorldComboBox->FindOptionIndex(SelectedItem);
+	const auto Found = this->SelectSystemsWorldComboBox->FindOptionIndex(SelectedItem);
 	if (Found < 0 || Found >= this->SystemsWorlds.Num())
 	{
 		ResetState();
@@ -91,8 +85,7 @@ void UWidgetSystemsQueryDebugger::OnSelectedSystemsWorldChanged(
 		return;
 	}
 
-	const auto& Classes =
-		this->SelectedSystemsWorld->RegisteredComponentClasses();
+	const auto& Classes = this->SelectedSystemsWorld->RegisteredComponentClasses();
 	this->ComponentsInfo.Reset(0);
 	IterStdConst(Classes)
 		.Map<UWidgetSystemsQueryComponentInfo*>(
@@ -104,9 +97,8 @@ void UWidgetSystemsQueryDebugger::OnSelectedSystemsWorldChanged(
 				return Info;
 			})
 		.CollectIntoArray(this->ComponentsInfo);
-	Algo::Sort(this->ComponentsInfo,
-		[](auto* A, auto* B)
-		{ return A->Type->GetName().Compare(B->Type->GetName()) <= 0; });
+	Algo::Sort(
+		this->ComponentsInfo, [](auto* A, auto* B) { return A->Type->GetName().Compare(B->Type->GetName()) <= 0; });
 	this->QueryComponentsListView->SetListItems(this->ComponentsInfo);
 	this->QueryComponentsGroup->SetVisibility(ESlateVisibility::Visible);
 }
@@ -133,14 +125,12 @@ void UWidgetSystemsQueryDebugger::OnDiscoverSystemsWorldsClicked()
 		const auto WorldName = GetWorldDescription(Systems->GetWorld());
 
 		this->SystemsWorlds.Add(Systems);
-		this->SelectSystemsWorldComboBox->AddOption(
-			FString::Printf(TEXT("%s (%s)"), *SystemsName, *WorldName));
+		this->SelectSystemsWorldComboBox->AddOption(FString::Printf(TEXT("%s (%s)"), *SystemsName, *WorldName));
 	}
 
 	if (this->SystemsWorlds.Num() > 0)
 	{
-		this->SelectSystemsWorldComboBox->SetVisibility(
-			ESlateVisibility::Visible);
+		this->SelectSystemsWorldComboBox->SetVisibility(ESlateVisibility::Visible);
 		this->SelectSystemsWorldComboBox->SetSelectedIndex(0);
 	}
 }
@@ -149,10 +139,8 @@ void UWidgetSystemsQueryDebugger::OnPerformQueryClicked()
 {
 	ResetActorsList();
 
-	if (IsValid(this->QueryActorsGroup) == false ||
-		IsValid(this->QueryActorsListView) == false ||
-		IsValid(this->SelectedSystemsWorld) == false ||
-		IsValid(this->QueryActorsCountText) == false)
+	if (IsValid(this->QueryActorsGroup) == false || IsValid(this->QueryActorsListView) == false ||
+		IsValid(this->SelectedSystemsWorld) == false || IsValid(this->QueryActorsCountText) == false)
 	{
 		return;
 	}
@@ -177,14 +165,11 @@ void UWidgetSystemsQueryDebugger::OnPerformQueryClicked()
 				return Actor;
 			})
 		.CollectIntoArray(Items);
-	Algo::Sort(Items,
-		[](auto* A, auto* B)
-		{ return A->GetName().Compare(B->GetName()) <= 0; });
+	Algo::Sort(Items, [](auto* A, auto* B) { return A->GetName().Compare(B->GetName()) <= 0; });
 
 	this->QueryActorsCountText->SetText(FText::AsNumber(Items.Num()));
 	this->QueryActorsListView->SetListItems(Items);
-	this->QueryActorsGroup->SetVisibility(
-		ESlateVisibility::SelfHitTestInvisible);
+	this->QueryActorsGroup->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 }
 
 void UWidgetSystemsQueryDebugger::OnResumePie(bool BIsSimulating)
@@ -202,8 +187,7 @@ void UWidgetSystemsQueryDebugger::ResetState()
 	if (IsValid(this->SelectSystemsWorldComboBox))
 	{
 		this->SelectSystemsWorldComboBox->ClearOptions();
-		this->SelectSystemsWorldComboBox->SetVisibility(
-			ESlateVisibility::Collapsed);
+		this->SelectSystemsWorldComboBox->SetVisibility(ESlateVisibility::Collapsed);
 	}
 
 	if (IsValid(this->QueryComponentsGroup))
@@ -264,9 +248,7 @@ FString GetWorldDescription(UWorld* World)
 				case NM_Client:
 					if (InstanceIndex.IsSet())
 					{
-						return FString::Printf(TEXT("%s: Client %i"),
-							*WorldName,
-							InstanceIndex.GetValue());
+						return FString::Printf(TEXT("%s: Client %i"), *WorldName, InstanceIndex.GetValue());
 					}
 					else
 					{

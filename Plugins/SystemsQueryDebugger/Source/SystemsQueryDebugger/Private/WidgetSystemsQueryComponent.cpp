@@ -9,8 +9,7 @@ void UWidgetSystemsQueryComponent::NativeConstruct()
 
 	if (IsValid(this->CheckBox))
 	{
-		this->CheckBox->OnCheckStateChanged.AddUniqueDynamic(
-			this, &ThisClass::OnEnableChanged);
+		this->CheckBox->OnCheckStateChanged.AddUniqueDynamic(this, &ThisClass::OnEnableChanged);
 	}
 }
 
@@ -24,8 +23,7 @@ void UWidgetSystemsQueryComponent::NativeDestruct()
 	}
 }
 
-void UWidgetSystemsQueryComponent::NativeOnListItemObjectSet(
-	UObject* ListItemObject)
+void UWidgetSystemsQueryComponent::NativeOnListItemObjectSet(UObject* ListItemObject)
 {
 	this->Info = Cast<UWidgetSystemsQueryComponentInfo>(ListItemObject);
 
@@ -36,14 +34,12 @@ void UWidgetSystemsQueryComponent::NativeOnListItemObjectSet(
 
 	if (IsValid(this->Info))
 	{
-		this->Text->SetText(
-			FText::AsCultureInvariant(this->Info->Type->GetName()));
+		this->Text->SetText(FText::AsCultureInvariant(this->Info->Type->GetName()));
 		this->CheckBox->SetIsChecked(this->Info->bEnabled);
 	}
 	else
 	{
-		this->Text->SetText(
-			FText::AsCultureInvariant(TEXT("<INVALID COMPONENT CLASS>")));
+		this->Text->SetText(FText::AsCultureInvariant(TEXT("<INVALID COMPONENT CLASS>")));
 		this->CheckBox->SetIsChecked(false);
 	}
 }

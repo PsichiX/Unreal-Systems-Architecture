@@ -11,9 +11,7 @@ class UTextBlock;
 class UButton;
 
 UCLASS()
-class SYSTEMSQUERYDEBUGGER_API UWidgetSystemsQueryActor
-	: public UUserWidget,
-	  public IUserObjectListEntry
+class SYSTEMSQUERYDEBUGGER_API UWidgetSystemsQueryActor : public UUserWidget, public IUserObjectListEntry
 {
 	GENERATED_BODY()
 

@@ -6,5 +6,4 @@ class USystemsWorld;
 
 void SYSTEMSSPATIALQUERY_API SpatialPartitioningSystem(USystemsWorld& Systems);
 
-void SYSTEMSSPATIALQUERY_API DebugSpatialPartitioningSystem(
-	USystemsWorld& Systems);
+void SYSTEMSSPATIALQUERY_API DebugSpatialPartitioningSystem(USystemsWorld& Systems);

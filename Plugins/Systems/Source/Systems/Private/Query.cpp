@@ -21,8 +21,7 @@ void UDynamicQuery::Setup(USystemsWorld* Systems, const UClass* Type)
 	if (IsValid(Systems) && IsValid(Type))
 	{
 		SignatureFromBundle(Systems, Type);
-		this->CachedArchetypes = Systems->FindQueryArchetypes(
-			this->Signature, FArchetypeSignature());
+		this->CachedArchetypes = Systems->FindQueryArchetypes(this->Signature, FArchetypeSignature());
 		if (this->CachedArchetypes.Num() > 0)
 		{
 			this->State.Set<FStartQueryState>({Systems});
@@ -30,47 +29,59 @@ void UDynamicQuery::Setup(USystemsWorld* Systems, const UClass* Type)
 	}
 }
 
-bool UDynamicQuery::Next(UObject* Output)
+UObject* UDynamicQuery::Next()
 {
-	if (Output == nullptr || Output->GetClass() != this->BundleType)
-	{
-		return NextNone();
-	}
 	if (this->State.IsType<FStartQueryState>())
 	{
-		return NextStart(this->State.Get<FStartQueryState>(), Output);
+		return NextStart(this->State.Get<FStartQueryState>());
 	}
 	else if (this->State.IsType<FCurrentQueryState>())
 	{
-		return NextCurrent(this->State.Get<FCurrentQueryState>(), Output);
+		return NextCurrent(this->State.Get<FCurrentQueryState>());
 	}
-	return NextNone();
+	Reset();
+	return nullptr;
 }
 
-void UDynamicQuery::NextBranched(UObject* Output, EDynamicQueryBranch& Branches)
+int UDynamicQuery::EstimateSizeLeft() const
 {
-	Branches =
-		Next(Output) ? EDynamicQueryBranch::Continue : EDynamicQueryBranch::End;
+	const USystemsWorld* Systems = nullptr;
+	if (this->State.IsType<FStartQueryState>())
+	{
+		Systems = this->State.Get<FStartQueryState>().Owner;
+	}
+	else if (this->State.IsType<FCurrentQueryState>())
+	{
+		Systems = this->State.Get<FCurrentQueryState>().Owner;
+	}
+	if (IsValid(Systems) == false)
+	{
+		return 0;
+	}
+	auto Result = 0;
+	for (const auto& Item : this->CachedArchetypes)
+	{
+		const auto* Archetype = Systems->Archetypes.Find(Item);
+		if (Archetype != nullptr)
+		{
+			Result += Archetype->Actors.Num();
+		}
+	}
+	return Result;
 }
 
-void UDynamicQuery::SignatureFromBundle(const USystemsWorld* Systems,
-	const UClass* Type)
+void UDynamicQuery::SignatureFromBundle(const USystemsWorld* Systems, const UClass* Type)
 {
 	this->Signature.Clear();
-	for (TFieldIterator<FProperty> Iter(
-			 Type, EFieldIteratorFlags::IncludeSuper);
-		 Iter;
-		 ++Iter)
+	for (TFieldIterator<FProperty> Iter(Type, EFieldIteratorFlags::IncludeSuper); Iter; ++Iter)
 	{
 		const auto* Property = *Iter;
 		if (Property->IsA<FObjectProperty>())
 		{
 			const auto* ObjectProperty = CastField<FObjectProperty>(Property);
-			if (IsValid(ObjectProperty->PropertyClass) &&
-				ObjectProperty->PropertyClass->IsChildOf<UActorComponent>())
+			if (IsValid(ObjectProperty->PropertyClass) && ObjectProperty->PropertyClass->IsChildOf<UActorComponent>())
 			{
-				const auto Found =
-					Systems->ComponentTypeIndex(ObjectProperty->PropertyClass);
+				const auto Found = Systems->ComponentTypeIndex(ObjectProperty->PropertyClass);
 				if (Found.IsSet())
 				{
 					this->Signature.EnableBit(Found.GetValue());
@@ -80,62 +91,58 @@ void UDynamicQuery::SignatureFromBundle(const USystemsWorld* Systems,
 	}
 }
 
-bool UDynamicQuery::NextNone()
+void UDynamicQuery::Reset()
 {
 	this->State.Set<FEndQueryState>({});
-	return false;
 }
 
-bool UDynamicQuery::NextStart(FStartQueryState& Data, UObject* Output)
+UObject* UDynamicQuery::NextStart(FStartQueryState& Data)
 {
 	if (IsValid(Data.Owner) == false || this->CachedArchetypes.Num() <= 0)
 	{
-		return NextNone();
+		Reset();
+		return nullptr;
 	}
 	auto* Archetype = Data.Owner->Archetypes.Find(this->CachedArchetypes[0]);
 	if (Archetype == nullptr || Archetype->Actors.Num() <= 0)
 	{
-		return NextNone();
+		Reset();
+		return nullptr;
 	}
 	this->State.Set<FCurrentQueryState>({Data.Owner, 0, 0});
-	FillQueryItem(Output, Archetype, 0);
-	return true;
+	return CreateQueryItem(Archetype, 0);
 }
 
-bool UDynamicQuery::NextCurrent(FCurrentQueryState& Data, UObject* Output)
+UObject* UDynamicQuery::NextCurrent(FCurrentQueryState& Data)
 {
 	if (IsValid(Data.Owner) == false)
 	{
-		return NextNone();
+		Reset();
+		return nullptr;
 	}
-	while (
-		Data.ArchetypeIndex < static_cast<uint32>(this->CachedArchetypes.Num()))
+	while (Data.ArchetypeIndex < static_cast<uint32>(this->CachedArchetypes.Num()))
 	{
-		auto* Archetype = Data.Owner->Archetypes.Find(
-			this->CachedArchetypes[Data.ArchetypeIndex]);
+		auto* Archetype = Data.Owner->Archetypes.Find(this->CachedArchetypes[Data.ArchetypeIndex]);
 		if (Archetype == nullptr)
 		{
-			return NextNone();
+			Reset();
+			return nullptr;
 		}
 		++Data.ActorIndex;
 		if (Data.ActorIndex < static_cast<uint32>(Archetype->Actors.Num()))
 		{
-			FillQueryItem(Output, Archetype, Data.ActorIndex);
-			return true;
+			return CreateQueryItem(Archetype, Data.ActorIndex);
 		}
 		++Data.ArchetypeIndex;
 	}
-	return NextNone();
+	Reset();
+	return nullptr;
 }
 
-void UDynamicQuery::FillQueryItem(UObject* Output,
-	const FArchetype* Archetype,
-	uint32 ActorIndex)
+UObject* UDynamicQuery::CreateQueryItem(const FArchetype* Archetype, uint32 ActorIndex)
 {
-	for (TFieldIterator<FProperty> Iter(
-			 this->BundleType, EFieldIteratorFlags::IncludeSuper);
-		 Iter;
-		 ++Iter)
+	auto* Result = NewObject<UObject>(GetTransientPackage(), this->BundleType);
+	for (TFieldIterator<FProperty> Iter(this->BundleType, EFieldIteratorFlags::IncludeSuper); Iter; ++Iter)
 	{
 		const auto* Property = *Iter;
 		if (Property->IsA<FObjectProperty>())
@@ -145,27 +152,22 @@ void UDynamicQuery::FillQueryItem(UObject* Output,
 			{
 				if (ObjectProperty->PropertyClass->IsChildOf<AActor>())
 				{
-					auto Ptr =
-						ObjectProperty->ContainerPtrToValuePtr<AActor*>(Output);
+					auto Ptr = ObjectProperty->ContainerPtrToValuePtr<AActor*>(Result);
 					*Ptr = Archetype->Actors[ActorIndex];
 				}
-				else if (ObjectProperty->PropertyClass
-							 ->IsChildOf<UActorComponent>())
+				else if (ObjectProperty->PropertyClass->IsChildOf<UActorComponent>())
 				{
-					auto* Component = Archetype->IndexedComponentRaw(
-						ActorIndex, ObjectProperty->PropertyClass);
+					auto* Component = Archetype->IndexedComponentRaw(ActorIndex, ObjectProperty->PropertyClass);
 					if (IsValid(Component))
 					{
-						auto Ptr =
-							ObjectProperty
-								->ContainerPtrToValuePtr<UActorComponent*>(
-									Output);
+						auto Ptr = ObjectProperty->ContainerPtrToValuePtr<UActorComponent*>(Result);
 						*Ptr = Component;
 					}
 				}
 			}
 		}
 	}
+	return Result;
 }
 
 FActorsIter::FActorsIter() : CachedArchetypes(), State()
@@ -249,11 +251,9 @@ TOptional<FActorsIter::Item> FActorsIter::NextCurrent(FCurrentQueryState& Data)
 	{
 		return NextNone();
 	}
-	while (
-		Data.ArchetypeIndex < static_cast<uint32>(this->CachedArchetypes.Num()))
+	while (Data.ArchetypeIndex < static_cast<uint32>(this->CachedArchetypes.Num()))
 	{
-		auto* Archetype = Data.Owner->Archetypes.Find(
-			this->CachedArchetypes[Data.ArchetypeIndex]);
+		auto* Archetype = Data.Owner->Archetypes.Find(this->CachedArchetypes[Data.ArchetypeIndex]);
 		if (Archetype == nullptr)
 		{
 			return NextNone();

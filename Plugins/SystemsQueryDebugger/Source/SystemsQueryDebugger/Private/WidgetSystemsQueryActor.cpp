@@ -10,8 +10,7 @@ void UWidgetSystemsQueryActor::NativeConstruct()
 
 	if (IsValid(this->SelectButton))
 	{
-		this->SelectButton->OnClicked.AddUniqueDynamic(
-			this, &ThisClass::OnSelectClicked);
+		this->SelectButton->OnClicked.AddUniqueDynamic(this, &ThisClass::OnSelectClicked);
 	}
 }
 
@@ -25,8 +24,7 @@ void UWidgetSystemsQueryActor::NativeDestruct()
 	}
 }
 
-void UWidgetSystemsQueryActor::NativeOnListItemObjectSet(
-	UObject* ListItemObject)
+void UWidgetSystemsQueryActor::NativeOnListItemObjectSet(UObject* ListItemObject)
 {
 	this->Actor = Cast<AActor>(ListItemObject);
 
@@ -35,17 +33,14 @@ void UWidgetSystemsQueryActor::NativeOnListItemObjectSet(
 		if (IsValid(this->Actor))
 		{
 			const auto ActorName = this->Actor->GetName();
-			const auto OwnerName = IsValid(this->Actor->GetOuter())
-				? this->Actor->GetOuter()->GetName()
-				: FString(TEXT("<UNKNOWN OWNER>"));
+			const auto OwnerName = IsValid(this->Actor->GetOuter()) ? this->Actor->GetOuter()->GetName()
+																	: FString(TEXT("<UNKNOWN OWNER>"));
 
-			this->Text->SetText(FText::AsCultureInvariant(
-				FString::Printf(TEXT("%s (%s)"), *ActorName, *OwnerName)));
+			this->Text->SetText(FText::AsCultureInvariant(FString::Printf(TEXT("%s (%s)"), *ActorName, *OwnerName)));
 		}
 		else
 		{
-			this->Text->SetText(
-				FText::AsCultureInvariant(TEXT("<INVALID ACTOR>")));
+			this->Text->SetText(FText::AsCultureInvariant(TEXT("<INVALID ACTOR>")));
 		}
 	}
 }

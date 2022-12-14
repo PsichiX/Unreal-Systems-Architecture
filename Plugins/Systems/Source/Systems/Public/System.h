@@ -144,8 +144,7 @@ private:
 	///
 	/// When not None, this system will run system function found in reflection
 	/// registry.
-	UPROPERTY(EditAnywhere,
-		Meta = (GetOptions = "Systems.SystemsReflection.GetOptions"))
+	UPROPERTY(EditAnywhere, Meta = (GetOptions = "Systems.SystemsReflection.GetOptions"))
 	FName FunctionName = FName();
 
 	TOptional<TFunction<FunctorType>> Functor = {};

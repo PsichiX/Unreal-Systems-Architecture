@@ -11,8 +11,7 @@ FSystemsReflection& FSystemsReflection::Get()
 	return GetSingleton().GetValue();
 }
 
-void FSystemsReflection::Register(FName Name,
-	TFunction<USystemsWorld::LambdaSystemType> Callback)
+void FSystemsReflection::Register(FName Name, TFunction<USystemsWorld::LambdaSystemType> Callback)
 {
 	FScopeLock Lock(&this->CriticalSection);
 	this->Registry.Add(Name, Callback);
@@ -32,8 +31,7 @@ void FSystemsReflection::GetNames(TArray<FString>& Result) const
 		.CollectIntoArray(Result);
 }
 
-TOptional<TFunction<USystemsWorld::LambdaSystemType>>
-FSystemsReflection::FindByName(FName Name) const
+TOptional<TFunction<USystemsWorld::LambdaSystemType>> FSystemsReflection::FindByName(FName Name) const
 {
 	FScopeLock Lock(&this->CriticalSection);
 	const auto* Found = this->Registry.Find(Name);

@@ -2,9 +2,7 @@
 
 #include "Systems/Public/SystemsPipeline.h"
 
-void ASystemsGameMode::InitGame(const FString& MapName,
-	const FString& Options,
-	FString& ErrorMessage)
+void ASystemsGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
 {
 	Super::InitGame(MapName, Options, ErrorMessage);
 

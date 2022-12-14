@@ -396,12 +396,11 @@
 //// template <typename ITER>
 //// TIterChain<Self, ITER> Chain(ITER&& Iter);
 //// [/proxy]
-#define ITER_IMPL_CHAIN(ITER)                                     \
-	template <typename ITER>                                      \
-	TIterChain<Self, ITER> Chain(ITER&& Iter)                     \
-	{                                                             \
-		return ::IterChain(                                       \
-			MoveTempIfPossible(*this), MoveTempIfPossible(Iter)); \
+#define ITER_IMPL_CHAIN(ITER)                                                    \
+	template <typename ITER>                                                     \
+	TIterChain<Self, ITER> Chain(ITER&& Iter)                                    \
+	{                                                                            \
+		return ::IterChain(MoveTempIfPossible(*this), MoveTempIfPossible(Iter)); \
 	}
 
 /// Enumerates values in this iterator.
@@ -463,12 +462,11 @@
 //// TIterFilterMap<typename RESULT, Self, typename FUNCTOR>
 //// FilterMap(FUNCTOR Func);
 //// [/proxy]
-#define ITER_IMPL_FILTER_MAP(RESULT, FUNCTOR)                            \
-	template <typename RESULT, typename FUNCTOR>                         \
-	TIterFilterMap<typename RESULT, Self, typename FUNCTOR> FilterMap(   \
-		FUNCTOR Func)                                                    \
-	{                                                                    \
-		return ::IterFilterMap<RESULT>(MoveTempIfPossible(*this), Func); \
+#define ITER_IMPL_FILTER_MAP(RESULT, FUNCTOR)                                       \
+	template <typename RESULT, typename FUNCTOR>                                    \
+	TIterFilterMap<typename RESULT, Self, typename FUNCTOR> FilterMap(FUNCTOR Func) \
+	{                                                                               \
+		return ::IterFilterMap<RESULT>(MoveTempIfPossible(*this), Func);            \
 	}
 
 /// Flattens nested iterators.

@@ -14,13 +14,11 @@ bool SystemsUnitTest(TFunction<bool(UWorld*)> Functor)
 	return false;
 }
 
-USystemsWorld* AcquireMockWorld(UWorld* TheWorld,
-	TFunction<void(USystemsWorld&)> Setup)
+USystemsWorld* AcquireMockWorld(UWorld* TheWorld, TFunction<void(USystemsWorld&)> Setup)
 {
 	if (IsValid(TheWorld))
 	{
-		auto* Systems =
-			NewObject<USystemsWorld>(TheWorld, USystemsWorld::StaticClass());
+		auto* Systems = NewObject<USystemsWorld>(TheWorld, USystemsWorld::StaticClass());
 		if (IsValid(Systems))
 		{
 			Setup(*Systems);

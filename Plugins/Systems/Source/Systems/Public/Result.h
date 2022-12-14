@@ -168,8 +168,7 @@ public:
 	TOptional<T> AsOk() const
 	{
 		//// [ignore]
-		return IsOk() ? TOptional<T>(this->Inner.Get<TResultOk<T>>().Value)
-					  : TOptional<T>();
+		return IsOk() ? TOptional<T>(this->Inner.Get<TResultOk<T>>().Value) : TOptional<T>();
 		//// [/ignore]
 	}
 
@@ -179,9 +178,7 @@ public:
 	TOptional<E> AsError() const
 	{
 		//// [ignore]
-		return IsError()
-			? TOptional<E>(this->Inner.Get<TResultError<E>>().Error)
-			: TOptional<E>();
+		return IsError() ? TOptional<E>(this->Inner.Get<TResultError<E>>().Error) : TOptional<E>();
 		//// [/ignore]
 	}
 

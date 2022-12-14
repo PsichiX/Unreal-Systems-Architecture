@@ -80,9 +80,7 @@ public:
 	/// [`class: USystemsWorld::GetResourceRaw`]() on it.
 	UFUNCTION(BlueprintCallable,
 		Category = "Systems|Resources",
-		Meta = (WorldContext = "World",
-			UnsafeDuringActorConstruction = "true",
-			DisplayName = "Get Resource"))
+		Meta = (WorldContext = "World", UnsafeDuringActorConstruction = "true", DisplayName = "Get Resource"))
 	static UObject* GetResourceRaw(
 		/// Systems world ID.
 		FName Id,

@@ -19,12 +19,9 @@ public:
 		FRotator Rotation = FRotator());
 
 	template <class T>
-	static FMockActorBuilder Make(UWorld* TheWorld,
-		FVector Position = FVector(0),
-		FRotator Rotation = FRotator())
+	static FMockActorBuilder Make(UWorld* TheWorld, FVector Position = FVector(0), FRotator Rotation = FRotator())
 	{
-		return FMockActorBuilder(
-			TheWorld, T::StaticClass(), Position, Rotation);
+		return FMockActorBuilder(TheWorld, T::StaticClass(), Position, Rotation);
 	}
 
 	FMockActorBuilder& AddComponentRaw(const UClass* ComponentType);

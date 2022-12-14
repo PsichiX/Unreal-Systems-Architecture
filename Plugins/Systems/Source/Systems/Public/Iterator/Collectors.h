@@ -7,8 +7,7 @@ void IterCollectIntoArray(I&& Iterator, TArray<typename I::Item>& Result)
 {
 	//// [ignore]
 	const auto SizeHint = Iterator.SizeHint();
-	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue()
-												   : SizeHint.Minimum;
+	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue() : SizeHint.Minimum;
 	Result.Reserve(Result.Num() + Capacity);
 	while (auto QueryItem = Iterator.Next())
 	{
@@ -32,8 +31,7 @@ void IterCollectIntoSet(I&& Iterator, TSet<typename I::Item>& Result)
 {
 	//// [ignore]
 	const auto SizeHint = Iterator.SizeHint();
-	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue()
-												   : SizeHint.Minimum;
+	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue() : SizeHint.Minimum;
 	Result.Reserve(Result.Num() + Capacity);
 	while (auto QueryItem = Iterator.Next())
 	{
@@ -57,8 +55,7 @@ void IterCollectIntoMap(I&& Iterator, TMap<K, V>& Result)
 {
 	//// [ignore]
 	const auto SizeHint = Iterator.SizeHint();
-	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue()
-												   : SizeHint.Minimum;
+	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue() : SizeHint.Minimum;
 	Result.Reserve(Result.Num() + Capacity);
 	while (auto QueryItem = Iterator.Next())
 	{

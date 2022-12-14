@@ -18,11 +18,7 @@ void FActorComponentsBucket::Remove(UActorComponent* Component)
 	{
 		const auto Id = Component->GetClass()->GetUniqueID();
 		this->Added.RemoveAllSwap(
-			[&](const auto* Item) {
-				return IsValid(Item) == false ||
-					Item->GetClass()->GetUniqueID() == Id;
-			},
-			false);
+			[&](const auto* Item) { return IsValid(Item) == false || Item->GetClass()->GetUniqueID() == Id; }, false);
 		this->Removed.Add(Id);
 	}
 }

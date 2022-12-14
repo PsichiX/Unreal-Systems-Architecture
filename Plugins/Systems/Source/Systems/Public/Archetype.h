@@ -34,8 +34,7 @@ public:
 
 	UActorComponent* ComponentRaw(AActor* Actor, const UClass* Type) const;
 
-	UActorComponent* IndexedComponentRaw(uint32 ActorIndex,
-		const UClass* Type) const;
+	UActorComponent* IndexedComponentRaw(uint32 ActorIndex, const UClass* Type) const;
 
 	template <class T>
 	T* IndexedComponent(uint32 ActorIndex) const
@@ -45,8 +44,7 @@ public:
 		//// [/ignore]
 	}
 
-	TOptional<TArray<UActorComponent*>> ConsumeSwapActorComponents(
-		AActor* Actor);
+	TOptional<TArray<UActorComponent*>> ConsumeSwapActorComponents(AActor* Actor);
 
 	TOptional<TArray<UActorComponent*>> ConsumeSwapActorIdComponents(uint32 Id);
 

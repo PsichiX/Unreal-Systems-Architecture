@@ -5,6 +5,7 @@
 #include "Misc/TVariant.h"
 #include "Systems/Public/Archetype.h"
 #include "Systems/Public/ArchetypeSignature.h"
+#include "Systems/Public/DynamicIterator.h"
 #include "Systems/Public/Iterator.h"
 
 #include "Query.generated.h"
@@ -41,13 +42,6 @@ struct SYSTEMS_API FEndQueryState
 	GENERATED_BODY()
 };
 
-UENUM(BlueprintType)
-enum class EDynamicQueryBranch : uint8
-{
-	Continue,
-	End,
-};
-
 /// Dynamic query useful for performing system world queries in blueprints.
 ///
 /// One of the goals of Systems Architecture is to provide game designers with
@@ -68,7 +62,7 @@ enum class EDynamicQueryBranch : uint8
 /// dynamic_query
 /// ```
 UCLASS(BlueprintType)
-class SYSTEMS_API UDynamicQuery : public UObject
+class SYSTEMS_API UDynamicQuery : public UDynamicIterator
 {
 	GENERATED_BODY()
 
@@ -84,39 +78,26 @@ public:
 		/// components are gonna be stored.
 		const UClass* Type);
 
-	/// Performs iteration and stores yielded values in provided object.
+	/// Performs iteration and stores yielded values in returned object.
 	///
 	/// # Note
 	/// > This method uses reflection to figure out properties that gonna store
-	/// yielded actor and components.
-	UFUNCTION()
-	bool Next(
-		/// Pointer to object where yielded actor and components are gonna be
-		/// stored in its properties.
-		UObject* Output);
+	/// yielded actor and components in returned object.
+	virtual UObject* Next() override;
 
-	/// Performs iteration and stores yielded values in provided object.
-	///
-	/// Handy wrapper for [`class: UDynamicQuery::Next`]() for use in
-	/// blueprints, where iteration can branch to `yielded` and `completed`
-	/// execution nodes.
-	UFUNCTION(BlueprintCallable,
-		Category = Systems,
-		Meta = (DisplayName = "Next", ExpandEnumAsExecs = "Branches"))
-	void NextBranched(UObject* Output, EDynamicQueryBranch& Branches);
+	/// Calculates maximum number of items this query can yield.
+	virtual int EstimateSizeLeft() const override;
 
 private:
 	void SignatureFromBundle(const USystemsWorld* Systems, const UClass* Type);
 
-	bool NextNone();
+	void Reset();
 
-	bool NextStart(FStartQueryState& Data, UObject* Output);
+	UObject* NextStart(FStartQueryState& Data);
 
-	bool NextCurrent(FCurrentQueryState& Data, UObject* Output);
+	UObject* NextCurrent(FCurrentQueryState& Data);
 
-	void FillQueryItem(UObject* Output,
-		const FArchetype* Archetype,
-		uint32 ActorIndex);
+	UObject* CreateQueryItem(const FArchetype* Archetype, uint32 ActorIndex);
 
 	UPROPERTY()
 	const UClass* BundleType = nullptr;
@@ -235,8 +216,7 @@ public:
 			{
 				Result.ExcludeType(Systems, Type);
 			}
-			Result.CachedArchetypes = Systems->FindQueryArchetypes(
-				Result.IncludeSignature, Result.ExcludeSignature);
+			Result.CachedArchetypes = Systems->FindQueryArchetypes(Result.IncludeSignature, Result.ExcludeSignature);
 			if (Result.CachedArchetypes.Num() > 0)
 			{
 				Result.State.Set<FStartQueryState>({this->Systems});
@@ -284,8 +264,7 @@ public:
 	using Self = TQuery<T...>;
 	using Item = TTuple<AActor*, T*...>;
 
-	TQuery()
-		: IncludeSignature(), ExcludeSignature(), CachedArchetypes(), State()
+	TQuery() : IncludeSignature(), ExcludeSignature(), CachedArchetypes(), State()
 	{
 		//// [ignore]
 		this->State.Set<FEndQueryState>({});
@@ -310,8 +289,7 @@ public:
 			{
 				IncludeType(Systems, Type);
 			}
-			this->CachedArchetypes = Systems->FindQueryArchetypes(
-				this->IncludeSignature, this->ExcludeSignature);
+			this->CachedArchetypes = Systems->FindQueryArchetypes(this->IncludeSignature, this->ExcludeSignature);
 			if (this->CachedArchetypes.Num() > 0)
 			{
 				this->State.Set<FStartQueryState>({Systems});
@@ -368,8 +346,7 @@ public:
 			const auto& Data = this->State.Get<FStartQueryState>();
 			if (IsValid(Data.Owner))
 			{
-				const auto Count = Data.Owner->CountRaw(
-					this->IncludeSignature, this->ExcludeSignature);
+				const auto Count = Data.Owner->CountRaw(this->IncludeSignature, this->ExcludeSignature);
 				return IterSizeHint{0, TOptional<uint32>(Count)};
 			}
 		}
@@ -378,8 +355,7 @@ public:
 			const auto& Data = this->State.Get<FCurrentQueryState>();
 			if (IsValid(Data.Owner))
 			{
-				const auto Count = Data.Owner->CountRaw(
-					this->IncludeSignature, this->ExcludeSignature);
+				const auto Count = Data.Owner->CountRaw(this->IncludeSignature, this->ExcludeSignature);
 				return IterSizeHint{0, TOptional<uint32>(Count)};
 			}
 		}
@@ -392,9 +368,7 @@ private:
 	{
 		//// [ignore]
 		const auto Found = Owner->ComponentTypeIndex(Type);
-		checkf(Found.IsSet(),
-			TEXT("Trying to query non-registered component: %s"),
-			*Type->GetName());
+		checkf(Found.IsSet(), TEXT("Trying to query non-registered component: %s"), *Type->GetName());
 		this->IncludeSignature.EnableBit(Found.GetValue());
 		//// [/ignore]
 	}
@@ -403,9 +377,7 @@ private:
 	{
 		//// [ignore]
 		const auto Found = Owner->ComponentTypeIndex(Type);
-		checkf(Found.IsSet(),
-			TEXT("Trying to query non-registered component: %s"),
-			*Type->GetName());
+		checkf(Found.IsSet(), TEXT("Trying to query non-registered component: %s"), *Type->GetName());
 		this->ExcludeSignature.EnableBit(Found.GetValue());
 		//// [/ignore]
 	}
@@ -425,15 +397,13 @@ private:
 		{
 			return NextNone();
 		}
-		auto* Archetype =
-			Data.Owner->Archetypes.Find(this->CachedArchetypes[0]);
+		auto* Archetype = Data.Owner->Archetypes.Find(this->CachedArchetypes[0]);
 		if (Archetype == nullptr || Archetype->Actors.Num() <= 0)
 		{
 			return NextNone();
 		}
 		this->State.Set<FCurrentQueryState>({Data.Owner, 0, 1});
-		return MakeTuple(
-			Archetype->Actors[0], Archetype->IndexedComponent<T>(0)...);
+		return MakeTuple(Archetype->Actors[0], Archetype->IndexedComponent<T>(0)...);
 		//// [/ignore]
 	}
 
@@ -444,11 +414,9 @@ private:
 		{
 			return NextNone();
 		}
-		while (Data.ArchetypeIndex <
-			static_cast<uint32>(this->CachedArchetypes.Num()))
+		while (Data.ArchetypeIndex < static_cast<uint32>(this->CachedArchetypes.Num()))
 		{
-			auto* Archetype = Data.Owner->Archetypes.Find(
-				this->CachedArchetypes[Data.ArchetypeIndex]);
+			auto* Archetype = Data.Owner->Archetypes.Find(this->CachedArchetypes[Data.ArchetypeIndex]);
 			if (Archetype == nullptr)
 			{
 				return NextNone();
@@ -457,8 +425,7 @@ private:
 			{
 				const auto ActorIndex = Data.ActorIndex;
 				++Data.ActorIndex;
-				return MakeTuple(Archetype->Actors[ActorIndex],
-					Archetype->IndexedComponent<T>(ActorIndex)...);
+				return MakeTuple(Archetype->Actors[ActorIndex], Archetype->IndexedComponent<T>(ActorIndex)...);
 			}
 			Data.ActorIndex = 0;
 			++Data.ArchetypeIndex;

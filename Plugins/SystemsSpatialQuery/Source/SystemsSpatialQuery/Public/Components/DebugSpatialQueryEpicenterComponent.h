@@ -18,15 +18,13 @@ enum class EDebugSpatialQueryEpicenterMode : uint8
 
 /// Component that marks actor to be a debug spatial query epicenter.
 UCLASS(BlueprintType, Blueprintable, Meta = (BlueprintSpawnableComponent))
-class SYSTEMSSPATIALQUERY_API UDebugSpatialQueryEpicenterComponent
-	: public USystemsActorComponent
+class SYSTEMSSPATIALQUERY_API UDebugSpatialQueryEpicenterComponent : public USystemsActorComponent
 {
 	GENERATED_BODY()
 
 public:
 	UPROPERTY(EditAnywhere)
-	EDebugSpatialQueryEpicenterMode Mode =
-		EDebugSpatialQueryEpicenterMode::None;
+	EDebugSpatialQueryEpicenterMode Mode = EDebugSpatialQueryEpicenterMode::None;
 
 	UPROPERTY(EditAnywhere)
 	float Radius = 100.0;

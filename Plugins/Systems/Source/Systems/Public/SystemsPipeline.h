@@ -90,22 +90,19 @@ public:
 
 	/// Typed components to be registered into systems world.
 	UPROPERTY(EditAnywhere, Category = "Components|Types")
-	TMap<TSubclassOf<UActorComponent>, FSystemsPipelineComponent>
-		ComponentsToRegister = {};
+	TMap<TSubclassOf<UActorComponent>, FSystemsPipelineComponent> ComponentsToRegister = {};
 
 	/// Typed resources to be registered into systems world.
 	///
 	/// Usually these are used as game managers.
 	UPROPERTY(EditAnywhere, Category = "Resources|Types")
-	TMap<TSubclassOf<UObject>, FSystemsPipelineResource>
-		TypeResourcesToInstall = {};
+	TMap<TSubclassOf<UObject>, FSystemsPipelineResource> TypeResourcesToInstall = {};
 
 	/// Asset resources to be registered into systems world.
 	///
 	/// Usually these are used as settings/config data sources.
 	UPROPERTY(EditAnywhere, Category = "Resources|Assets")
-	TMap<TObjectPtr<UDataAsset>, FSystemsPipelineResource>
-		AssetResourcesToInstall = {};
+	TMap<TObjectPtr<UDataAsset>, FSystemsPipelineResource> AssetResourcesToInstall = {};
 
 	/// System templates to instantiate and run on systems world creation.
 	///

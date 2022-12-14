@@ -71,8 +71,7 @@ public:
 		//// [ignore]
 		auto Queue = TRingBuffer<T>();
 		Queue.Reserve(Capacity);
-		const auto Strong =
-			MakeShared<TRingBuffer<T>, ESPMode::ThreadSafe>(Queue);
+		const auto Strong = MakeShared<TRingBuffer<T>, ESPMode::ThreadSafe>(Queue);
 		const auto Weak = TWeakPtr<TRingBuffer<T>, ESPMode::ThreadSafe>(Strong);
 		this->Queues.Add(Weak);
 		return TReceiverChannel<T>(Strong);
@@ -161,9 +160,7 @@ public:
 	TOptional<T> Receive()
 	{
 		//// [ignore]
-		return Queue.IsValid() && Queue->IsEmpty() == false
-			? TOptional<T>(Queue->PopFrontValue())
-			: TOptional<T>();
+		return Queue.IsValid() && Queue->IsEmpty() == false ? TOptional<T>(Queue->PopFrontValue()) : TOptional<T>();
 		//// [/ignore]
 	}
 

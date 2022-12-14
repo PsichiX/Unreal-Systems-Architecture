@@ -42,9 +42,8 @@ public:
 		const auto A = this->InnerA.SizeHint();
 		const auto B = this->InnerB.SizeHint();
 		const auto Min = FMath::Min(A.Minimum, B.Minimum);
-		const auto Max = A.Maximum.IsSet() && B.Maximum.IsSet()
-			? FMath::Max(A.Maximum.GetValue(), B.Maximum.GetValue())
-			: TOptional<uint32>();
+		const auto Max = A.Maximum.IsSet() && B.Maximum.IsSet() ? FMath::Max(A.Maximum.GetValue(), B.Maximum.GetValue())
+																: TOptional<uint32>();
 		return IterSizeHint{Min, Max};
 		//// [/ignore]
 	}
@@ -62,7 +61,6 @@ template <typename IA, typename IB>
 TIterZip<IA, IB> IterZip(IA&& IterA, IB&& IterB)
 {
 	//// [ignore]
-	return TIterZip<IA, IB>(
-		MoveTempIfPossible(IterA), MoveTempIfPossible(IterB));
+	return TIterZip<IA, IB>(MoveTempIfPossible(IterA), MoveTempIfPossible(IterB));
 	//// [/ignore]
 }

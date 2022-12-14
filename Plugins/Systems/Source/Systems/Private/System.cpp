@@ -37,8 +37,7 @@ void ULambdaSystem::Init(USystemsWorld& Systems)
 
 	if (this->FunctionName.IsNone() == false)
 	{
-		const auto Callback =
-			FSystemsReflection::Get().FindByName(this->FunctionName);
+		const auto Callback = FSystemsReflection::Get().FindByName(this->FunctionName);
 		if (Callback.IsSet())
 		{
 			this->Functor = CopyTemp(Callback.GetValue());
