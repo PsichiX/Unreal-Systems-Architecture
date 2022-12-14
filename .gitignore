@@ -11,4 +11,7 @@ Documentation/Distribution
 Content/Collections
 Content/Developers
 *.code-workspace
+*.pdb
+*.patch_*.*
 *.sln
+*.vsconfig

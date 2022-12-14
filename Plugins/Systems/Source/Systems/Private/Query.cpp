@@ -147,7 +147,7 @@ void UDynamicQuery::FillQueryItem(UObject* Output,
 				{
 					auto Ptr =
 						ObjectProperty->ContainerPtrToValuePtr<AActor*>(Output);
-					*Ptr = Archetype->Actors[0];
+					*Ptr = Archetype->Actors[ActorIndex];
 				}
 				else if (ObjectProperty->PropertyClass
 							 ->IsChildOf<UActorComponent>())
