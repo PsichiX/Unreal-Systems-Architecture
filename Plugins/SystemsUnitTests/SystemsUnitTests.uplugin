@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
+	"VersionName": "1.2",
 	"FriendlyName": "Systems Unit Tests",
 	"Description": "Unit tests plugin for Systems Architecture",
 	"Category": "Systems",
