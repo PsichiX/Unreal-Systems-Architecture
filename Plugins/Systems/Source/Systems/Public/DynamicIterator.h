@@ -23,7 +23,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Systems)
 	virtual UObject* Next()
 	{
+		//// [ignore]
 		return nullptr;
+		//// [/ignore]
 	}
 
 	/// Handy wrapper for [`class: Self::Next`]() for use in blueprints, where iteration can branch to `yielded` and
@@ -35,6 +37,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Systems)
 	virtual int EstimateSizeLeft() const
 	{
+		//// [ignore]
 		return 0;
+		//// [/ignore]
 	}
 };
