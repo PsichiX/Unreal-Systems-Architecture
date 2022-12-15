@@ -6,7 +6,6 @@
         <title>Systems - Modular and scalable game architecture for orthogonal game logic</title>
         <meta name="robots" content="noindex" />
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -27,17 +26,17 @@
 
         <!-- Custom theme stylesheets -->
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -53,7 +52,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -65,7 +64,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -78,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="documentation.html">Documentation</a></li><li class="chapter-item expanded "><a href="book/index.html">Book</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="book/getting_started.html">Getting started</a></li><li class="chapter-item expanded "><a href="book/architecture/index.html">Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="book/architecture/world.html">World</a></li><li class="chapter-item expanded "><a href="book/architecture/systems.html">Systems</a></li><li class="chapter-item expanded "><a href="book/architecture/components.html">Components</a></li><li class="chapter-item expanded "><a href="book/architecture/resources.html">Resources</a></li><li class="chapter-item expanded "><a href="book/architecture/subsystem.html">Subsystem</a></li><li class="chapter-item expanded "><a href="book/architecture/iterators.html">Iterators</a></li><li class="chapter-item expanded "><a href="book/architecture/channels.html">Channels</a></li></ol></li><li class="chapter-item expanded "><a href="book/learning_materials/index.html">Learning materials</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/index.html">Tutorial</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/installation.html">Installation</a></li><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/setup_game.html">Setup game</a></li><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/setup_actors.html">Setup actors</a></li><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/spawn_system.html">Spawn system</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="reference.html">C++ API Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/structs.html">Structs</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/structs/FActorsIter.html">FActorsIter</a></li><li class="chapter-item expanded "><a href="reference/structs/FArchetypeSignature.html">FArchetypeSignature</a></li><li class="chapter-item expanded "><a href="reference/structs/FInstallSystemOptions.html">FInstallSystemOptions</a></li><li class="chapter-item expanded "><a href="reference/structs/FMetronome.html">FMetronome</a></li><li class="chapter-item expanded "><a href="reference/structs/IterSizeHint.html">IterSizeHint</a></li><li class="chapter-item expanded "><a href="reference/structs/TQuery.html">TQuery</a></li><li class="chapter-item expanded "><a href="reference/structs/TReceiverChannel.html">TReceiverChannel</a></li><li class="chapter-item expanded "><a href="reference/structs/TResult.html">TResult</a></li><li class="chapter-item expanded "><a href="reference/structs/TSenderChannel.html">TSenderChannel</a></li><li class="chapter-item expanded "><a href="reference/structs/TTaggedQuery.html">TTaggedQuery</a></li></ol></li><li class="chapter-item expanded "><a href="reference/classes.html">Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/classes/UDynamicQuery.html">UDynamicQuery</a></li><li class="chapter-item expanded "><a href="reference/classes/ULambdaSystem.html">ULambdaSystem</a></li><li class="chapter-item expanded "><a href="reference/classes/UScriptableSystem.html">UScriptableSystem</a></li><li class="chapter-item expanded "><a href="reference/classes/USystem.html">USystem</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsActorComponent.html">USystemsActorComponent</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsSceneComponent.html">USystemsSceneComponent</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsStatics.html">USystemsStatics</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsSubsystem.html">USystemsSubsystem</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsWorld.html">USystemsWorld</a></li></ol></li><li class="chapter-item expanded "><a href="reference/functions.html">Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/functions/IterGenerate.html">IterGenerate</a></li><li class="chapter-item expanded "><a href="reference/functions/IterOnce.html">IterOnce</a></li><li class="chapter-item expanded "><a href="reference/functions/IterRange.html">IterRange</a></li><li class="chapter-item expanded "><a href="reference/functions/IterRepeat.html">IterRepeat</a></li><li class="chapter-item expanded "><a href="reference/functions/IterStd.html">IterStd</a></li><li class="chapter-item expanded "><a href="reference/functions/IterStdConst.html">IterStdConst</a></li></ol></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="documentation.html">Documentation</a></li><li class="chapter-item expanded "><a href="book/index.html">Book</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="book/getting_started.html">Getting started</a></li><li class="chapter-item expanded "><a href="book/architecture/index.html">Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="book/architecture/world.html">World</a></li><li class="chapter-item expanded "><a href="book/architecture/systems.html">Systems</a></li><li class="chapter-item expanded "><a href="book/architecture/components.html">Components</a></li><li class="chapter-item expanded "><a href="book/architecture/resources.html">Resources</a></li><li class="chapter-item expanded "><a href="book/architecture/subsystem.html">Subsystem</a></li><li class="chapter-item expanded "><a href="book/architecture/iterators.html">Iterators</a></li><li class="chapter-item expanded "><a href="book/architecture/channels.html">Channels</a></li></ol></li><li class="chapter-item expanded "><a href="book/learning_materials/index.html">Learning materials</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/index.html">Tutorial</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/installation.html">Installation</a></li><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/setup_game.html">Setup game</a></li><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/setup_actors.html">Setup actors</a></li><li class="chapter-item expanded "><a href="book/learning_materials/tutorial/spawn_system.html">Spawn system</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="reference.html">C++ API Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/structs.html">Structs</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/structs/FActorsIter.html">FActorsIter</a></li><li class="chapter-item expanded "><a href="reference/structs/FArchetypeSignature.html">FArchetypeSignature</a></li><li class="chapter-item expanded "><a href="reference/structs/FInstallSystemOptions.html">FInstallSystemOptions</a></li><li class="chapter-item expanded "><a href="reference/structs/FMetronome.html">FMetronome</a></li><li class="chapter-item expanded "><a href="reference/structs/FSystemsPipelineComponent.html">FSystemsPipelineComponent</a></li><li class="chapter-item expanded "><a href="reference/structs/FSystemsPipelineResource.html">FSystemsPipelineResource</a></li><li class="chapter-item expanded "><a href="reference/structs/FSystemsPipelineSystem.html">FSystemsPipelineSystem</a></li><li class="chapter-item expanded "><a href="reference/structs/IterSizeHint.html">IterSizeHint</a></li><li class="chapter-item expanded "><a href="reference/structs/TQuery.html">TQuery</a></li><li class="chapter-item expanded "><a href="reference/structs/TReceiverChannel.html">TReceiverChannel</a></li><li class="chapter-item expanded "><a href="reference/structs/TResult.html">TResult</a></li><li class="chapter-item expanded "><a href="reference/structs/TSenderChannel.html">TSenderChannel</a></li><li class="chapter-item expanded "><a href="reference/structs/TTaggedQuery.html">TTaggedQuery</a></li></ol></li><li class="chapter-item expanded "><a href="reference/classes.html">Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/classes/ASystemsActor.html">ASystemsActor</a></li><li class="chapter-item expanded "><a href="reference/classes/ASystemsGameMode.html">ASystemsGameMode</a></li><li class="chapter-item expanded "><a href="reference/classes/ASystemsGameState.html">ASystemsGameState</a></li><li class="chapter-item expanded "><a href="reference/classes/ASystemsPawn.html">ASystemsPawn</a></li><li class="chapter-item expanded "><a href="reference/classes/FSystemsReflection.html">FSystemsReflection</a></li><li class="chapter-item expanded "><a href="reference/classes/UDynamicIterator.html">UDynamicIterator</a></li><li class="chapter-item expanded "><a href="reference/classes/UDynamicQuery.html">UDynamicQuery</a></li><li class="chapter-item expanded "><a href="reference/classes/ULambdaSystem.html">ULambdaSystem</a></li><li class="chapter-item expanded "><a href="reference/classes/UScriptableSystem.html">UScriptableSystem</a></li><li class="chapter-item expanded "><a href="reference/classes/USystem.html">USystem</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsActorComponent.html">USystemsActorComponent</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsPipeline.html">USystemsPipeline</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsReflection.html">USystemsReflection</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsSceneComponent.html">USystemsSceneComponent</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsStatics.html">USystemsStatics</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsSubsystem.html">USystemsSubsystem</a></li><li class="chapter-item expanded "><a href="reference/classes/USystemsWorld.html">USystemsWorld</a></li></ol></li><li class="chapter-item expanded "><a href="reference/functions.html">Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/functions/IterGenerate.html">IterGenerate</a></li><li class="chapter-item expanded "><a href="reference/functions/IterOnce.html">IterOnce</a></li><li class="chapter-item expanded "><a href="reference/functions/IterRange.html">IterRange</a></li><li class="chapter-item expanded "><a href="reference/functions/IterRepeat.html">IterRepeat</a></li><li class="chapter-item expanded "><a href="reference/functions/IterStd.html">IterStd</a></li><li class="chapter-item expanded "><a href="reference/functions/IterStdConst.html">IterStdConst</a></li></ol></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -100,7 +99,7 @@
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
@@ -127,7 +126,7 @@
                     </div>
                 </div>
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -158,7 +157,7 @@ does it solve.</p>
 <li><a href="/Unreal-Systems-Architecture/systems/reference.html">C++ API Reference</a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="book"><a class="header" href="#book">Book</a></h1>
 <p>This book covers explanation of Systems Architecture, as well as provides learning materials
 such as guidelines with best practices to keep your project healthy and your sanity in check,
@@ -168,7 +167,7 @@ it also provides tutorial showing step-by-step how to use Systems Architecture i
 <li><a href="book//Unreal-Systems-Architecture/systems/book/getting_started.html">Getting started</a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
 <p>Before we jump into the meat of Systems Architecture, let me quickly show you a
 snippet showcasing how working with Systems looks like in a gist:</p>
@@ -496,7 +495,7 @@ distraction-abstractions for that.</strong></p>
 </ul>
 <p>Then you'll keep your sanity after year of development on a single game title.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="architecture"><a class="header" href="#architecture">Architecture</a></h1>
 <p>This section will explain in-depth how Systems Architecture exactly works and how to abuse
 it to solve your problems the right way.</p>
@@ -576,7 +575,7 @@ and <strong>we make ourselves keep systems small, doing only only the work they 
 <li><a href="book/architecture//Unreal-Systems-Architecture/systems/book/architecture/channels.html">Channels</a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="world"><a class="header" href="#world">World</a></h1>
 <h1 id="table-of-contents-1"><a class="header" href="#table-of-contents-1">Table of contents</a></h1>
 <ul>
@@ -684,7 +683,7 @@ forces user to make flat game logic with explicit order of execution, additional
 of work as small and as precise as possible to make it easy to reason about how game data gets
 processed.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="systems"><a class="header" href="#systems">Systems</a></h1>
 <h1 id="table-of-contents-2"><a class="header" href="#table-of-contents-2">Table of contents</a></h1>
 <ul>
@@ -823,7 +822,7 @@ do better than that.</p>
 making switching from prototype to actual implementation a matter of just swapping prototype
 systems with actual properly implemented systems, sometimes not even having to change them at all.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="components"><a class="header" href="#components">Components</a></h1>
 <h1 id="table-of-contents-3"><a class="header" href="#table-of-contents-3">Table of contents</a></h1>
 <ul>
@@ -878,7 +877,7 @@ dependency tree.</p>
 <p>All of that could be avoided with splitting monolithic work per components, but we can do even
 better and <strong>copletely decouple data from logic that we put in small dedicated systems</strong>.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="resources"><a class="header" href="#resources">Resources</a></h1>
 <h1 id="table-of-contents-4"><a class="header" href="#table-of-contents-4">Table of contents</a></h1>
 <ul>
@@ -969,7 +968,7 @@ just need to interact with third-party game managers - these are useful usecases
 Architecture doesn't get rid of them, rather make their use more ergonomic, yet not giving
 them global lifetime like with dangerous singletons.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="subsystem"><a class="header" href="#subsystem">Subsystem</a></h1>
 <h1 id="table-of-contents-5"><a class="header" href="#table-of-contents-5">Table of contents</a></h1>
 <ul>
@@ -1083,7 +1082,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 }
 </code></pre>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="iterators"><a class="header" href="#iterators">Iterators</a></h1>
 <h1 id="table-of-contents-6"><a class="header" href="#table-of-contents-6">Table of contents</a></h1>
 <ul>
@@ -1311,7 +1310,7 @@ const TArray&lt;int&gt; Result =
 <code>SizeHint</code> methods require reference to previous stage iterator so they both consume and process its
 yielded values.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="channels"><a class="header" href="#channels">Channels</a></h1>
 <h1 id="table-of-contents-7"><a class="header" href="#table-of-contents-7">Table of contents</a></h1>
 <ul>
@@ -1361,11 +1360,11 @@ simply just situations where some data gets passed too early and
 invalidates dependent object state causing unnecessary state recalculations
 later by other objects trying to get some data out of it.</p>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="learning-materials"><a class="header" href="#learning-materials">Learning materials</a></h1>
 <h1 id="pages-2"><a class="header" href="#pages-2">Pages</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tutorial"><a class="header" href="#tutorial">Tutorial</a></h1>
 <h1 id="pages-3"><a class="header" href="#pages-3">Pages</a></h1>
 <ul>
@@ -1375,19 +1374,19 @@ later by other objects trying to get some data out of it.</p>
 <li><a href="book/learning_materials/tutorial//Unreal-Systems-Architecture/systems/book/learning_materials/tutorial/spawn_system.html">Spawn system</a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="setup-game"><a class="header" href="#setup-game">Setup game</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="setup-actors"><a class="header" href="#setup-actors">Setup actors</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="spawn-system"><a class="header" href="#spawn-system">Spawn system</a></h1>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="c-api-reference"><a class="header" href="#c-api-reference">C++ API Reference</a></h1>
 <h2 id="structs"><a class="header" href="#structs">Structs</a></h2>
 <ul>
@@ -1395,6 +1394,9 @@ later by other objects trying to get some data out of it.</p>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.html"><code>FArchetypeSignature</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.html"><code>FInstallSystemOptions</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/structs/FMetronome.html"><code>FMetronome</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/structs/FSystemsPipelineComponent.html"><code>FSystemsPipelineComponent</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/structs/FSystemsPipelineResource.html"><code>FSystemsPipelineResource</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/structs/FSystemsPipelineSystem.html"><code>FSystemsPipelineSystem</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/structs/IterSizeHint.html"><code>IterSizeHint</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/structs/TQuery.html"><code>TQuery</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/structs/TReceiverChannel.html"><code>TReceiverChannel</code></a></li>
@@ -1404,11 +1406,19 @@ later by other objects trying to get some data out of it.</p>
 </ul>
 <h2 id="classes"><a class="header" href="#classes">Classes</a></h2>
 <ul>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/classes/ASystemsActor.html"><code>ASystemsActor</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/classes/ASystemsGameMode.html"><code>ASystemsGameMode</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/classes/ASystemsGameState.html"><code>ASystemsGameState</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/classes/ASystemsPawn.html"><code>ASystemsPawn</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/classes/FSystemsReflection.html"><code>FSystemsReflection</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/classes/UDynamicIterator.html"><code>UDynamicIterator</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.html"><code>UDynamicQuery</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/classes/ULambdaSystem.html"><code>ULambdaSystem</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/classes/UScriptableSystem.html"><code>UScriptableSystem</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/classes/USystem.html"><code>USystem</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.html"><code>USystemsActorComponent</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html"><code>USystemsPipeline</code></a></li>
+<li><a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsReflection.html"><code>USystemsReflection</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsSceneComponent.html"><code>USystemsSceneComponent</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsStatics.html"><code>USystemsStatics</code></a></li>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.html"><code>USystemsSubsystem</code></a></li>
@@ -1424,13 +1434,16 @@ later by other objects trying to get some data out of it.</p>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/functions/IterStdConst.html"><code>IterStdConst</code></a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="structs-1"><a class="header" href="#structs-1">Structs</a></h1>
 <ul>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/FActorsIter.html"><code>FActorsIter</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/FArchetypeSignature.html"><code>FArchetypeSignature</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/FInstallSystemOptions.html"><code>FInstallSystemOptions</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/FMetronome.html"><code>FMetronome</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/FSystemsPipelineComponent.html"><code>FSystemsPipelineComponent</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/FSystemsPipelineResource.html"><code>FSystemsPipelineResource</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/FSystemsPipelineSystem.html"><code>FSystemsPipelineSystem</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/IterSizeHint.html"><code>IterSizeHint</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/TQuery.html"><code>TQuery</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/TReceiverChannel.html"><code>TReceiverChannel</code></a></li>
@@ -1439,7 +1452,7 @@ later by other objects trying to get some data out of it.</p>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/structs/TTaggedQuery.html"><code>TTaggedQuery</code></a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-factorsiter"><a class="header" href="#struct-factorsiter"><strong>Struct: <code>FActorsIter</code></strong></a></h1>
 <pre><code class="language-cpp">struct SYSTEMS_API FActorsIter;
 </code></pre>
@@ -2267,7 +2280,7 @@ const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-farchetypesignature"><a class="header" href="#struct-farchetypesignature"><strong>Struct: <code>FArchetypeSignature</code></strong></a></h1>
 <pre><code class="language-cpp">struct SYSTEMS_API FArchetypeSignature;
 </code></pre>
@@ -2597,7 +2610,7 @@ signatures.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-finstallsystemoptions"><a class="header" href="#struct-finstallsystemoptions"><strong>Struct: <code>FInstallSystemOptions</code></strong></a></h1>
 <pre><code class="language-cpp">struct SYSTEMS_API FInstallSystemOptions;
 </code></pre>
@@ -2715,7 +2728,7 @@ FInstallSystemOptions&amp; RunBefore(
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-fmetronome"><a class="header" href="#struct-fmetronome"><strong>Struct: <code>FMetronome</code></strong></a></h1>
 <pre><code class="language-cpp">struct SYSTEMS_API FMetronome;
 </code></pre>
@@ -2838,7 +2851,174 @@ in range from 0 to <a href="reference/structs//Unreal-Systems-Architecture/syste
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="struct-fsystemspipelinecomponent"><a class="header" href="#struct-fsystemspipelinecomponent"><strong>Struct: <code>FSystemsPipelineComponent</code></strong></a></h1>
+<pre><code class="language-cpp">struct SYSTEMS_API FSystemsPipelineComponent;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-6"><a class="header" href="#specifiers-6">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintType</strong></li>
+</ul>
+<hr />
+<p>Pipeline component descriptor.</p>
+<hr />
+<h1 id="properties-1"><a class="header" href="#properties-1"><strong>Properties</strong></a></h1>
+<ul>
+<li>
+<h1 id="bdevelopmentbuildonly"><a class="header" href="#bdevelopmentbuildonly"><strong><code>bDevelopmentBuildOnly</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool bDevelopmentBuildOnly;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-7"><a class="header" href="#specifiers-7">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Options</em></li>
+</ul>
+<hr />
+<p>Tells if this component should be used in development builds only.</p>
+<p>Useful for debug or prototype game features.</p>
+</li>
+<li>
+<h1 id="buse"><a class="header" href="#buse"><strong><code>bUse</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool bUse;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-8"><a class="header" href="#specifiers-8">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Options</em></li>
+</ul>
+<hr />
+<p>Tells if this component should be used.</p>
+<p>Useful for quick enable/disable of component without removing it from
+the pipeline (quick tests).</p>
+</li>
+</ul>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="struct-fsystemspipelineresource"><a class="header" href="#struct-fsystemspipelineresource"><strong>Struct: <code>FSystemsPipelineResource</code></strong></a></h1>
+<pre><code class="language-cpp">struct SYSTEMS_API FSystemsPipelineResource;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-9"><a class="header" href="#specifiers-9">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintType</strong></li>
+</ul>
+<hr />
+<p>Pipeline resource descriptor.</p>
+<hr />
+<h1 id="properties-2"><a class="header" href="#properties-2"><strong>Properties</strong></a></h1>
+<ul>
+<li>
+<h1 id="bdevelopmentbuildonly-1"><a class="header" href="#bdevelopmentbuildonly-1"><strong><code>bDevelopmentBuildOnly</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool bDevelopmentBuildOnly;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-10"><a class="header" href="#specifiers-10">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Options</em></li>
+</ul>
+<hr />
+<p>Tells if this resource should be used in development builds only.</p>
+<p>Useful for debug or prototype game features.</p>
+</li>
+<li>
+<h1 id="buse-1"><a class="header" href="#buse-1"><strong><code>bUse</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool bUse;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-11"><a class="header" href="#specifiers-11">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Options</em></li>
+</ul>
+<hr />
+<p>Tells if this resource should be used.</p>
+<p>Useful for quick enable/disable of resource without removing it from the
+pipeline (quick tests).</p>
+</li>
+</ul>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="struct-fsystemspipelinesystem"><a class="header" href="#struct-fsystemspipelinesystem"><strong>Struct: <code>FSystemsPipelineSystem</code></strong></a></h1>
+<pre><code class="language-cpp">struct SYSTEMS_API FSystemsPipelineSystem;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-12"><a class="header" href="#specifiers-12">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintType</strong></li>
+</ul>
+<hr />
+<p>Pipeline system descriptor.</p>
+<hr />
+<h1 id="properties-3"><a class="header" href="#properties-3"><strong>Properties</strong></a></h1>
+<ul>
+<li>
+<h1 id="template"><a class="header" href="#template"><strong><code>Template</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TObjectPtr&lt;USystem&gt; Template;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-13"><a class="header" href="#specifiers-13">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Export</strong></li>
+<li><strong>Instanced</strong></li>
+<li><strong>Category</strong> = <em>System</em></li>
+</ul>
+<hr />
+<p>Template of system to instantiate.</p>
+</li>
+<li>
+<h1 id="bdevelopmentbuildonly-2"><a class="header" href="#bdevelopmentbuildonly-2"><strong><code>bDevelopmentBuildOnly</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool bDevelopmentBuildOnly;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-14"><a class="header" href="#specifiers-14">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Options</em></li>
+</ul>
+<hr />
+<p>Tells if this system should be used in development builds only.</p>
+<p>Useful for debug or prototype game features.</p>
+</li>
+<li>
+<h1 id="buse-2"><a class="header" href="#buse-2"><strong><code>bUse</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+bool bUse;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-15"><a class="header" href="#specifiers-15">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Options</em></li>
+</ul>
+<hr />
+<p>Tells if this system should be used.</p>
+<p>Useful for quick enable/disable of this system without removing it from
+the pipeline (quick tests).</p>
+</li>
+</ul>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-itersizehint"><a class="header" href="#struct-itersizehint"><strong>Struct: <code>IterSizeHint</code></strong></a></h1>
 <pre><code class="language-cpp">struct IterSizeHint;
 </code></pre>
@@ -2861,7 +3041,7 @@ void IterCollectIntoArray(I&amp;&amp; Iterator, TArray&lt;typename I::Item&gt;&a
 }
 </code></pre>
 <hr />
-<h1 id="properties-1"><a class="header" href="#properties-1"><strong>Properties</strong></a></h1>
+<h1 id="properties-4"><a class="header" href="#properties-4"><strong>Properties</strong></a></h1>
 <ul>
 <li>
 <h1 id="maximum"><a class="header" href="#maximum"><strong><code>Maximum</code></strong></a></h1>
@@ -2881,7 +3061,7 @@ uint32 Minimum;
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-tquery"><a class="header" href="#struct-tquery"><strong>Struct: <code>TQuery</code></strong></a></h1>
 <pre><code class="language-cpp">template &lt;class... T&gt;
 struct TQuery;
@@ -3882,7 +4062,7 @@ const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-treceiverchannel"><a class="header" href="#struct-treceiverchannel"><strong>Struct: <code>TReceiverChannel</code></strong></a></h1>
 <pre><code class="language-cpp">template &lt;typename T&gt;
 struct TReceiverChannel;
@@ -3963,7 +4143,7 @@ on demand, useful in more advanced scenarios.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-tresult"><a class="header" href="#struct-tresult"><strong>Struct: <code>TResult</code></strong></a></h1>
 <pre><code class="language-cpp">template &lt;typename T, typename E&gt;
 struct TResult;
@@ -4592,7 +4772,7 @@ their data is compared.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-tsenderchannel"><a class="header" href="#struct-tsenderchannel"><strong>Struct: <code>TSenderChannel</code></strong></a></h1>
 <pre><code class="language-cpp">template &lt;typename T&gt;
 struct TSenderChannel;
@@ -4693,7 +4873,7 @@ void Send(
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="struct-ttaggedquery"><a class="header" href="#struct-ttaggedquery"><strong>Struct: <code>TTaggedQuery</code></strong></a></h1>
 <pre><code class="language-cpp">template &lt;class... T&gt;
 struct TTaggedQuery;
@@ -4833,28 +5013,295 @@ TTaggedQuery&amp; WithoutRaw(
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="classes-1"><a class="header" href="#classes-1">Classes</a></h1>
 <ul>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/ASystemsActor.html"><code>ASystemsActor</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/ASystemsGameMode.html"><code>ASystemsGameMode</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/ASystemsGameState.html"><code>ASystemsGameState</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/ASystemsPawn.html"><code>ASystemsPawn</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/FSystemsReflection.html"><code>FSystemsReflection</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/UDynamicIterator.html"><code>UDynamicIterator</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/UDynamicQuery.html"><code>UDynamicQuery</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/ULambdaSystem.html"><code>ULambdaSystem</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/UScriptableSystem.html"><code>UScriptableSystem</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/USystem.html"><code>USystem</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsActorComponent.html"><code>USystemsActorComponent</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsPipeline.html"><code>USystemsPipeline</code></a></li>
+<li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsReflection.html"><code>USystemsReflection</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsSceneComponent.html"><code>USystemsSceneComponent</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsStatics.html"><code>USystemsStatics</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsSubsystem.html"><code>USystemsSubsystem</code></a></li>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/classes/USystemsWorld.html"><code>USystemsWorld</code></a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="class-udynamicquery"><a class="header" href="#class-udynamicquery"><strong>Class: <code>UDynamicQuery</code></strong></a></h1>
-<pre><code class="language-cpp">class SYSTEMS_API UDynamicQuery
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class-asystemsactor"><a class="header" href="#class-asystemsactor"><strong>Class: <code>ASystemsActor</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API ASystemsActor
+    : public AActor;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-16"><a class="header" href="#specifiers-16">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintType</strong></li>
+<li><strong>Blueprintable</strong></li>
+<li><strong>Abstract</strong></li>
+</ul>
+<hr />
+<p>Base class for systems actors.</p>
+<p>Automatically registers this actor components that are not inheriting from
+<a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.html"><strong><code>USystemsActorComponent</code></strong></a> or <a href="reference/classes//reference/classes/USystemsSceneComponent.html"><strong><code>USystemsSceneComponent</code></strong></a>
+and have <code>Systems</code> component tag applied to them. This simply allows Systems
+World to recognize and query built-in Unreal Engine components without
+registering them manually - one less boilerplate to make on user side.</p>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class-asystemsgamemode"><a class="header" href="#class-asystemsgamemode"><strong>Class: <code>ASystemsGameMode</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API ASystemsGameMode
+    : public AGameModeBase;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<hr />
+<p>Base class for game mode that has to install <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html"><strong><code>USystemsPipeline</code></strong></a>.</p>
+<h1 id="note-45"><a class="header" href="#note-45">Note</a></h1>
+<blockquote>
+<p>Given pipeline will be installed only on server.</p>
+</blockquote>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class-asystemsgamestate"><a class="header" href="#class-asystemsgamestate"><strong>Class: <code>ASystemsGameState</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API ASystemsGameState
+    : public AGameStateBase;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<hr />
+<p>Base class for game state that has to install <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html"><strong><code>USystemsPipeline</code></strong></a>.</p>
+<h1 id="note-46"><a class="header" href="#note-46">Note</a></h1>
+<blockquote>
+<p>Given pipeline will be installed only on client.</p>
+</blockquote>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class-asystemspawn"><a class="header" href="#class-asystemspawn"><strong>Class: <code>ASystemsPawn</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API ASystemsPawn
+    : public APawn;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-17"><a class="header" href="#specifiers-17">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintType</strong></li>
+<li><strong>Blueprintable</strong></li>
+<li><strong>Abstract</strong></li>
+</ul>
+<hr />
+<p>Base class for systems actors.</p>
+<p>Does exactly the same as <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/ASystemsActor.html"><strong><code>ASystemsActor</code></strong></a> but for Pawns.</p>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class-fsystemsreflection"><a class="header" href="#class-fsystemsreflection"><strong>Class: <code>FSystemsReflection</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API FSystemsReflection;
+</code></pre>
+<hr />
+<p>Systems reflection singleton.</p>
+<p>Stores application-wide database of named system functions to be used by
+[<code>class: ULambdaSystem</code>].</p>
+<hr />
+<h1 id="methods-9"><a class="header" href="#methods-9"><strong>Methods</strong></a></h1>
+<ul>
+<li>
+<h1 id="findbyname"><a class="header" href="#findbyname"><strong><code>FindByName</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TOptional&lt;TFunction&lt;USystemsWorld::LambdaSystemType&gt;&gt; FindByName(
+    FName Name
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Find system function by name.</p>
+<hr />
+<h1 id="arguments-78"><a class="header" href="#arguments-78"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="name-3"><a class="header" href="#name-3"><strong><code>Name</code></strong></a></h2>
+<pre><code class="language-cpp">FName Name
+</code></pre>
+<p>Unique name for given system function.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="getnames"><a class="header" href="#getnames"><strong><code>GetNames</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void GetNames(
+    TArray&lt;FString&gt;&amp; Result
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Gets list of system function names.</p>
+<hr />
+<h1 id="arguments-79"><a class="header" href="#arguments-79"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="result-3"><a class="header" href="#result-3"><strong><code>Result</code></strong></a></h2>
+<pre><code class="language-cpp">TArray&lt;FString&gt;&amp; Result
+</code></pre>
+<p>Output array to receive names.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="register"><a class="header" href="#register"><strong><code>Register</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void Register(
+    FName Name,
+    TFunction&lt;USystemsWorld::LambdaSystemType&gt; Callback
+);
+</code></pre>
+<details>
+<hr />
+<p>Register or overwrite system function under given name.</p>
+<hr />
+<h1 id="arguments-80"><a class="header" href="#arguments-80"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="name-4"><a class="header" href="#name-4"><strong><code>Name</code></strong></a></h2>
+<pre><code class="language-cpp">FName Name
+</code></pre>
+<p>Unique name for given system function.</p>
+</li>
+<li>
+<h2 id="callback"><a class="header" href="#callback"><strong><code>Callback</code></strong></a></h2>
+<pre><code class="language-cpp">TFunction&lt;USystemsWorld::LambdaSystemType&gt; Callback
+</code></pre>
+<p>Reference to system function.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="unregister"><a class="header" href="#unregister"><strong><code>Unregister</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void Unregister(
+    FName Name
+);
+</code></pre>
+<details>
+<hr />
+<p>Unregister system function under given name.</p>
+<hr />
+<h1 id="arguments-81"><a class="header" href="#arguments-81"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="name-5"><a class="header" href="#name-5"><strong><code>Name</code></strong></a></h2>
+<pre><code class="language-cpp">FName Name
+</code></pre>
+<p>Unique name for given system function.</p>
+</li>
+</ul>
+</details>
+</li>
+</ul>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class-udynamiciterator"><a class="header" href="#class-udynamiciterator"><strong>Class: <code>UDynamicIterator</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API UDynamicIterator
     : public UObject;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-6"><a class="header" href="#specifiers-6">Specifiers:</a></h3>
+<h3 id="specifiers-18"><a class="header" href="#specifiers-18">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintType</strong></li>
+</ul>
+<hr />
+<hr />
+<h1 id="methods-10"><a class="header" href="#methods-10"><strong>Methods</strong></a></h1>
+<ul>
+<li>
+<h1 id="estimatesizeleft"><a class="header" href="#estimatesizeleft"><strong><code>EstimateSizeLeft</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+virtual int EstimateSizeLeft() const;
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-19"><a class="header" href="#specifiers-19">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Calculates (usually minimal) number of items this iterator stage can yield.</p>
+</details>
+</li>
+<li>
+<h1 id="next-2"><a class="header" href="#next-2"><strong><code>Next</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+virtual UObject* Next();
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-20"><a class="header" href="#specifiers-20">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Performs iteration and returns yielded value.</p>
+<p>Null means no object left to iterate.</p>
+</details>
+</li>
+<li>
+<h1 id="nextbranched"><a class="header" href="#nextbranched"><strong><code>NextBranched</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+UObject* NextBranched(
+    EDynamicQueryBranch&amp; Branches
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-21"><a class="header" href="#specifiers-21">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<h3 id="meta-specifiers"><a class="header" href="#meta-specifiers">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>ExpandEnumAsExecs</strong> = <em>Branches</em></li>
+</ul>
+<hr />
+<p>Handy wrapper for <strong><code>Self::Next</code></strong> for use in blueprints, where iteration can branch to <code>yielded</code> and
+<code>completed</code> execution nodes.</p>
+<hr />
+<h1 id="arguments-82"><a class="header" href="#arguments-82"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="branches"><a class="header" href="#branches"><strong><code>Branches</code></strong></a></h2>
+<pre><code class="language-cpp">EDynamicQueryBranch&amp; Branches
+</code></pre>
+</li>
+</ul>
+</details>
+</li>
+</ul>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class-udynamicquery"><a class="header" href="#class-udynamicquery"><strong>Class: <code>UDynamicQuery</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API UDynamicQuery
+    : public UDynamicIterator;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-22"><a class="header" href="#specifiers-22">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintType</strong></li>
 </ul>
@@ -4894,78 +5341,31 @@ term.</p>
 	}
 </code></pre>
 <hr />
-<h1 id="methods-9"><a class="header" href="#methods-9"><strong>Methods</strong></a></h1>
+<h1 id="methods-11"><a class="header" href="#methods-11"><strong>Methods</strong></a></h1>
 <ul>
 <li>
-<h1 id="next-2"><a class="header" href="#next-2"><strong><code>Next</code></strong></a></h1>
+<h1 id="estimatesizeleft-1"><a class="header" href="#estimatesizeleft-1"><strong><code>EstimateSizeLeft</code></strong></a></h1>
 <pre><code class="language-cpp">public:
-bool Next(
-    UObject* Output
-);
+virtual int EstimateSizeLeft() const override;
 </code></pre>
 <details>
 <hr />
-<p><strong><em>Reflection-enabled</em></strong></p>
-<hr />
-<p>Performs iteration and stores yielded values in provided object.</p>
-<h1 id="note-45"><a class="header" href="#note-45">Note</a></h1>
-<blockquote>
-<p>This method uses reflection to figure out properties that gonna store
-yielded actor and components.</p>
-</blockquote>
-<hr />
-<h1 id="arguments-78"><a class="header" href="#arguments-78"><strong>Arguments</strong></a></h1>
-<ul>
-<li>
-<h2 id="output"><a class="header" href="#output"><strong><code>Output</code></strong></a></h2>
-<pre><code class="language-cpp">UObject* Output
-</code></pre>
-<p>Pointer to object where yielded actor and components are gonna be
-stored in its properties.</p>
-</li>
-</ul>
+<p>Calculates maximum number of items this query can yield.</p>
 </details>
 </li>
 <li>
-<h1 id="nextbranched"><a class="header" href="#nextbranched"><strong><code>NextBranched</code></strong></a></h1>
+<h1 id="next-3"><a class="header" href="#next-3"><strong><code>Next</code></strong></a></h1>
 <pre><code class="language-cpp">public:
-void NextBranched(
-    UObject* Output,
-    EDynamicQueryBranch&amp; Branches
-);
+virtual UObject* Next() override;
 </code></pre>
 <details>
 <hr />
-<p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-7"><a class="header" href="#specifiers-7">Specifiers:</a></h3>
-<ul>
-<li><strong>BlueprintCallable</strong></li>
-<li><strong>Category</strong> = <em>Systems</em></li>
-</ul>
-<h3 id="meta-specifiers"><a class="header" href="#meta-specifiers">Meta Specifiers:</a></h3>
-<ul>
-<li><strong>DisplayName</strong> = <em>Next</em></li>
-<li><strong>ExpandEnumAsExecs</strong> = <em>Branches</em></li>
-</ul>
-<hr />
-<p>Performs iteration and stores yielded values in provided object.</p>
-<p>Handy wrapper for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.html#next"><strong><code>UDynamicQuery::Next</code></strong></a> for use in
-blueprints, where iteration can branch to <code>yielded</code> and <code>completed</code>
-execution nodes.</p>
-<hr />
-<h1 id="arguments-79"><a class="header" href="#arguments-79"><strong>Arguments</strong></a></h1>
-<ul>
-<li>
-<h2 id="output-1"><a class="header" href="#output-1"><strong><code>Output</code></strong></a></h2>
-<pre><code class="language-cpp">UObject* Output
-</code></pre>
-</li>
-<li>
-<h2 id="branches"><a class="header" href="#branches"><strong><code>Branches</code></strong></a></h2>
-<pre><code class="language-cpp">EDynamicQueryBranch&amp; Branches
-</code></pre>
-</li>
-</ul>
+<p>Performs iteration and stores yielded values in returned object.</p>
+<h1 id="note-47"><a class="header" href="#note-47">Note</a></h1>
+<blockquote>
+<p>This method uses reflection to figure out properties that gonna store
+yielded actor and components in returned object.</p>
+</blockquote>
 </details>
 </li>
 <li>
@@ -4981,7 +5381,7 @@ void Setup(
 <p>Resets internal iterator to state for interating current state of
 systems world.</p>
 <hr />
-<h1 id="arguments-80"><a class="header" href="#arguments-80"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-83"><a class="header" href="#arguments-83"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="systems-3"><a class="header" href="#systems-3"><strong><code>Systems</code></strong></a></h2>
@@ -5001,14 +5401,14 @@ components are gonna be stored.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-ulambdasystem"><a class="header" href="#class-ulambdasystem"><strong>Class: <code>ULambdaSystem</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API ULambdaSystem
     : public USystem;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-8"><a class="header" href="#specifiers-8">Specifiers:</a></h3>
+<h3 id="specifiers-23"><a class="header" href="#specifiers-23">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintType</strong></li>
 <li><strong>Blueprintable</strong></li>
@@ -5039,7 +5439,7 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 	BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
 </code></pre>
 <hr />
-<h1 id="methods-10"><a class="header" href="#methods-10"><strong>Methods</strong></a></h1>
+<h1 id="methods-12"><a class="header" href="#methods-12"><strong>Methods</strong></a></h1>
 <ul>
 <li>
 <h1 id="bind"><a class="header" href="#bind"><strong><code>Bind</code></strong></a></h1>
@@ -5053,7 +5453,7 @@ void Bind(
 <p>Binds given function/lambda that runs some system logic.</p>
 <p>Method called by <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a></p>
 <hr />
-<h1 id="arguments-81"><a class="header" href="#arguments-81"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-84"><a class="header" href="#arguments-84"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="func-22"><a class="header" href="#func-22"><strong><code>Func</code></strong></a></h2>
@@ -5075,14 +5475,14 @@ void Unbind();
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-uscriptablesystem"><a class="header" href="#class-uscriptablesystem"><strong>Class: <code>UScriptableSystem</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API UScriptableSystem
     : public USystem;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-9"><a class="header" href="#specifiers-9">Specifiers:</a></h3>
+<h3 id="specifiers-24"><a class="header" href="#specifiers-24">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintType</strong></li>
 <li><strong>Blueprintable</strong></li>
@@ -5093,7 +5493,7 @@ void Unbind();
 OnRun for performing system logic.</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystem.html"><strong><code>USystem</code></strong></a></p>
 <hr />
-<h1 id="methods-11"><a class="header" href="#methods-11"><strong>Methods</strong></a></h1>
+<h1 id="methods-13"><a class="header" href="#methods-13"><strong>Methods</strong></a></h1>
 <ul>
 <li>
 <h1 id="oninit"><a class="header" href="#oninit"><strong><code>OnInit</code></strong></a></h1>
@@ -5105,7 +5505,7 @@ void OnInit(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-10"><a class="header" href="#specifiers-10">Specifiers:</a></h3>
+<h3 id="specifiers-25"><a class="header" href="#specifiers-25">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintNativeEvent</strong></li>
 <li><strong>BlueprintCallable</strong></li>
@@ -5115,7 +5515,7 @@ void OnInit(
 <p>Override to initialize system (setup its internal state).</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystem.html#init"><strong><code>USystem::Init</code></strong></a></p>
 <hr />
-<h1 id="arguments-82"><a class="header" href="#arguments-82"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-85"><a class="header" href="#arguments-85"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="systems-4"><a class="header" href="#systems-4"><strong><code>Systems</code></strong></a></h2>
@@ -5135,7 +5535,7 @@ void OnRun(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-11"><a class="header" href="#specifiers-11">Specifiers:</a></h3>
+<h3 id="specifiers-26"><a class="header" href="#specifiers-26">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintNativeEvent</strong></li>
 <li><strong>BlueprintCallable</strong></li>
@@ -5146,7 +5546,7 @@ void OnRun(
 and resources).</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystem.html#run"><strong><code>USystem::Run</code></strong></a></p>
 <hr />
-<h1 id="arguments-83"><a class="header" href="#arguments-83"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-86"><a class="header" href="#arguments-86"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="systems-5"><a class="header" href="#systems-5"><strong><code>Systems</code></strong></a></h2>
@@ -5158,16 +5558,17 @@ and resources).</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystem"><a class="header" href="#class-usystem"><strong>Class: <code>USystem</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystem
     : public UObject;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-12"><a class="header" href="#specifiers-12">Specifiers:</a></h3>
+<h3 id="specifiers-27"><a class="header" href="#specifiers-27">Specifiers:</a></h3>
 <ul>
 <li><strong>Abstract</strong></li>
+<li><strong>EditInlineNew</strong></li>
 </ul>
 <hr />
 <p>Base class for unit of work over some data.</p>
@@ -5217,7 +5618,7 @@ void ULogBirdsNumberChangeSystem::Run(USystemsWorld&amp; Systems)
 }
 </code></pre>
 <hr />
-<h1 id="methods-12"><a class="header" href="#methods-12"><strong>Methods</strong></a></h1>
+<h1 id="methods-14"><a class="header" href="#methods-14"><strong>Methods</strong></a></h1>
 <ul>
 <li>
 <h1 id="init"><a class="header" href="#init"><strong><code>Init</code></strong></a></h1>
@@ -5260,7 +5661,7 @@ void UBoidsMovementSystem::Init(USystemsWorld&amp; Systems)
 }
 </code></pre>
 <hr />
-<h1 id="arguments-84"><a class="header" href="#arguments-84"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-87"><a class="header" href="#arguments-87"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="systems-6"><a class="header" href="#systems-6"><strong><code>Systems</code></strong></a></h2>
@@ -5325,7 +5726,7 @@ void UBoidsMovementSystem::Run(USystemsWorld&amp; Systems)
 }
 </code></pre>
 <hr />
-<h1 id="arguments-85"><a class="header" href="#arguments-85"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-88"><a class="header" href="#arguments-88"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="systems-7"><a class="header" href="#systems-7"><strong><code>Systems</code></strong></a></h2>
@@ -5338,14 +5739,14 @@ void UBoidsMovementSystem::Run(USystemsWorld&amp; Systems)
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemsactorcomponent"><a class="header" href="#class-usystemsactorcomponent"><strong>Class: <code>USystemsActorComponent</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsActorComponent
     : public UActorComponent;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-13"><a class="header" href="#specifiers-13">Specifiers:</a></h3>
+<h3 id="specifiers-28"><a class="header" href="#specifiers-28">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintType</strong></li>
 <li><strong>Blueprintable</strong></li>
@@ -5368,7 +5769,7 @@ unregister this component at will to any systems world if you want to make
 it available from custom or just non-globally accessible systems world, this
 class is useful only for automation of registering/unregistering components.</p>
 <hr />
-<h1 id="properties-2"><a class="header" href="#properties-2"><strong>Properties</strong></a></h1>
+<h1 id="properties-5"><a class="header" href="#properties-5"><strong>Properties</strong></a></h1>
 <ul>
 <li>
 <h1 id="systemsworlds"><a class="header" href="#systemsworlds"><strong><code>SystemsWorlds</code></strong></a></h1>
@@ -5377,7 +5778,7 @@ TSet&lt;FName&gt; SystemsWorlds;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-14"><a class="header" href="#specifiers-14">Specifiers:</a></h3>
+<h3 id="specifiers-29"><a class="header" href="#specifiers-29">Specifiers:</a></h3>
 <ul>
 <li><strong>EditAnywhere</strong></li>
 <li><strong>Category</strong> = <em>Systems|Component|Actor</em></li>
@@ -5390,7 +5791,7 @@ registered systems world.</p>
 </li>
 </ul>
 <hr />
-<h1 id="methods-13"><a class="header" href="#methods-13"><strong>Methods</strong></a></h1>
+<h1 id="methods-15"><a class="header" href="#methods-15"><strong>Methods</strong></a></h1>
 <ul>
 <li>
 <h1 id="canberegisteredtosystemsworld"><a class="header" href="#canberegisteredtosystemsworld"><strong><code>CanBeRegisteredToSystemsWorld</code></strong></a></h1>
@@ -5430,7 +5831,7 @@ void SetRegistered(
 <p>Registers this component to subsystem's systems worlds listed in
 <strong><code>Self::SystemsWorlds</code></strong>.</p>
 <hr />
-<h1 id="arguments-86"><a class="header" href="#arguments-86"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-89"><a class="header" href="#arguments-89"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="bmode"><a class="header" href="#bmode"><strong><code>bMode</code></strong></a></h2>
@@ -5443,7 +5844,7 @@ void SetRegistered(
 <pre><code class="language-cpp">bool bForced = false
 </code></pre>
 <p>Forces registration change.</p>
-<h1 id="note-46"><a class="header" href="#note-46">Note</a></h1>
+<h1 id="note-48"><a class="header" href="#note-48">Note</a></h1>
 <blockquote>
 <p>Be careful, when <code>bMode</code> is true, this will not unregister this
 component from systems worlds where this component is already
@@ -5457,14 +5858,187 @@ internal <code>bRegister</code> gets set to true in editor.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemspipeline"><a class="header" href="#class-usystemspipeline"><strong>Class: <code>USystemsPipeline</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API USystemsPipeline
+    : public UDataAsset;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-30"><a class="header" href="#specifiers-30">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintType</strong></li>
+</ul>
+<hr />
+<p>Data asset used to describe Systems pipeline.</p>
+<hr />
+<h1 id="properties-6"><a class="header" href="#properties-6"><strong>Properties</strong></a></h1>
+<ul>
+<li>
+<h1 id="assetresourcestoinstall"><a class="header" href="#assetresourcestoinstall"><strong><code>AssetResourcesToInstall</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TMap&lt;TObjectPtr&lt;UDataAsset&gt;, FSystemsPipelineResource&gt; AssetResourcesToInstall;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-31"><a class="header" href="#specifiers-31">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Resources|Assets</em></li>
+</ul>
+<hr />
+<p>Asset resources to be registered into systems world.</p>
+<p>Usually these are used as settings/config data sources.</p>
+</li>
+<li>
+<h1 id="cleanupsystemstorun"><a class="header" href="#cleanupsystemstorun"><strong><code>CleanupSystemsToRun</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TArray&lt;FSystemsPipelineSystem&gt; CleanupSystemsToRun;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-32"><a class="header" href="#specifiers-32">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Systems|Cleanup</em></li>
+</ul>
+<hr />
+<p>System templates to instantiate and run on systems world destruction.</p>
+<p>Order in the list represents order of execution.</p>
+</li>
+<li>
+<h1 id="componentstoregister"><a class="header" href="#componentstoregister"><strong><code>ComponentsToRegister</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TMap&lt;TSubclassOf&lt;UActorComponent&gt;, FSystemsPipelineComponent&gt; ComponentsToRegister;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-33"><a class="header" href="#specifiers-33">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Components|Types</em></li>
+</ul>
+<hr />
+<p>Typed components to be registered into systems world.</p>
+</li>
+<li>
+<h1 id="persistentsystemstoinstall"><a class="header" href="#persistentsystemstoinstall"><strong><code>PersistentSystemsToInstall</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TArray&lt;FSystemsPipelineSystem&gt; PersistentSystemsToInstall;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-34"><a class="header" href="#specifiers-34">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Systems|Persistent</em></li>
+</ul>
+<hr />
+<p>System templates to instantiate and register into systems world to run
+every tick.</p>
+<p>Order in the list represents order of execution.</p>
+</li>
+<li>
+<h1 id="startupsystemstorun"><a class="header" href="#startupsystemstorun"><strong><code>StartupSystemsToRun</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TArray&lt;FSystemsPipelineSystem&gt; StartupSystemsToRun;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-35"><a class="header" href="#specifiers-35">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Systems|Startup</em></li>
+</ul>
+<hr />
+<p>System templates to instantiate and run on systems world creation.</p>
+<p>Order in the list represents order of execution.</p>
+</li>
+<li>
+<h1 id="typeresourcestoinstall"><a class="header" href="#typeresourcestoinstall"><strong><code>TypeResourcesToInstall</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TMap&lt;TSubclassOf&lt;UObject&gt;, FSystemsPipelineResource&gt; TypeResourcesToInstall;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-36"><a class="header" href="#specifiers-36">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Resources|Types</em></li>
+</ul>
+<hr />
+<p>Typed resources to be registered into systems world.</p>
+<p>Usually these are used as game managers.</p>
+</li>
+</ul>
+<hr />
+<h1 id="methods-16"><a class="header" href="#methods-16"><strong>Methods</strong></a></h1>
+<ul>
+<li>
+<h1 id="install"><a class="header" href="#install"><strong><code>Install</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void Install(
+    UWorld* World
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Creates new global systems world under [<code>class: Self::WorldId</code>] name and
+installs this pipeline content into that systems world.</p>
+<hr />
+<h1 id="arguments-90"><a class="header" href="#arguments-90"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="world-1"><a class="header" href="#world-1"><strong><code>World</code></strong></a></h2>
+<pre><code class="language-cpp">UWorld* World
+</code></pre>
+<p>World that has running [<code>class: USystemsSubsystem</code>].</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="uninstall"><a class="header" href="#uninstall"><strong><code>Uninstall</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void Uninstall(
+    UWorld* World
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Destroys systems world registered under [<code>class: Self::WorldId</code>] name.</p>
+<hr />
+<h1 id="arguments-91"><a class="header" href="#arguments-91"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="world-2"><a class="header" href="#world-2"><strong><code>World</code></strong></a></h2>
+<pre><code class="language-cpp">UWorld* World
+</code></pre>
+<p>World that has running [<code>class: USystemsSubsystem</code>].</p>
+</li>
+</ul>
+</details>
+</li>
+</ul>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemsreflection"><a class="header" href="#class-usystemsreflection"><strong>Class: <code>USystemsReflection</code></strong></a></h1>
+<pre><code class="language-cpp">class SYSTEMS_API USystemsReflection
+    : public UBlueprintFunctionLibrary;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<hr />
+<p>Systems reflection blueprint library.</p>
+<hr />
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemsscenecomponent"><a class="header" href="#class-usystemsscenecomponent"><strong>Class: <code>USystemsSceneComponent</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsSceneComponent
     : public USceneComponent;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-15"><a class="header" href="#specifiers-15">Specifiers:</a></h3>
+<h3 id="specifiers-37"><a class="header" href="#specifiers-37">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintType</strong></li>
 <li><strong>Blueprintable</strong></li>
@@ -5480,7 +6054,7 @@ internal <code>bRegister</code> gets set to true in editor.</p>
 scene componets are useful where given component should have transformation
 relative to actor.</p>
 <hr />
-<h1 id="properties-3"><a class="header" href="#properties-3"><strong>Properties</strong></a></h1>
+<h1 id="properties-7"><a class="header" href="#properties-7"><strong>Properties</strong></a></h1>
 <ul>
 <li>
 <h1 id="systemsworlds-1"><a class="header" href="#systemsworlds-1"><strong><code>SystemsWorlds</code></strong></a></h1>
@@ -5489,7 +6063,7 @@ TSet&lt;FName&gt; SystemsWorlds;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-16"><a class="header" href="#specifiers-16">Specifiers:</a></h3>
+<h3 id="specifiers-38"><a class="header" href="#specifiers-38">Specifiers:</a></h3>
 <ul>
 <li><strong>EditAnywhere</strong></li>
 <li><strong>Category</strong> = <em>Systems|Component|Scene</em></li>
@@ -5502,7 +6076,7 @@ registered systems world.</p>
 </li>
 </ul>
 <hr />
-<h1 id="methods-14"><a class="header" href="#methods-14"><strong>Methods</strong></a></h1>
+<h1 id="methods-17"><a class="header" href="#methods-17"><strong>Methods</strong></a></h1>
 <ul>
 <li>
 <h1 id="canberegisteredtosystemsworld-1"><a class="header" href="#canberegisteredtosystemsworld-1"><strong><code>CanBeRegisteredToSystemsWorld</code></strong></a></h1>
@@ -5542,7 +6116,7 @@ void SetRegistered(
 <p>Registers this component to subsystem's systems worlds listed in
 <strong><code>Self::SystemsWorlds</code></strong>.</p>
 <hr />
-<h1 id="arguments-87"><a class="header" href="#arguments-87"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-92"><a class="header" href="#arguments-92"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="bmode-1"><a class="header" href="#bmode-1"><strong><code>bMode</code></strong></a></h2>
@@ -5555,7 +6129,7 @@ void SetRegistered(
 <pre><code class="language-cpp">bool bForced = false
 </code></pre>
 <p>Forces registration change.</p>
-<h1 id="note-47"><a class="header" href="#note-47">Note</a></h1>
+<h1 id="note-49"><a class="header" href="#note-49">Note</a></h1>
 <blockquote>
 <p>Be careful, when <code>bMode</code> is true, this will not unregister this
 component from systems worlds where this component is already
@@ -5569,7 +6143,7 @@ internal <code>bRegister</code> gets set to true in editor.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemsstatics"><a class="header" href="#class-usystemsstatics"><strong>Class: <code>USystemsStatics</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsStatics
     : public UBlueprintFunctionLibrary;
@@ -5580,7 +6154,7 @@ internal <code>bRegister</code> gets set to true in editor.</p>
 <p>Library of useful boilerplate-wrapping functions related to systems
 components.</p>
 <hr />
-<h1 id="methods-15"><a class="header" href="#methods-15"><strong>Methods</strong></a></h1>
+<h1 id="methods-18"><a class="header" href="#methods-18"><strong>Methods</strong></a></h1>
 <ul>
 <li>
 <h1 id="addcomponent"><a class="header" href="#addcomponent"><strong><code>AddComponent</code></strong></a></h1>
@@ -5594,7 +6168,7 @@ static void AddComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-17"><a class="header" href="#specifiers-17">Specifiers:</a></h3>
+<h3 id="specifiers-39"><a class="header" href="#specifiers-39">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
@@ -5610,7 +6184,7 @@ static void AddComponent(
 components to make them auto added to global systems worlds on
 <code>BeginPlay</code>.</p>
 <hr />
-<h1 id="arguments-88"><a class="header" href="#arguments-88"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-93"><a class="header" href="#arguments-93"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component"><a class="header" href="#component"><strong><code>Component</code></strong></a></h2>
@@ -5626,7 +6200,7 @@ components to make them auto added to global systems worlds on
 into.</p>
 </li>
 <li>
-<h2 id="world-1"><a class="header" href="#world-1"><strong><code>World</code></strong></a></h2>
+<h2 id="world-3"><a class="header" href="#world-3"><strong><code>World</code></strong></a></h2>
 <pre><code class="language-cpp">UWorld* World
 </code></pre>
 <p>World context object.</p>
@@ -5645,7 +6219,7 @@ static void AddComponentEverywhere(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-18"><a class="header" href="#specifiers-18">Specifiers:</a></h3>
+<h3 id="specifiers-40"><a class="header" href="#specifiers-40">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
@@ -5661,7 +6235,7 @@ static void AddComponentEverywhere(
 components to make them auto added to global systems worlds on
 <code>BeginPlay</code>.</p>
 <hr />
-<h1 id="arguments-89"><a class="header" href="#arguments-89"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-94"><a class="header" href="#arguments-94"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-1"><a class="header" href="#component-1"><strong><code>Component</code></strong></a></h2>
@@ -5670,7 +6244,7 @@ components to make them auto added to global systems worlds on
 <p>Actor component to add to global systems world.</p>
 </li>
 <li>
-<h2 id="world-2"><a class="header" href="#world-2"><strong><code>World</code></strong></a></h2>
+<h2 id="world-4"><a class="header" href="#world-4"><strong><code>World</code></strong></a></h2>
 <pre><code class="language-cpp">UWorld* World
 </code></pre>
 <p>World context object.</p>
@@ -5692,7 +6266,7 @@ static T* GetResource(
 <p>Gets resource from globally registered systems world by its label.</p>
 <p>This is a handy template shortcut for <strong><code>Self::GetResourceRaw</code></strong>.</p>
 <hr />
-<h1 id="arguments-90"><a class="header" href="#arguments-90"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-95"><a class="header" href="#arguments-95"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id"><a class="header" href="#id"><strong><code>Id</code></strong></a></h2>
@@ -5701,7 +6275,7 @@ static T* GetResource(
 <p>Systems world ID.</p>
 </li>
 <li>
-<h2 id="world-3"><a class="header" href="#world-3"><strong><code>World</code></strong></a></h2>
+<h2 id="world-5"><a class="header" href="#world-5"><strong><code>World</code></strong></a></h2>
 <pre><code class="language-cpp">UWorld* World
 </code></pre>
 <p>World context object.</p>
@@ -5721,7 +6295,7 @@ static UObject* GetResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-19"><a class="header" href="#specifiers-19">Specifiers:</a></h3>
+<h3 id="specifiers-41"><a class="header" href="#specifiers-41">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Resources</em></li>
@@ -5737,7 +6311,7 @@ static UObject* GetResourceRaw(
 <p>This is a handy shortcut for <strong><code>Self::GetSystemsWorld</code></strong> and then
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#getresourceraw"><strong><code>USystemsWorld::GetResourceRaw</code></strong></a> on it.</p>
 <hr />
-<h1 id="arguments-91"><a class="header" href="#arguments-91"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-96"><a class="header" href="#arguments-96"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-1"><a class="header" href="#id-1"><strong><code>Id</code></strong></a></h2>
@@ -5752,7 +6326,7 @@ static UObject* GetResourceRaw(
 <p>Resource type user wants to get from global systems world.</p>
 </li>
 <li>
-<h2 id="world-4"><a class="header" href="#world-4"><strong><code>World</code></strong></a></h2>
+<h2 id="world-6"><a class="header" href="#world-6"><strong><code>World</code></strong></a></h2>
 <pre><code class="language-cpp">UWorld* World
 </code></pre>
 <p>World context object.</p>
@@ -5771,7 +6345,7 @@ static USystemsWorld* GetSystemsWorld(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-20"><a class="header" href="#specifiers-20">Specifiers:</a></h3>
+<h3 id="specifiers-42"><a class="header" href="#specifiers-42">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|World</em></li>
@@ -5786,7 +6360,7 @@ static USystemsWorld* GetSystemsWorld(
 <p>Useful in places where we need to perform systems qorld query, but there
 is no systems world provided into the scope.</p>
 <hr />
-<h1 id="arguments-92"><a class="header" href="#arguments-92"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-97"><a class="header" href="#arguments-97"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-2"><a class="header" href="#id-2"><strong><code>Id</code></strong></a></h2>
@@ -5795,7 +6369,7 @@ is no systems world provided into the scope.</p>
 <p>Systems world ID.</p>
 </li>
 <li>
-<h2 id="world-5"><a class="header" href="#world-5"><strong><code>World</code></strong></a></h2>
+<h2 id="world-7"><a class="header" href="#world-7"><strong><code>World</code></strong></a></h2>
 <pre><code class="language-cpp">UWorld* World
 </code></pre>
 <p>World context object.</p>
@@ -5814,7 +6388,7 @@ static void RemoveComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-21"><a class="header" href="#specifiers-21">Specifiers:</a></h3>
+<h3 id="specifiers-43"><a class="header" href="#specifiers-43">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
@@ -5830,7 +6404,7 @@ static void RemoveComponent(
 components to make them auto removed from global systems worlds on
 <code>EndPlay</code>.</p>
 <hr />
-<h1 id="arguments-93"><a class="header" href="#arguments-93"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-98"><a class="header" href="#arguments-98"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-2"><a class="header" href="#component-2"><strong><code>Component</code></strong></a></h2>
@@ -5839,7 +6413,7 @@ components to make them auto removed from global systems worlds on
 <p>Actor component to remove from global systems world.</p>
 </li>
 <li>
-<h2 id="world-6"><a class="header" href="#world-6"><strong><code>World</code></strong></a></h2>
+<h2 id="world-8"><a class="header" href="#world-8"><strong><code>World</code></strong></a></h2>
 <pre><code class="language-cpp">UWorld* World
 </code></pre>
 <p>World context object.</p>
@@ -5849,7 +6423,7 @@ components to make them auto removed from global systems worlds on
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemssubsystem"><a class="header" href="#class-usystemssubsystem"><strong>Class: <code>USystemsSubsystem</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsSubsystem
     : public UGameInstanceSubsystem;
@@ -5892,7 +6466,7 @@ void UExampleGameInstance::Init()
 }
 </code></pre>
 <hr />
-<h1 id="methods-16"><a class="header" href="#methods-16"><strong>Methods</strong></a></h1>
+<h1 id="methods-19"><a class="header" href="#methods-19"><strong>Methods</strong></a></h1>
 <ul>
 <li>
 <h1 id="acquiresystemsworld"><a class="header" href="#acquiresystemsworld"><strong><code>AcquireSystemsWorld</code></strong></a></h1>
@@ -5953,7 +6527,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 }
 </code></pre>
 <hr />
-<h1 id="arguments-94"><a class="header" href="#arguments-94"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-99"><a class="header" href="#arguments-99"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-3"><a class="header" href="#id-3"><strong><code>Id</code></strong></a></h2>
@@ -5966,7 +6540,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 <pre><code class="language-cpp">TFunction&lt;SystemSetupFunctor&gt; SetupFunctor
 </code></pre>
 <p>Function/lambda that performs setup of created systems world.</p>
-<h1 id="note-48"><a class="header" href="#note-48">Note</a></h1>
+<h1 id="note-50"><a class="header" href="#note-50">Note</a></h1>
 <blockquote>
 <p><code>SystemSetupFunctor</code> has given signature:
 <code>void(USystemsWorld&amp; Systems)</code>.</p>
@@ -5986,7 +6560,7 @@ void BlueprintAcquireSystemsWorld(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-22"><a class="header" href="#specifiers-22">Specifiers:</a></h3>
+<h3 id="specifiers-44"><a class="header" href="#specifiers-44">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Subsystem</em></li>
@@ -5999,7 +6573,7 @@ void BlueprintAcquireSystemsWorld(
 <p>Create, setup and register new systems world.</p>
 <p>Blueprint-side version of <strong><code>Self::AcquireSystemsWorld</code></strong>.</p>
 <hr />
-<h1 id="arguments-95"><a class="header" href="#arguments-95"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-100"><a class="header" href="#arguments-100"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-4"><a class="header" href="#id-4"><strong><code>Id</code></strong></a></h2>
@@ -6012,7 +6586,7 @@ void BlueprintAcquireSystemsWorld(
 <pre><code class="language-cpp">FOnSetupSystemsWorld SetupDelegate
 </code></pre>
 <p>Delegate that performs setup of created systems world.</p>
-<h1 id="note-49"><a class="header" href="#note-49">Note</a></h1>
+<h1 id="note-51"><a class="header" href="#note-51">Note</a></h1>
 <blockquote>
 <p>This delegate has given signature:
 <code>void(USystemsWorld&amp; Systems)</code>.</p>
@@ -6032,10 +6606,10 @@ static USystemsSubsystem* Get(
 <hr />
 <p>Gets instance of this subsystem.</p>
 <hr />
-<h1 id="arguments-96"><a class="header" href="#arguments-96"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-101"><a class="header" href="#arguments-101"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="world-7"><a class="header" href="#world-7"><strong><code>World</code></strong></a></h2>
+<h2 id="world-9"><a class="header" href="#world-9"><strong><code>World</code></strong></a></h2>
 <pre><code class="language-cpp">UWorld* World
 </code></pre>
 <p>World context object.</p>
@@ -6053,7 +6627,7 @@ USystemsWorld* GetSystemsWorld(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-23"><a class="header" href="#specifiers-23">Specifiers:</a></h3>
+<h3 id="specifiers-45"><a class="header" href="#specifiers-45">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Subsystem</em></li>
@@ -6065,7 +6639,7 @@ USystemsWorld* GetSystemsWorld(
 <hr />
 <p>Gets systems world by its label.</p>
 <hr />
-<h1 id="arguments-97"><a class="header" href="#arguments-97"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-102"><a class="header" href="#arguments-102"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-5"><a class="header" href="#id-5"><strong><code>Id</code></strong></a></h2>
@@ -6089,10 +6663,10 @@ void GetSystemsWorldsIds(
 <p>Useful only for more advanced usecases like editor tools that might want
 to list currently existing systems world.</p>
 <hr />
-<h1 id="arguments-98"><a class="header" href="#arguments-98"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-103"><a class="header" href="#arguments-103"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="output-2"><a class="header" href="#output-2"><strong><code>Output</code></strong></a></h2>
+<h2 id="output"><a class="header" href="#output"><strong><code>Output</code></strong></a></h2>
 <pre><code class="language-cpp">TSet&lt;FName&gt;&amp; Output
 </code></pre>
 </li>
@@ -6109,7 +6683,7 @@ void ReleaseSystemsWorld(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-24"><a class="header" href="#specifiers-24">Specifiers:</a></h3>
+<h3 id="specifiers-46"><a class="header" href="#specifiers-46">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Subsystem</em></li>
@@ -6168,7 +6742,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 }
 </code></pre>
 <hr />
-<h1 id="arguments-99"><a class="header" href="#arguments-99"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-104"><a class="header" href="#arguments-104"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-6"><a class="header" href="#id-6"><strong><code>Id</code></strong></a></h2>
@@ -6180,14 +6754,14 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class-usystemsworld"><a class="header" href="#class-usystemsworld"><strong>Class: <code>USystemsWorld</code></strong></a></h1>
 <pre><code class="language-cpp">class SYSTEMS_API USystemsWorld
     : public UObject;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-25"><a class="header" href="#specifiers-25">Specifiers:</a></h3>
+<h3 id="specifiers-47"><a class="header" href="#specifiers-47">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintType</strong></li>
 </ul>
@@ -6201,7 +6775,7 @@ as database - actor components are records and resources are unique
 singleton-like data (usually config/settings or things you would call
 managers).</p>
 <hr />
-<h1 id="methods-17"><a class="header" href="#methods-17"><strong>Methods</strong></a></h1>
+<h1 id="methods-20"><a class="header" href="#methods-20"><strong>Methods</strong></a></h1>
 <ul>
 <li>
 <h1 id="actors"><a class="header" href="#actors"><strong><code>Actors</code></strong></a></h1>
@@ -6277,7 +6851,7 @@ bool AddComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-26"><a class="header" href="#specifiers-26">Specifiers:</a></h3>
+<h3 id="specifiers-48"><a class="header" href="#specifiers-48">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -6289,7 +6863,7 @@ bool AddComponent(
 have to, but in case of user dynamically removing actor component to
 achieve support for behavior toggling, adding components back to
 registry can be achieved with this method.</p>
-<h1 id="note-50"><a class="header" href="#note-50">Note</a></h1>
+<h1 id="note-52"><a class="header" href="#note-52">Note</a></h1>
 <blockquote>
 <p>Actor components are not registered immediatelly to avoid undefined
 behavior or even game crashes when performing this while iterating
@@ -6313,7 +6887,7 @@ after all systems complete their run on current game tick.</p>
 }
 </code></pre>
 <hr />
-<h1 id="arguments-100"><a class="header" href="#arguments-100"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-105"><a class="header" href="#arguments-105"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-3"><a class="header" href="#component-3"><strong><code>Component</code></strong></a></h2>
@@ -6339,7 +6913,7 @@ T* Component(
 <h1 id="return-1"><a class="header" href="#return-1">Return</a></h1>
 <p>Pointer to component or <code>nullptr</code> in case component does not exist in
 registry.</p>
-<h1 id="note-51"><a class="header" href="#note-51">Note</a></h1>
+<h1 id="note-53"><a class="header" href="#note-53">Note</a></h1>
 <blockquote>
 <p><code>T</code> should inherit from <strong><code>UActorComponent</code></strong></p>
 </blockquote>
@@ -6347,7 +6921,7 @@ registry.</p>
 <pre><code class="language-cpp">Systems.Component&lt;UShiaComponent&gt;(Actor)-&gt;JustDoIt();
 </code></pre>
 <hr />
-<h1 id="arguments-101"><a class="header" href="#arguments-101"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-106"><a class="header" href="#arguments-106"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="actor"><a class="header" href="#actor"><strong><code>Actor</code></strong></a></h2>
@@ -6372,7 +6946,7 @@ TOptional&lt;uint32&gt; ComponentIndex(
 user most likely won't have any high-level usecase for that.</p>
 <p>For getting component index by its class use: <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#componenttypeindex"><strong><code>USystemsWorld::ComponentTypeIndex</code></strong></a></p>
 <hr />
-<h1 id="arguments-102"><a class="header" href="#arguments-102"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-107"><a class="header" href="#arguments-107"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-5"><a class="header" href="#component-5"><strong><code>Component</code></strong></a></h2>
@@ -6394,7 +6968,7 @@ UActorComponent* ComponentRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-27"><a class="header" href="#specifiers-27">Specifiers:</a></h3>
+<h3 id="specifiers-49"><a class="header" href="#specifiers-49">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -6405,7 +6979,7 @@ UActorComponent* ComponentRaw(
 </ul>
 <hr />
 <p>Tries to get pointer to registered actor component.</p>
-<h1 id="note-52"><a class="header" href="#note-52">Note</a></h1>
+<h1 id="note-54"><a class="header" href="#note-54">Note</a></h1>
 <blockquote>
 <p>Because components are registered after systems run this will always
 return <code>nullptr</code> whe trying to get actor component just after calling
@@ -6424,7 +6998,7 @@ registry.</p>
 <pre><code class="language-cpp">Systems.ComponentRaw(Actor, UShiaComponent::StaticClass())-&gt;JustDoIt();
 </code></pre>
 <hr />
-<h1 id="arguments-103"><a class="header" href="#arguments-103"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-108"><a class="header" href="#arguments-108"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="actor-1"><a class="header" href="#actor-1"><strong><code>Actor</code></strong></a></h2>
@@ -6455,7 +7029,7 @@ TOptional&lt;uint32&gt; ComponentTypeIndex(
 user most likely won't have any high-level usecase for that.</p>
 <p>For getting component index by component: <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#componentindex"><strong><code>USystemsWorld::ComponentIndex</code></strong></a></p>
 <hr />
-<h1 id="arguments-104"><a class="header" href="#arguments-104"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-109"><a class="header" href="#arguments-109"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-5"><a class="header" href="#type-5"><strong><code>Type</code></strong></a></h2>
@@ -6478,7 +7052,7 @@ TTuple&lt;T*...&gt; Components(
 <p>Gets tuple of actor components.</p>
 <p>Handy wrapper for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#component"><strong><code>USystemsWorld::Component</code></strong></a> in case of
 asking for more than one actor component.</p>
-<h1 id="note-53"><a class="header" href="#note-53">Note</a></h1>
+<h1 id="note-55"><a class="header" href="#note-55">Note</a></h1>
 <blockquote>
 <p>Works similar way to <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> but do not put
 actor in its first tuple element, rather gives exactly the pointers to
@@ -6487,7 +7061,7 @@ component not being registered, it returns <code>nullptr</code> in tuple element
 corresponding to requested actor component type.</p>
 </blockquote>
 <hr />
-<h1 id="arguments-105"><a class="header" href="#arguments-105"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-110"><a class="header" href="#arguments-110"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="actor-2"><a class="header" href="#actor-2"><strong><code>Actor</code></strong></a></h2>
@@ -6521,12 +7095,12 @@ bool ComponentsDidChangedRaw(
 <p><strong><em>Reflection-enabled</em></strong></p>
 <hr />
 <p>Tells if components changed during last game tick.</p>
-<h1 id="note-54"><a class="header" href="#note-54">Note</a></h1>
+<h1 id="note-56"><a class="header" href="#note-56">Note</a></h1>
 <blockquote>
 <p>This checks if any, not all of components marked in signature changed.</p>
 </blockquote>
 <hr />
-<h1 id="arguments-106"><a class="header" href="#arguments-106"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-111"><a class="header" href="#arguments-111"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="signature"><a class="header" href="#signature"><strong><code>Signature</code></strong></a></h2>
@@ -6549,7 +7123,7 @@ FArchetypeSignature ComponentsSignature(
 <p>Useful when working directly with <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
 user most likely won't have any high-level usecase for that.</p>
 <hr />
-<h1 id="arguments-107"><a class="header" href="#arguments-107"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-112"><a class="header" href="#arguments-112"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="view"><a class="header" href="#view"><strong><code>View</code></strong></a></h2>
@@ -6570,7 +7144,7 @@ uint32 Count() const;
 <p>Counts actors that contain given archetype signature.</p>
 <p>This is ergonomic shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#countraw"><strong><code>USystemsWorld::CountRaw</code></strong></a> that
 only counts types that should be included.</p>
-<h1 id="note-55"><a class="header" href="#note-55">Note</a></h1>
+<h1 id="note-57"><a class="header" href="#note-57">Note</a></h1>
 <blockquote>
 <p><code>T</code> classes should inherit from <strong><code>UActorComponent</code></strong>!</p>
 </blockquote>
@@ -6584,7 +7158,7 @@ only counts types that should be included.</p>
 <pre><code class="language-cpp">public:
 uint32 CountRaw(
     const FArchetypeSignature&amp; IncludeSignature,
-    const FArchetypeSignature&amp; ExcludeSignature
+    const FArchetypeSignature&amp; ExcludeSignature = {}
 ) const;
 </code></pre>
 <details>
@@ -6609,14 +7183,14 @@ components (although non-ergonomic for sure):</p>
 	const auto B = Systems.CountRaw(Signature);
 </code></pre>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#count"><strong><code>USystemsWorld::Count</code></strong></a> for more ergonomic use.</p>
-<h1 id="note-56"><a class="header" href="#note-56">Note</a></h1>
+<h1 id="note-58"><a class="header" href="#note-58">Note</a></h1>
 <blockquote>
 <p>For example if requested signature is: <code>&lt;A, B&gt;</code> and there are actors:
 <code>1: A, B, C</code> and <code>2: A, C</code> then only actor <code>1: A, B, C</code> gets counted
 since only this one contains entirel requested signature.</p>
 </blockquote>
 <hr />
-<h1 id="arguments-108"><a class="header" href="#arguments-108"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-113"><a class="header" href="#arguments-113"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="includesignature"><a class="header" href="#includesignature"><strong><code>IncludeSignature</code></strong></a></h2>
@@ -6627,7 +7201,7 @@ actors should contain.</p>
 </li>
 <li>
 <h2 id="excludesignature"><a class="header" href="#excludesignature"><strong><code>ExcludeSignature</code></strong></a></h2>
-<pre><code class="language-cpp">const FArchetypeSignature&amp; ExcludeSignature
+<pre><code class="language-cpp">const FArchetypeSignature&amp; ExcludeSignature = {}
 </code></pre>
 <p>Archetype signature with minimal set of components that counted
 actors should not contain.</p>
@@ -6658,7 +7232,7 @@ bool InstallDefaultResource(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-28"><a class="header" href="#specifiers-28">Specifiers:</a></h3>
+<h3 id="specifiers-50"><a class="header" href="#specifiers-50">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -6672,7 +7246,7 @@ bool InstallDefaultResource(
 <pre><code class="language-cpp">Systems.InstallDefaultResource(UInventory::StaticClass());
 </code></pre>
 <hr />
-<h1 id="arguments-109"><a class="header" href="#arguments-109"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-114"><a class="header" href="#arguments-114"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-6"><a class="header" href="#type-6"><strong><code>Type</code></strong></a></h2>
@@ -6694,7 +7268,7 @@ bool InstallDefaultSystem(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-29"><a class="header" href="#specifiers-29">Specifiers:</a></h3>
+<h3 id="specifiers-51"><a class="header" href="#specifiers-51">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -6710,7 +7284,7 @@ bool InstallDefaultSystem(
 	USomeSystem::StaticClass(), FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
-<h1 id="arguments-110"><a class="header" href="#arguments-110"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-115"><a class="header" href="#arguments-115"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-7"><a class="header" href="#type-7"><strong><code>Type</code></strong></a></h2>
@@ -6767,14 +7341,14 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 	BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
 </code></pre>
 <hr />
-<h1 id="arguments-111"><a class="header" href="#arguments-111"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-116"><a class="header" href="#arguments-116"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="functor"><a class="header" href="#functor"><strong><code>Functor</code></strong></a></h2>
 <pre><code class="language-cpp">TFunction&lt;LambdaSystemType&gt;&amp;&amp; Functor
 </code></pre>
 <p>Function or lambda being installed as system</p>
-<h1 id="note-57"><a class="header" href="#note-57">Note</a></h1>
+<h1 id="note-59"><a class="header" href="#note-59">Note</a></h1>
 <blockquote>
 <p><code>LambdaSystemType</code> should comply to given signature:
 <code>void(USystemsWorld&amp;)</code></p>
@@ -6816,7 +7390,7 @@ bool InstallResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-30"><a class="header" href="#specifiers-30">Specifiers:</a></h3>
+<h3 id="specifiers-52"><a class="header" href="#specifiers-52">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -6837,7 +7411,7 @@ object that has its lifetime managed by other object.</p>
 	NewObject&lt;UInventory&gt;(Systems, UInventory::StaticClass()));
 </code></pre>
 <hr />
-<h1 id="arguments-112"><a class="header" href="#arguments-112"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-117"><a class="header" href="#arguments-117"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="resource"><a class="header" href="#resource"><strong><code>Resource</code></strong></a></h2>
@@ -6861,7 +7435,7 @@ bool InstallSystem(
 <p>Install system.</p>
 <p>Handy shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#installdefaultsystem"><strong><code>USystemsWorld::InstallDefaultSystem</code></strong></a></p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>, <a href="reference/classes//reference/structs/FInstallSystemOptions.html"><strong><code>FInstallSystemOptions</code></strong></a></p>
-<h1 id="note-58"><a class="header" href="#note-58">Note</a></h1>
+<h1 id="note-60"><a class="header" href="#note-60">Note</a></h1>
 <blockquote>
 <p>Make sure <code>T</code> is a class that inherits from <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystem.html"><strong><code>USystem</code></strong></a>!</p>
 </blockquote>
@@ -6871,7 +7445,7 @@ bool InstallSystem(
 <pre><code class="language-cpp">Systems.InstallSystem&lt;USomeSystem&gt;(FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
-<h1 id="arguments-113"><a class="header" href="#arguments-113"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-118"><a class="header" href="#arguments-118"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="options-2"><a class="header" href="#options-2"><strong><code>Options</code></strong></a></h2>
@@ -6893,7 +7467,7 @@ bool InstallSystemRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-31"><a class="header" href="#specifiers-31">Specifiers:</a></h3>
+<h3 id="specifiers-53"><a class="header" href="#specifiers-53">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -6907,7 +7481,7 @@ bool InstallSystemRaw(
 <p>Usually user would want to install systems using either
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#installsystem"><strong><code>USystemsWorld::InstallSystem</code></strong></a> or <a href="reference/classes//reference/classes/USystemsWorld.html#installlambdasystem"><strong><code>USystemsWorld::InstallLambdaSystem</code></strong></a> but in case of valid reasons user
 can install system by its instance.</p>
-<h1 id="note-59"><a class="header" href="#note-59">Note</a></h1>
+<h1 id="note-61"><a class="header" href="#note-61">Note</a></h1>
 <blockquote>
 <p>In case of <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/structs/FInstallSystemOptions.html#label"><strong><code>FInstallSystemOptions::Label</code></strong></a> being empty, it
 will generate random label from new GUID.</p>
@@ -6921,7 +7495,7 @@ will generate random label from new GUID.</p>
 	FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
-<h1 id="arguments-114"><a class="header" href="#arguments-114"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-119"><a class="header" href="#arguments-119"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="system"><a class="header" href="#system"><strong><code>System</code></strong></a></h2>
@@ -6976,21 +7550,21 @@ void MarkComponentChanged(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-32"><a class="header" href="#specifiers-32">Specifiers:</a></h3>
+<h3 id="specifiers-54"><a class="header" href="#specifiers-54">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
 <hr />
 <p>Marks component as changed.</p>
-<h1 id="note-60"><a class="header" href="#note-60">Note</a></h1>
+<h1 id="note-62"><a class="header" href="#note-62">Note</a></h1>
 <blockquote>
 <p>This will mark component type, not component instance, as changed. The
 need for component iinstance here is purely to ensure we do not mark
 components we do not have access to.</p>
 </blockquote>
 <hr />
-<h1 id="arguments-115"><a class="header" href="#arguments-115"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-120"><a class="header" href="#arguments-120"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-6"><a class="header" href="#component-6"><strong><code>Component</code></strong></a></h2>
@@ -7010,7 +7584,7 @@ void MarkResourceChanged(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-33"><a class="header" href="#specifiers-33">Specifiers:</a></h3>
+<h3 id="specifiers-55"><a class="header" href="#specifiers-55">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7026,7 +7600,7 @@ most of the times systems and UI do not require to ask for changes.</p>
 <p>Use <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#resourcedidchanged"><strong><code>USystemsWorld::ResourceDidChanged</code></strong></a> to ask if some
 resource has changed.</p>
 <hr />
-<h1 id="arguments-116"><a class="header" href="#arguments-116"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-121"><a class="header" href="#arguments-121"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="resource-1"><a class="header" href="#resource-1"><strong><code>Resource</code></strong></a></h2>
@@ -7044,7 +7618,7 @@ void Process();
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-34"><a class="header" href="#specifiers-34">Specifiers:</a></h3>
+<h3 id="specifiers-56"><a class="header" href="#specifiers-56">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7092,7 +7666,7 @@ registered to systems world that belong to the same actor. Systems
 architecture focuses on performing queries as fast as possible and not
 iterating over actors that do not need to be queried was a priority.</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/structs/TQuery.html"><strong><code>TQuery</code></strong></a></p>
-<h1 id="note-61"><a class="header" href="#note-61">Note</a></h1>
+<h1 id="note-63"><a class="header" href="#note-63">Note</a></h1>
 <blockquote>
 <p>Returned query iterator has always actor put as first item of item
 tuple and then follow requested components. So <code>Systems-&gt;Query&lt;A, B, C&gt;()</code> iterator will yield given tuple <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code></p>
@@ -7131,7 +7705,7 @@ bool RegisterComponent();
 <h1 id="return-10"><a class="header" href="#return-10">Return</a></h1>
 <p>True if component was successfully installed (registry is not sealed and
 registry haven't reached its capacity).</p>
-<h1 id="note-62"><a class="header" href="#note-62">Note</a></h1>
+<h1 id="note-64"><a class="header" href="#note-64">Note</a></h1>
 <blockquote>
 <p><code>T</code> has to be a component that inherits from <strong><code>UActorComponent</code></strong></p>
 </blockquote>
@@ -7150,7 +7724,7 @@ bool RegisterComponentRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-35"><a class="header" href="#specifiers-35">Specifiers:</a></h3>
+<h3 id="specifiers-57"><a class="header" href="#specifiers-57">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7172,7 +7746,7 @@ registry haven't reached its capacity).</p>
 <pre><code class="language-cpp">Systems.RegisterComponentRaw(USomeComponent::StaticClass());
 </code></pre>
 <hr />
-<h1 id="arguments-117"><a class="header" href="#arguments-117"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-122"><a class="header" href="#arguments-122"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-8"><a class="header" href="#type-8"><strong><code>Type</code></strong></a></h2>
@@ -7193,7 +7767,7 @@ bool RemoveComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-36"><a class="header" href="#specifiers-36">Specifiers:</a></h3>
+<h3 id="specifiers-58"><a class="header" href="#specifiers-58">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7205,7 +7779,7 @@ bool RemoveComponent(
 to, but in case of user dynamically adding actor component to achieve
 support for behavior toggling, removing components from registry can be
 achieved with this method.</p>
-<h1 id="note-63"><a class="header" href="#note-63">Note</a></h1>
+<h1 id="note-65"><a class="header" href="#note-65">Note</a></h1>
 <blockquote>
 <p>Actor components are not unregistered immediatelly to avoid undefined
 behavior or eve game crashes when performing this while iterating
@@ -7229,7 +7803,7 @@ after all systems complete their run on current game tick.</p>
 }
 </code></pre>
 <hr />
-<h1 id="arguments-118"><a class="header" href="#arguments-118"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-123"><a class="header" href="#arguments-123"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-7"><a class="header" href="#component-7"><strong><code>Component</code></strong></a></h2>
@@ -7279,7 +7853,7 @@ bool ResourceDidChangedRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-37"><a class="header" href="#specifiers-37">Specifiers:</a></h3>
+<h3 id="specifiers-59"><a class="header" href="#specifiers-59">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7288,7 +7862,7 @@ bool ResourceDidChangedRaw(
 <p>Tells if given resource type did changed in last game tick.</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#markresourcechanged"><strong><code>USystemsWorld::MarkResourceChanged</code></strong></a>.</p>
 <hr />
-<h1 id="arguments-119"><a class="header" href="#arguments-119"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-124"><a class="header" href="#arguments-124"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-9"><a class="header" href="#type-9"><strong><code>Type</code></strong></a></h2>
@@ -7308,7 +7882,7 @@ UObject* ResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-38"><a class="header" href="#specifiers-38">Specifiers:</a></h3>
+<h3 id="specifiers-60"><a class="header" href="#specifiers-60">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7330,7 +7904,7 @@ if (IsValid(Inventory))
 }
 </code></pre>
 <hr />
-<h1 id="arguments-120"><a class="header" href="#arguments-120"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-125"><a class="header" href="#arguments-125"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-10"><a class="header" href="#type-10"><strong><code>Type</code></strong></a></h2>
@@ -7349,7 +7923,7 @@ void SealAndInitialize();
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-39"><a class="header" href="#specifiers-39">Specifiers:</a></h3>
+<h3 id="specifiers-61"><a class="header" href="#specifiers-61">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7362,7 +7936,7 @@ world registry, or wants to handle systems world on their own, user
 should call this method after systems world setup (registering
 components, installation of systems and resources) and then call this
 method.</p>
-<h1 id="note-64"><a class="header" href="#note-64">Note</a></h1>
+<h1 id="note-66"><a class="header" href="#note-66">Note</a></h1>
 <blockquote>
 <p>After calling this method, no further successful system or resource
 installation i possible, so make sure to install systems world
@@ -7393,7 +7967,7 @@ UDynamicQuery* SpawnQuery(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-40"><a class="header" href="#specifiers-40">Specifiers:</a></h3>
+<h3 id="specifiers-62"><a class="header" href="#specifiers-62">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7411,7 +7985,7 @@ to iterate over actor components and should be avoided in favor of
 <strong><code>USystems::Query</code></strong>.</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.html"><strong><code>UDynamicQuery</code></strong></a></p>
 <hr />
-<h1 id="arguments-121"><a class="header" href="#arguments-121"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-126"><a class="header" href="#arguments-126"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="bundletype"><a class="header" href="#bundletype"><strong><code>BundleType</code></strong></a></h2>
@@ -7454,7 +8028,7 @@ any data of given components.</p>
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="functions-1"><a class="header" href="#functions-1">Functions</a></h1>
 <ul>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/functions/IterGenerate.html"><code>IterGenerate</code></a></li>
@@ -7465,7 +8039,7 @@ any data of given components.</p>
 <li><a href="reference//Unreal-Systems-Architecture/systems/reference/reference/functions/IterStdConst.html"><code>IterStdConst</code></a></li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-itergenerate"><a class="header" href="#function-itergenerate"><strong>Function: <code>IterGenerate</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T, typename F&gt;
@@ -7486,7 +8060,7 @@ const TArray&lt;int&gt; Result = IterGenerate&lt;int&gt;([]() { return FMath::Ra
 							   .CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-122"><a class="header" href="#arguments-122"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-127"><a class="header" href="#arguments-127"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="functor-1"><a class="header" href="#functor-1"><strong><code>Functor</code></strong></a></h2>
@@ -7496,7 +8070,7 @@ const TArray&lt;int&gt; Result = IterGenerate&lt;int&gt;([]() { return FMath::Ra
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iteronce"><a class="header" href="#function-iteronce"><strong>Function: <code>IterOnce</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -7516,7 +8090,7 @@ const TArray&lt;int&gt; Result = IterRange(0, 5)
 							   .CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-123"><a class="header" href="#arguments-123"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-128"><a class="header" href="#arguments-128"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="value-6"><a class="header" href="#value-6"><strong><code>Value</code></strong></a></h2>
@@ -7526,7 +8100,7 @@ const TArray&lt;int&gt; Result = IterRange(0, 5)
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iterrange"><a class="header" href="#function-iterrange"><strong>Function: <code>IterRange</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -7543,7 +8117,7 @@ TIterRange&lt;T&gt; IterRange(
 <li>exclusive upper bound.
 For range from 0 to 5 it means yielding values: 0, 1, 2, 3, 4.</li>
 </ul>
-<h1 id="note-65"><a class="header" href="#note-65">Note</a></h1>
+<h1 id="note-67"><a class="header" href="#note-67">Note</a></h1>
 <blockquote>
 <p>This iterator is value type agnostic, all it requires from type is for it
 to implemen <code>operator++</code> and <code>operator-</code>;</p>
@@ -7553,7 +8127,7 @@ to implemen <code>operator++</code> and <code>operator-</code>;</p>
 const TArray&lt;int&gt; Result = IterRange(0, 10).CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-124"><a class="header" href="#arguments-124"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-129"><a class="header" href="#arguments-129"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="from"><a class="header" href="#from"><strong><code>From</code></strong></a></h2>
@@ -7569,7 +8143,7 @@ const TArray&lt;int&gt; Result = IterRange(0, 10).CollectArray();
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iterrepeat"><a class="header" href="#function-iterrepeat"><strong>Function: <code>IterRepeat</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -7586,7 +8160,7 @@ collecting iterator values that never ends.</p>
 const TArray&lt;int&gt; Result = IterRepeat(1).Take(5).CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-125"><a class="header" href="#arguments-125"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-130"><a class="header" href="#arguments-130"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="value-7"><a class="header" href="#value-7"><strong><code>Value</code></strong></a></h2>
@@ -7596,7 +8170,7 @@ const TArray&lt;int&gt; Result = IterRepeat(1).Take(5).CollectArray();
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iterstd"><a class="header" href="#function-iterstd"><strong>Function: <code>IterStd</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -7614,7 +8188,7 @@ TArray&lt;int&gt; Result = IterRange(0, 5).CollectArray();
 IterStd(Result).ForEach([](auto&amp; Value) { Value = Value * Value; });
 </code></pre>
 <hr />
-<h1 id="arguments-126"><a class="header" href="#arguments-126"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-131"><a class="header" href="#arguments-131"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="container"><a class="header" href="#container"><strong><code>Container</code></strong></a></h2>
@@ -7624,7 +8198,7 @@ IterStd(Result).ForEach([](auto&amp; Value) { Value = Value * Value; });
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-iterstdconst"><a class="header" href="#function-iterstdconst"><strong>Function: <code>IterStdConst</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;typename T&gt;
@@ -7642,7 +8216,7 @@ const TArray&lt;int&gt; ResultA = IterRange(0, 10).CollectArray();
 const TArray&lt;int&gt; ResultB = IterStd(ResultA).CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-127"><a class="header" href="#arguments-127"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-132"><a class="header" href="#arguments-132"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="container-1"><a class="header" href="#container-1"><strong><code>Container</code></strong></a></h2>
@@ -7652,7 +8226,7 @@ const TArray&lt;int&gt; ResultB = IterStd(ResultA).CollectArray();
 </li>
 </ul>
 <hr />
-<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.4</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
+<p><em>Documentation built with <a href="https://github.com/PsichiX/unreal-doc"><strong><code>Unreal-Doc</code> v1.0.5</strong></a> tool by <a href="https://github.com/PsichiX"><strong><code>PsichiX</code></strong></a></em></p>
 
                     </main>
 
@@ -7668,18 +8242,18 @@ const TArray&lt;int&gt; ResultB = IterStd(ResultA).CollectArray();
 
         </div>
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript">
+        <script>
         window.addEventListener('load', function() {
             MathJax.Hub.Register.StartupHook('End', function() {
                 window.setTimeout(window.print, 100);
