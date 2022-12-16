@@ -350,7 +350,7 @@ user most likely won't have any high-level usecase for that.</p>
 <pre><code class="language-cpp">public:
 UActorComponent* ComponentRaw(
     AActor* Actor,
-    const UClass* Type
+    TSubclassOf&lt;UActorComponent&gt; Type
 );
 </code></pre>
 <details>
@@ -358,12 +358,13 @@ UActorComponent* ComponentRaw(
 <p><strong><em>Reflection-enabled</em></strong></p>
 <h3 id="specifiers-2"><a class="header" href="#specifiers-2">Specifiers:</a></h3>
 <ul>
-<li><strong>BlueprintCallable</strong></li>
+<li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
 <h3 id="meta-specifiers"><a class="header" href="#meta-specifiers">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Get Component</em></li>
+<li><strong>DeterminesOutputType</strong> = <em>Type</em></li>
 </ul>
 <hr />
 <p>Tries to get pointer to registered actor component.</p>
@@ -396,7 +397,7 @@ registry.</p>
 </li>
 <li>
 <h2 id="type"><a class="header" href="#type"><strong><code>Type</code></strong></a></h2>
-<pre><code class="language-cpp">const UClass* Type
+<pre><code class="language-cpp">TSubclassOf&lt;UActorComponent&gt; Type
 </code></pre>
 <p>Component class.</p>
 </li>
@@ -1265,12 +1266,13 @@ UObject* ResourceRaw(
 <p><strong><em>Reflection-enabled</em></strong></p>
 <h3 id="specifiers-13"><a class="header" href="#specifiers-13">Specifiers:</a></h3>
 <ul>
-<li><strong>BlueprintCallable</strong></li>
+<li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
 <h3 id="meta-specifiers-4"><a class="header" href="#meta-specifiers-4">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Get Resource</em></li>
+<li><strong>DeterminesOutputType</strong> = <em>Type</em></li>
 </ul>
 <hr />
 <p>Tries to get pointer to resource by its class.</p>
