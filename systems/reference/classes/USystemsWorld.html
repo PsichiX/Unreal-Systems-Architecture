@@ -4,7 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>USystemsWorld - Systems - Modular and scalable game architecture for orthogonal game logic</title>
+
+
         <!-- Custom HTML head -->
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -15,15 +18,18 @@
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
         <link rel="stylesheet" href="../../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="../../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../highlight.css">
         <link rel="stylesheet" href="../../tomorrow-night.css">
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -111,6 +117,7 @@
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -124,6 +131,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -554,8 +562,7 @@ components (although non-ergonomic for sure):</p>
 
 	// You can do this:
 	auto Signature = FArchetypeSignature();
-	if (const auto Index =
-			Systems.ComponentTypeIndex(UShiaComponent::StaticClass()))
+	if (const auto Index = Systems.ComponentTypeIndex(UShiaComponent::StaticClass()))
 	{
 		Signature.EnableBit(Index.GetValue());
 	}
@@ -660,8 +667,7 @@ bool InstallDefaultSystem(
 <h1 id="return-4"><a class="header" href="#return-4">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-5"><a class="header" href="#example-5">Example</a></h1>
-<pre><code class="language-cpp">Systems.InstallDefaultSystem(
-	USomeSystem::StaticClass(), FInstallSystemOptions(&quot;Something&quot;));
+<pre><code class="language-cpp">Systems.InstallDefaultSystem(USomeSystem::StaticClass(), FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
 <h1 id="arguments-10"><a class="header" href="#arguments-10"><strong>Arguments</strong></a></h1>
@@ -717,8 +723,7 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 		});
 }
 </code></pre>
-<pre><code class="language-cpp">Systems.InstallLambdaSystem(
-	BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
+<pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
 </code></pre>
 <hr />
 <h1 id="arguments-11"><a class="header" href="#arguments-11"><strong>Arguments</strong></a></h1>
@@ -787,8 +792,7 @@ object that has its lifetime managed by other object.</p>
 <h1 id="return-7"><a class="header" href="#return-7">Return</a></h1>
 <p>True if resource was successfully installed (registry is not sealed).</p>
 <h1 id="example-8"><a class="header" href="#example-8">Example</a></h1>
-<pre><code class="language-cpp">Systems.InstallResourceRaw(
-	NewObject&lt;UInventory&gt;(Systems, UInventory::StaticClass()));
+<pre><code class="language-cpp">Systems.InstallResourceRaw(NewObject&lt;UInventory&gt;(Systems, UInventory::StaticClass()));
 </code></pre>
 <hr />
 <h1 id="arguments-12"><a class="header" href="#arguments-12"><strong>Arguments</strong></a></h1>
@@ -871,8 +875,7 @@ will generate random label from new GUID.</p>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-10"><a class="header" href="#example-10">Example</a></h1>
 <pre><code class="language-cpp">Systems.InstallSystemRaw(
-	NewObject&lt;USomeSystem&gt;(Systems, USomeSystem::StaticClass()),
-	FInstallSystemOptions(&quot;Something&quot;));
+	NewObject&lt;USomeSystem&gt;(Systems, USomeSystem::StaticClass()), FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
 <h1 id="arguments-14"><a class="header" href="#arguments-14"><strong>Arguments</strong></a></h1>
@@ -1016,8 +1019,7 @@ none of steps above are gonna be performed.</p>
 <p>This method is called automatically for global systems world managed by
 <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>, but in case of user managing systems
 world on their own, user can do:</p>
-<pre><code class="language-cpp">	auto* Systems =
-		NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
+<pre><code class="language-cpp">	auto* Systems = NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
 
 	// [Systems world setup...]
 
@@ -1052,8 +1054,7 @@ iterating over actors that do not need to be queried was a priority.</p>
 tuple and then follow requested components. So <code>Systems-&gt;Query&lt;A, B, C&gt;()</code> iterator will yield given tuple <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code></p>
 </blockquote>
 <h1 id="example-11"><a class="header" href="#example-11">Example</a></h1>
-<pre><code class="language-cpp">	const auto Count =
-		static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
+<pre><code class="language-cpp">	const auto Count = static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
 	const auto Difference = Count - EXPECTED_POPULATION_NUMBER;
 
 	if (Difference &gt; 0)
@@ -1323,14 +1324,12 @@ installation i possible, so make sure to install systems world
 components before sealing systems world!</p>
 </blockquote>
 <h1 id="example-17"><a class="header" href="#example-17">Example</a></h1>
-<pre><code class="language-cpp">	auto* Systems =
-		NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
+<pre><code class="language-cpp">	auto* Systems = NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
 	if (IsValid(Systems) == false)
 	{
 		Systems-&gt;InstallResource&lt;USomeResource&gt;();
 
-		Systems-&gt;InstallLambdaSystem(
-			SomeSystem, FInstallSystemOptions(&quot;Something&quot;));
+		Systems-&gt;InstallLambdaSystem(SomeSystem, FInstallSystemOptions(&quot;Something&quot;));
 
 		Systems-&gt;SealAndInitialize();
 	}
@@ -1355,6 +1354,7 @@ UDynamicQuery* SpawnQuery(
 <h3 id="meta-specifiers-5"><a class="header" href="#meta-specifiers-5">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Query</em></li>
+<li><strong>DevelopmentOnly</strong></li>
 </ul>
 <hr />
 <p>Acquires lazy-iterator to dynamically queried actor components.</p>
@@ -1391,18 +1391,15 @@ are not required for query to access - useful when user do not require
 any data of given components.</p>
 <p>See <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html"><strong><code>TTaggedQuery</code></strong></a></p>
 <h1 id="example-18"><a class="header" href="#example-18">Example</a></h1>
-<pre><code class="language-cpp">	Systems.TaggedQuery&lt;UVelocityComponent&gt;()
-		.With&lt;UBoidComponent&gt;()
-		.Iter()
-		.ForEach(
-			[](auto&amp; QueryItem)
-			{
-				auto* Actor = QueryItem.Get&lt;0&gt;();
-				const auto* Velocity = QueryItem.Get&lt;1&gt;();
-				const auto Position = Actor-&gt;GetActorLocation();
+<pre><code class="language-cpp">	Systems.TaggedQuery&lt;UVelocityComponent&gt;().With&lt;UBoidComponent&gt;().Iter().ForEach(
+		[](auto&amp; QueryItem)
+		{
+			auto* Actor = QueryItem.Get&lt;0&gt;();
+			const auto* Velocity = QueryItem.Get&lt;1&gt;();
+			const auto Position = Actor-&gt;GetActorLocation();
 
-				Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DletaTime);
-			});
+			Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DletaTime);
+		});
 </code></pre>
 </details>
 </li>
@@ -1417,9 +1414,11 @@ any data of given components.</p>
                             <a rel="prev" href="../../reference/classes/USystemsSubsystem.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="../../reference/functions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -1429,6 +1428,7 @@ any data of given components.</p>
                     <a rel="prev" href="../../reference/classes/USystemsSubsystem.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="../../reference/functions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -1436,16 +1436,24 @@ any data of given components.</p>
 
         </div>
 
+
+
+
         <script>
             window.playground_copyable = true;
         </script>
+
+
         <script src="../../elasticlunr.min.js"></script>
         <script src="../../mark.min.js"></script>
         <script src="../../searcher.js"></script>
+
         <script src="../../clipboard.min.js"></script>
         <script src="../../highlight.js"></script>
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
     </body>
 </html>

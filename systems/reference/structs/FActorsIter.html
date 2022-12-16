@@ -4,7 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>FActorsIter - Systems - Modular and scalable game architecture for orthogonal game logic</title>
+
+
         <!-- Custom HTML head -->
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -15,15 +18,18 @@
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
         <link rel="stylesheet" href="../../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="../../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../highlight.css">
         <link rel="stylesheet" href="../../tomorrow-night.css">
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -111,6 +117,7 @@
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -124,6 +131,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -170,8 +178,7 @@ same type wit iterator that wraps this adapter.</p>
 </blockquote>
 <h1 id="example"><a class="header" href="#example">Example</a></h1>
 <pre><code class="language-cpp">// [1, 3, 5, 7, 9]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
 </code></pre>
 <pre><code class="language-cpp">template &lt;typename T&gt;
 struct TIterOddAdapter
@@ -219,8 +226,7 @@ bool All(
 </blockquote>
 <h1 id="example-1"><a class="header" href="#example-1">Example</a></h1>
 <pre><code class="language-cpp">// false
-const bool Result =
-	IterRange(0, 10).All([](const auto&amp; Value) { return Value &gt; 5; });
+const bool Result = IterRange(0, 10).All([](const auto&amp; Value) { return Value &gt; 5; });
 </code></pre>
 <hr />
 <h1 id="arguments-1"><a class="header" href="#arguments-1"><strong>Arguments</strong></a></h1>
@@ -250,8 +256,7 @@ bool Any(
 </blockquote>
 <h1 id="example-2"><a class="header" href="#example-2">Example</a></h1>
 <pre><code class="language-cpp">// true
-const bool Result =
-	IterRange(0, 10).Any([](const auto&amp; Value) { return Value &gt; 5; });
+const bool Result = IterRange(0, 10).Any([](const auto&amp; Value) { return Value &gt; 5; });
 </code></pre>
 <hr />
 <h1 id="arguments-2"><a class="header" href="#arguments-2"><strong>Arguments</strong></a></h1>
@@ -305,8 +310,7 @@ with this iterato value type.</p>
 </blockquote>
 <h1 id="example-4"><a class="header" href="#example-4">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4, -5, -4, -3, -2, -1]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 5).Chain(IterRange(-5, 0)).CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 5).Chain(IterRange(-5, 0)).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-3"><a class="header" href="#arguments-3"><strong>Arguments</strong></a></h1>
@@ -335,12 +339,11 @@ min/max value with this iterator consumer.</p>
 <h1 id="note-5"><a class="header" href="#note-5">Note</a></h1>
 <blockquote>
 <p><code>FUNCTOR</code> should comply to given function signature: <code>bool(I::Item A, I::Item B)</code> where <code>A</code> holds current value yielded by iterator and <code>B</code> is
-the one that has best &quot;score&quot; s far.</p>
+the one that has best &quot;score&quot; so far.</p>
 </blockquote>
 <h1 id="example-5"><a class="header" href="#example-5">Example</a></h1>
-<pre><code class="language-cpp">// false
-const bool Result =
-	IterRange(0, 10).All([](const auto&amp; Value) { return Value &gt; 5; });
+<pre><code class="language-cpp">// 42
+const int Result = IterRange(0, 42).ComparedBy([](const auto A, const auto B) { return A &gt; B; });
 </code></pre>
 <hr />
 <h1 id="arguments-4"><a class="header" href="#arguments-4"><strong>Arguments</strong></a></h1>
@@ -384,11 +387,7 @@ iterator yields tuple o index-value pair.</p>
 <h1 id="example-7"><a class="header" href="#example-7">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4]
 const TArray&lt;int&gt; Result =
-	IterRepeat(42)
-		.Enumerate()
-		.Map&lt;int&gt;([](const auto&amp; Pair) { return Pair.Get&lt;0&gt;(); })
-		.Take(5)
-		.CollectArray();
+	IterRepeat(42).Enumerate().Map&lt;int&gt;([](const auto&amp; Pair) { return Pair.Get&lt;0&gt;(); }).Take(5).CollectArray();
 </code></pre>
 </details>
 </li>
@@ -432,10 +431,7 @@ TIterFilter&lt;Self, typename FUNCTOR&gt; Filter(
 </blockquote>
 <h1 id="example-8"><a class="header" href="#example-8">Example</a></h1>
 <pre><code class="language-cpp">// [0, 2, 4, 6, 8]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10).Filter([](const auto&amp; Value) { return Value % 2 == 0; }).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-6"><a class="header" href="#arguments-6"><strong>Arguments</strong></a></h1>
@@ -468,21 +464,20 @@ pasing it to next iterator, returning none means we omit thi value.</p>
 </blockquote>
 <h1 id="example-9"><a class="header" href="#example-9">Example</a></h1>
 <pre><code class="language-cpp">// [0.0, 2.0, 4.0, 6.0, 8.0]
-const TArray&lt;float&gt; I =
-	IterRange(0, 10)
-		.FilterMap&lt;float&gt;(
-			[](const auto&amp; Value)
-			{
-				if (Value % 2 == 0)
-				{
-					return TOptional&lt;float&gt;(static_cast&lt;float&gt;(Value));
-				}
-				else
-				{
-					return TOptional&lt;float&gt;();
-				}
-			})
-		.CollectArray();
+const TArray&lt;float&gt; I = IterRange(0, 10)
+							.FilterMap&lt;float&gt;(
+								[](const auto&amp; Value)
+								{
+									if (Value % 2 == 0)
+									{
+										return TOptional&lt;float&gt;(static_cast&lt;float&gt;(Value));
+									}
+									else
+									{
+										return TOptional&lt;float&gt;();
+									}
+								})
+							.CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-7"><a class="header" href="#arguments-7"><strong>Arguments</strong></a></h1>
@@ -512,8 +507,7 @@ TOptional&lt;Item&gt; Find(
 </blockquote>
 <h1 id="example-10"><a class="header" href="#example-10">Example</a></h1>
 <pre><code class="language-cpp">// 5
-const TOptional&lt;int&gt; Result =
-	IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
+const TOptional&lt;int&gt; Result = IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
 </code></pre>
 <hr />
 <h1 id="arguments-8"><a class="header" href="#arguments-8"><strong>Arguments</strong></a></h1>
@@ -608,10 +602,7 @@ should comply to this function signature: <code>RESULT(const I::Item&amp; Value)
 <h1 id="example-13"><a class="header" href="#example-13">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
 const TArray&lt;int&gt; P =
-	IterGenerate&lt;TIterRange&lt;int&gt;&gt;([]() { return IterRange(0, 5); })
-		.Take(2)
-		.Flatten&lt;int&gt;()
-		.CollectArray();
+	IterGenerate&lt;TIterRange&lt;int&gt;&gt;([]() { return IterRange(0, 5); }).Take(2).Flatten&lt;int&gt;().CollectArray();
 </code></pre>
 </details>
 </li>
@@ -641,8 +632,7 @@ previous iteration, and <code>Value</code> holds curren value yielded by iterato
 </blockquote>
 <h1 id="example-14"><a class="header" href="#example-14">Example</a></h1>
 <pre><code class="language-cpp">// 45
-const int Result = IterRange(0, 10).Fold(
-	0, [](const auto&amp; Accum, const auto&amp; Value) { return Accum + Value; });
+const int Result = IterRange(0, 10).Fold(0, [](const auto&amp; Accum, const auto&amp; Value) { return Accum + Value; });
 </code></pre>
 <hr />
 <h1 id="arguments-10"><a class="header" href="#arguments-10"><strong>Arguments</strong></a></h1>
@@ -721,28 +711,21 @@ at which iterator chain stage.</p>
 </blockquote>
 <h1 id="example-16"><a class="header" href="#example-16">Example</a></h1>
 <pre><code class="language-cpp">// [0, 2, 4, 6, 8]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10)
-		.Inspect(
-			[](const auto&amp; Value)
-			{
-				// Prints values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
-				UE_LOG(LogTemp,
-					Warning,
-					TEXT(&quot;Inspected item before: %i&quot;),
-					Value);
-			})
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Inspect(
-			[](const auto&amp; Value)
-			{
-				// Prints values: 0, 2, 4, 6, 8.
-				UE_LOG(LogTemp,
-					Warning,
-					TEXT(&quot;Inspected item after: %i&quot;),
-					Value);
-			})
-		.CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10)
+							   .Inspect(
+								   [](const auto&amp; Value)
+								   {
+									   // Prints values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
+									   UE_LOG(LogTemp, Warning, TEXT(&quot;Inspected item before: %i&quot;), Value);
+								   })
+							   .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+							   .Inspect(
+								   [](const auto&amp; Value)
+								   {
+									   // Prints values: 0, 2, 4, 6, 8.
+									   UE_LOG(LogTemp, Warning, TEXT(&quot;Inspected item after: %i&quot;), Value);
+								   })
+							   .CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-12"><a class="header" href="#arguments-12"><strong>Arguments</strong></a></h1>
@@ -788,12 +771,10 @@ TIterMap&lt;typename RESULT, Self, typename FUNCTOR&gt; Map(
 </blockquote>
 <h1 id="example-18"><a class="header" href="#example-18">Example</a></h1>
 <pre><code class="language-cpp">// [0.0, 4.0, 16.0, 36.0, 64.0]
-const TArray&lt;float&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Map&lt;float&gt;([](const auto&amp; Value)
-			{ return static_cast&lt;float&gt;(Value * Value); })
-		.CollectArray();
+const TArray&lt;float&gt; Result = IterRange(0, 10)
+								 .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+								 .Map&lt;float&gt;([](const auto&amp; Value) { return static_cast&lt;float&gt;(Value * Value); })
+								 .CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-13"><a class="header" href="#arguments-13"><strong>Arguments</strong></a></h1>
@@ -926,8 +907,7 @@ TIterViews&lt;Self, COUNT&gt; Views();
 const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 	IterRange(0, 5)
 		.Views&lt;2&gt;()
-		.Map&lt;TTuple&lt;int, int&gt;&gt;(
-			[](const auto&amp; View) { return MakeTuple(View[0], View[1]); })
+		.Map&lt;TTuple&lt;int, int&gt;&gt;([](const auto&amp; View) { return MakeTuple(View[0], View[1]); })
 		.CollectArray();
 </code></pre>
 </details>
@@ -946,8 +926,7 @@ TIterZip&lt;Self, ITER&gt; Zip(
 at the same time.</p>
 <h1 id="example-23"><a class="header" href="#example-23">Example</a></h1>
 <pre><code class="language-cpp">// [(0, -5), (1, -4), (2, -3), (3, -2), (4, -1)]
-const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
-	IterRange(0, 5).Zip(IterRange(-5, 0)).CollectArray();
+const TArray&lt;TTuple&lt;int, int&gt;&gt; Result = IterRange(0, 5).Zip(IterRange(-5, 0)).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-17"><a class="header" href="#arguments-17"><strong>Arguments</strong></a></h1>
@@ -971,9 +950,11 @@ const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
                             <a rel="prev" href="../../reference/structs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="../../reference/structs/FArchetypeSignature.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -983,6 +964,7 @@ const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
                     <a rel="prev" href="../../reference/structs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="../../reference/structs/FArchetypeSignature.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -990,16 +972,24 @@ const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 
         </div>
 
+
+
+
         <script>
             window.playground_copyable = true;
         </script>
+
+
         <script src="../../elasticlunr.min.js"></script>
         <script src="../../mark.min.js"></script>
         <script src="../../searcher.js"></script>
+
         <script src="../../clipboard.min.js"></script>
         <script src="../../highlight.js"></script>
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
     </body>
 </html>

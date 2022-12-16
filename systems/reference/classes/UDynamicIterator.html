@@ -4,7 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>UDynamicIterator - Systems - Modular and scalable game architecture for orthogonal game logic</title>
+
+
         <!-- Custom HTML head -->
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -15,15 +18,18 @@
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
         <link rel="stylesheet" href="../../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="../../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../highlight.css">
         <link rel="stylesheet" href="../../tomorrow-night.css">
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -111,6 +117,7 @@
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -124,6 +131,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -162,6 +170,10 @@ virtual int EstimateSizeLeft() const;
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
+<h3 id="meta-specifiers"><a class="header" href="#meta-specifiers">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DevelopmentOnly</strong></li>
+</ul>
 <hr />
 <p>Calculates (usually minimal) number of items this iterator stage can yield.</p>
 </details>
@@ -179,6 +191,10 @@ virtual UObject* Next();
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
+<h3 id="meta-specifiers-1"><a class="header" href="#meta-specifiers-1">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DevelopmentOnly</strong></li>
+</ul>
 <hr />
 <p>Performs iteration and returns yielded value.</p>
 <p>Null means no object left to iterate.</p>
@@ -188,7 +204,7 @@ virtual UObject* Next();
 <h1 id="nextbranched"><a class="header" href="#nextbranched"><strong><code>NextBranched</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 UObject* NextBranched(
-    EDynamicQueryBranch&amp; Branches
+    EDynamicIteratorNextBranch&amp; Branches
 );
 </code></pre>
 <details>
@@ -199,9 +215,10 @@ UObject* NextBranched(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
-<h3 id="meta-specifiers"><a class="header" href="#meta-specifiers">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-2"><a class="header" href="#meta-specifiers-2">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>ExpandEnumAsExecs</strong> = <em>Branches</em></li>
+<li><strong>DevelopmentOnly</strong></li>
 </ul>
 <hr />
 <p>Handy wrapper for <strong><code>Self::Next</code></strong> for use in blueprints, where iteration can branch to <code>yielded</code> and
@@ -211,7 +228,7 @@ UObject* NextBranched(
 <ul>
 <li>
 <h2 id="branches"><a class="header" href="#branches"><strong><code>Branches</code></strong></a></h2>
-<pre><code class="language-cpp">EDynamicQueryBranch&amp; Branches
+<pre><code class="language-cpp">EDynamicIteratorNextBranch&amp; Branches
 </code></pre>
 </li>
 </ul>
@@ -228,9 +245,11 @@ UObject* NextBranched(
                             <a rel="prev" href="../../reference/classes/FSystemsReflection.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="../../reference/classes/UDynamicQuery.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -240,6 +259,7 @@ UObject* NextBranched(
                     <a rel="prev" href="../../reference/classes/FSystemsReflection.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="../../reference/classes/UDynamicQuery.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -247,16 +267,24 @@ UObject* NextBranched(
 
         </div>
 
+
+
+
         <script>
             window.playground_copyable = true;
         </script>
+
+
         <script src="../../elasticlunr.min.js"></script>
         <script src="../../mark.min.js"></script>
         <script src="../../searcher.js"></script>
+
         <script src="../../clipboard.min.js"></script>
         <script src="../../highlight.js"></script>
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
     </body>
 </html>

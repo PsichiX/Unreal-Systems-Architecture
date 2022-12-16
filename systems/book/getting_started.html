@@ -4,7 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Getting started - Systems - Modular and scalable game architecture for orthogonal game logic</title>
+
+
         <!-- Custom HTML head -->
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -15,15 +18,18 @@
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
         <link rel="stylesheet" href="../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
         <link rel="stylesheet" href="../tomorrow-night.css">
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -111,6 +117,7 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -124,6 +131,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -181,41 +189,37 @@ void HuntSystem(USystemsWorld&amp; Systems)
 				auto* PlayerActor = PlayerData.Get&lt;0&gt;();
 				const auto PlayerPosition = PlayerActor-&gt;GetActorLocation();
 
-				const auto Nearest =
-					Systems
-						.Query&lt;UEnemyComponent&gt;()
-						// mapping iterator is one of the most commonly used
-						// types of iterators that transform data from one form
-						// to another, usually to get exact information needed
-						// by next iterators in chain, or to just process it and
-						// collect the result.
-						.Map&lt;TTuple&lt;FVector, float&gt;&gt;(
-							[&amp;](const auto&amp; EnemyData)
-							{
-								const auto* EnemyActor = EnemyData.Get&lt;0&gt;();
-								const auto EnemyPosition =
-									EnemyActor-&gt;GetActorLocation();
-								const auto Distance = FVector::Distance(
-									PlayerPosition, EnemyPosition);
+				const auto Nearest = Systems
+										 .Query&lt;UEnemyComponent&gt;()
+										 // mapping iterator is one of the most commonly used
+										 // types of iterators that transform data from one form
+										 // to another, usually to get exact information needed
+										 // by next iterators in chain, or to just process it and
+										 // collect the result.
+										 .Map&lt;TTuple&lt;FVector, float&gt;&gt;(
+											 [&amp;](const auto&amp; EnemyData)
+											 {
+												 const auto* EnemyActor = EnemyData.Get&lt;0&gt;();
+												 const auto EnemyPosition = EnemyActor-&gt;GetActorLocation();
+												 const auto Distance = FVector::Distance(PlayerPosition, EnemyPosition);
 
-								return MakeTuple(EnemyPosition, Distance);
-							})
-						// finding the nearest enemy based on distance extracted
-						// in previous iteration step.
-						.ComparedBy(
-							[](const auto&amp; A, const auto&amp; B)
-							{
-								const auto DistanceA = A.Get&lt;1&gt;();
-								const auto DistanceB = B.Get&lt;1&gt;();
+												 return MakeTuple(EnemyPosition, Distance);
+											 })
+										 // finding the nearest enemy based on distance extracted
+										 // in previous iteration step.
+										 .ComparedBy(
+											 [](const auto&amp; A, const auto&amp; B)
+											 {
+												 const auto DistanceA = A.Get&lt;1&gt;();
+												 const auto DistanceB = B.Get&lt;1&gt;();
 
-								return DistanceA &lt; DistanceB;
-							});
+												 return DistanceA &lt; DistanceB;
+											 });
 
 				if (Nearest.IsSet())
 				{
 					const auto TargetPosition = Nearest.GetValue().Get&lt;0&gt;();
-					const auto Direction =
-						(TargetPosition - PlayerPosition).GetSafeNormal();
+					const auto Direction = (TargetPosition - PlayerPosition).GetSafeNormal();
 					const auto Velocity = Direction * 100.0f * DeltaTime;
 
 					PlayerActor-&gt;SetActorLocation(PlayerPosition + Velocity);
@@ -254,8 +258,7 @@ void UExampleGameInstance::Init()
 				// (&quot;Hunt&quot;) are used for resolving systems dependency graph
 				// (user can provide sets of systems that given one has to run
 				// before and after).
-				Systems.InstallLambdaSystem(
-					HuntSystem, FInstallSystemOptions(&quot;Hunt&quot;));
+				Systems.InstallLambdaSystem(HuntSystem, FInstallSystemOptions(&quot;Hunt&quot;));
 			});
 	}
 }
@@ -370,7 +373,7 @@ message execution when broadcasting messages.</p>
 <p>There is also another benefit we gain from flat dependency graph, that we will discuss next:</p>
 <h2 id="orthogonal-and-compact-game-logic"><a class="header" href="#orthogonal-and-compact-game-logic">Orthogonal and compact game logic</a></h2>
 <p>Quote from Eric Steven Raymond in
-<a href="http://www.catb.org/%7Eesr/writings/taoup/html/ch04s02.html#orthogonality">Art of UNIX programming</a>:</p>
+<a href="http://www.catb.org/~esr/writings/taoup/html/ch04s02.html#orthogonality">Art of UNIX programming</a>:</p>
 <blockquote>
 <p>Orthogonality is one of the most important properties that can help make even complex designs
 compact. In a purely orthogonal design, operations do not have side effects; each action (whether
@@ -471,9 +474,11 @@ distraction-abstractions for that.</strong></p>
                             <a rel="prev" href="../book/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="../book/architecture/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -483,6 +488,7 @@ distraction-abstractions for that.</strong></p>
                     <a rel="prev" href="../book/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="../book/architecture/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -490,16 +496,24 @@ distraction-abstractions for that.</strong></p>
 
         </div>
 
+
+
+
         <script>
             window.playground_copyable = true;
         </script>
+
+
         <script src="../elasticlunr.min.js"></script>
         <script src="../mark.min.js"></script>
         <script src="../searcher.js"></script>
+
         <script src="../clipboard.min.js"></script>
         <script src="../highlight.js"></script>
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
     </body>
 </html>

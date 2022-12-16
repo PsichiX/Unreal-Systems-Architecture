@@ -5,7 +5,10 @@
         <meta charset="UTF-8">
         <title>Systems - Modular and scalable game architecture for orthogonal game logic</title>
         <meta name="robots" content="noindex" />
+
+
         <!-- Custom HTML head -->
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -16,15 +19,18 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
@@ -85,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -112,6 +118,7 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -125,6 +132,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -214,41 +222,37 @@ void HuntSystem(USystemsWorld&amp; Systems)
 				auto* PlayerActor = PlayerData.Get&lt;0&gt;();
 				const auto PlayerPosition = PlayerActor-&gt;GetActorLocation();
 
-				const auto Nearest =
-					Systems
-						.Query&lt;UEnemyComponent&gt;()
-						// mapping iterator is one of the most commonly used
-						// types of iterators that transform data from one form
-						// to another, usually to get exact information needed
-						// by next iterators in chain, or to just process it and
-						// collect the result.
-						.Map&lt;TTuple&lt;FVector, float&gt;&gt;(
-							[&amp;](const auto&amp; EnemyData)
-							{
-								const auto* EnemyActor = EnemyData.Get&lt;0&gt;();
-								const auto EnemyPosition =
-									EnemyActor-&gt;GetActorLocation();
-								const auto Distance = FVector::Distance(
-									PlayerPosition, EnemyPosition);
+				const auto Nearest = Systems
+										 .Query&lt;UEnemyComponent&gt;()
+										 // mapping iterator is one of the most commonly used
+										 // types of iterators that transform data from one form
+										 // to another, usually to get exact information needed
+										 // by next iterators in chain, or to just process it and
+										 // collect the result.
+										 .Map&lt;TTuple&lt;FVector, float&gt;&gt;(
+											 [&amp;](const auto&amp; EnemyData)
+											 {
+												 const auto* EnemyActor = EnemyData.Get&lt;0&gt;();
+												 const auto EnemyPosition = EnemyActor-&gt;GetActorLocation();
+												 const auto Distance = FVector::Distance(PlayerPosition, EnemyPosition);
 
-								return MakeTuple(EnemyPosition, Distance);
-							})
-						// finding the nearest enemy based on distance extracted
-						// in previous iteration step.
-						.ComparedBy(
-							[](const auto&amp; A, const auto&amp; B)
-							{
-								const auto DistanceA = A.Get&lt;1&gt;();
-								const auto DistanceB = B.Get&lt;1&gt;();
+												 return MakeTuple(EnemyPosition, Distance);
+											 })
+										 // finding the nearest enemy based on distance extracted
+										 // in previous iteration step.
+										 .ComparedBy(
+											 [](const auto&amp; A, const auto&amp; B)
+											 {
+												 const auto DistanceA = A.Get&lt;1&gt;();
+												 const auto DistanceB = B.Get&lt;1&gt;();
 
-								return DistanceA &lt; DistanceB;
-							});
+												 return DistanceA &lt; DistanceB;
+											 });
 
 				if (Nearest.IsSet())
 				{
 					const auto TargetPosition = Nearest.GetValue().Get&lt;0&gt;();
-					const auto Direction =
-						(TargetPosition - PlayerPosition).GetSafeNormal();
+					const auto Direction = (TargetPosition - PlayerPosition).GetSafeNormal();
 					const auto Velocity = Direction * 100.0f * DeltaTime;
 
 					PlayerActor-&gt;SetActorLocation(PlayerPosition + Velocity);
@@ -287,8 +291,7 @@ void UExampleGameInstance::Init()
 				// (&quot;Hunt&quot;) are used for resolving systems dependency graph
 				// (user can provide sets of systems that given one has to run
 				// before and after).
-				Systems.InstallLambdaSystem(
-					HuntSystem, FInstallSystemOptions(&quot;Hunt&quot;));
+				Systems.InstallLambdaSystem(HuntSystem, FInstallSystemOptions(&quot;Hunt&quot;));
 			});
 	}
 }
@@ -403,7 +406,7 @@ message execution when broadcasting messages.</p>
 <p>There is also another benefit we gain from flat dependency graph, that we will discuss next:</p>
 <h2 id="orthogonal-and-compact-game-logic"><a class="header" href="#orthogonal-and-compact-game-logic">Orthogonal and compact game logic</a></h2>
 <p>Quote from Eric Steven Raymond in
-<a href="http://www.catb.org/%7Eesr/writings/taoup/html/ch04s02.html#orthogonality">Art of UNIX programming</a>:</p>
+<a href="http://www.catb.org/~esr/writings/taoup/html/ch04s02.html#orthogonality">Art of UNIX programming</a>:</p>
 <blockquote>
 <p>Orthogonality is one of the most important properties that can help make even complex designs
 compact. In a purely orthogonal design, operations do not have side effects; each action (whether
@@ -616,8 +619,7 @@ void UExampleGameInstance::Init()
 
 				Systems.InstallResource&lt;UShiaSettings&gt;();
 
-				Systems.InstallLambdaSystem(
-					JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
+				Systems.InstallLambdaSystem(JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
 			});
 	}
 }
@@ -634,8 +636,7 @@ which means to perform same operations on a batched set of actor components, ins
 that work into these objects. That makes us completely decouple data from behaviors, making it
 easier to add, remove and change them at will, even reuse without dealing with solving hidden
 dependency tree problems between seemingly unrelated parts of codebase.</p>
-<pre><code class="language-cpp">	const auto Count =
-		static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
+<pre><code class="language-cpp">	const auto Count = static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
 	const auto Difference = Count - EXPECTED_POPULATION_NUMBER;
 
 	if (Difference &gt; 0)
@@ -743,8 +744,7 @@ to operate.</p>
 			{
 				Systems.RegisterComponent&lt;UVelocityComponent&gt;();
 
-				Systems.InstallLambdaSystem(
-					MovementSystem, FInstallSystemOptions(&quot;Movement&quot;));
+				Systems.InstallLambdaSystem(MovementSystem, FInstallSystemOptions(&quot;Movement&quot;));
 			});
 	}
 }
@@ -774,8 +774,7 @@ void ULogBirdsNumberChangeSystem::Run(USystemsWorld&amp; Systems)
 		return;
 	}
 
-	const auto Number =
-		static_cast&lt;int&gt;(Systems.Query&lt;UBirdComponent&gt;().Count());
+	const auto Number = static_cast&lt;int&gt;(Systems.Query&lt;UBirdComponent&gt;().Count());
 	const Difference = Number - this-&gt;LastCount;
 	this-&gt;LastCount = Number;
 
@@ -801,8 +800,7 @@ void ULogBirdsNumberChangeSystem::Run(USystemsWorld&amp; Systems)
 			{
 				Systems.RegisterComponent&lt;UBirdComponent&gt;();
 
-				Systems.InstallSystem&lt;ULogBirdsNumberChangeSystem&gt;(
-					FInstallSystemOptions(&quot;LogBirdsNumberChange&quot;));
+				Systems.InstallSystem&lt;ULogBirdsNumberChangeSystem&gt;(FInstallSystemOptions(&quot;LogBirdsNumberChange&quot;));
 			});
 	}
 }
@@ -833,8 +831,7 @@ systems with actual properly implemented systems, sometimes not even having to c
 <p>See <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.html"><strong><code>USystemsActorComponent</code></strong></a>.</p>
 <p>Systems Architecture treats game world as database that user can query. That enables us to
 perform same operations on a batch of actors and their requested components in-place.</p>
-<pre><code class="language-cpp">	const auto Count =
-		static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
+<pre><code class="language-cpp">	const auto Count = static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
 	const auto Difference = Count - EXPECTED_POPULATION_NUMBER;
 
 	if (Difference &gt; 0)
@@ -934,8 +931,7 @@ void UExampleGameInstance::Init()
 				// USettings asset set up in editor.
 				Systems.InstallResourceRaw(this-&gt;Settings);
 
-				Systems.InstallLambdaSystem(
-					MovementSystem, FInstallSystemOptions(&quot;Movement&quot;));
+				Systems.InstallLambdaSystem(MovementSystem, FInstallSystemOptions(&quot;Movement&quot;));
 			});
 	}
 }
@@ -1024,8 +1020,7 @@ void UExampleGameInstance::Init()
 
 				Systems.InstallResource&lt;UShiaSettings&gt;();
 
-				Systems.InstallLambdaSystem(
-					JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
+				Systems.InstallLambdaSystem(JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
 			});
 	}
 }
@@ -1041,16 +1036,12 @@ class EXAMPLE_API AExampleGameMode : public AGameModeBase
 	GENERATED_BODY()
 
 private:
-	virtual void InitGame(const FString&amp; MapName,
-		const FString&amp; Options,
-		FString&amp; ErrorMessage) override;
+	virtual void InitGame(const FString&amp; MapName, const FString&amp; Options, FString&amp; ErrorMessage) override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };
 
-void AExampleGameMode::InitGame(const FString&amp; MapName,
-	const FString&amp; Options,
-	FString&amp; ErrorMessage)
+void AExampleGameMode::InitGame(const FString&amp; MapName, const FString&amp; Options, FString&amp; ErrorMessage)
 {
 	Super::InitGame(MapName, Options, ErrorMessage);
 
@@ -1064,8 +1055,7 @@ void AExampleGameMode::InitGame(const FString&amp; MapName,
 
 				Systems.InstallResource&lt;UShiaSettings&gt;();
 
-				Systems.InstallLambdaSystem(
-					JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
+				Systems.InstallLambdaSystem(JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
 			});
 	}
 }
@@ -1100,12 +1090,10 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 ergonomic processing of collections and procedural generators. Lazy iterators are lazy
 because on their own they do not yield any values until consumed.</p>
 <pre><code class="language-cpp">// [0.0, 4.0, 16.0, 36.0, 64.0]
-const TArray&lt;float&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Map&lt;float&gt;([](const auto&amp; Value)
-			{ return static_cast&lt;float&gt;(Value * Value); })
-		.CollectArray();
+const TArray&lt;float&gt; Result = IterRange(0, 10)
+								 .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+								 .Map&lt;float&gt;([](const auto&amp; Value) { return static_cast&lt;float&gt;(Value * Value); })
+								 .CollectArray();
 </code></pre>
 <p>This lazyness allows us to produce more elaborated processing over data without making
 unnecessary caching between iteration stages, and that also makes iteration code cleaner
@@ -1117,8 +1105,7 @@ and easier to reason about.</p>
 <p>Consumers are final iterators that consume yielded values and produce some result out
 of it, usually single value.</p>
 <pre><code class="language-cpp">// 5
-const TOptional&lt;int&gt; Result =
-	IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
+const TOptional&lt;int&gt; Result = IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
 </code></pre>
 <ul>
 <li><a href="book/architecture//Unreal-Systems-Architecture/systems/reference/structs/TQuery.html#count"><strong><code>TQuery::Count</code></strong></a></li>
@@ -1156,12 +1143,10 @@ all yielded values into commonly used collections such as <code>TArray</code>, <
 <p>Converters are stages of iteration that converts values yielded by previous iteration
 stages into some new values.</p>
 <pre><code class="language-cpp">// [0.0, 4.0, 16.0, 36.0, 64.0]
-const TArray&lt;float&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Map&lt;float&gt;([](const auto&amp; Value)
-			{ return static_cast&lt;float&gt;(Value * Value); })
-		.CollectArray();
+const TArray&lt;float&gt; Result = IterRange(0, 10)
+								 .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+								 .Map&lt;float&gt;([](const auto&amp; Value) { return static_cast&lt;float&gt;(Value * Value); })
+								 .CollectArray();
 </code></pre>
 <ul>
 <li><a href="book/architecture//Unreal-Systems-Architecture/systems/reference/structs/TQuery.html#adapt"><strong><code>TQuery::Adapt</code></strong></a></li>
@@ -1303,8 +1288,7 @@ public:
 };
 </code></pre>
 <pre><code class="language-cpp">// [1, 3, 5, 7, 9]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
 </code></pre>
 <p>They differ from regular iterators in a way that they do not need type aliases and their <code>Next</code> and
 <code>SizeHint</code> methods require reference to previous stage iterator so they both consume and process its
@@ -1488,8 +1472,7 @@ same type wit iterator that wraps this adapter.</p>
 </blockquote>
 <h1 id="example"><a class="header" href="#example">Example</a></h1>
 <pre><code class="language-cpp">// [1, 3, 5, 7, 9]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
 </code></pre>
 <pre><code class="language-cpp">template &lt;typename T&gt;
 struct TIterOddAdapter
@@ -1537,8 +1520,7 @@ bool All(
 </blockquote>
 <h1 id="example-1"><a class="header" href="#example-1">Example</a></h1>
 <pre><code class="language-cpp">// false
-const bool Result =
-	IterRange(0, 10).All([](const auto&amp; Value) { return Value &gt; 5; });
+const bool Result = IterRange(0, 10).All([](const auto&amp; Value) { return Value &gt; 5; });
 </code></pre>
 <hr />
 <h1 id="arguments-1"><a class="header" href="#arguments-1"><strong>Arguments</strong></a></h1>
@@ -1568,8 +1550,7 @@ bool Any(
 </blockquote>
 <h1 id="example-2"><a class="header" href="#example-2">Example</a></h1>
 <pre><code class="language-cpp">// true
-const bool Result =
-	IterRange(0, 10).Any([](const auto&amp; Value) { return Value &gt; 5; });
+const bool Result = IterRange(0, 10).Any([](const auto&amp; Value) { return Value &gt; 5; });
 </code></pre>
 <hr />
 <h1 id="arguments-2"><a class="header" href="#arguments-2"><strong>Arguments</strong></a></h1>
@@ -1623,8 +1604,7 @@ with this iterato value type.</p>
 </blockquote>
 <h1 id="example-4"><a class="header" href="#example-4">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4, -5, -4, -3, -2, -1]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 5).Chain(IterRange(-5, 0)).CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 5).Chain(IterRange(-5, 0)).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-3"><a class="header" href="#arguments-3"><strong>Arguments</strong></a></h1>
@@ -1653,12 +1633,11 @@ min/max value with this iterator consumer.</p>
 <h1 id="note-5"><a class="header" href="#note-5">Note</a></h1>
 <blockquote>
 <p><code>FUNCTOR</code> should comply to given function signature: <code>bool(I::Item A, I::Item B)</code> where <code>A</code> holds current value yielded by iterator and <code>B</code> is
-the one that has best &quot;score&quot; s far.</p>
+the one that has best &quot;score&quot; so far.</p>
 </blockquote>
 <h1 id="example-5"><a class="header" href="#example-5">Example</a></h1>
-<pre><code class="language-cpp">// false
-const bool Result =
-	IterRange(0, 10).All([](const auto&amp; Value) { return Value &gt; 5; });
+<pre><code class="language-cpp">// 42
+const int Result = IterRange(0, 42).ComparedBy([](const auto A, const auto B) { return A &gt; B; });
 </code></pre>
 <hr />
 <h1 id="arguments-4"><a class="header" href="#arguments-4"><strong>Arguments</strong></a></h1>
@@ -1702,11 +1681,7 @@ iterator yields tuple o index-value pair.</p>
 <h1 id="example-7"><a class="header" href="#example-7">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4]
 const TArray&lt;int&gt; Result =
-	IterRepeat(42)
-		.Enumerate()
-		.Map&lt;int&gt;([](const auto&amp; Pair) { return Pair.Get&lt;0&gt;(); })
-		.Take(5)
-		.CollectArray();
+	IterRepeat(42).Enumerate().Map&lt;int&gt;([](const auto&amp; Pair) { return Pair.Get&lt;0&gt;(); }).Take(5).CollectArray();
 </code></pre>
 </details>
 </li>
@@ -1750,10 +1725,7 @@ TIterFilter&lt;Self, typename FUNCTOR&gt; Filter(
 </blockquote>
 <h1 id="example-8"><a class="header" href="#example-8">Example</a></h1>
 <pre><code class="language-cpp">// [0, 2, 4, 6, 8]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10).Filter([](const auto&amp; Value) { return Value % 2 == 0; }).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-6"><a class="header" href="#arguments-6"><strong>Arguments</strong></a></h1>
@@ -1786,21 +1758,20 @@ pasing it to next iterator, returning none means we omit thi value.</p>
 </blockquote>
 <h1 id="example-9"><a class="header" href="#example-9">Example</a></h1>
 <pre><code class="language-cpp">// [0.0, 2.0, 4.0, 6.0, 8.0]
-const TArray&lt;float&gt; I =
-	IterRange(0, 10)
-		.FilterMap&lt;float&gt;(
-			[](const auto&amp; Value)
-			{
-				if (Value % 2 == 0)
-				{
-					return TOptional&lt;float&gt;(static_cast&lt;float&gt;(Value));
-				}
-				else
-				{
-					return TOptional&lt;float&gt;();
-				}
-			})
-		.CollectArray();
+const TArray&lt;float&gt; I = IterRange(0, 10)
+							.FilterMap&lt;float&gt;(
+								[](const auto&amp; Value)
+								{
+									if (Value % 2 == 0)
+									{
+										return TOptional&lt;float&gt;(static_cast&lt;float&gt;(Value));
+									}
+									else
+									{
+										return TOptional&lt;float&gt;();
+									}
+								})
+							.CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-7"><a class="header" href="#arguments-7"><strong>Arguments</strong></a></h1>
@@ -1830,8 +1801,7 @@ TOptional&lt;Item&gt; Find(
 </blockquote>
 <h1 id="example-10"><a class="header" href="#example-10">Example</a></h1>
 <pre><code class="language-cpp">// 5
-const TOptional&lt;int&gt; Result =
-	IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
+const TOptional&lt;int&gt; Result = IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
 </code></pre>
 <hr />
 <h1 id="arguments-8"><a class="header" href="#arguments-8"><strong>Arguments</strong></a></h1>
@@ -1926,10 +1896,7 @@ should comply to this function signature: <code>RESULT(const I::Item&amp; Value)
 <h1 id="example-13"><a class="header" href="#example-13">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
 const TArray&lt;int&gt; P =
-	IterGenerate&lt;TIterRange&lt;int&gt;&gt;([]() { return IterRange(0, 5); })
-		.Take(2)
-		.Flatten&lt;int&gt;()
-		.CollectArray();
+	IterGenerate&lt;TIterRange&lt;int&gt;&gt;([]() { return IterRange(0, 5); }).Take(2).Flatten&lt;int&gt;().CollectArray();
 </code></pre>
 </details>
 </li>
@@ -1959,8 +1926,7 @@ previous iteration, and <code>Value</code> holds curren value yielded by iterato
 </blockquote>
 <h1 id="example-14"><a class="header" href="#example-14">Example</a></h1>
 <pre><code class="language-cpp">// 45
-const int Result = IterRange(0, 10).Fold(
-	0, [](const auto&amp; Accum, const auto&amp; Value) { return Accum + Value; });
+const int Result = IterRange(0, 10).Fold(0, [](const auto&amp; Accum, const auto&amp; Value) { return Accum + Value; });
 </code></pre>
 <hr />
 <h1 id="arguments-10"><a class="header" href="#arguments-10"><strong>Arguments</strong></a></h1>
@@ -2039,28 +2005,21 @@ at which iterator chain stage.</p>
 </blockquote>
 <h1 id="example-16"><a class="header" href="#example-16">Example</a></h1>
 <pre><code class="language-cpp">// [0, 2, 4, 6, 8]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10)
-		.Inspect(
-			[](const auto&amp; Value)
-			{
-				// Prints values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
-				UE_LOG(LogTemp,
-					Warning,
-					TEXT(&quot;Inspected item before: %i&quot;),
-					Value);
-			})
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Inspect(
-			[](const auto&amp; Value)
-			{
-				// Prints values: 0, 2, 4, 6, 8.
-				UE_LOG(LogTemp,
-					Warning,
-					TEXT(&quot;Inspected item after: %i&quot;),
-					Value);
-			})
-		.CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10)
+							   .Inspect(
+								   [](const auto&amp; Value)
+								   {
+									   // Prints values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
+									   UE_LOG(LogTemp, Warning, TEXT(&quot;Inspected item before: %i&quot;), Value);
+								   })
+							   .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+							   .Inspect(
+								   [](const auto&amp; Value)
+								   {
+									   // Prints values: 0, 2, 4, 6, 8.
+									   UE_LOG(LogTemp, Warning, TEXT(&quot;Inspected item after: %i&quot;), Value);
+								   })
+							   .CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-12"><a class="header" href="#arguments-12"><strong>Arguments</strong></a></h1>
@@ -2106,12 +2065,10 @@ TIterMap&lt;typename RESULT, Self, typename FUNCTOR&gt; Map(
 </blockquote>
 <h1 id="example-18"><a class="header" href="#example-18">Example</a></h1>
 <pre><code class="language-cpp">// [0.0, 4.0, 16.0, 36.0, 64.0]
-const TArray&lt;float&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Map&lt;float&gt;([](const auto&amp; Value)
-			{ return static_cast&lt;float&gt;(Value * Value); })
-		.CollectArray();
+const TArray&lt;float&gt; Result = IterRange(0, 10)
+								 .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+								 .Map&lt;float&gt;([](const auto&amp; Value) { return static_cast&lt;float&gt;(Value * Value); })
+								 .CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-13"><a class="header" href="#arguments-13"><strong>Arguments</strong></a></h1>
@@ -2244,8 +2201,7 @@ TIterViews&lt;Self, COUNT&gt; Views();
 const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 	IterRange(0, 5)
 		.Views&lt;2&gt;()
-		.Map&lt;TTuple&lt;int, int&gt;&gt;(
-			[](const auto&amp; View) { return MakeTuple(View[0], View[1]); })
+		.Map&lt;TTuple&lt;int, int&gt;&gt;([](const auto&amp; View) { return MakeTuple(View[0], View[1]); })
 		.CollectArray();
 </code></pre>
 </details>
@@ -2264,8 +2220,7 @@ TIterZip&lt;Self, ITER&gt; Zip(
 at the same time.</p>
 <h1 id="example-23"><a class="header" href="#example-23">Example</a></h1>
 <pre><code class="language-cpp">// [(0, -5), (1, -4), (2, -3), (3, -2), (4, -1)]
-const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
-	IterRange(0, 5).Zip(IterRange(-5, 0)).CollectArray();
+const TArray&lt;TTuple&lt;int, int&gt;&gt; Result = IterRange(0, 5).Zip(IterRange(-5, 0)).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-17"><a class="header" href="#arguments-17"><strong>Arguments</strong></a></h1>
@@ -2309,8 +2264,7 @@ perform more advanced operations.</p>
 
 	// You can do this:
 	auto Signature = FArchetypeSignature();
-	if (const auto Index =
-			Systems.ComponentTypeIndex(UShiaComponent::StaticClass()))
+	if (const auto Index = Systems.ComponentTypeIndex(UShiaComponent::StaticClass()))
 	{
 		Signature.EnableBit(Index.GetValue());
 	}
@@ -3031,8 +2985,7 @@ yield.</p>
 void IterCollectIntoArray(I&amp;&amp; Iterator, TArray&lt;typename I::Item&gt;&amp; Result)
 {
 	const auto SizeHint = Iterator.SizeHint();
-	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue()
-												   : SizeHint.Minimum;
+	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue() : SizeHint.Minimum;
 	Result.Reserve(Result.Num() + Capacity);
 	while (auto QueryItem = Iterator.Next())
 	{
@@ -3083,8 +3036,7 @@ and then follow requested components. So <code>Systems-&gt;Query&lt;A, B, C&gt;(
 iterator will yield given tuple <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code></p>
 </blockquote>
 <h1 id="example-31"><a class="header" href="#example-31">Example</a></h1>
-<pre><code class="language-cpp">	const auto Count =
-		static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
+<pre><code class="language-cpp">	const auto Count = static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
 	const auto Difference = Count - EXPECTED_POPULATION_NUMBER;
 
 	if (Difference &gt; 0)
@@ -3123,8 +3075,7 @@ same type wit iterator that wraps this adapter.</p>
 </blockquote>
 <h1 id="example-32"><a class="header" href="#example-32">Example</a></h1>
 <pre><code class="language-cpp">// [1, 3, 5, 7, 9]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
 </code></pre>
 <pre><code class="language-cpp">template &lt;typename T&gt;
 struct TIterOddAdapter
@@ -3172,8 +3123,7 @@ bool All(
 </blockquote>
 <h1 id="example-33"><a class="header" href="#example-33">Example</a></h1>
 <pre><code class="language-cpp">// false
-const bool Result =
-	IterRange(0, 10).All([](const auto&amp; Value) { return Value &gt; 5; });
+const bool Result = IterRange(0, 10).All([](const auto&amp; Value) { return Value &gt; 5; });
 </code></pre>
 <hr />
 <h1 id="arguments-34"><a class="header" href="#arguments-34"><strong>Arguments</strong></a></h1>
@@ -3203,8 +3153,7 @@ bool Any(
 </blockquote>
 <h1 id="example-34"><a class="header" href="#example-34">Example</a></h1>
 <pre><code class="language-cpp">// true
-const bool Result =
-	IterRange(0, 10).Any([](const auto&amp; Value) { return Value &gt; 5; });
+const bool Result = IterRange(0, 10).Any([](const auto&amp; Value) { return Value &gt; 5; });
 </code></pre>
 <hr />
 <h1 id="arguments-35"><a class="header" href="#arguments-35"><strong>Arguments</strong></a></h1>
@@ -3258,8 +3207,7 @@ with this iterato value type.</p>
 </blockquote>
 <h1 id="example-36"><a class="header" href="#example-36">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4, -5, -4, -3, -2, -1]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 5).Chain(IterRange(-5, 0)).CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 5).Chain(IterRange(-5, 0)).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-36"><a class="header" href="#arguments-36"><strong>Arguments</strong></a></h1>
@@ -3364,12 +3312,11 @@ min/max value with this iterator consumer.</p>
 <h1 id="note-23"><a class="header" href="#note-23">Note</a></h1>
 <blockquote>
 <p><code>FUNCTOR</code> should comply to given function signature: <code>bool(I::Item A, I::Item B)</code> where <code>A</code> holds current value yielded by iterator and <code>B</code> is
-the one that has best &quot;score&quot; s far.</p>
+the one that has best &quot;score&quot; so far.</p>
 </blockquote>
 <h1 id="example-41"><a class="header" href="#example-41">Example</a></h1>
-<pre><code class="language-cpp">// false
-const bool Result =
-	IterRange(0, 10).All([](const auto&amp; Value) { return Value &gt; 5; });
+<pre><code class="language-cpp">// 42
+const int Result = IterRange(0, 42).ComparedBy([](const auto A, const auto B) { return A &gt; B; });
 </code></pre>
 <hr />
 <h1 id="arguments-39"><a class="header" href="#arguments-39"><strong>Arguments</strong></a></h1>
@@ -3413,11 +3360,7 @@ iterator yields tuple o index-value pair.</p>
 <h1 id="example-43"><a class="header" href="#example-43">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4]
 const TArray&lt;int&gt; Result =
-	IterRepeat(42)
-		.Enumerate()
-		.Map&lt;int&gt;([](const auto&amp; Pair) { return Pair.Get&lt;0&gt;(); })
-		.Take(5)
-		.CollectArray();
+	IterRepeat(42).Enumerate().Map&lt;int&gt;([](const auto&amp; Pair) { return Pair.Get&lt;0&gt;(); }).Take(5).CollectArray();
 </code></pre>
 </details>
 </li>
@@ -3438,10 +3381,7 @@ TIterFilter&lt;Self, typename FUNCTOR&gt; Filter(
 </blockquote>
 <h1 id="example-44"><a class="header" href="#example-44">Example</a></h1>
 <pre><code class="language-cpp">// [0, 2, 4, 6, 8]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10).Filter([](const auto&amp; Value) { return Value % 2 == 0; }).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-40"><a class="header" href="#arguments-40"><strong>Arguments</strong></a></h1>
@@ -3474,21 +3414,20 @@ pasing it to next iterator, returning none means we omit thi value.</p>
 </blockquote>
 <h1 id="example-45"><a class="header" href="#example-45">Example</a></h1>
 <pre><code class="language-cpp">// [0.0, 2.0, 4.0, 6.0, 8.0]
-const TArray&lt;float&gt; I =
-	IterRange(0, 10)
-		.FilterMap&lt;float&gt;(
-			[](const auto&amp; Value)
-			{
-				if (Value % 2 == 0)
-				{
-					return TOptional&lt;float&gt;(static_cast&lt;float&gt;(Value));
-				}
-				else
-				{
-					return TOptional&lt;float&gt;();
-				}
-			})
-		.CollectArray();
+const TArray&lt;float&gt; I = IterRange(0, 10)
+							.FilterMap&lt;float&gt;(
+								[](const auto&amp; Value)
+								{
+									if (Value % 2 == 0)
+									{
+										return TOptional&lt;float&gt;(static_cast&lt;float&gt;(Value));
+									}
+									else
+									{
+										return TOptional&lt;float&gt;();
+									}
+								})
+							.CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-41"><a class="header" href="#arguments-41"><strong>Arguments</strong></a></h1>
@@ -3518,8 +3457,7 @@ TOptional&lt;Item&gt; Find(
 </blockquote>
 <h1 id="example-46"><a class="header" href="#example-46">Example</a></h1>
 <pre><code class="language-cpp">// 5
-const TOptional&lt;int&gt; Result =
-	IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
+const TOptional&lt;int&gt; Result = IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
 </code></pre>
 <hr />
 <h1 id="arguments-42"><a class="header" href="#arguments-42"><strong>Arguments</strong></a></h1>
@@ -3614,10 +3552,7 @@ should comply to this function signature: <code>RESULT(const I::Item&amp; Value)
 <h1 id="example-49"><a class="header" href="#example-49">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
 const TArray&lt;int&gt; P =
-	IterGenerate&lt;TIterRange&lt;int&gt;&gt;([]() { return IterRange(0, 5); })
-		.Take(2)
-		.Flatten&lt;int&gt;()
-		.CollectArray();
+	IterGenerate&lt;TIterRange&lt;int&gt;&gt;([]() { return IterRange(0, 5); }).Take(2).Flatten&lt;int&gt;().CollectArray();
 </code></pre>
 </details>
 </li>
@@ -3647,8 +3582,7 @@ previous iteration, and <code>Value</code> holds curren value yielded by iterato
 </blockquote>
 <h1 id="example-50"><a class="header" href="#example-50">Example</a></h1>
 <pre><code class="language-cpp">// 45
-const int Result = IterRange(0, 10).Fold(
-	0, [](const auto&amp; Accum, const auto&amp; Value) { return Accum + Value; });
+const int Result = IterRange(0, 10).Fold(0, [](const auto&amp; Accum, const auto&amp; Value) { return Accum + Value; });
 </code></pre>
 <hr />
 <h1 id="arguments-44"><a class="header" href="#arguments-44"><strong>Arguments</strong></a></h1>
@@ -3727,28 +3661,21 @@ at which iterator chain stage.</p>
 </blockquote>
 <h1 id="example-52"><a class="header" href="#example-52">Example</a></h1>
 <pre><code class="language-cpp">// [0, 2, 4, 6, 8]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10)
-		.Inspect(
-			[](const auto&amp; Value)
-			{
-				// Prints values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
-				UE_LOG(LogTemp,
-					Warning,
-					TEXT(&quot;Inspected item before: %i&quot;),
-					Value);
-			})
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Inspect(
-			[](const auto&amp; Value)
-			{
-				// Prints values: 0, 2, 4, 6, 8.
-				UE_LOG(LogTemp,
-					Warning,
-					TEXT(&quot;Inspected item after: %i&quot;),
-					Value);
-			})
-		.CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10)
+							   .Inspect(
+								   [](const auto&amp; Value)
+								   {
+									   // Prints values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
+									   UE_LOG(LogTemp, Warning, TEXT(&quot;Inspected item before: %i&quot;), Value);
+								   })
+							   .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+							   .Inspect(
+								   [](const auto&amp; Value)
+								   {
+									   // Prints values: 0, 2, 4, 6, 8.
+									   UE_LOG(LogTemp, Warning, TEXT(&quot;Inspected item after: %i&quot;), Value);
+								   })
+							   .CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-46"><a class="header" href="#arguments-46"><strong>Arguments</strong></a></h1>
@@ -3794,12 +3721,10 @@ TIterMap&lt;typename RESULT, Self, typename FUNCTOR&gt; Map(
 </blockquote>
 <h1 id="example-54"><a class="header" href="#example-54">Example</a></h1>
 <pre><code class="language-cpp">// [0.0, 4.0, 16.0, 36.0, 64.0]
-const TArray&lt;float&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Map&lt;float&gt;([](const auto&amp; Value)
-			{ return static_cast&lt;float&gt;(Value * Value); })
-		.CollectArray();
+const TArray&lt;float&gt; Result = IterRange(0, 10)
+								 .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+								 .Map&lt;float&gt;([](const auto&amp; Value) { return static_cast&lt;float&gt;(Value * Value); })
+								 .CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-47"><a class="header" href="#arguments-47"><strong>Arguments</strong></a></h1>
@@ -3883,8 +3808,7 @@ is really useful for these usecases.</p>
 void IterCollectIntoArray(I&amp;&amp; Iterator, TArray&lt;typename I::Item&gt;&amp; Result)
 {
 	const auto SizeHint = Iterator.SizeHint();
-	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue()
-												   : SizeHint.Minimum;
+	const auto Capacity = SizeHint.Maximum.IsSet() ? SizeHint.Maximum.GetValue() : SizeHint.Minimum;
 	Result.Reserve(Result.Num() + Capacity);
 	while (auto QueryItem = Iterator.Next())
 	{
@@ -3944,8 +3868,7 @@ const int Return = IterRange(0, 10).Sum(0);
 </code></pre>
 <p>This is equivalent of:</p>
 <pre><code class="language-cpp">// 45
-const int Result = IterRange(0, 10).Fold(
-	0, [](const auto&amp; Accum, const auto&amp; Value) { return Accum + Value; });
+const int Result = IterRange(0, 10).Fold(0, [](const auto&amp; Accum, const auto&amp; Value) { return Accum + Value; });
 </code></pre>
 <hr />
 <h1 id="arguments-50"><a class="header" href="#arguments-50"><strong>Arguments</strong></a></h1>
@@ -4026,8 +3949,7 @@ TIterViews&lt;Self, COUNT&gt; Views();
 const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
 	IterRange(0, 5)
 		.Views&lt;2&gt;()
-		.Map&lt;TTuple&lt;int, int&gt;&gt;(
-			[](const auto&amp; View) { return MakeTuple(View[0], View[1]); })
+		.Map&lt;TTuple&lt;int, int&gt;&gt;([](const auto&amp; View) { return MakeTuple(View[0], View[1]); })
 		.CollectArray();
 </code></pre>
 </details>
@@ -4046,8 +3968,7 @@ TIterZip&lt;Self, ITER&gt; Zip(
 at the same time.</p>
 <h1 id="example-62"><a class="header" href="#example-62">Example</a></h1>
 <pre><code class="language-cpp">// [(0, -5), (1, -4), (2, -3), (3, -2), (4, -1)]
-const TArray&lt;TTuple&lt;int, int&gt;&gt; Result =
-	IterRange(0, 5).Zip(IterRange(-5, 0)).CollectArray();
+const TArray&lt;TTuple&lt;int, int&gt;&gt; Result = IterRange(0, 5).Zip(IterRange(-5, 0)).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-53"><a class="header" href="#arguments-53"><strong>Arguments</strong></a></h1>
@@ -4171,8 +4092,7 @@ public:
 	{
 	}
 
-	FShiaTheSecretKeeper(FString InSecret, int InPassword)
-		: Secret(InSecret), Password(InPassword)
+	FShiaTheSecretKeeper(FString InSecret, int InPassword) : Secret(InSecret), Password(InPassword)
 	{
 	}
 
@@ -5108,7 +5028,7 @@ registering them manually - one less boilerplate to make on user side.</p>
 <hr />
 <p>Systems reflection singleton.</p>
 <p>Stores application-wide database of named system functions to be used by
-[<code>class: ULambdaSystem</code>].</p>
+<a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/ULambdaSystem.html"><strong><code>ULambdaSystem</code></strong></a>.</p>
 <hr />
 <h1 id="methods-9"><a class="header" href="#methods-9"><strong>Methods</strong></a></h1>
 <ul>
@@ -5237,6 +5157,10 @@ virtual int EstimateSizeLeft() const;
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
+<h3 id="meta-specifiers"><a class="header" href="#meta-specifiers">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DevelopmentOnly</strong></li>
+</ul>
 <hr />
 <p>Calculates (usually minimal) number of items this iterator stage can yield.</p>
 </details>
@@ -5254,6 +5178,10 @@ virtual UObject* Next();
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
+<h3 id="meta-specifiers-1"><a class="header" href="#meta-specifiers-1">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DevelopmentOnly</strong></li>
+</ul>
 <hr />
 <p>Performs iteration and returns yielded value.</p>
 <p>Null means no object left to iterate.</p>
@@ -5263,7 +5191,7 @@ virtual UObject* Next();
 <h1 id="nextbranched"><a class="header" href="#nextbranched"><strong><code>NextBranched</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 UObject* NextBranched(
-    EDynamicQueryBranch&amp; Branches
+    EDynamicIteratorNextBranch&amp; Branches
 );
 </code></pre>
 <details>
@@ -5274,9 +5202,10 @@ UObject* NextBranched(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
-<h3 id="meta-specifiers"><a class="header" href="#meta-specifiers">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-2"><a class="header" href="#meta-specifiers-2">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>ExpandEnumAsExecs</strong> = <em>Branches</em></li>
+<li><strong>DevelopmentOnly</strong></li>
 </ul>
 <hr />
 <p>Handy wrapper for <strong><code>Self::Next</code></strong> for use in blueprints, where iteration can branch to <code>yielded</code> and
@@ -5286,7 +5215,7 @@ UObject* NextBranched(
 <ul>
 <li>
 <h2 id="branches"><a class="header" href="#branches"><strong><code>Branches</code></strong></a></h2>
-<pre><code class="language-cpp">EDynamicQueryBranch&amp; Branches
+<pre><code class="language-cpp">EDynamicIteratorNextBranch&amp; Branches
 </code></pre>
 </li>
 </ul>
@@ -5333,8 +5262,7 @@ term.</p>
 	};
 
 	auto Query = Systems.DynamicQuery&lt;UShiaQueryBundle&gt;();
-	auto* Bundle =
-		NewObject&lt;UShiaQueryBundle&gt;(this, UShiaQueryBundle::StaticClass());
+	auto* Bundle = NewObject&lt;UShiaQueryBundle&gt;(this, UShiaQueryBundle::StaticClass());
 	while (Query-&gt;Next(Bundle))
 	{
 		Bundle-&gt;Shia-&gt;JustDoIt(Bundle-&gt;Actor);
@@ -5435,8 +5363,7 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 		});
 }
 </code></pre>
-<pre><code class="language-cpp">Systems.InstallLambdaSystem(
-	BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
+<pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
 </code></pre>
 <hr />
 <h1 id="methods-12"><a class="header" href="#methods-12"><strong>Methods</strong></a></h1>
@@ -5511,6 +5438,10 @@ void OnInit(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
+<h3 id="meta-specifiers-3"><a class="header" href="#meta-specifiers-3">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DevelopmentOnly</strong></li>
+</ul>
 <hr />
 <p>Override to initialize system (setup its internal state).</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystem.html#init"><strong><code>USystem::Init</code></strong></a></p>
@@ -5540,6 +5471,10 @@ void OnRun(
 <li><strong>BlueprintNativeEvent</strong></li>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<h3 id="meta-specifiers-4"><a class="header" href="#meta-specifiers-4">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>DevelopmentOnly</strong></li>
 </ul>
 <hr />
 <p>Override to run system work logic (perform queries on world components
@@ -5602,8 +5537,7 @@ void ULogBirdsNumberChangeSystem::Run(USystemsWorld&amp; Systems)
 		return;
 	}
 
-	const auto Number =
-		static_cast&lt;int&gt;(Systems.Query&lt;UBirdComponent&gt;().Count());
+	const auto Number = static_cast&lt;int&gt;(Systems.Query&lt;UBirdComponent&gt;().Count());
 	const Difference = Number - this-&gt;LastCount;
 	this-&gt;LastCount = Number;
 
@@ -5752,7 +5686,7 @@ void UBoidsMovementSystem::Run(USystemsWorld&amp; Systems)
 <li><strong>Blueprintable</strong></li>
 <li><strong>Abstract</strong></li>
 </ul>
-<h3 id="meta-specifiers-1"><a class="header" href="#meta-specifiers-1">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-5"><a class="header" href="#meta-specifiers-5">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintSpawnableComponent</strong></li>
 </ul>
@@ -6044,7 +5978,7 @@ void Uninstall(
 <li><strong>Blueprintable</strong></li>
 <li><strong>Abstract</strong></li>
 </ul>
-<h3 id="meta-specifiers-2"><a class="header" href="#meta-specifiers-2">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-6"><a class="header" href="#meta-specifiers-6">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintSpawnableComponent</strong></li>
 </ul>
@@ -6173,7 +6107,7 @@ static void AddComponent(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
 </ul>
-<h3 id="meta-specifiers-3"><a class="header" href="#meta-specifiers-3">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-7"><a class="header" href="#meta-specifiers-7">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>WorldContext</strong> = <em>World</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
@@ -6224,7 +6158,7 @@ static void AddComponentEverywhere(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
 </ul>
-<h3 id="meta-specifiers-4"><a class="header" href="#meta-specifiers-4">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-8"><a class="header" href="#meta-specifiers-8">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>WorldContext</strong> = <em>World</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
@@ -6300,7 +6234,7 @@ static UObject* GetResourceRaw(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Resources</em></li>
 </ul>
-<h3 id="meta-specifiers-5"><a class="header" href="#meta-specifiers-5">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-9"><a class="header" href="#meta-specifiers-9">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>WorldContext</strong> = <em>World</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
@@ -6350,7 +6284,7 @@ static USystemsWorld* GetSystemsWorld(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|World</em></li>
 </ul>
-<h3 id="meta-specifiers-6"><a class="header" href="#meta-specifiers-6">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-10"><a class="header" href="#meta-specifiers-10">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>WorldContext</strong> = <em>World</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
@@ -6393,7 +6327,7 @@ static void RemoveComponent(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
 </ul>
-<h3 id="meta-specifiers-7"><a class="header" href="#meta-specifiers-7">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-11"><a class="header" href="#meta-specifiers-11">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>WorldContext</strong> = <em>World</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
@@ -6459,8 +6393,7 @@ void UExampleGameInstance::Init()
 
 				Systems.InstallResource&lt;UShiaSettings&gt;();
 
-				Systems.InstallLambdaSystem(
-					JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
+				Systems.InstallLambdaSystem(JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
 			});
 	}
 }
@@ -6486,16 +6419,12 @@ class EXAMPLE_API AExampleGameMode : public AGameModeBase
 	GENERATED_BODY()
 
 private:
-	virtual void InitGame(const FString&amp; MapName,
-		const FString&amp; Options,
-		FString&amp; ErrorMessage) override;
+	virtual void InitGame(const FString&amp; MapName, const FString&amp; Options, FString&amp; ErrorMessage) override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };
 
-void AExampleGameMode::InitGame(const FString&amp; MapName,
-	const FString&amp; Options,
-	FString&amp; ErrorMessage)
+void AExampleGameMode::InitGame(const FString&amp; MapName, const FString&amp; Options, FString&amp; ErrorMessage)
 {
 	Super::InitGame(MapName, Options, ErrorMessage);
 
@@ -6509,8 +6438,7 @@ void AExampleGameMode::InitGame(const FString&amp; MapName,
 
 				Systems.InstallResource&lt;UShiaSettings&gt;();
 
-				Systems.InstallLambdaSystem(
-					JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
+				Systems.InstallLambdaSystem(JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
 			});
 	}
 }
@@ -6565,7 +6493,7 @@ void BlueprintAcquireSystemsWorld(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Subsystem</em></li>
 </ul>
-<h3 id="meta-specifiers-8"><a class="header" href="#meta-specifiers-8">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-12"><a class="header" href="#meta-specifiers-12">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Acquire Systems World</em></li>
 </ul>
@@ -6632,7 +6560,7 @@ USystemsWorld* GetSystemsWorld(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Subsystem</em></li>
 </ul>
-<h3 id="meta-specifiers-9"><a class="header" href="#meta-specifiers-9">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-13"><a class="header" href="#meta-specifiers-13">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>Displayname</strong> = <em>Get Systems World</em></li>
 </ul>
@@ -6688,7 +6616,7 @@ void ReleaseSystemsWorld(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Subsystem</em></li>
 </ul>
-<h3 id="meta-specifiers-10"><a class="header" href="#meta-specifiers-10">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-14"><a class="header" href="#meta-specifiers-14">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>Displayname</strong> = <em>Release Systems World</em></li>
 </ul>
@@ -6701,16 +6629,12 @@ class EXAMPLE_API AExampleGameMode : public AGameModeBase
 	GENERATED_BODY()
 
 private:
-	virtual void InitGame(const FString&amp; MapName,
-		const FString&amp; Options,
-		FString&amp; ErrorMessage) override;
+	virtual void InitGame(const FString&amp; MapName, const FString&amp; Options, FString&amp; ErrorMessage) override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };
 
-void AExampleGameMode::InitGame(const FString&amp; MapName,
-	const FString&amp; Options,
-	FString&amp; ErrorMessage)
+void AExampleGameMode::InitGame(const FString&amp; MapName, const FString&amp; Options, FString&amp; ErrorMessage)
 {
 	Super::InitGame(MapName, Options, ErrorMessage);
 
@@ -6724,8 +6648,7 @@ void AExampleGameMode::InitGame(const FString&amp; MapName,
 
 				Systems.InstallResource&lt;UShiaSettings&gt;();
 
-				Systems.InstallLambdaSystem(
-					JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
+				Systems.InstallLambdaSystem(JustDoItSystem, FInstallSystemOptions(&quot;JustDoIt&quot;));
 			});
 	}
 }
@@ -6973,7 +6896,7 @@ UActorComponent* ComponentRaw(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
-<h3 id="meta-specifiers-11"><a class="header" href="#meta-specifiers-11">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-15"><a class="header" href="#meta-specifiers-15">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Get Component</em></li>
 </ul>
@@ -7174,8 +7097,7 @@ components (although non-ergonomic for sure):</p>
 
 	// You can do this:
 	auto Signature = FArchetypeSignature();
-	if (const auto Index =
-			Systems.ComponentTypeIndex(UShiaComponent::StaticClass()))
+	if (const auto Index = Systems.ComponentTypeIndex(UShiaComponent::StaticClass()))
 	{
 		Signature.EnableBit(Index.GetValue());
 	}
@@ -7280,8 +7202,7 @@ bool InstallDefaultSystem(
 <h1 id="return-4"><a class="header" href="#return-4">Return</a></h1>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-81"><a class="header" href="#example-81">Example</a></h1>
-<pre><code class="language-cpp">Systems.InstallDefaultSystem(
-	USomeSystem::StaticClass(), FInstallSystemOptions(&quot;Something&quot;));
+<pre><code class="language-cpp">Systems.InstallDefaultSystem(USomeSystem::StaticClass(), FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
 <h1 id="arguments-115"><a class="header" href="#arguments-115"><strong>Arguments</strong></a></h1>
@@ -7337,8 +7258,7 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 		});
 }
 </code></pre>
-<pre><code class="language-cpp">Systems.InstallLambdaSystem(
-	BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
+<pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
 </code></pre>
 <hr />
 <h1 id="arguments-116"><a class="header" href="#arguments-116"><strong>Arguments</strong></a></h1>
@@ -7395,7 +7315,7 @@ bool InstallResourceRaw(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
-<h3 id="meta-specifiers-12"><a class="header" href="#meta-specifiers-12">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-16"><a class="header" href="#meta-specifiers-16">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Install Resource</em></li>
 </ul>
@@ -7407,8 +7327,7 @@ object that has its lifetime managed by other object.</p>
 <h1 id="return-7"><a class="header" href="#return-7">Return</a></h1>
 <p>True if resource was successfully installed (registry is not sealed).</p>
 <h1 id="example-84"><a class="header" href="#example-84">Example</a></h1>
-<pre><code class="language-cpp">Systems.InstallResourceRaw(
-	NewObject&lt;UInventory&gt;(Systems, UInventory::StaticClass()));
+<pre><code class="language-cpp">Systems.InstallResourceRaw(NewObject&lt;UInventory&gt;(Systems, UInventory::StaticClass()));
 </code></pre>
 <hr />
 <h1 id="arguments-117"><a class="header" href="#arguments-117"><strong>Arguments</strong></a></h1>
@@ -7472,7 +7391,7 @@ bool InstallSystemRaw(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
-<h3 id="meta-specifiers-13"><a class="header" href="#meta-specifiers-13">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-17"><a class="header" href="#meta-specifiers-17">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Install System</em></li>
 </ul>
@@ -7491,8 +7410,7 @@ will generate random label from new GUID.</p>
 <p>True if system was successfully installed (registry is not sealed).</p>
 <h1 id="example-86"><a class="header" href="#example-86">Example</a></h1>
 <pre><code class="language-cpp">Systems.InstallSystemRaw(
-	NewObject&lt;USomeSystem&gt;(Systems, USomeSystem::StaticClass()),
-	FInstallSystemOptions(&quot;Something&quot;));
+	NewObject&lt;USomeSystem&gt;(Systems, USomeSystem::StaticClass()), FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
 <h1 id="arguments-119"><a class="header" href="#arguments-119"><strong>Arguments</strong></a></h1>
@@ -7636,8 +7554,7 @@ none of steps above are gonna be performed.</p>
 <p>This method is called automatically for global systems world managed by
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.html"><strong><code>USystemsSubsystem</code></strong></a>, but in case of user managing systems
 world on their own, user can do:</p>
-<pre><code class="language-cpp">	auto* Systems =
-		NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
+<pre><code class="language-cpp">	auto* Systems = NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
 
 	// [Systems world setup...]
 
@@ -7672,8 +7589,7 @@ iterating over actors that do not need to be queried was a priority.</p>
 tuple and then follow requested components. So <code>Systems-&gt;Query&lt;A, B, C&gt;()</code> iterator will yield given tuple <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code></p>
 </blockquote>
 <h1 id="example-87"><a class="header" href="#example-87">Example</a></h1>
-<pre><code class="language-cpp">	const auto Count =
-		static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
+<pre><code class="language-cpp">	const auto Count = static_cast&lt;int&gt;(Systems.Query&lt;UBoidComponent&gt;().Count());
 	const auto Difference = Count - EXPECTED_POPULATION_NUMBER;
 
 	if (Difference &gt; 0)
@@ -7729,7 +7645,7 @@ bool RegisterComponentRaw(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
-<h3 id="meta-specifiers-14"><a class="header" href="#meta-specifiers-14">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-18"><a class="header" href="#meta-specifiers-18">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Register Component</em></li>
 </ul>
@@ -7887,7 +7803,7 @@ UObject* ResourceRaw(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
-<h3 id="meta-specifiers-15"><a class="header" href="#meta-specifiers-15">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-19"><a class="header" href="#meta-specifiers-19">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Get Resource</em></li>
 </ul>
@@ -7943,14 +7859,12 @@ installation i possible, so make sure to install systems world
 components before sealing systems world!</p>
 </blockquote>
 <h1 id="example-93"><a class="header" href="#example-93">Example</a></h1>
-<pre><code class="language-cpp">	auto* Systems =
-		NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
+<pre><code class="language-cpp">	auto* Systems = NewObject&lt;USystemsWorld&gt;(this, USystemsWorld::StaticClass());
 	if (IsValid(Systems) == false)
 	{
 		Systems-&gt;InstallResource&lt;USomeResource&gt;();
 
-		Systems-&gt;InstallLambdaSystem(
-			SomeSystem, FInstallSystemOptions(&quot;Something&quot;));
+		Systems-&gt;InstallLambdaSystem(SomeSystem, FInstallSystemOptions(&quot;Something&quot;));
 
 		Systems-&gt;SealAndInitialize();
 	}
@@ -7972,9 +7886,10 @@ UDynamicQuery* SpawnQuery(
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
 </ul>
-<h3 id="meta-specifiers-16"><a class="header" href="#meta-specifiers-16">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-20"><a class="header" href="#meta-specifiers-20">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>DisplayName</strong> = <em>Query</em></li>
+<li><strong>DevelopmentOnly</strong></li>
 </ul>
 <hr />
 <p>Acquires lazy-iterator to dynamically queried actor components.</p>
@@ -8011,18 +7926,15 @@ are not required for query to access - useful when user do not require
 any data of given components.</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html"><strong><code>TTaggedQuery</code></strong></a></p>
 <h1 id="example-94"><a class="header" href="#example-94">Example</a></h1>
-<pre><code class="language-cpp">	Systems.TaggedQuery&lt;UVelocityComponent&gt;()
-		.With&lt;UBoidComponent&gt;()
-		.Iter()
-		.ForEach(
-			[](auto&amp; QueryItem)
-			{
-				auto* Actor = QueryItem.Get&lt;0&gt;();
-				const auto* Velocity = QueryItem.Get&lt;1&gt;();
-				const auto Position = Actor-&gt;GetActorLocation();
+<pre><code class="language-cpp">	Systems.TaggedQuery&lt;UVelocityComponent&gt;().With&lt;UBoidComponent&gt;().Iter().ForEach(
+		[](auto&amp; QueryItem)
+		{
+			auto* Actor = QueryItem.Get&lt;0&gt;();
+			const auto* Velocity = QueryItem.Get&lt;1&gt;();
+			const auto Position = Actor-&gt;GetActorLocation();
 
-				Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DletaTime);
-			});
+			Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DletaTime);
+		});
 </code></pre>
 </details>
 </li>
@@ -8055,9 +7967,7 @@ iterator to limit number of iterations in loop or for collecting values it
 yields.</p>
 <h1 id="example-95"><a class="header" href="#example-95">Example</a></h1>
 <pre><code class="language-cpp">// [?, ?, ?, ?, ?]
-const TArray&lt;int&gt; Result = IterGenerate&lt;int&gt;([]() { return FMath::Rand(); })
-							   .Take(5)
-							   .CollectArray();
+const TArray&lt;int&gt; Result = IterGenerate&lt;int&gt;([]() { return FMath::Rand(); }).Take(5).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-127"><a class="header" href="#arguments-127"><strong>Arguments</strong></a></h1>
@@ -8084,10 +7994,7 @@ TIterOnce&lt;T&gt; IterOnce(
 multiple iterators.</p>
 <h1 id="example-96"><a class="header" href="#example-96">Example</a></h1>
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4, -1, 5, 6, 7, 8, 9]
-const TArray&lt;int&gt; Result = IterRange(0, 5)
-							   .Chain(IterOnce(-1))
-							   .Chain(IterRange(5, 10))
-							   .CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 5).Chain(IterOnce(-1)).Chain(IterRange(5, 10)).CollectArray();
 </code></pre>
 <hr />
 <h1 id="arguments-128"><a class="header" href="#arguments-128"><strong>Arguments</strong></a></h1>
@@ -8232,27 +8139,37 @@ const TArray&lt;int&gt; ResultB = IterStd(ResultA).CollectArray();
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
             </nav>
 
         </div>
 
+
+
+
         <script>
             window.playground_copyable = true;
         </script>
+
+
         <script src="elasticlunr.min.js"></script>
         <script src="mark.min.js"></script>
         <script src="searcher.js"></script>
+
         <script src="clipboard.min.js"></script>
         <script src="highlight.js"></script>
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
         <script>
         window.addEventListener('load', function() {
             MathJax.Hub.Register.StartupHook('End', function() {
@@ -8260,5 +8177,6 @@ const TArray&lt;int&gt; ResultB = IterStd(ResultA).CollectArray();
             });
         });
         </script>
+
     </body>
 </html>

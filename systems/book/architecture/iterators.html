@@ -4,7 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Iterators - Systems - Modular and scalable game architecture for orthogonal game logic</title>
+
+
         <!-- Custom HTML head -->
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -15,15 +18,18 @@
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
         <link rel="stylesheet" href="../../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="../../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../highlight.css">
         <link rel="stylesheet" href="../../tomorrow-night.css">
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -111,6 +117,7 @@
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -124,6 +131,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -152,12 +160,10 @@
 ergonomic processing of collections and procedural generators. Lazy iterators are lazy
 because on their own they do not yield any values until consumed.</p>
 <pre><code class="language-cpp">// [0.0, 4.0, 16.0, 36.0, 64.0]
-const TArray&lt;float&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Map&lt;float&gt;([](const auto&amp; Value)
-			{ return static_cast&lt;float&gt;(Value * Value); })
-		.CollectArray();
+const TArray&lt;float&gt; Result = IterRange(0, 10)
+								 .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+								 .Map&lt;float&gt;([](const auto&amp; Value) { return static_cast&lt;float&gt;(Value * Value); })
+								 .CollectArray();
 </code></pre>
 <p>This lazyness allows us to produce more elaborated processing over data without making
 unnecessary caching between iteration stages, and that also makes iteration code cleaner
@@ -169,8 +175,7 @@ and easier to reason about.</p>
 <p>Consumers are final iterators that consume yielded values and produce some result out
 of it, usually single value.</p>
 <pre><code class="language-cpp">// 5
-const TOptional&lt;int&gt; Result =
-	IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
+const TOptional&lt;int&gt; Result = IterRange(0, 10).Find([](const auto&amp; Value) { return Value &gt;= 5; });
 </code></pre>
 <ul>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/structs/TQuery.html#count"><strong><code>TQuery::Count</code></strong></a></li>
@@ -208,12 +213,10 @@ all yielded values into commonly used collections such as <code>TArray</code>, <
 <p>Converters are stages of iteration that converts values yielded by previous iteration
 stages into some new values.</p>
 <pre><code class="language-cpp">// [0.0, 4.0, 16.0, 36.0, 64.0]
-const TArray&lt;float&gt; Result =
-	IterRange(0, 10)
-		.Filter([](const auto&amp; Value) { return Value % 2 == 0; })
-		.Map&lt;float&gt;([](const auto&amp; Value)
-			{ return static_cast&lt;float&gt;(Value * Value); })
-		.CollectArray();
+const TArray&lt;float&gt; Result = IterRange(0, 10)
+								 .Filter([](const auto&amp; Value) { return Value % 2 == 0; })
+								 .Map&lt;float&gt;([](const auto&amp; Value) { return static_cast&lt;float&gt;(Value * Value); })
+								 .CollectArray();
 </code></pre>
 <ul>
 <li><a href="/Unreal-Systems-Architecture/systems/reference/structs/TQuery.html#adapt"><strong><code>TQuery::Adapt</code></strong></a></li>
@@ -355,8 +358,7 @@ public:
 };
 </code></pre>
 <pre><code class="language-cpp">// [1, 3, 5, 7, 9]
-const TArray&lt;int&gt; Result =
-	IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
+const TArray&lt;int&gt; Result = IterRange(0, 10).Adapt(TIterOddAdapter&lt;int&gt;()).CollectArray();
 </code></pre>
 <p>They differ from regular iterators in a way that they do not need type aliases and their <code>Next</code> and
 <code>SizeHint</code> methods require reference to previous stage iterator so they both consume and process its
@@ -371,9 +373,11 @@ yielded values.</p>
                             <a rel="prev" href="../../book/architecture/subsystem.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="../../book/architecture/channels.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -383,6 +387,7 @@ yielded values.</p>
                     <a rel="prev" href="../../book/architecture/subsystem.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="../../book/architecture/channels.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -390,16 +395,24 @@ yielded values.</p>
 
         </div>
 
+
+
+
         <script>
             window.playground_copyable = true;
         </script>
+
+
         <script src="../../elasticlunr.min.js"></script>
         <script src="../../mark.min.js"></script>
         <script src="../../searcher.js"></script>
+
         <script src="../../clipboard.min.js"></script>
         <script src="../../highlight.js"></script>
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
     </body>
 </html>
