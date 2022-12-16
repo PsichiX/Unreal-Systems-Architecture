@@ -12,6 +12,6 @@ class TUTORIAL_API UTutorialMovementComponent : public USystemsActorComponent
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector2D Value = FVector2D(0);
 };

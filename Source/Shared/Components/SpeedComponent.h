@@ -12,6 +12,6 @@ class SHARED_API USpeedComponent : public USystemsActorComponent
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Value = 100;
 };

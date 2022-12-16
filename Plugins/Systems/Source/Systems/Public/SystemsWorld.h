@@ -666,7 +666,7 @@ public:
 	/// [`class: USystems::Query`]().
 	///
 	/// See [`class: UDynamicQuery`]()
-	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Query"))
+	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Query", DevelopmentOnly))
 	UDynamicQuery* SpawnQuery(const UClass* BundleType);
 
 	/// Acquires lazy-iterator over all registered actors.

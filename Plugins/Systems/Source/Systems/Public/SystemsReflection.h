@@ -10,7 +10,7 @@
 /// Systems reflection singleton.
 ///
 /// Stores application-wide database of named system functions to be used by
-/// [`class: ULambdaSystem`].
+/// [`class: ULambdaSystem`]().
 class SYSTEMS_API FSystemsReflection
 {
 public:

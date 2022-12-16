@@ -240,11 +240,11 @@
 /// # Note
 /// > `FUNCTOR` should comply to given function signature: `bool(I::Item A,
 /// I::Item B)` where `A` holds current value yielded by iterator and `B` is
-/// the one that has best "score" s far.
+/// the one that has best "score" so far.
 ///
 /// # Example
 /// ```snippet
-/// iter_all
+/// iter_compared_by
 /// ```
 //// [proxy: iter_compared_by, iter, iter_consumers_base, iter_consumers]
 //// template <typename FUNCTOR>

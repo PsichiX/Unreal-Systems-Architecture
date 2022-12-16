@@ -91,14 +91,14 @@ public:
 	/// Override to initialize system (setup its internal state).
 	///
 	/// See [`class: USystem::Init`]()
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Systems)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Systems, Meta = (DevelopmentOnly))
 	void OnInit(USystemsWorld* Systems);
 
 	/// Override to run system work logic (perform queries on world components
 	/// and resources).
 	///
 	/// See [`class: USystem::Run`]()
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Systems)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Systems, Meta = (DevelopmentOnly))
 	void OnRun(USystemsWorld* Systems);
 
 private:
