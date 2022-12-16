@@ -10,55 +10,28 @@ do
     esac
 done
 
+function package {
+    local NAME="$1"
+    local DIR="$2"
+
+    cp -rf "$SCRIPT_DIR/../Plugins/$NAME" "$SCRIPT_DIR/../Distribution/$DIR"
+    if [ $BINARIES = 1 ]
+    then
+        find "$SCRIPT_DIR/../Distribution/$DIR/Binaries" -name "*.pdb" -type f -delete
+    else
+        rm -rf "$SCRIPT_DIR/../Distribution/$DIR/Binaries"
+    fi
+    rm -rf "$SCRIPT_DIR/../Distribution/$DIR/Intermediate"
+    rm -rf "$SCRIPT_DIR/../Distribution/$DIR/Documentation"
+    "/c/Program Files/7-Zip/7z.exe" a -tzip "$SCRIPT_DIR/../Distribution/$DIR.zip" "$SCRIPT_DIR/../Distribution/$DIR"
+    rm -rf "$SCRIPT_DIR/../Distribution/$DIR"
+}
+
 rm -rf "$SCRIPT_DIR/../Distribution/"
 mkdir "$SCRIPT_DIR/../Distribution/"
 
-cp -rf "$SCRIPT_DIR/../Plugins/Systems" "$SCRIPT_DIR/../Distribution/Systems-Architecture"
-if [ $BINARIES = 0 ]
-then
-    rm -rf "$SCRIPT_DIR/../Distribution/Systems-Architecture/Binaries"
-fi
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Architecture/Intermediate"
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Architecture/Documentation"
-"/c/Program Files/7-Zip/7z.exe" a -tzip "$SCRIPT_DIR/../Distribution/Systems-Architecture.zip" "$SCRIPT_DIR/../Distribution/Systems-Architecture"
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Architecture"
-
-cp -rf "$SCRIPT_DIR/../Plugins/SystemsUnitTests" "$SCRIPT_DIR/../Distribution/Systems-Unit-Tests"
-if [ $BINARIES = 0 ]
-then
-    rm -rf "$SCRIPT_DIR/../Distribution/Systems-Unit-Tests/Binaries"
-fi
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Unit-Tests/Intermediate"
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Unit-Tests/Documentation"
-"/c/Program Files/7-Zip/7z.exe" a -tzip "$SCRIPT_DIR/../Distribution/Systems-Unit-Tests.zip" "$SCRIPT_DIR/../Distribution/Systems-Unit-Tests"
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Unit-Tests"
-
-cp -rf "$SCRIPT_DIR/../Plugins/SystemsSpatialQuery" "$SCRIPT_DIR/../Distribution/Systems-Spatial-Query"
-if [ $BINARIES = 0 ]
-then
-    rm -rf "$SCRIPT_DIR/../Distribution/Systems-Spatial-Query/Binaries"
-fi
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Spatial-Query/Intermediate"
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Spatial-Query/Documentation"
-"/c/Program Files/7-Zip/7z.exe" a -tzip "$SCRIPT_DIR/../Distribution/Systems-Spatial-Query.zip" "$SCRIPT_DIR/../Distribution/Systems-Spatial-Query"
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Spatial-Query"
-
-cp -rf "$SCRIPT_DIR/../Plugins/SystemsQueryDebugger" "$SCRIPT_DIR/../Distribution/Systems-Query-Debugger"
-if [ $BINARIES = 0 ]
-then
-    rm -rf "$SCRIPT_DIR/../Distribution/Systems-Query-Debugger/Binaries"
-fi
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Query-Debugger/Intermediate"
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Query-Debugger/Documentation"
-"/c/Program Files/7-Zip/7z.exe" a -tzip "$SCRIPT_DIR/../Distribution/Systems-Query-Debugger.zip" "$SCRIPT_DIR/../Distribution/Systems-Query-Debugger"
-rm -rf "$SCRIPT_DIR/../Distribution/Systems-Query-Debugger"
-
-cp -rf "$SCRIPT_DIR/../Plugins/ReactiveUserInterfaceSystems" "$SCRIPT_DIR/../Distribution/Reactive-UI-Systems"
-if [ $BINARIES = 0 ]
-then
-    rm -rf "$SCRIPT_DIR/../Distribution/Reactive-UI-Systems/Binaries"
-fi
-rm -rf "$SCRIPT_DIR/../Distribution/Reactive-UI-Systems/Intermediate"
-rm -rf "$SCRIPT_DIR/../Distribution/Reactive-UI-Systems/Documentation"
-"/c/Program Files/7-Zip/7z.exe" a -tzip "$SCRIPT_DIR/../Distribution/Reactive-UI-Systems.zip" "$SCRIPT_DIR/../Distribution/Reactive-UI-Systems"
-rm -rf "$SCRIPT_DIR/../Distribution/Reactive-UI-Systems"
+package "Systems" "Systems-Architecture"
+package "SystemsUnitTests" "Systems-Unit-Tests"
+package "SystemsSpatialQuery" "Systems-Spatial-Query"
+package "SystemsQueryDebugger" "Systems-Query-Debugger"
+package "ReactiveUserInterfaceSystems" "Reactive-UI-Systems"
