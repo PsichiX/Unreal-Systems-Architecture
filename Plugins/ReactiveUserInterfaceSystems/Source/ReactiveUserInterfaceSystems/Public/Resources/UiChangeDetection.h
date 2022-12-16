@@ -11,7 +11,11 @@ class USystemsWorld;
 DECLARE_MULTICAST_DELEGATE_OneParam(FSystemsWorldChangedDelegate,
 	USystemsWorld&);
 
-USTRUCT()
+DECLARE_DYNAMIC_DELEGATE_OneParam(FSystemsWorldChangedEvent,
+	USystemsWorld*,
+	Systems);
+
+USTRUCT(BlueprintType)
 struct REACTIVEUSERINTERFACESYSTEMS_API FUiChangeSignature
 {
 	GENERATED_BODY()
@@ -86,6 +90,11 @@ public:
 		}
 	}
 
+	UFUNCTION(BlueprintCallable, Meta = (DisplayName = "Subscribe"))
+	void SubscribeDynamic(const FUiChangeSignature& Signature,
+		FSystemsWorldChangedEvent Callback,
+		bool bForcedInitializationCall = true);
+
 	template <class T>
 	void Unsubscribe(const FUiChangeSignature& Signature, T* Receiver)
 	{
@@ -96,6 +105,13 @@ public:
 		}
 	}
 
+	UFUNCTION(BlueprintCallable, Meta = (DisplayName = "Unsubscribe"))
+	void UnsubscribeDynamic(const FUiChangeSignature& Signature,
+		UObject* Receiver)
+	{
+		Unsubscribe(Signature, Receiver);
+	}
+
 	template <class T>
 	void UnsubscribeAll(T* Receiver)
 	{
@@ -103,6 +119,12 @@ public:
 		{
 			Pair.Value.RemoveAll(Receiver);
 		}
+	}
+
+	UFUNCTION(BlueprintCallable, Meta = (DisplayName = "Unsubscribe All"))
+	void UnsubscribeAllDynamic(UObject* Receiver)
+	{
+		UnsubscribeAll(Receiver);
 	}
 
 private:

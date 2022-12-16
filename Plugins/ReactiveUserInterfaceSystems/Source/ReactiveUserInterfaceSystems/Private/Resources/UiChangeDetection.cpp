@@ -78,6 +78,30 @@ uint32 GetTypeHash(const FUiChangeSignature& Signature)
 	return FCrc::MemCrc32(&Signature, sizeof(FUiChangeSignature));
 }
 
+void UUiChangeDetection::SubscribeDynamic(const FUiChangeSignature& Signature,
+	FSystemsWorldChangedEvent Callback,
+	bool bForcedInitializationCall)
+{
+	auto* Found = this->Events.Find(Signature);
+	if (Found != nullptr)
+	{
+		Found->AddLambda(
+			[=](auto& Systems) { Callback.ExecuteIfBound(&Systems); });
+	}
+	else
+	{
+		auto Event = FSystemsWorldChangedDelegate();
+		Event.AddLambda(
+			[=](auto& Systems) { Callback.ExecuteIfBound(&Systems); });
+		this->Events.Add(Signature, Event);
+	}
+	if (bForcedInitializationCall)
+	{
+		this->InitializationEvents.AddLambda(
+			[=](auto& Systems) { Callback.ExecuteIfBound(&Systems); });
+	}
+}
+
 void UUiChangeDetection::BroadcastChanges(const FUiChangeSignature& Signature,
 	USystemsWorld& Systems)
 {

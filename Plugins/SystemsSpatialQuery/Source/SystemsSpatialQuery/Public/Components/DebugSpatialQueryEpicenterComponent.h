@@ -23,12 +23,12 @@ class SYSTEMSSPATIALQUERY_API UDebugSpatialQueryEpicenterComponent : public USys
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EDebugSpatialQueryEpicenterMode Mode = EDebugSpatialQueryEpicenterMode::None;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Radius = 100.0;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector Extents = FVector(100.0);
 };

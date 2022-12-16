@@ -350,7 +350,7 @@ public:
 	/// ```snippet
 	/// systems_world_resource_raw
 	/// ```
-	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Get Resource"))
+	UFUNCTION(BlueprintPure, Category = Systems, Meta = (DisplayName = "Get Resource", DeterminesOutputType = "Type"))
 	UObject* ResourceRaw(
 		/// Resource class.
 		const UClass* Type);
@@ -537,12 +537,12 @@ public:
 	/// ```snippet
 	/// systems_world_component_raw
 	/// ```
-	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DisplayName = "Get Component"))
+	UFUNCTION(BlueprintPure, Category = Systems, Meta = (DisplayName = "Get Component", DeterminesOutputType = "Type"))
 	UActorComponent* ComponentRaw(
 		/// Actor owning given component.
 		AActor* Actor,
 		/// Component class.
-		const UClass* Type);
+		TSubclassOf<UActorComponent> Type);
 
 	/// Tries to get pointer to registered actor component.
 	///

@@ -265,7 +265,7 @@ bool USystemsWorld::ComponentsDidChangedRaw(const FArchetypeSignature& Signature
 	return this->CachedLastComponentsChanged.ContainsAny(Signature);
 }
 
-UActorComponent* USystemsWorld::ComponentRaw(AActor* Actor, const UClass* Type)
+UActorComponent* USystemsWorld::ComponentRaw(AActor* Actor, TSubclassOf<UActorComponent> Type)
 {
 	for (auto& Pair : this->Archetypes)
 	{
