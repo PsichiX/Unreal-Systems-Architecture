@@ -6096,7 +6096,7 @@ components.</p>
 static void AddComponent(
     UActorComponent* Component,
     const TSet&lt;FName&gt;&amp; SystemsWorlds,
-    UWorld* World
+    UObject* WorldContext
 );
 </code></pre>
 <details>
@@ -6109,7 +6109,7 @@ static void AddComponent(
 </ul>
 <h3 id="meta-specifiers-7"><a class="header" href="#meta-specifiers-7">Meta Specifiers:</a></h3>
 <ul>
-<li><strong>WorldContext</strong> = <em>World</em></li>
+<li><strong>WorldContext</strong> = <em>WorldContext</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
 </ul>
 <hr />
@@ -6134,8 +6134,8 @@ components to make them auto added to global systems worlds on
 into.</p>
 </li>
 <li>
-<h2 id="world-3"><a class="header" href="#world-3"><strong><code>World</code></strong></a></h2>
-<pre><code class="language-cpp">UWorld* World
+<h2 id="worldcontext"><a class="header" href="#worldcontext"><strong><code>WorldContext</code></strong></a></h2>
+<pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>
 </li>
@@ -6147,7 +6147,7 @@ into.</p>
 <pre><code class="language-cpp">public:
 static void AddComponentEverywhere(
     UActorComponent* Component,
-    UWorld* World
+    UObject* WorldContext
 );
 </code></pre>
 <details>
@@ -6160,7 +6160,7 @@ static void AddComponentEverywhere(
 </ul>
 <h3 id="meta-specifiers-8"><a class="header" href="#meta-specifiers-8">Meta Specifiers:</a></h3>
 <ul>
-<li><strong>WorldContext</strong> = <em>World</em></li>
+<li><strong>WorldContext</strong> = <em>WorldContext</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
 </ul>
 <hr />
@@ -6178,8 +6178,8 @@ components to make them auto added to global systems worlds on
 <p>Actor component to add to global systems world.</p>
 </li>
 <li>
-<h2 id="world-4"><a class="header" href="#world-4"><strong><code>World</code></strong></a></h2>
-<pre><code class="language-cpp">UWorld* World
+<h2 id="worldcontext-1"><a class="header" href="#worldcontext-1"><strong><code>WorldContext</code></strong></a></h2>
+<pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>
 </li>
@@ -6192,7 +6192,7 @@ components to make them auto added to global systems worlds on
 template &lt;class T&gt;
 static T* GetResource(
     FName Id,
-    UWorld* World
+    UObject* WorldContext
 );
 </code></pre>
 <details>
@@ -6209,8 +6209,8 @@ static T* GetResource(
 <p>Systems world ID.</p>
 </li>
 <li>
-<h2 id="world-5"><a class="header" href="#world-5"><strong><code>World</code></strong></a></h2>
-<pre><code class="language-cpp">UWorld* World
+<h2 id="worldcontext-2"><a class="header" href="#worldcontext-2"><strong><code>WorldContext</code></strong></a></h2>
+<pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>
 </li>
@@ -6223,7 +6223,7 @@ static T* GetResource(
 static UObject* GetResourceRaw(
     FName Id,
     const UClass* Type,
-    UWorld* World
+    UObject* WorldContext
 );
 </code></pre>
 <details>
@@ -6231,14 +6231,15 @@ static UObject* GetResourceRaw(
 <p><strong><em>Reflection-enabled</em></strong></p>
 <h3 id="specifiers-41"><a class="header" href="#specifiers-41">Specifiers:</a></h3>
 <ul>
-<li><strong>BlueprintCallable</strong></li>
+<li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems|Resources</em></li>
 </ul>
 <h3 id="meta-specifiers-9"><a class="header" href="#meta-specifiers-9">Meta Specifiers:</a></h3>
 <ul>
-<li><strong>WorldContext</strong> = <em>World</em></li>
+<li><strong>WorldContext</strong> = <em>WorldContext</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
 <li><strong>DisplayName</strong> = <em>Get Resource</em></li>
+<li><strong>DeterminesOutputType</strong> = <em>Type</em></li>
 </ul>
 <hr />
 <p>Gets resource from globally registered systems world by its label.</p>
@@ -6260,8 +6261,8 @@ static UObject* GetResourceRaw(
 <p>Resource type user wants to get from global systems world.</p>
 </li>
 <li>
-<h2 id="world-6"><a class="header" href="#world-6"><strong><code>World</code></strong></a></h2>
-<pre><code class="language-cpp">UWorld* World
+<h2 id="worldcontext-3"><a class="header" href="#worldcontext-3"><strong><code>WorldContext</code></strong></a></h2>
+<pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>
 </li>
@@ -6273,7 +6274,7 @@ static UObject* GetResourceRaw(
 <pre><code class="language-cpp">public:
 static USystemsWorld* GetSystemsWorld(
     FName Id,
-    UWorld* World
+    UObject* WorldContext
 );
 </code></pre>
 <details>
@@ -6281,12 +6282,12 @@ static USystemsWorld* GetSystemsWorld(
 <p><strong><em>Reflection-enabled</em></strong></p>
 <h3 id="specifiers-42"><a class="header" href="#specifiers-42">Specifiers:</a></h3>
 <ul>
-<li><strong>BlueprintCallable</strong></li>
+<li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems|World</em></li>
 </ul>
 <h3 id="meta-specifiers-10"><a class="header" href="#meta-specifiers-10">Meta Specifiers:</a></h3>
 <ul>
-<li><strong>WorldContext</strong> = <em>World</em></li>
+<li><strong>WorldContext</strong> = <em>WorldContext</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
 </ul>
 <hr />
@@ -6303,8 +6304,8 @@ is no systems world provided into the scope.</p>
 <p>Systems world ID.</p>
 </li>
 <li>
-<h2 id="world-7"><a class="header" href="#world-7"><strong><code>World</code></strong></a></h2>
-<pre><code class="language-cpp">UWorld* World
+<h2 id="worldcontext-4"><a class="header" href="#worldcontext-4"><strong><code>WorldContext</code></strong></a></h2>
+<pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>
 </li>
@@ -6316,7 +6317,7 @@ is no systems world provided into the scope.</p>
 <pre><code class="language-cpp">public:
 static void RemoveComponent(
     UActorComponent* Component,
-    UWorld* World
+    UObject* WorldContext
 );
 </code></pre>
 <details>
@@ -6329,7 +6330,7 @@ static void RemoveComponent(
 </ul>
 <h3 id="meta-specifiers-11"><a class="header" href="#meta-specifiers-11">Meta Specifiers:</a></h3>
 <ul>
-<li><strong>WorldContext</strong> = <em>World</em></li>
+<li><strong>WorldContext</strong> = <em>WorldContext</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
 </ul>
 <hr />
@@ -6347,8 +6348,8 @@ components to make them auto removed from global systems worlds on
 <p>Actor component to remove from global systems world.</p>
 </li>
 <li>
-<h2 id="world-8"><a class="header" href="#world-8"><strong><code>World</code></strong></a></h2>
-<pre><code class="language-cpp">UWorld* World
+<h2 id="worldcontext-5"><a class="header" href="#worldcontext-5"><strong><code>WorldContext</code></strong></a></h2>
+<pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>
 </li>
@@ -6537,7 +6538,7 @@ static USystemsSubsystem* Get(
 <h1 id="arguments-101"><a class="header" href="#arguments-101"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="world-9"><a class="header" href="#world-9"><strong><code>World</code></strong></a></h2>
+<h2 id="world-3"><a class="header" href="#world-3"><strong><code>World</code></strong></a></h2>
 <pre><code class="language-cpp">UWorld* World
 </code></pre>
 <p>World context object.</p>
