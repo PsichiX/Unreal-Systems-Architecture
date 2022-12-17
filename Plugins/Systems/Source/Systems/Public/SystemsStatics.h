@@ -29,6 +29,26 @@ public:
 		/// World context object.
 		UObject* WorldContext);
 
+	/// Gets actor component from globally registered systems world by its label.
+	///
+	/// This is a handy shortcut for [`class: Self::GetSystemsWorld`]() and then
+	/// [`class: USystemsWorld::ComponentRaw`]() on it.
+	UFUNCTION(BlueprintPure,
+		Category = "Systems|Components",
+		Meta = (WorldContext = "WorldContext",
+			UnsafeDuringActorConstruction = "true",
+			DisplayName = "Get Component",
+			DeterminesOutputType = "Type"))
+	static UActorComponent* GetComponentRaw(
+		/// Systems world ID.
+		FName Id,
+		/// Actor to search in.
+		AActor* Actor,
+		/// Type of component to search for.
+		const TSubclassOf<UActorComponent>& Type,
+		/// World context object.
+		UObject* WorldContext);
+
 	/// Tries to add component to specified global systems worlds.
 	///
 	/// Useful when creating proxy components that inherits from engine
@@ -77,7 +97,7 @@ public:
 	/// Gets resource from globally registered systems world by its label.
 	///
 	/// This is a handy shortcut for [`class: Self::GetSystemsWorld`]() and then
-	/// [`class: USystemsWorld::GetResourceRaw`]() on it.
+	/// [`class: USystemsWorld::ResourceRaw`]() on it.
 	UFUNCTION(BlueprintPure,
 		Category = "Systems|Resources",
 		Meta = (WorldContext = "WorldContext",
@@ -94,7 +114,7 @@ public:
 
 	/// Gets resource from globally registered systems world by its label.
 	///
-	/// This is a handy template shortcut for [`class: Self::GetResourceRaw`]().
+	/// This is a handy template shortcut for [`class: Self::ResourceRaw`]().
 	template <class T>
 	static T* GetResource(
 		/// Systems world ID.

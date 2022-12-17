@@ -14,6 +14,19 @@ USystemsWorld* USystemsStatics::GetSystemsWorld(FName Id, UObject* WorldContext)
 	return IsValid(Subsystem) ? Subsystem->GetSystemsWorld(Id) : nullptr;
 }
 
+UActorComponent* USystemsStatics::GetComponentRaw(FName Id,
+	AActor* Actor,
+	const TSubclassOf<UActorComponent>& Type,
+	UObject* WorldContext)
+{
+	if (IsValid(WorldContext) == false)
+	{
+		return nullptr;
+	}
+	auto* Systems = ThisClass::GetSystemsWorld(Id, WorldContext->GetWorld());
+	return IsValid(Systems) ? Systems->ComponentRaw(Actor, Type.Get()) : nullptr;
+}
+
 void USystemsStatics::AddComponent(UActorComponent* Component, const TSet<FName>& SystemsWorlds, UObject* WorldContext)
 {
 	if (IsValid(WorldContext) == false)

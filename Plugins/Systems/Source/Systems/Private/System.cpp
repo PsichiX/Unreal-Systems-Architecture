@@ -12,13 +12,22 @@ void UScriptableSystem::Init(USystemsWorld& Systems)
 	OnInit(&Systems);
 }
 
-void UScriptableSystem::OnRun_Implementation(USystemsWorld* Systems)
+void UScriptableSystem::OnRun_Implementation(USystemsWorld* Systems, float DeltaSeconds)
 {
 }
 
 void UScriptableSystem::Run(USystemsWorld& Systems)
 {
-	OnRun(&Systems);
+	OnRun(&Systems, GetWorld()->GetDeltaSeconds());
+}
+
+AActor* UScriptableSystem::SpawnActorFromClass(TSubclassOf<AActor> Class,
+	const FTransform& SpawnTransform,
+	AActor* Owner)
+{
+	FActorSpawnParameters Parameters = {};
+	Parameters.Owner = Owner;
+	return GetWorld()->SpawnActor<AActor>(Class.Get(), SpawnTransform, Parameters);
 }
 
 void ULambdaSystem::Bind(TFunction<ThisClass::FunctorType>&& Func)

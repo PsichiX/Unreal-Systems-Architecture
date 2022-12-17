@@ -99,7 +99,10 @@ public:
 	///
 	/// See [`class: USystem::Run`]()
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Systems, Meta = (DevelopmentOnly))
-	void OnRun(USystemsWorld* Systems);
+	void OnRun(USystemsWorld* Systems, float DeltaSeconds);
+
+	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (DeterminesOutputType = "Class", DevelopmentOnly))
+	AActor* SpawnActorFromClass(TSubclassOf<AActor> Class, const FTransform& SpawnTransform, AActor* Owner = nullptr);
 
 private:
 	virtual void Init(USystemsWorld& Systems) override;
