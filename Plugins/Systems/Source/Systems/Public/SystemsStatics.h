@@ -20,14 +20,14 @@ public:
 	///
 	/// Useful in places where we need to perform systems qorld query, but there
 	/// is no systems world provided into the scope.
-	UFUNCTION(BlueprintCallable,
+	UFUNCTION(BlueprintPure,
 		Category = "Systems|World",
-		Meta = (WorldContext = "World", UnsafeDuringActorConstruction = "true"))
+		Meta = (WorldContext = "WorldContext", UnsafeDuringActorConstruction = "true"))
 	static USystemsWorld* GetSystemsWorld(
 		/// Systems world ID.
 		FName Id,
 		/// World context object.
-		UWorld* World);
+		UObject* WorldContext);
 
 	/// Tries to add component to specified global systems worlds.
 	///
@@ -36,7 +36,7 @@ public:
 	/// `BeginPlay`.
 	UFUNCTION(BlueprintCallable,
 		Category = "Systems|Components",
-		Meta = (WorldContext = "World", UnsafeDuringActorConstruction = "true"))
+		Meta = (WorldContext = "WorldContext", UnsafeDuringActorConstruction = "true"))
 	static void AddComponent(
 		/// Actor component to add to global systems world.
 		UActorComponent* Component,
@@ -44,7 +44,7 @@ public:
 		/// into.
 		const TSet<FName>& SystemsWorlds,
 		/// World context object.
-		UWorld* World);
+		UObject* WorldContext);
 
 	/// Tries to add component to every global systems worlds.
 	///
@@ -53,12 +53,12 @@ public:
 	/// `BeginPlay`.
 	UFUNCTION(BlueprintCallable,
 		Category = "Systems|Components",
-		Meta = (WorldContext = "World", UnsafeDuringActorConstruction = "true"))
+		Meta = (WorldContext = "WorldContext", UnsafeDuringActorConstruction = "true"))
 	static void AddComponentEverywhere(
 		/// Actor component to add to global systems world.
 		UActorComponent* Component,
 		/// World context object.
-		UWorld* World);
+		UObject* WorldContext);
 
 	/// Tries to add component to global systems worlds.
 	///
@@ -67,27 +67,30 @@ public:
 	/// `EndPlay`.
 	UFUNCTION(BlueprintCallable,
 		Category = "Systems|Components",
-		Meta = (WorldContext = "World", UnsafeDuringActorConstruction = "true"))
+		Meta = (WorldContext = "WorldContext", UnsafeDuringActorConstruction = "true"))
 	static void RemoveComponent(
 		/// Actor component to remove from global systems world.
 		UActorComponent* Component,
 		/// World context object.
-		UWorld* World);
+		UObject* WorldContext);
 
 	/// Gets resource from globally registered systems world by its label.
 	///
 	/// This is a handy shortcut for [`class: Self::GetSystemsWorld`]() and then
 	/// [`class: USystemsWorld::GetResourceRaw`]() on it.
-	UFUNCTION(BlueprintCallable,
+	UFUNCTION(BlueprintPure,
 		Category = "Systems|Resources",
-		Meta = (WorldContext = "World", UnsafeDuringActorConstruction = "true", DisplayName = "Get Resource"))
+		Meta = (WorldContext = "WorldContext",
+			UnsafeDuringActorConstruction = "true",
+			DisplayName = "Get Resource",
+			DeterminesOutputType = "Type"))
 	static UObject* GetResourceRaw(
 		/// Systems world ID.
 		FName Id,
 		/// Resource type user wants to get from global systems world.
 		const UClass* Type,
 		/// World context object.
-		UWorld* World);
+		UObject* WorldContext);
 
 	/// Gets resource from globally registered systems world by its label.
 	///
@@ -97,10 +100,14 @@ public:
 		/// Systems world ID.
 		FName Id,
 		/// World context object.
-		UWorld* World)
+		UObject* WorldContext)
 	{
 		//// [ignore]
-		return Cast<T>(ThisClass::GetResourceRaw(Id, T::StaticClass(), World));
+		if (IsValid(WorldContext) == false)
+		{
+			return nullptr;
+		}
+		return Cast<T>(ThisClass::GetResourceRaw(Id, T::StaticClass(), WorldContext->GetWorld()));
 		//// [/ignore]
 	}
 };

@@ -4,15 +4,23 @@
 #include "Systems/Public/SystemsSubsystem.h"
 #include "Systems/Public/SystemsWorld.h"
 
-USystemsWorld* USystemsStatics::GetSystemsWorld(FName Id, UWorld* World)
+USystemsWorld* USystemsStatics::GetSystemsWorld(FName Id, UObject* WorldContext)
 {
-	auto* Subsystem = USystemsSubsystem::Get(World);
+	if (IsValid(WorldContext) == false)
+	{
+		return nullptr;
+	}
+	auto* Subsystem = USystemsSubsystem::Get(WorldContext->GetWorld());
 	return IsValid(Subsystem) ? Subsystem->GetSystemsWorld(Id) : nullptr;
 }
 
-void USystemsStatics::AddComponent(UActorComponent* Component, const TSet<FName>& SystemsWorlds, UWorld* World)
+void USystemsStatics::AddComponent(UActorComponent* Component, const TSet<FName>& SystemsWorlds, UObject* WorldContext)
 {
-	auto* Subsystem = USystemsSubsystem::Get(World);
+	if (IsValid(WorldContext) == false)
+	{
+		return;
+	}
+	auto* Subsystem = USystemsSubsystem::Get(WorldContext->GetWorld());
 	if (IsValid(Subsystem))
 	{
 		for (const auto& Id : SystemsWorlds)
@@ -26,9 +34,13 @@ void USystemsStatics::AddComponent(UActorComponent* Component, const TSet<FName>
 	}
 }
 
-void USystemsStatics::AddComponentEverywhere(UActorComponent* Component, UWorld* World)
+void USystemsStatics::AddComponentEverywhere(UActorComponent* Component, UObject* WorldContext)
 {
-	auto* Subsystem = USystemsSubsystem::Get(World);
+	if (IsValid(WorldContext) == false)
+	{
+		return;
+	}
+	auto* Subsystem = USystemsSubsystem::Get(WorldContext->GetWorld());
 	if (IsValid(Subsystem))
 	{
 		auto Ids = TSet<FName>();
@@ -44,9 +56,13 @@ void USystemsStatics::AddComponentEverywhere(UActorComponent* Component, UWorld*
 	}
 }
 
-void USystemsStatics::RemoveComponent(UActorComponent* Component, UWorld* World)
+void USystemsStatics::RemoveComponent(UActorComponent* Component, UObject* WorldContext)
 {
-	auto* Subsystem = USystemsSubsystem::Get(World);
+	if (IsValid(WorldContext) == false)
+	{
+		return;
+	}
+	auto* Subsystem = USystemsSubsystem::Get(WorldContext->GetWorld());
 	if (IsValid(Subsystem))
 	{
 		auto Ids = TSet<FName>();
@@ -62,8 +78,12 @@ void USystemsStatics::RemoveComponent(UActorComponent* Component, UWorld* World)
 	}
 }
 
-UObject* USystemsStatics::GetResourceRaw(FName Id, const UClass* Type, UWorld* World)
+UObject* USystemsStatics::GetResourceRaw(FName Id, const UClass* Type, UObject* WorldContext)
 {
-	auto* Systems = ThisClass::GetSystemsWorld(Id, World);
+	if (IsValid(WorldContext) == false)
+	{
+		return nullptr;
+	}
+	auto* Systems = ThisClass::GetSystemsWorld(Id, WorldContext->GetWorld());
 	return IsValid(Systems) ? Systems->ResourceRaw(Type) : nullptr;
 }
