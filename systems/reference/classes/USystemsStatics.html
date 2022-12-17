@@ -252,6 +252,65 @@ components to make them auto added to global systems worlds on
 </details>
 </li>
 <li>
+<h1 id="getcomponentraw"><a class="header" href="#getcomponentraw"><strong><code>GetComponentRaw</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+static UActorComponent* GetComponentRaw(
+    FName Id,
+    AActor* Actor,
+    const TSubclassOf&lt;UActorComponent&gt;&amp; Type,
+    UObject* WorldContext
+);
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-2"><a class="header" href="#specifiers-2">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintPure</strong></li>
+<li><strong>Category</strong> = <em>Systems|Components</em></li>
+</ul>
+<h3 id="meta-specifiers-2"><a class="header" href="#meta-specifiers-2">Meta Specifiers:</a></h3>
+<ul>
+<li><strong>WorldContext</strong> = <em>WorldContext</em></li>
+<li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
+<li><strong>DisplayName</strong> = <em>Get Component</em></li>
+<li><strong>DeterminesOutputType</strong> = <em>Type</em></li>
+</ul>
+<hr />
+<p>Gets actor component from globally registered systems world by its label.</p>
+<p>This is a handy shortcut for <strong><code>Self::GetSystemsWorld</code></strong> and then
+<a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#componentraw"><strong><code>USystemsWorld::ComponentRaw</code></strong></a> on it.</p>
+<hr />
+<h1 id="arguments-2"><a class="header" href="#arguments-2"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="id"><a class="header" href="#id"><strong><code>Id</code></strong></a></h2>
+<pre><code class="language-cpp">FName Id
+</code></pre>
+<p>Systems world ID.</p>
+</li>
+<li>
+<h2 id="actor"><a class="header" href="#actor"><strong><code>Actor</code></strong></a></h2>
+<pre><code class="language-cpp">AActor* Actor
+</code></pre>
+<p>Actor to search in.</p>
+</li>
+<li>
+<h2 id="type"><a class="header" href="#type"><strong><code>Type</code></strong></a></h2>
+<pre><code class="language-cpp">const TSubclassOf&lt;UActorComponent&gt;&amp; Type
+</code></pre>
+<p>Type of component to search for.</p>
+</li>
+<li>
+<h2 id="worldcontext-2"><a class="header" href="#worldcontext-2"><strong><code>WorldContext</code></strong></a></h2>
+<pre><code class="language-cpp">UObject* WorldContext
+</code></pre>
+<p>World context object.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
 <h1 id="getresource"><a class="header" href="#getresource"><strong><code>GetResource</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;class T&gt;
@@ -263,18 +322,18 @@ static T* GetResource(
 <details>
 <hr />
 <p>Gets resource from globally registered systems world by its label.</p>
-<p>This is a handy template shortcut for <strong><code>Self::GetResourceRaw</code></strong>.</p>
+<p>This is a handy template shortcut for <strong><code>Self::ResourceRaw</code></strong>.</p>
 <hr />
-<h1 id="arguments-2"><a class="header" href="#arguments-2"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-3"><a class="header" href="#arguments-3"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="id"><a class="header" href="#id"><strong><code>Id</code></strong></a></h2>
+<h2 id="id-1"><a class="header" href="#id-1"><strong><code>Id</code></strong></a></h2>
 <pre><code class="language-cpp">FName Id
 </code></pre>
 <p>Systems world ID.</p>
 </li>
 <li>
-<h2 id="worldcontext-2"><a class="header" href="#worldcontext-2"><strong><code>WorldContext</code></strong></a></h2>
+<h2 id="worldcontext-3"><a class="header" href="#worldcontext-3"><strong><code>WorldContext</code></strong></a></h2>
 <pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>
@@ -294,12 +353,12 @@ static UObject* GetResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-2"><a class="header" href="#specifiers-2">Specifiers:</a></h3>
+<h3 id="specifiers-3"><a class="header" href="#specifiers-3">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems|Resources</em></li>
 </ul>
-<h3 id="meta-specifiers-2"><a class="header" href="#meta-specifiers-2">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-3"><a class="header" href="#meta-specifiers-3">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>WorldContext</strong> = <em>WorldContext</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
@@ -309,24 +368,24 @@ static UObject* GetResourceRaw(
 <hr />
 <p>Gets resource from globally registered systems world by its label.</p>
 <p>This is a handy shortcut for <strong><code>Self::GetSystemsWorld</code></strong> and then
-<a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#getresourceraw"><strong><code>USystemsWorld::GetResourceRaw</code></strong></a> on it.</p>
+<a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#resourceraw"><strong><code>USystemsWorld::ResourceRaw</code></strong></a> on it.</p>
 <hr />
-<h1 id="arguments-3"><a class="header" href="#arguments-3"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-4"><a class="header" href="#arguments-4"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="id-1"><a class="header" href="#id-1"><strong><code>Id</code></strong></a></h2>
+<h2 id="id-2"><a class="header" href="#id-2"><strong><code>Id</code></strong></a></h2>
 <pre><code class="language-cpp">FName Id
 </code></pre>
 <p>Systems world ID.</p>
 </li>
 <li>
-<h2 id="type"><a class="header" href="#type"><strong><code>Type</code></strong></a></h2>
+<h2 id="type-1"><a class="header" href="#type-1"><strong><code>Type</code></strong></a></h2>
 <pre><code class="language-cpp">const UClass* Type
 </code></pre>
 <p>Resource type user wants to get from global systems world.</p>
 </li>
 <li>
-<h2 id="worldcontext-3"><a class="header" href="#worldcontext-3"><strong><code>WorldContext</code></strong></a></h2>
+<h2 id="worldcontext-4"><a class="header" href="#worldcontext-4"><strong><code>WorldContext</code></strong></a></h2>
 <pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>
@@ -345,12 +404,12 @@ static USystemsWorld* GetSystemsWorld(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-3"><a class="header" href="#specifiers-3">Specifiers:</a></h3>
+<h3 id="specifiers-4"><a class="header" href="#specifiers-4">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems|World</em></li>
 </ul>
-<h3 id="meta-specifiers-3"><a class="header" href="#meta-specifiers-3">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-4"><a class="header" href="#meta-specifiers-4">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>WorldContext</strong> = <em>WorldContext</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
@@ -360,16 +419,16 @@ static USystemsWorld* GetSystemsWorld(
 <p>Useful in places where we need to perform systems qorld query, but there
 is no systems world provided into the scope.</p>
 <hr />
-<h1 id="arguments-4"><a class="header" href="#arguments-4"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-5"><a class="header" href="#arguments-5"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="id-2"><a class="header" href="#id-2"><strong><code>Id</code></strong></a></h2>
+<h2 id="id-3"><a class="header" href="#id-3"><strong><code>Id</code></strong></a></h2>
 <pre><code class="language-cpp">FName Id
 </code></pre>
 <p>Systems world ID.</p>
 </li>
 <li>
-<h2 id="worldcontext-4"><a class="header" href="#worldcontext-4"><strong><code>WorldContext</code></strong></a></h2>
+<h2 id="worldcontext-5"><a class="header" href="#worldcontext-5"><strong><code>WorldContext</code></strong></a></h2>
 <pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>
@@ -388,12 +447,12 @@ static void RemoveComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-4"><a class="header" href="#specifiers-4">Specifiers:</a></h3>
+<h3 id="specifiers-5"><a class="header" href="#specifiers-5">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
 </ul>
-<h3 id="meta-specifiers-4"><a class="header" href="#meta-specifiers-4">Meta Specifiers:</a></h3>
+<h3 id="meta-specifiers-5"><a class="header" href="#meta-specifiers-5">Meta Specifiers:</a></h3>
 <ul>
 <li><strong>WorldContext</strong> = <em>WorldContext</em></li>
 <li><strong>UnsafeDuringActorConstruction</strong> = <em>true</em></li>
@@ -404,7 +463,7 @@ static void RemoveComponent(
 components to make them auto removed from global systems worlds on
 <code>EndPlay</code>.</p>
 <hr />
-<h1 id="arguments-5"><a class="header" href="#arguments-5"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-6"><a class="header" href="#arguments-6"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-2"><a class="header" href="#component-2"><strong><code>Component</code></strong></a></h2>
@@ -413,7 +472,7 @@ components to make them auto removed from global systems worlds on
 <p>Actor component to remove from global systems world.</p>
 </li>
 <li>
-<h2 id="worldcontext-5"><a class="header" href="#worldcontext-5"><strong><code>WorldContext</code></strong></a></h2>
+<h2 id="worldcontext-6"><a class="header" href="#worldcontext-6"><strong><code>WorldContext</code></strong></a></h2>
 <pre><code class="language-cpp">UObject* WorldContext
 </code></pre>
 <p>World context object.</p>

@@ -200,7 +200,8 @@ void OnInit(
 <h1 id="onrun"><a class="header" href="#onrun"><strong><code>OnRun</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 void OnRun(
-    USystemsWorld* Systems
+    USystemsWorld* Systems,
+    float DeltaSeconds
 );
 </code></pre>
 <details>
@@ -226,6 +227,11 @@ and resources).</p>
 <li>
 <h2 id="systems-1"><a class="header" href="#systems-1"><strong><code>Systems</code></strong></a></h2>
 <pre><code class="language-cpp">USystemsWorld* Systems
+</code></pre>
+</li>
+<li>
+<h2 id="deltaseconds"><a class="header" href="#deltaseconds"><strong><code>DeltaSeconds</code></strong></a></h2>
+<pre><code class="language-cpp">float DeltaSeconds
 </code></pre>
 </li>
 </ul>
