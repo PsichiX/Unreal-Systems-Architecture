@@ -1077,7 +1077,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h1>
 <h1 id="table-of-contents-6"><a class="header" href="#table-of-contents-6">Table of contents</a></h1>
 <ul>
-<li><a href="book/architecture/pipelines.html#explanation">Explanation</a>
+<li><a href="book/architecture/pipelines.html#explanation-and-setup">Explanation and setup</a>
 <ul>
 <li><a href="book/architecture/pipelines.html#components">Components</a></li>
 <li><a href="book/architecture/pipelines.html#resources">Resources</a>
@@ -1095,17 +1095,23 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 </li>
 </ul>
 </li>
+<li><a href="book/architecture/pipelines.html#using-pipeline-data-assets">Using pipeline data assets</a>
+<ul>
+<li><a href="book/architecture/pipelines.html#systems-game-mode">Systems game mode</a></li>
+<li><a href="book/architecture/pipelines.html#systems-game-state">Systems game state</a></li>
 </ul>
-<h1 id="explanation-5"><a class="header" href="#explanation-5">Explanation</a></h1>
+</li>
+</ul>
+<h1 id="explanation-and-setup"><a class="header" href="#explanation-and-setup">Explanation and setup</a></h1>
 <p>See <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html"><strong><code>USystemsPipeline</code></strong></a>.</p>
 <p>Systems pipeline is a data asset that describes configuration of a single systems world:
 its components, resources and systems that should be installed for new systems world.
-Given pipeline is then assigned to either <strong><code>USystemsGameMode</code></strong> or
-<strong><code>USystemsGameState</code></strong> to automatically create and destroy dedicated systems world.</p>
+Given pipeline is then assigned to either <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/ASystemsGameMode.html"><strong><code>ASystemsGameMode</code></strong></a> or
+<a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/ASystemsGameState.html"><strong><code>ASystemsGameState</code></strong></a> to automatically create and destroy dedicated systems world.</p>
 <p>Having systems pipeline defined in a data asset simplifies systems world setup and gives
 more flexibility to game designers so they can balance and test special cases and new game
 features without asking programmers to take their time and make changes to the setup.</p>
-<p><img src="book/architecture/../../assets/systems_pipeline.png" alt="Systems Pipeline Data Asset" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline.png" alt="Data Asset" /></p>
 <ul>
 <li><strong><code>World Id</code></strong> - ID under which this pipeline systems world will be registered globally.
 Usually there is gonna be single systems world so it's best to leave <code>None</code> here, but in
@@ -1115,7 +1121,7 @@ once so here user can specify that.</li>
 <h2 id="components-1"><a class="header" href="#components-1">Components</a></h2>
 <p>See components <a href="book/architecture//Unreal-Systems-Architecture/systems/book/architecture/components.html">architecture book page</a>.</p>
 <p>List of all component types that are gonna be recognized by this systems world.</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_components.png" alt="Systems Pipeline Data Asset - Components" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_components.png" alt="Components" /></p>
 <ul>
 <li><strong><code>Development Build Only</code></strong> - Ensures this component will be registered in development
 builds only (and editor builds).</li>
@@ -1128,12 +1134,12 @@ removing it, can be used for quick dirty tests.</li>
 <p>List of type resources to install.</p>
 <p>Type resources are usually just a typical <code>UObject</code>-based
 game managers, 3rd-party library wrappers, data shared runtime data cache/storage and such.</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_type_resources.png" alt="Systems Pipeline Data Asset - Type Resources" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_type_resources.png" alt="Type Resources" /></p>
 <h3 id="asset-resources"><a class="header" href="#asset-resources">Asset resources</a></h3>
 <p>List of asset resourecs to install.</p>
 <p>Asset resources are purely data (either baked data sources
 or systems settings) that will be used by systems.</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_asset_resources.png" alt="Systems Pipeline Data Asset - Asset Resources" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_asset_resources.png" alt="Asset Resources" /></p>
 <ul>
 <li><strong><code>Development Build Only</code></strong> - Ensures this resource will be registered in development
 builds only (and editor builds).</li>
@@ -1146,7 +1152,7 @@ removing it, can be used for quick dirty tests.</li>
 <blockquote>
 <p>Order of systems in the list represents order of their execution!</p>
 </blockquote>
-<p><img src="book/architecture/../../assets/systems_pipeline_systems.png" alt="Systems Pipeline Data Asset - Systems" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_systems.png" alt="Systems" /></p>
 <ul>
 <li><strong><code>Template</code></strong> - Template <code>USystem</code>-based object that can be configured in-place.</li>
 <li><strong><code>Development Build Only</code></strong> - Ensures this system will be registered in development
@@ -1154,6 +1160,14 @@ builds only (and editor builds).</li>
 <li><strong><code>Use</code></strong> - Useful for quickly disabling given system from the pipeline without actually
 removing it, can be used for quick dirty tests.</li>
 </ul>
+<blockquote>
+<p>Note the difference between category of systems:</p>
+<ul>
+<li><code>Startup</code> - Runs only at systems world installation.</li>
+<li><code>Persistent</code> - Runs on every game frame.</li>
+<li><code>Cleanup</code> - Runs only at systems world uninstallation.</li>
+</ul>
+</blockquote>
 <p>Commonly used template types:</p>
 <h3 id="stateful-systems-1"><a class="header" href="#stateful-systems-1">Stateful systems</a></h3>
 <p>Stateful systems are ones that can have configuration properties put in them and/or can hold
@@ -1161,7 +1175,7 @@ internal state (for example to cache some values between next system runs, chang
 for example). User makes them by inheriting directly from <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/USystem.html"><strong><code>USystem</code></strong></a> class.</p>
 <h3 id="stateless-systems-1"><a class="header" href="#stateless-systems-1">Stateless systems</a></h3>
 <p>Stateless systems are basically lambdas/functions registered into <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/FSystemsReflection.html"><strong><code>FSystemsReflection</code></strong></a>.</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_lambda_systems.png" alt="Systems Pipeline Data Asset - Lambda Systems" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_lambda_systems.png" alt="Lambda Systems" /></p>
 <p>The reason for lambda systems to be registered is that Unreal doesn't come with it's own global
 function reflection so we have to put these into a dedicated registry ourselves, so we can assign
 them in <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/ULambdaSystem.html"><strong><code>ULambdaSystem</code></strong></a>'s <code>Function Name</code> property.</p>
@@ -1217,35 +1231,73 @@ expects to iterate on.</li>
 <ol>
 <li>
 <p>Create new game object that inherits from <code>UObject</code>:</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_create_query_object.png" alt="Systems Pipeline Data Asset - Create new object" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_create_query_object.png" alt="Create new object" /></p>
 <p>And name it <code>BP_ShakeSystemQuery</code>.</p>
 </li>
 <li>
 <p>Create public properties of actor/scene component types (and optionally an actor) your system query
 wants to iterate on:</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_query_object.png" alt="Systems Pipeline Data Asset - Create query properties" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_query_object.png" alt="Create query properties" /></p>
 </li>
 <li>
 <p>Create new game object that inherits from <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/UScriptableSystem.html"><strong><code>UScriptableSystem</code></strong></a>:</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_create_scriptable_system.png" alt="Systems Pipeline Data Asset - Create new system" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_create_scriptable_system.png" alt="Create new system" /></p>
 <p>And name it <code>BP_ShakeSystem</code>.</p>
 </li>
 <li>
 <p>Create <code>System World Query</code> node and assign <code>BP_ShakeSystemQuery</code> object class:</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_system_query_a.png" alt="Systems Pipeline Data Asset - System query A" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_system_query_a.png" alt="System query A" /></p>
 <p>With this we tell tis query iterator it will yield <code>BP_ShakeSystemQuery</code> objects with requested components
 and actor assigned to its fields.</p>
 </li>
 <li>
 <p>Create <code>Lazy Iterate</code> node:</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_system_query_b.png" alt="Systems Pipeline Data Asset - System query B" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_system_query_b.png" alt="System query B" /></p>
 <p>Since <code>Query</code> returns a lazy iterator object (you can read about lazy iterators in
 <a href="book/architecture//Unreal-Systems-Architecture/systems/book/architecture/iterators.html">this architecture book page</a>), this node is a <code>For Each</code> equivalent,
 to iterate over this iterator elements.</p>
 </li>
 <li>
 <p>Apply changes to actor offset component we got from yielded query object:</p>
-<p><img src="book/architecture/../../assets/systems_pipeline_system_query_c.png" alt="Systems Pipeline Data Asset - System query C" /></p>
+<p><img src="book/architecture/../../assets/systems_pipeline_system_query_c.png" alt="System query C" /></p>
+</li>
+</ol>
+<h1 id="using-pipeline-data-assets"><a class="header" href="#using-pipeline-data-assets">Using pipeline data assets</a></h1>
+<p>While you can call <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html#install"><strong><code>USystemsPipeline::Install</code></strong></a> and <a href="book/architecture//reference/classes/USystemsPipeline.html#uninstall"><strong><code>USystemsPipeline::Uninstall</code></strong></a>
+directly to install and uninstall given pipeline systems world globally, it is useful to have that automated,
+and for that these are game objects that do this for you, based on pipeline data asset assigned to them
+in the editor:</p>
+<h2 id="systems-game-mode"><a class="header" href="#systems-game-mode">Systems game mode</a></h2>
+<p>See <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/ASystemsGameMode.html"><strong><code>ASystemsGameMode</code></strong></a>.</p>
+<p>Consider using it to install pipeline that has to run singleplayer or multiplayer server game logic (since game modes are spawned only there).</p>
+<ol>
+<li>
+<p>Create game mode that inerits from <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/ASystemsGameMode.html"><strong><code>ASystemsGameMode</code></strong></a>:</p>
+<p><img src="book/architecture/../../assets/systems_pipeline_game_mode_a.png" alt="Systems game mode A" /></p>
+<p>And name it <code>BP_TutorialGameMode</code>.</p>
+</li>
+<li>
+<p>Assign <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html"><strong><code>USystemsPipeline</code></strong></a> data asset into <code>Systems Pipeline</code> property:</p>
+<p><img src="book/architecture/../../assets/systems_pipeline_game_mode_b.png" alt="Systems game mode B" /></p>
+</li>
+</ol>
+<h2 id="systems-game-state"><a class="header" href="#systems-game-state">Systems game state</a></h2>
+<p>See <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/ASystemsGameState.html"><strong><code>ASystemsGameState</code></strong></a>.</p>
+<p>Consider using it to install pipeline that has to run multiplayer client game logic (internally it will enforce to install only on multiplayer client).</p>
+<ol>
+<li>
+<p>Create game state that inerits from <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/ASystemsGameState.html"><strong><code>ASystemsGameState</code></strong></a>:</p>
+<p><img src="book/architecture/../../assets/systems_pipeline_game_state_a.png" alt="Systems game state A" /></p>
+<p>And name it <code>BP_TutorialGameState</code>.</p>
+</li>
+<li>
+<p>Assign <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html"><strong><code>USystemsPipeline</code></strong></a> data asset into <code>Systems Pipeline</code> property:</p>
+<p><img src="book/architecture/../../assets/systems_pipeline_game_state_b.png" alt="Systems game state B" /></p>
+</li>
+<li>
+<p>Additionally you assign this game state class in its sibling game mode:</p>
+<p><img src="book/architecture/../../assets/systems_pipeline_game_state_c.png" alt="Systems game state C" /></p>
+<p>To make server game mode spawn this game state with its pipeline on clients.</p>
 </li>
 </ol>
 <hr />
@@ -1262,7 +1314,7 @@ to iterate over this iterator elements.</p>
 </ul>
 </li>
 </ul>
-<h1 id="explanation-6"><a class="header" href="#explanation-6">Explanation</a></h1>
+<h1 id="explanation-5"><a class="header" href="#explanation-5">Explanation</a></h1>
 <p>Iterators, or more precisely lazy iterators, are an useful tool for more efficient and
 ergonomic processing of collections and procedural generators. Lazy iterators are lazy
 because on their own they do not yield any values until consumed.</p>
@@ -1478,7 +1530,7 @@ yielded values.</p>
 <li><a href="book/architecture/channels.html#explanation">Explanation</a></li>
 <li><a href="book/architecture/channels.html#problems-that-it-solves">Problems that it solves</a></li>
 </ul>
-<h1 id="explanation-7"><a class="header" href="#explanation-7">Explanation</a></h1>
+<h1 id="explanation-6"><a class="header" href="#explanation-6">Explanation</a></h1>
 <p>See <a href="book/architecture//Unreal-Systems-Architecture/systems/reference/structs/TSenderChannel.html"><strong><code>TSenderChannel</code></strong></a>, <a href="book/architecture//reference/structs/TReceiverChannel.html"><strong><code>TReceiverChannel</code></strong></a>.</p>
 <p>Shared channels are Single-Produce, Multiple-Consumer events that instead
 being executed at the time of sending message (pushing), they are executed
