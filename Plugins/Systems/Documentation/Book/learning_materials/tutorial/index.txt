@@ -1,4 +1,5 @@
 installation.md
+setup_component.md
+setup_actor.md
+setup_system.md
 setup_game.md
-setup_actors.md
-spawn_system.md
