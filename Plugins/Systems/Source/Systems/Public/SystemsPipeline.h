@@ -80,12 +80,12 @@ public:
 	/// Creates new global systems world under [`class: Self::WorldId`] name and
 	/// installs this pipeline content into that systems world.
 	void Install(
-		/// World that has running [`class: USystemsSubsystem`].
+		/// World that has running [`class: USystemsSubsystem`]().
 		UWorld* World) const;
 
 	/// Destroys systems world registered under [`class: Self::WorldId`] name.
 	void Uninstall(
-		/// World that has running [`class: USystemsSubsystem`].
+		/// World that has running [`class: USystemsSubsystem`]().
 		UWorld* World) const;
 
 	/// Typed components to be registered into systems world.
