@@ -116,7 +116,7 @@ To do that you have to register it in your game module:
 
     And name it `BP_TutorialMovementSystem`.
 
-1. Override `OnRun` event:
+1. Override `On Run` event:
 
     ![Override OnRun event](../../../assets/systems_system_run_a.png)
 
@@ -131,3 +131,6 @@ To do that you have to register it in your game module:
 1. Perform update on yielded object:
 
     ![Perform update](../../../assets/systems_system_run_d.png)
+
+    > Note that `Movement`::`Value` is multiplied by `Delta Time` provided by
+    > `On Run` event.
