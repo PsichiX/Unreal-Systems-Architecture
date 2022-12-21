@@ -26,7 +26,7 @@
 
         ![Add Blueprint systems](../../../assets/game_systems_blueprint.png)
 
-1. Create new game object that inherits from [`class: USystemsGameMode`]():
+1. Create new game object that inherits from [`class: ASystemsGameMode`]():
 
     ![Create game mode](../../../assets/systems_pipeline_game_mode_a.png)
 
