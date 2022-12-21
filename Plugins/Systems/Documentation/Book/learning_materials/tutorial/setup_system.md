@@ -47,7 +47,7 @@
     ```
 
 Since this is a lambda system, we need to register it to [`class: FSystemsReflection`]().
-To do that you have to register them in your game module:
+To do that you have to register it in your game module:
 
 - `Tutorial/Tutorial.h`:
 
