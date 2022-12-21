@@ -7,7 +7,7 @@
 
 # Explanation
 
-See [`class: USystemsActorComponent`]().
+See [`class: USystemsActorComponent`]() and [`class: USystemsSceneComponent`]().
 
 Systems Architecture treats game world as database that user can query. That enables us to
 perform same operations on a batch of actors and their requested components in-place.

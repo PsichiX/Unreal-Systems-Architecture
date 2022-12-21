@@ -3,5 +3,6 @@ systems.md
 components.md
 resources.md
 subsystem.md
+pipelines.md
 iterators.md
 channels.md

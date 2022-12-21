@@ -12,4 +12,4 @@ build = true
 cleanup = true
 # header = "header.md"
 # footer = "footer.md"
-# assets = "assets/"
+assets = "Assets/"
