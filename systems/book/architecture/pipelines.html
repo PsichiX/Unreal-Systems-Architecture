@@ -174,7 +174,7 @@ Given pipeline is then assigned to either <strong><code>USystemsGameMode</code><
 <p>Having systems pipeline defined in a data asset simplifies systems world setup and gives
 more flexibility to game designers so they can balance and test special cases and new game
 features without asking programmers to take their time and make changes to the setup.</p>
-<p><img src="/assets/systems_pipeline.png" alt="Systems Pipeline Data Asset" /></p>
+<p><img src="../../assets/systems_pipeline.png" alt="Systems Pipeline Data Asset" /></p>
 <ul>
 <li><strong><code>World Id</code></strong> - ID under which this pipeline systems world will be registered globally.
 Usually there is gonna be single systems world so it's best to leave <code>None</code> here, but in
@@ -184,7 +184,7 @@ once so here user can specify that.</li>
 <h2 id="components"><a class="header" href="#components">Components</a></h2>
 <p>See components <a href="/Unreal-Systems-Architecture/systems/book/architecture/components.html">architecture book page</a>.</p>
 <p>List of all component types that are gonna be recognized by this systems world.</p>
-<p><img src="/assets/systems_pipeline_components.png" alt="Systems Pipeline Data Asset - Components" /></p>
+<p><img src="../../assets/systems_pipeline_components.png" alt="Systems Pipeline Data Asset - Components" /></p>
 <ul>
 <li><strong><code>Development Build Only</code></strong> - Ensures this component will be registered in development
 builds only (and editor builds).</li>
@@ -197,12 +197,12 @@ removing it, can be used for quick dirty tests.</li>
 <p>List of type resources to install.</p>
 <p>Type resources are usually just a typical <code>UObject</code>-based
 game managers, 3rd-party library wrappers, data shared runtime data cache/storage and such.</p>
-<p><img src="/assets/systems_pipeline_type_resources.png" alt="Systems Pipeline Data Asset - Type Resources" /></p>
+<p><img src="../../assets/systems_pipeline_type_resources.png" alt="Systems Pipeline Data Asset - Type Resources" /></p>
 <h3 id="asset-resources"><a class="header" href="#asset-resources">Asset resources</a></h3>
 <p>List of asset resourecs to install.</p>
 <p>Asset resources are purely data (either baked data sources
 or systems settings) that will be used by systems.</p>
-<p><img src="/assets/systems_pipeline_asset_resources.png" alt="Systems Pipeline Data Asset - Asset Resources" /></p>
+<p><img src="../../assets/systems_pipeline_asset_resources.png" alt="Systems Pipeline Data Asset - Asset Resources" /></p>
 <ul>
 <li><strong><code>Development Build Only</code></strong> - Ensures this resource will be registered in development
 builds only (and editor builds).</li>
@@ -215,7 +215,7 @@ removing it, can be used for quick dirty tests.</li>
 <blockquote>
 <p>Order of systems in the list represents order of their execution!</p>
 </blockquote>
-<p><img src="/assets/systems_pipeline_systems.png" alt="Systems Pipeline Data Asset - Systems" /></p>
+<p><img src="../../assets/systems_pipeline_systems.png" alt="Systems Pipeline Data Asset - Systems" /></p>
 <ul>
 <li><strong><code>Template</code></strong> - Template <code>USystem</code>-based object that can be configured in-place.</li>
 <li><strong><code>Development Build Only</code></strong> - Ensures this system will be registered in development
@@ -230,7 +230,7 @@ internal state (for example to cache some values between next system runs, chang
 for example). User makes them by inheriting directly from <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystem.html"><strong><code>USystem</code></strong></a> class.</p>
 <h3 id="stateless-systems"><a class="header" href="#stateless-systems">Stateless systems</a></h3>
 <p>Stateless systems are basically lambdas/functions registered into <a href="/Unreal-Systems-Architecture/systems/reference/classes/FSystemsReflection.html"><strong><code>FSystemsReflection</code></strong></a>.</p>
-<p><img src="/assets/systems_pipeline_lambda_systems.png" alt="Systems Pipeline Data Asset - Lambda Systems" /></p>
+<p><img src="../../assets/systems_pipeline_lambda_systems.png" alt="Systems Pipeline Data Asset - Lambda Systems" /></p>
 <p>The reason for lambda systems to be registered is that Unreal doesn't come with it's own global
 function reflection so we have to put these into a dedicated registry ourselves, so we can assign
 them in <a href="/Unreal-Systems-Architecture/systems/reference/classes/ULambdaSystem.html"><strong><code>ULambdaSystem</code></strong></a>'s <code>Function Name</code> property.</p>
@@ -286,35 +286,35 @@ expects to iterate on.</li>
 <ol>
 <li>
 <p>Create new game object that inherits from <code>UObject</code>:</p>
-<p><img src="/assets/systems_pipeline_create_query_object.png" alt="Systems Pipeline Data Asset - Create new object" /></p>
+<p><img src="../../assets/systems_pipeline_create_query_object.png" alt="Systems Pipeline Data Asset - Create new object" /></p>
 <p>And name it <code>BP_ShakeSystemQuery</code>.</p>
 </li>
 <li>
 <p>Create public properties of actor/scene component types (and optionally an actor) your system query
 wants to iterate on:</p>
-<p><img src="/assets/systems_pipeline_query_object.png" alt="Systems Pipeline Data Asset - Create query properties" /></p>
+<p><img src="../../assets/systems_pipeline_query_object.png" alt="Systems Pipeline Data Asset - Create query properties" /></p>
 </li>
 <li>
 <p>Create new game object that inherits from <a href="/Unreal-Systems-Architecture/systems/reference/classes/UScriptableSystem.html"><strong><code>UScriptableSystem</code></strong></a>:</p>
-<p><img src="/assets/systems_pipeline_create_scriptable_system.png" alt="Systems Pipeline Data Asset - Create new system" /></p>
+<p><img src="../../assets/systems_pipeline_create_scriptable_system.png" alt="Systems Pipeline Data Asset - Create new system" /></p>
 <p>And name it <code>BP_ShakeSystem</code>.</p>
 </li>
 <li>
 <p>Create <code>System World Query</code> node and assign <code>BP_ShakeSystemQuery</code> object class:</p>
-<p><img src="/assets/systems_pipeline_system_query_a.png" alt="Systems Pipeline Data Asset - System query A" /></p>
+<p><img src="../../assets/systems_pipeline_system_query_a.png" alt="Systems Pipeline Data Asset - System query A" /></p>
 <p>With this we tell tis query iterator it will yield <code>BP_ShakeSystemQuery</code> objects with requested components
 and actor assigned to its fields.</p>
 </li>
 <li>
 <p>Create <code>Lazy Iterate</code> node:</p>
-<p><img src="/assets/systems_pipeline_system_query_b.png" alt="Systems Pipeline Data Asset - System query B" /></p>
+<p><img src="../../assets/systems_pipeline_system_query_b.png" alt="Systems Pipeline Data Asset - System query B" /></p>
 <p>Since <code>Query</code> returns a lazy iterator object (you can read about lazy iterators in
 <a href="/Unreal-Systems-Architecture/systems/book/architecture/iterators.html">this architecture book page</a>), this node is a <code>For Each</code> equivalent,
 to iterate over this iterator elements.</p>
 </li>
 <li>
 <p>Apply changes to actor offset component we got from yielded query object:</p>
-<p><img src="/assets/systems_pipeline_system_query_c.png" alt="Systems Pipeline Data Asset - System query C" /></p>
+<p><img src="../../assets/systems_pipeline_system_query_c.png" alt="Systems Pipeline Data Asset - System query C" /></p>
 </li>
 </ol>
 <hr />
