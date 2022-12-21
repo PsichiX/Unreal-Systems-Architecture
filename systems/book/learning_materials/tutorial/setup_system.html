@@ -257,7 +257,7 @@ world elements this query wants to iterate over.</p>
 <p>And name it <code>BP_TutorialMovementSystem</code>.</p>
 </li>
 <li>
-<p>Override <code>OnRun</code> event:</p>
+<p>Override <code>On Run</code> event:</p>
 <p><img src="../../../assets/systems_system_run_a.png" alt="Override OnRun event" /></p>
 </li>
 <li>
@@ -271,6 +271,10 @@ world elements this query wants to iterate over.</p>
 <li>
 <p>Perform update on yielded object:</p>
 <p><img src="../../../assets/systems_system_run_d.png" alt="Perform update" /></p>
+<blockquote>
+<p>Note that <code>Movement</code>::<code>Value</code> is multiplied by <code>Delta Time</code> provided by
+<code>On Run</code> event.</p>
+</blockquote>
 </li>
 </ol>
 <hr />
