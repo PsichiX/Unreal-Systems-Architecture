@@ -108,6 +108,8 @@ To do that you have to register it in your game module:
 
     ![Add query properties](../../../assets/systems_query_properties.png)
 
+    Here Actor is `Actor` and `Movement` is `BP_TutorialMovement` component.
+
 1. Create new game object that inherits from [`class: UScriptableSystem`]():
 
     ![Create system](../../../assets/systems_system_create.png)
