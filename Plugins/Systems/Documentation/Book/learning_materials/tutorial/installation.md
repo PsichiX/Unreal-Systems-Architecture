@@ -3,7 +3,7 @@
 Until plugin gets accepted to Unreal Engine Marketplace, we need to install plugin
 from GitHub.
 
-1. Download plugin from [GitHub Release page]([https://github.com/PsichiX/Unreal-Systems-Architecture/releases])
+1. Download plugin from [GitHub Release page](https://github.com/PsichiX/Unreal-Systems-Architecture/releases)
     (core plugin is in `Systems-Architecture.zip` archive file).
 
 1. Make sure project folder structure contains `Plugins` folder in its root (next
