@@ -23,7 +23,7 @@
 
     public:
         UPROPERTY(EditAnywhere, BlueprintReadWrite)
-        FVector2D Value = FVector2D(0);
+        FVector Value = FVector(0);
     };
     ```
 

@@ -37,11 +37,9 @@
                 auto* Actor = QueryItem.Get<0>();
                 auto* Movement = QueryItem.Get<1>();
                 const auto Position = Actor->GetActorLocation();
-                const auto Velocity = FVector(Movement->Value, 0) * DeltaTime;
+                const auto Velocity = Movement->Value * DeltaTime;
 
                 Actor->SetActorLocation(Position + Velocity);
-
-                Movement->Value = FVector2D(0);
             });
     }
     ```
