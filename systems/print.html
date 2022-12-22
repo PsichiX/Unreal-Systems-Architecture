@@ -1636,7 +1636,7 @@ class TUTORIAL_API UTutorialMovementComponent : public USystemsActorComponent
 
 public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FVector2D Value = FVector2D(0);
+    FVector Value = FVector(0);
 };
 </code></pre>
 </li>
@@ -1719,11 +1719,9 @@ void TutorialMovementSystem(USystemsWorld&amp; Systems)
             auto* Actor = QueryItem.Get&lt;0&gt;();
             auto* Movement = QueryItem.Get&lt;1&gt;();
             const auto Position = Actor-&gt;GetActorLocation();
-            const auto Velocity = FVector(Movement-&gt;Value, 0) * DeltaTime;
+            const auto Velocity = Movement-&gt;Value * DeltaTime;
 
             Actor-&gt;SetActorLocation(Position + Velocity);
-
-            Movement-&gt;Value = FVector2D(0);
         });
 }
 </code></pre>
