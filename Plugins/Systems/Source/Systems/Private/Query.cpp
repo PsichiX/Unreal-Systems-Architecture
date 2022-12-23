@@ -109,7 +109,7 @@ UObject* UDynamicQuery::NextStart(FStartQueryState& Data)
 		Reset();
 		return nullptr;
 	}
-	this->State.Set<FCurrentQueryState>({Data.Owner, 0, 0});
+	this->State.Set<FCurrentQueryState>({Data.Owner, 0, 1});
 	return CreateQueryItem(Archetype, 0);
 }
 
@@ -128,11 +128,13 @@ UObject* UDynamicQuery::NextCurrent(FCurrentQueryState& Data)
 			Reset();
 			return nullptr;
 		}
-		++Data.ActorIndex;
 		if (Data.ActorIndex < static_cast<uint32>(Archetype->Actors.Num()))
 		{
-			return CreateQueryItem(Archetype, Data.ActorIndex);
+			const auto ActorIndex = Data.ActorIndex;
+			++Data.ActorIndex;
+			return CreateQueryItem(Archetype, ActorIndex);
 		}
+		Data.ActorIndex = 0;
 		++Data.ArchetypeIndex;
 	}
 	Reset();
