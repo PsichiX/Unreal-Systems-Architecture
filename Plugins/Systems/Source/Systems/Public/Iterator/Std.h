@@ -142,3 +142,91 @@ TIterStdConst<T> IterStdConst(
 	return TIterStdConst<T>(Container);
 	//// [/ignore]
 }
+
+template <
+	//// [ignore]
+	const int N,
+	//// [/ignore]
+	typename T>
+struct TIterArray
+{
+public:
+	using Self = TIterArray<N, T>;
+	using Item = typename T;
+
+	TIterArray() : Num(0)
+	{
+		//// [ignore]
+		for (auto& Item : this->Data)
+		{
+			Item = Item();
+		}
+		//// [/ignore]
+	}
+
+	TIterArray(std::initializer_list<Item> Args)
+		//// [ignore]
+		: Num(0)
+	//// [/ignore]
+	{
+		//// [ignore]
+		auto Index = 0;
+		for (auto Item : Args)
+		{
+			this->Data[Index] = Item;
+			++Index;
+		}
+		while (Index < N)
+		{
+			this->Data[Index] = Item();
+			++Index;
+		}
+		//// [/ignore]
+	}
+
+	TOptional<Item> Next()
+	{
+		//// [ignore]
+		if (this->Num < N)
+		{
+			const auto Index = this->Num;
+			++this->Num;
+			return TOptional<Item>(this->Data[Index]);
+		}
+		return TOptional<Item>();
+		//// [/ignore]
+	}
+
+	IterSizeHint SizeHint() const
+	{
+		//// [ignore]
+		const auto Count = static_cast<uint32>(N - this->Num);
+		return IterSizeHint{Count, TOptional<uint32>(Count)};
+		//// [/ignore]
+	}
+
+private:
+	typename Item Data[N] = {};
+	int Num = 0;
+
+public:
+	ITER_IMPL
+};
+
+/// Iterator that yields values from fixed size array stored internally.
+///
+/// # Example
+/// ```snippet
+/// iter_array
+/// ```
+template <
+	//// [ignore]
+	const int N,
+	//// [/ignore]
+	typename T>
+TIterArray<N, T> IterArray(std::initializer_list<T> Args)
+{
+	//// [ignore]
+	return TIterArray<N, T>(Args);
+	//// [/ignore]
+}

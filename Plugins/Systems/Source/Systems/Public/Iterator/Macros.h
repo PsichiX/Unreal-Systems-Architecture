@@ -257,6 +257,40 @@
 		return ::IterComparedBy(MoveTempIfPossible(*this), Func); \
 	}
 
+/// Allows this iterator to be used in `for-in` loop.
+///
+/// # Example
+/// ```snippet
+/// iter_for_in
+/// ```
+//// [proxy: iter_stl_begin, iter, iter_consumers_base, iter_consumers]
+//// TStlIterator<Self> begin();
+//// [/proxy]
+#define ITER_IMPL_STL_BEGIN                              \
+	TStlIterator<Self> begin()                           \
+	{                                                    \
+		return ::StlIterator(MoveTempIfPossible(*this)); \
+	}
+
+/// Allows this iterator to be used in `for-in` loop.
+///
+/// # Example
+/// ```snippet
+/// iter_for_in
+/// ```
+//// [proxy: iter_stl_end, iter, iter_consumers_base, iter_consumers]
+//// TStlIterator<Self> end();
+//// [/proxy]
+#define ITER_IMPL_STL_END              \
+	TStlIterator<Self> end()           \
+	{                                  \
+		return ::TStlIterator<Self>(); \
+	}
+
+#define ITER_IMPL_STL   \
+	ITER_IMPL_STL_BEGIN \
+	ITER_IMPL_STL_END
+
 /// Consumes iterator and stores its values into provided array.
 ///
 /// # Example
@@ -476,8 +510,8 @@
 ///
 /// # Note
 /// > `RESULT` is a type of values yielded by this iterator - it should be the
-/// same as neste iterator value type (c++ won't accept that syntax, hence we
-/// have to provide a `RESULT` typ and ensure it's the same) `FUNCTOR`
+/// same as nested iterator value type (c++ won't accept that syntax, hence we
+/// have to provide a `RESULT` type and ensure it's the same), `FUNCTOR`
 /// should comply to this function signature: `RESULT(const I::Item& Value)`.
 ///
 /// # Example
@@ -646,7 +680,8 @@
 	ITER_IMPL_FOR_EACH(G)        \
 	ITER_IMPL_ANY(G)             \
 	ITER_IMPL_ALL(G)             \
-	ITER_IMPL_COMPARED_BY(G)
+	ITER_IMPL_COMPARED_BY(G)     \
+	ITER_IMPL_STL
 
 #define ITER_IMPL_CONSUMERS  \
 	ITER_IMPL_CONSUMERS_BASE \

@@ -84,6 +84,10 @@ public:
 	/// to list currently existing systems world.
 	void GetSystemsWorldsIds(TSet<FName>& Output) const;
 
+	void Store(UObject* Resource);
+
+	UObject* Restore(const UClass* Type, UObject* NewOwner);
+
 private:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
@@ -98,4 +102,7 @@ private:
 
 	UPROPERTY()
 	TSet<FName> ToRemove = {};
+
+	UPROPERTY()
+	TMap<const UClass*, UObject*> GlobalStorage = {};
 };

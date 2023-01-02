@@ -42,7 +42,22 @@ void USystemsPipeline::Install(UWorld* World) const
 					continue;
 				}
 #endif
-				Systems.InstallDefaultResource(Pair.Key);
+				if (Pair.Value.bUseGlobalStorage)
+				{
+					auto* Restored = Subsystem->Restore(Pair.Key, &Systems);
+					if (IsValid(Restored))
+					{
+						Systems.InstallResourceRaw(Restored);
+					}
+					else
+					{
+						Systems.InstallDefaultResource(Pair.Key);
+					}
+				}
+				else
+				{
+					Systems.InstallDefaultResource(Pair.Key);
+				}
 			}
 
 			for (const auto& Pair : this->AssetResourcesToInstall)
@@ -109,6 +124,17 @@ void USystemsPipeline::Uninstall(UWorld* World) const
 		auto* Systems = Subsystem->GetSystemsWorld(this->WorldId);
 		if (IsValid(Systems))
 		{
+			for (const auto& Pair : this->TypeResourcesToInstall)
+			{
+				if (Pair.Value.bUseGlobalStorage)
+				{
+					auto* Resource = Systems->ResourceRaw(Pair.Key);
+					if (IsValid(Resource))
+					{
+						Subsystem->Store(Resource);
+					}
+				}
+			}
 			for (const auto& Data : this->StartupSystemsToRun)
 			{
 				if (Data.bUse == false)

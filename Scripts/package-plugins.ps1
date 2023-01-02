@@ -1,3 +1,5 @@
+#!/usr/bin/env powershell
+
 $source = "$PSScriptRoot/../Plugins"
 $target = "$PSScriptRoot/../Distribution"
 
@@ -16,7 +18,8 @@ function New-Package {
         Get-ChildItem -Path "$target/Binaries" -Recurse -Include "*.pdb" | ForEach-Object {
             Remove-Item "$_" -Force
         }
-    } else {
+    }
+    else {
         Remove-Item "$target/Binaries" -Recurse -Force
     }
     Remove-Item "$target/Intermediate" -Recurse -Force
@@ -42,7 +45,7 @@ Remove-Item $target -Recurse -Force
 New-Item $target -ItemType Directory | Out-Null
 
 New-Package-Set -name "Systems" -dir "Systems-Architecture"
-New-Package-Set -name "SystemsUnitTests" -dir "Systems-Unit-Tests"
+New-Package -name "SystemsUnitTests" -dir "Systems-Unit-Tests"
 New-Package-Set -name "SystemsSpatialQuery" -dir "Systems-Spatial-Query"
 New-Package-Set -name "SystemsQueryDebugger" -dir "Systems-Query-Debugger"
 New-Package-Set -name "ReactiveUserInterfaceSystems" -dir "Reactive-UI-Systems"

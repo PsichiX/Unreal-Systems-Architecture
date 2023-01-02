@@ -167,3 +167,88 @@ TOptional<typename I::Item> IterComparedBy(I&& Iterator, F Functor)
 	return Result;
 	//// [/ignore]
 }
+
+template <typename I>
+struct TStlIterator
+{
+public:
+	using iterator_category = std::forward_iterator_tag;
+	// using difference_type = ?;
+	using value_type = typename I::Item;
+	using pointer = typename I::Item*;
+	using reference = typename I::Item&;
+
+	TStlIterator() : Inner(), Current()
+	{
+	}
+
+	TStlIterator(I&& InInner) : Inner(InInner), Current()
+	{
+		//// [ignore]
+		this->Current = this->Inner.GetValue().Next();
+		//// [/ignore]
+	}
+
+	reference operator*()
+	{
+		//// [ignore]
+		return this->Current.GetValue();
+		//// [/ignore]
+	}
+
+	pointer operator->()
+	{
+		//// [ignore]
+		return &this->Current.GetValue();
+		//// [/ignore]
+	}
+
+	TStlIterator& operator++()
+	{
+		//// [ignore]
+		if (this->Inner.IsSet())
+		{
+			this->Current = this->Inner.GetValue().Next();
+		}
+		else
+		{
+			this->Current.Reset();
+		}
+		return *this;
+		//// [/ignore]
+	}
+
+	operator bool() const
+	{
+		//// [ignore]
+		return this->Current.IsSet();
+		//// [/ignore]
+	}
+
+	friend bool operator==(const TStlIterator& A, const TStlIterator& B)
+	{
+		//// [ignore]
+		return A.Current == B.Current;
+		//// [/ignore]
+	}
+
+	friend bool operator!=(const TStlIterator& A, const TStlIterator& B)
+	{
+		//// [ignore]
+		return A.Current != B.Current;
+		//// [/ignore]
+	}
+
+private:
+	TOptional<I> Inner = {};
+
+	TOptional<value_type> Current = {};
+};
+
+template <typename I>
+TStlIterator<I> StlIterator(I&& Iter)
+{
+	//// [ignore]
+	return TStlIterator<I>(MoveTempIfPossible(Iter));
+	//// [/ignore]
+}

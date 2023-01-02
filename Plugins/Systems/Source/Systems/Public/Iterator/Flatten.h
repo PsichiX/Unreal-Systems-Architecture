@@ -27,8 +27,7 @@ public:
 	TOptional<Item> Next()
 	{
 		//// [ignore]
-		auto Iterations = 10;
-		while (Iterations-- > 0)
+		while (true)
 		{
 			if (this->Current.IsSet() == false)
 			{
@@ -50,7 +49,6 @@ public:
 				else
 				{
 					this->Current.Reset();
-					continue;
 				}
 			}
 		}

@@ -207,4 +207,18 @@ void TestIterators()
 	// [0.0, 1.0, 2.0, 3.0, 4.0]
 	const TArray<float> U = IterRange(0, 5).Cast<float>().CollectArray();
 	LOG_FLOAT_ARRAY(U);
+
+	// [1, 2, 3, 4, 5]
+	const TArray<int> V = IterArray<5>({1, 2, 3, 4, 5}).CollectArray();
+	LOG_INT_ARRAY(V);
+
+	// 0
+	// 1
+	// 2
+	// 3
+	// 4
+	for (auto Item : IterRange(0, 5))
+	{
+		LOG_INT(Item);
+	}
 }

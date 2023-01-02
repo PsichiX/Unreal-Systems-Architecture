@@ -398,6 +398,23 @@ void main()
 	const TArray<int> ResultB = IterStd(ResultA).CollectArray();
 	//// [/snippet]
 
+	//// [snippet: iter_array]
+	// [1, 2, 3, 4, 5]
+	const TArray<int> Result = IterArray<5>({1, 2, 3, 4, 5}).CollectArray();
+	//// [/snippet]
+
+	//// [snippet: iter_for_in]
+	// 0
+	// 1
+	// 2
+	// 3
+	// 4
+	for (auto Value : IterRange(0, 5))
+	{
+		UE_LOG(LogTemp, Info, TEXT("%i"), Value);
+	}
+	//// [/snippet]
+
 	//// [snippet: shared_channel]
 	auto Sender = TSenderChannel<int>();
 	auto Receiver = Sender.Receiver(1);

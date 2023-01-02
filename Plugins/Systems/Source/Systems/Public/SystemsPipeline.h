@@ -44,6 +44,20 @@ struct SYSTEMS_API FSystemsPipelineResource
 	/// pipeline (quick tests).
 	UPROPERTY(EditAnywhere, Category = "Options")
 	bool bUse = true;
+
+	/// Tells if this resource should be stored in global storage when pipeline
+	/// gets uninstalled and restored from global storage when pipeline gets installed.
+	///
+	/// Useful to transfer resources between persistent maps, like player username
+	/// typed in main menu and used in game world, or after mission ends, score gets
+	/// transfered to main menu for display.
+	///
+	/// # Note
+	/// > It doesn't affect asset resources since they have "global" lifetime anyway,
+	/// no need to pass them between systems world other way than just using same
+	/// reference in shared systems worlds.
+	UPROPERTY(EditAnywhere, Category = "Options")
+	bool bUseGlobalStorage = false;
 };
 
 /// Pipeline system descriptor.

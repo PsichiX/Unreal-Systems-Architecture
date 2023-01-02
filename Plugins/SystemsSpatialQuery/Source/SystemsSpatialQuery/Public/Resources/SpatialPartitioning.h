@@ -163,24 +163,35 @@ using FSpatialQueryLimits = TVariant<FSpatialQueryLimitsNone, FSpatialQueryLimit
 template <class... T>
 struct TSpatialQuery
 {
+	template <class... T>
+	friend struct TTaggedSpatialQuery;
+
 public:
 	using Self = TSpatialQuery<T...>;
 	using Item = TTuple<AActor*, FVector::FReal, T*...>;
 
-	TSpatialQuery() : Systems(nullptr), Partitioning(nullptr), Limits(), Signature(), Visited(), Position(0.0)
+	TSpatialQuery()
+		: Systems(nullptr)
+		, Partitioning(nullptr)
+		, Position(0.0)
+		, Limits()
+		, IncludeSignature()
+		, ExcludeSignature()
+		, Visited()
 	{
 	}
 
 	TSpatialQuery(USystemsWorld* InSystems,
-		USpatialPartitioning* InPartitioning,
+		const USpatialPartitioning* InPartitioning,
 		FVector InPosition,
 		FSpatialQueryLimits InLimits)
 		: Systems(InSystems)
 		, Partitioning(InPartitioning)
-		, Limits(InLimits)
-		, Signature()
-		, Visited()
 		, Position(InPosition)
+		, Limits(InLimits)
+		, IncludeSignature()
+		, ExcludeSignature()
+		, Visited()
 	{
 		if (IsValid(Systems) && IsValid(Partitioning))
 		{
@@ -218,7 +229,8 @@ public:
 					return false;
 				}
 				const auto Signature = this->Systems->ActorSignature(Actor);
-				return Signature.IsSet() && Signature.GetValue().ContainsAll(this->Signature);
+				return Signature.IsSet() && Signature.GetValue().ContainsAll(this->IncludeSignature) &&
+					Signature.GetValue().ContainsAny(this->ExcludeSignature) == false;
 			});
 		if (Found)
 		{
@@ -239,23 +251,109 @@ private:
 	{
 		const auto Found = Owner->ComponentTypeIndex(Type);
 		checkf(Found.IsSet(), TEXT("Trying to query non-registered component: %s"), *Type->GetName());
-		this->Signature.EnableBit(Found.GetValue());
+		this->IncludeSignature.EnableBit(Found.GetValue());
+	}
+
+	void ExcludeType(const USystemsWorld* Owner, const UClass* Type)
+	{
+		const auto Found = Owner->ComponentTypeIndex(Type);
+		checkf(Found.IsSet(), TEXT("Trying to query non-registered component: %s"), *Type->GetName());
+		this->ExcludeSignature.EnableBit(Found.GetValue());
 	}
 
 	USystemsWorld* Systems = nullptr;
 
-	USpatialPartitioning* Partitioning = nullptr;
-
-	FSpatialQueryLimits Limits = {};
-
-	FArchetypeSignature Signature = {};
-
-	TSet<TObjectPtr<AActor>> Visited = {};
+	const USpatialPartitioning* Partitioning = nullptr;
 
 	FVector Position = FVector(0.0);
 
+	FSpatialQueryLimits Limits = {};
+
+	FArchetypeSignature IncludeSignature = {};
+
+	FArchetypeSignature ExcludeSignature = {};
+
+	TSet<TObjectPtr<AActor>> Visited = {};
+
 public:
 	ITER_IMPL
+};
+
+template <class... T>
+struct TTaggedSpatialQuery
+{
+public:
+	TTaggedSpatialQuery()
+		: Systems(nullptr), Partitioning(nullptr), Position(0.0), Limits(), WithTypes(), WithoutTypes()
+	{
+	}
+
+	TTaggedSpatialQuery(USystemsWorld* InSystems,
+		const USpatialPartitioning* InPartitioning,
+		FVector InPosition,
+		FSpatialQueryLimits InLimits)
+		: Systems(InSystems)
+		, Partitioning(InPartitioning)
+		, Position(InPosition)
+		, Limits(InLimits)
+		, WithTypes()
+		, WithoutTypes()
+	{
+	}
+
+	TTaggedSpatialQuery& WithRaw(const UClass* Type)
+	{
+		this->WithTypes.Add(Type);
+		return *this;
+	}
+
+	template <class W>
+	TTaggedSpatialQuery& With()
+	{
+		return WithRaw(W::StaticClass());
+	}
+
+	TTaggedSpatialQuery& WithoutRaw(const UClass* Type)
+	{
+		this->WithoutTypes.Add(Type);
+		return *this;
+	}
+
+	template <class W>
+	TTaggedSpatialQuery& Without()
+	{
+		return WithoutRaw(W::StaticClass());
+	}
+
+	TSpatialQuery<T...> Iter() const
+	{
+		auto Result = TSpatialQuery<T...>(this->Systems, this->Partitioning, this->Position, this->Limits);
+		if (IsValid(this->Systems))
+		{
+			for (const auto* Type : this->WithTypes)
+			{
+				Result.IncludeType(Systems, Type);
+			}
+			for (const auto* Type : this->WithoutTypes)
+			{
+				Result.ExcludeType(Systems, Type);
+			}
+		}
+		return Result;
+	}
+
+private:
+	USystemsWorld* Systems = nullptr;
+
+	const USpatialPartitioning* Partitioning = nullptr;
+
+	FVector Position = FVector(0.0);
+
+	FSpatialQueryLimits Limits = {};
+
+	TSet<const UClass*> WithTypes = {};
+
+	TSet<const UClass*> WithoutTypes = {};
 };
 
 UCLASS(BlueprintType)
@@ -284,13 +382,13 @@ public:
 	void ForEachArea(const TFunction<void(const FArea&, bool)> Callback) const;
 
 	template <class... T>
-	TSpatialQuery<T...> Query(USystemsWorld& Systems, FVector Position)
+	TSpatialQuery<T...> Query(USystemsWorld& Systems, FVector Position) const
 	{
 		return TSpatialQuery<T...>(&Systems, this, Position, {});
 	}
 
 	template <class... T>
-	TSpatialQuery<T...> QueryInArea(USystemsWorld& Systems, FVector Position, FArea Area)
+	TSpatialQuery<T...> QueryInArea(USystemsWorld& Systems, FVector Position, FArea Area) const
 	{
 		FSpatialQueryLimits Limits = {};
 		Limits.Set<FSpatialQueryLimitsArea>({Area});
@@ -298,11 +396,33 @@ public:
 	}
 
 	template <class... T>
-	TSpatialQuery<T...> QueryInRadius(USystemsWorld& Systems, FVector Position, FVector::FReal Radius)
+	TSpatialQuery<T...> QueryInRadius(USystemsWorld& Systems, FVector Position, FVector::FReal Radius) const
 	{
 		FSpatialQueryLimits Limits = {};
 		Limits.Set<FSpatialQueryLimitsRadius>({Radius});
 		return TSpatialQuery<T...>(&Systems, this, Position, Limits);
+	}
+
+	template <class... T>
+	TTaggedSpatialQuery<T...> TaggedQuery(USystemsWorld& Systems, FVector Position) const
+	{
+		return TTaggedSpatialQuery<T...>(&Systems, this, Position, {});
+	}
+
+	template <class... T>
+	TTaggedSpatialQuery<T...> TaggedQueryInArea(USystemsWorld& Systems, FVector Position, FArea Area) const
+	{
+		FSpatialQueryLimits Limits = {};
+		Limits.Set<FSpatialQueryLimitsArea>({Area});
+		return TTaggedSpatialQuery<T...>(&Systems, this, Position, Limits);
+	}
+
+	template <class... T>
+	TTaggedSpatialQuery<T...> TaggedQueryInRadius(USystemsWorld& Systems, FVector Position, FVector::FReal Radius) const
+	{
+		FSpatialQueryLimits Limits = {};
+		Limits.Set<FSpatialQueryLimitsRadius>({Radius});
+		return TTaggedSpatialQuery<T...>(&Systems, this, Position, Limits);
 	}
 
 private:
@@ -315,45 +435,45 @@ class SYSTEMSSPATIALQUERY_API USpatialPartitioningSettings : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere);
+	UPROPERTY(EditAnywhere)
 	uint32 CellActorsCapacity = 10;
 
-	UPROPERTY(EditAnywhere);
+	UPROPERTY(EditAnywhere)
 	FArea CoverWorldArea = {};
 
 	UPROPERTY(EditAnywhere);
 	ESpatialPreferedPlane PreferedSubdivisionPlane = ESpatialPreferedPlane::Any;
 
-	UPROPERTY(EditAnywhere);
+	UPROPERTY(EditAnywhere)
 	bool bRebuildOnlyOnChange = false;
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	bool bDrawOccupiedDebugAreas = true;
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	bool bDrawEmptyDebugAreas = true;
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	bool bDrawSpatialQueries = true;
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	FColor DebugOccupiedAreasColor = FColor::Yellow;
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	FColor DebugEmptyAreasColor = FColor::Magenta;
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	FColor DebugOrderedActorsColor = FColor::Red;
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	TSubclassOf<AActor> StressTestActor = {};
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	uint32 StressTestSpawnCount = 0;
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	FVector StressTestSpawnOffset = FVector(0.0);
 
-	UPROPERTY(EditAnywhere, Category = Debug);
+	UPROPERTY(EditAnywhere, Category = Debug)
 	bool bStressTestSpawnOnGround = true;
 };

@@ -56,6 +56,25 @@ void USystemsSubsystem::GetSystemsWorldsIds(TSet<FName>& Output) const
 	this->ToAdd.GetKeys(Output);
 }
 
+void USystemsSubsystem::Store(UObject* Resource)
+{
+	if (IsValid(Resource) && Resource->Rename(nullptr, this, REN_ForceNoResetLoaders))
+	{
+		this->GlobalStorage.Add(Resource->GetClass(), Resource);
+	}
+}
+
+UObject* USystemsSubsystem::Restore(const UClass* Type, UObject* NewOwner)
+{
+	auto** Found = this->GlobalStorage.Find(Type);
+	if (Found != nullptr && IsValid(*Found) && (*Found)->Rename(nullptr, NewOwner, REN_ForceNoResetLoaders))
+	{
+		this->GlobalStorage.Remove(Type);
+		return *Found;
+	}
+	return nullptr;
+}
+
 void USystemsSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);

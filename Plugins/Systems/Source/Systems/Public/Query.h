@@ -130,7 +130,7 @@ template <class... T>
 struct TTaggedQuery
 {
 public:
-	TTaggedQuery() : Systems(), Tags()
+	TTaggedQuery() : Systems(), WithTypes(), WithoutTypes()
 	{
 	}
 
@@ -141,7 +141,7 @@ public:
 		/// Pointer to systems world of which actor components user wants to
 		/// iterate on.
 		USystemsWorld* InSystems)
-		: Systems(InSystems), WithTypes()
+		: Systems(InSystems), WithTypes(), WithoutTypes()
 	{
 	}
 

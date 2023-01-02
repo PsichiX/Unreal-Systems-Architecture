@@ -1,3 +1,5 @@
+#!/usr/bin/env powershell
+
 param (
     [switch]$serve = $false
 )

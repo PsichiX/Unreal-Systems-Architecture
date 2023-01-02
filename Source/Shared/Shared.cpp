@@ -1,5 +1,16 @@
 #include "Shared.h"
 
-#include "Modules/ModuleManager.h"
+#include "TestIterators.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultGameModuleImpl, Shared, "Systems_Workspace");
+#define LOCTEXT_NAMESPACE "FSharedModule"
+#define SYSTEMS_NAMESPACE "Shared"
+
+void FSharedModule::StartupModule()
+{
+	TestIterators();
+}
+
+#undef LOCTEXT_NAMESPACE
+#undef SYSTEMS_NAMESPACE
+
+IMPLEMENT_PRIMARY_GAME_MODULE(FSharedModule, Shared, "Systems_Workspace");
