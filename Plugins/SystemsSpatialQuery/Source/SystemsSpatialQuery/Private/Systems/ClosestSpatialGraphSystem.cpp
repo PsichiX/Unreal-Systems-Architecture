@@ -63,43 +63,47 @@ void UClosestSpatialGraphSystem::Run(USystemsWorld& Systems)
 			Query.WithRaw(Type.Get());
 		}
 	}
-	Query.Iter().ForEach(
-		[&](const auto& QueryItem)
+	for (const auto& QueryItem : Query.Iter())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		const auto Position = Actor->GetActorLocation();
+		auto Limit = this->ConnectionsLimitPerNode > 0 ? this->ConnectionsLimitPerNode : -1;
+		auto Query2 = SpatialQuery(Systems, *Spatial, Position, this->ExtraComponentTypes);
+		for (const auto& QueryItem2 : Query2.Iter())
 		{
-			auto* Actor = QueryItem.Get<0>();
-			const auto Position = Actor->GetActorLocation();
-			auto Query2 = SpatialQuery(Systems, *Spatial, Position, this->ExtraComponentTypes);
-			Query2.Iter()
-				.Filter([&](const auto& QueryItem) { return QueryItem.Get<0>() != Actor; })
-				.Filter(
-					[&](const auto& QueryItem)
-					{
-						auto* Actor2 = QueryItem.Get<0>();
-						const auto Position2 = Actor2->GetActorLocation();
-						const auto Center = (Position + Position2) * 0.5;
-						const auto Radius = FVector::Distance(Center, Position);
-						auto Query3 = SpatialQuery(Systems, *Spatial, Center, this->ExtraComponentTypes);
-						return Query3.Iter().Any(
-								   [&](const auto QueryItem)
-								   {
-									   auto* Actor3 = QueryItem.Get<0>();
-									   const auto Distance = QueryItem.Get<1>();
-									   return Actor3 != Actor && Actor3 != Actor2 && Distance < Radius;
-								   }) == false;
-					})
-				.Filter(
-					[&](const auto& QueryItem)
-					{
-						const auto Actor2 = QueryItem.Get<0>();
-						return IterStdConst(this->ConnectionValidators)
-							.All([&](const auto& Validator)
-								{ return Validator == false || Validator->Validate(Actor, Actor2); });
-					})
-				.ForEach(
-					[&](const auto& QueryItem)
-					{
-						auto* Actor2 = QueryItem.Get<0>();
-						Graph->Add(Actor, Actor2, true);
-					});
-		});
+			auto* Actor2 = QueryItem2.Get<0>();
+			if (Actor2 == Actor || Graph->HasConnection(Actor, Actor2, true))
+			{
+				continue;
+			}
+			const auto Position2 = Actor2->GetActorLocation();
+			const auto Center = (Position + Position2) * 0.5;
+			const auto Radius = FVector::Distance(Center, Position) - this->CollisionCircumsphereTolerance;
+			auto Query3 = SpatialQuery(Systems, *Spatial, Center, this->ExtraComponentTypes);
+			const auto Found = Query3.Iter()
+								   .Filter(
+									   [&](const auto& QueryItem3)
+									   {
+										   auto* Actor3 = QueryItem3.Get<0>();
+										   return Actor3 != Actor && Actor3 != Actor2;
+									   })
+								   .First();
+			if (Found.IsSet() && Found.GetValue().Get<1>() < Radius)
+			{
+				continue;
+			}
+			const auto bIsValid = IterStdConst(this->ConnectionValidators)
+									  .All([&](const auto& Validator)
+										  { return Validator == false || Validator->Validate(Actor, Actor2); });
+			if (bIsValid)
+			{
+				Graph->Add(Actor, Actor2, true);
+				--Limit;
+				if (Limit == 0)
+				{
+					break;
+				}
+			}
+		}
+	}
 }

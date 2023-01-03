@@ -67,6 +67,7 @@ bool USystemsWorld::InstallResourceRaw(UObject* Resource)
 	}
 	const auto Id = Resource->GetClass()->GetUniqueID();
 	this->Resources.Add(Id, Resource);
+	this->ResourcesBeingChanged.Add(Id);
 	return true;
 }
 
