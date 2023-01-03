@@ -182,29 +182,27 @@ with <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWor
 all registered actors, but there are other usecases which can definitely
 be solved with regular component queries.</p>
 <p>Common usecase that would be wrong to query actors would be:</p>
-<pre><code class="language-cpp">Systems.Actors().ForEach(
-	[](const auto* Actor)
+<pre><code class="language-cpp">for (const auto* Actor : Systems.Actors())
+{
+	auto* ShiaActor = Cast&lt;AShiaActor&gt;(Actor);
+	if (IsValid(ShiaActor))
 	{
-		auto* ShiaActor = Cast&lt;AShiaActor&gt;(Actor);
-		if (IsValid(ShiaActor))
-		{
-			ShiaActor-&gt;JustDoit();
-		}
-	});
+		ShiaActor-&gt;JustDoit();
+	}
+}
 </code></pre>
 <p>User should instead for example add <code>UShiaComponent</code> actor component and
 query actors using
 <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#query"><strong><code>USystemsWorld::Query</code></strong></a> to iterate only on these actors that
 are marked as &quot;Shia&quot; actor using actor component tag:</p>
-<pre><code class="language-cpp">Systems.Query&lt;UShiaComponent&gt;().ForEach(
-	[](const auto* Actor)
+<pre><code class="language-cpp">for (const auto* Actor : Systems.Query&lt;UShiaComponent&gt;())
+{
+	auto* ShiaActor = Cast&lt;AShiaActor&gt;(Actor);
+	if (IsValid(ShiaActor))
 	{
-		auto* ShiaActor = Cast&lt;AShiaActor&gt;(Actor);
-		if (IsValid(ShiaActor))
-		{
-			ShiaActor-&gt;JustDoit();
-		}
-	});
+		ShiaActor-&gt;JustDoit();
+	}
+}
 </code></pre>
 <p>Another thing is that user should avoid putting any logic into the
 actors itself and rather create system that performs work of
@@ -711,17 +709,16 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems);
 
 void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 {
-	Systems.Query&lt;UVelocityComponent, UBoidComponent&gt;().ForEach(
-		[&amp;](auto&amp; QueryItem)
-		{
-			auto* Actor = QueryItem.Get&lt;0&gt;();
-			const auto* Velocity = QueryItem.Get&lt;1&gt;();
+	for (auto&amp; QueryItem : Systems.Query&lt;UVelocityComponent, UBoidComponent&gt;())
+	{
+		auto* Actor = QueryItem.Get&lt;0&gt;();
+		const auto* Velocity = QueryItem.Get&lt;1&gt;();
 
-			if (Velocity-&gt;Value.IsNearlyZero() == false)
-			{
-				Actor-&gt;SetActorRotation(Velocity-&gt;Value.Rotation());
-			}
-		});
+		if (Velocity-&gt;Value.IsNearlyZero() == false)
+		{
+			Actor-&gt;SetActorRotation(Velocity-&gt;Value.Rotation());
+		}
+	}
 }
 </code></pre>
 <pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
@@ -1060,15 +1057,11 @@ tuple and then follow requested components. So <code>Systems-&gt;Query&lt;A, B, 
 
 	if (Difference &gt; 0)
 	{
-		Systems.Query&lt;UBoidComponent&gt;()
-			.Take(Difference)
-			.ForEach(
-				[](auto&amp; QueryItem)
-				{
-					auto* Actor = QueryItem.Get&lt;0&gt;();
-
-					Actor-&gt;Destroy();
-				});
+		for (auto&amp; QueryItem : Systems.Query&lt;UBoidComponent&gt;().Take(Difference))
+		{
+			auto* Actor = QueryItem.Get&lt;0&gt;();
+			Actor-&gt;Destroy();
+		}
 	}
 </code></pre>
 </details>
@@ -1393,15 +1386,14 @@ are not required for query to access - useful when user do not require
 any data of given components.</p>
 <p>See <a href="/Unreal-Systems-Architecture/systems/reference/structs/TTaggedQuery.html"><strong><code>TTaggedQuery</code></strong></a></p>
 <h1 id="example-18"><a class="header" href="#example-18">Example</a></h1>
-<pre><code class="language-cpp">	Systems.TaggedQuery&lt;UVelocityComponent&gt;().With&lt;UBoidComponent&gt;().Iter().ForEach(
-		[](auto&amp; QueryItem)
-		{
-			auto* Actor = QueryItem.Get&lt;0&gt;();
-			const auto* Velocity = QueryItem.Get&lt;1&gt;();
-			const auto Position = Actor-&gt;GetActorLocation();
+<pre><code class="language-cpp">	for (auto&amp; QueryItem : Systems.TaggedQuery&lt;UVelocityComponent&gt;().With&lt;UBoidComponent&gt;().Iter())
+	{
+		auto* Actor = QueryItem.Get&lt;0&gt;();
+		const auto* Velocity = QueryItem.Get&lt;1&gt;();
+		const auto Position = Actor-&gt;GetActorLocation();
 
-			Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DletaTime);
-		});
+		Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DletaTime);
+	}
 </code></pre>
 </details>
 </li>

@@ -163,17 +163,16 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems);
 
 void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 {
-	Systems.Query&lt;UVelocityComponent, UBoidComponent&gt;().ForEach(
-		[&amp;](auto&amp; QueryItem)
-		{
-			auto* Actor = QueryItem.Get&lt;0&gt;();
-			const auto* Velocity = QueryItem.Get&lt;1&gt;();
+	for (auto&amp; QueryItem : Systems.Query&lt;UVelocityComponent, UBoidComponent&gt;())
+	{
+		auto* Actor = QueryItem.Get&lt;0&gt;();
+		const auto* Velocity = QueryItem.Get&lt;1&gt;();
 
-			if (Velocity-&gt;Value.IsNearlyZero() == false)
-			{
-				Actor-&gt;SetActorRotation(Velocity-&gt;Value.Rotation());
-			}
-		});
+		if (Velocity-&gt;Value.IsNearlyZero() == false)
+		{
+			Actor-&gt;SetActorRotation(Velocity-&gt;Value.Rotation());
+		}
+	}
 }
 </code></pre>
 <pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));

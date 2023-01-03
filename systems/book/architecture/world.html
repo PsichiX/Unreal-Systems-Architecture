@@ -205,15 +205,11 @@ dependency tree problems between seemingly unrelated parts of codebase.</p>
 
 	if (Difference &gt; 0)
 	{
-		Systems.Query&lt;UBoidComponent&gt;()
-			.Take(Difference)
-			.ForEach(
-				[](auto&amp; QueryItem)
-				{
-					auto* Actor = QueryItem.Get&lt;0&gt;();
-
-					Actor-&gt;Destroy();
-				});
+		for (auto&amp; QueryItem : Systems.Query&lt;UBoidComponent&gt;().Take(Difference))
+		{
+			auto* Actor = QueryItem.Get&lt;0&gt;();
+			Actor-&gt;Destroy();
+		}
 	}
 </code></pre>
 <p>Queries are <a href="/Unreal-Systems-Architecture/systems/book/architecture/iterators.html">iterators</a> that always yields a tuple of actor

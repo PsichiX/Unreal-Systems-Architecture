@@ -169,15 +169,11 @@ iterator will yield given tuple <code>TTuple&lt;AActor*, A*, B*, C*&gt;</code></
 
 	if (Difference &gt; 0)
 	{
-		Systems.Query&lt;UBoidComponent&gt;()
-			.Take(Difference)
-			.ForEach(
-				[](auto&amp; QueryItem)
-				{
-					auto* Actor = QueryItem.Get&lt;0&gt;();
-
-					Actor-&gt;Destroy();
-				});
+		for (auto&amp; QueryItem : Systems.Query&lt;UBoidComponent&gt;().Take(Difference))
+		{
+			auto* Actor = QueryItem.Get&lt;0&gt;();
+			Actor-&gt;Destroy();
+		}
 	}
 </code></pre>
 <hr />
@@ -752,12 +748,11 @@ while (const auto Value = Iter.Next())
 <p><code>FUNCTOR</code> should comply to given function signature: <code>void(I::Item Value)</code> where <code>Value</code> holds current value yielded by iterator.</p>
 </blockquote>
 <h1 id="example-20"><a class="header" href="#example-20">Example</a></h1>
-<pre><code class="language-cpp">IterRange(0, 9).ForEach(
-	[](const auto&amp; Value)
-	{
-		const auto Squared = Value * Value;
-		UE_LOG(LogTemp, Warning, TEXT(&quot;Squared value: %i&quot;), Squared);
-	});
+<pre><code class="language-cpp">for (const auto Value : IterRange(0, 9))
+{
+	const auto Squared = Value * Value;
+	UE_LOG(LogTemp, Warning, TEXT(&quot;Squared value: %i&quot;), Squared);
+}
 </code></pre>
 <hr />
 <h1 id="arguments-12"><a class="header" href="#arguments-12"><strong>Arguments</strong></a></h1>

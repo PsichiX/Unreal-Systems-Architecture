@@ -175,56 +175,49 @@ void HuntSystem(USystemsWorld&amp; Systems)
 	// treat it as database that we can query, also rather than putting logic
 	// into each object, we rather perform batched data processing on a set of
 	// requested components.
-	Systems
-		.Query&lt;UPlayerComponent&gt;()
-		// We use powerful lazy-iterators to ease our work on batched data
-		// processing. this one is one of many consumer iterators and it's job
-		// is to go through all yielded iterator values and make user do
-		// something useful with these, just like with regular for-in loops.
-		.ForEach(
-			[](auto&amp; PlayerData)
-			{
-				// queries always yield tuple with actor that owns components
-				// requested for query, in addition to following components.
-				auto* PlayerActor = PlayerData.Get&lt;0&gt;();
-				const auto PlayerPosition = PlayerActor-&gt;GetActorLocation();
+	for (auto&amp; PlayerData : Systems.Query&lt;UPlayerComponent&gt;())
+	{
+		// Queries always yield tuple with actor that owns components
+		// requested for query, in addition to following components.
+		auto* PlayerActor = PlayerData.Get&lt;0&gt;();
+		const auto PlayerPosition = PlayerActor-&gt;GetActorLocation();
 
-				const auto Nearest = Systems
-										 .Query&lt;UEnemyComponent&gt;()
-										 // mapping iterator is one of the most commonly used
-										 // types of iterators that transform data from one form
-										 // to another, usually to get exact information needed
-										 // by next iterators in chain, or to just process it and
-										 // collect the result.
-										 .Map&lt;TTuple&lt;FVector, float&gt;&gt;(
-											 [&amp;](const auto&amp; EnemyData)
-											 {
-												 const auto* EnemyActor = EnemyData.Get&lt;0&gt;();
-												 const auto EnemyPosition = EnemyActor-&gt;GetActorLocation();
-												 const auto Distance = FVector::Distance(PlayerPosition, EnemyPosition);
+		const auto Nearest = Systems
+								 .Query&lt;UEnemyComponent&gt;()
+								 // Mapping iterator is one of the most commonly used
+								 // types of iterators that transform data from one form
+								 // to another, usually to get exact information needed
+								 // by next iterators in chain, or to just process it and
+								 // collect the result.
+								 .Map&lt;TTuple&lt;FVector, float&gt;&gt;(
+									 [&amp;](const auto&amp; EnemyData)
+									 {
+										 const auto* EnemyActor = EnemyData.Get&lt;0&gt;();
+										 const auto EnemyPosition = EnemyActor-&gt;GetActorLocation();
+										 const auto Distance = FVector::Distance(PlayerPosition, EnemyPosition);
 
-												 return MakeTuple(EnemyPosition, Distance);
-											 })
-										 // finding the nearest enemy based on distance extracted
-										 // in previous iteration step.
-										 .ComparedBy(
-											 [](const auto&amp; A, const auto&amp; B)
-											 {
-												 const auto DistanceA = A.Get&lt;1&gt;();
-												 const auto DistanceB = B.Get&lt;1&gt;();
+										 return MakeTuple(EnemyPosition, Distance);
+									 })
+								 // Finding the nearest enemy based on distance extracted
+								 // in previous iteration step.
+								 .ComparedBy(
+									 [](const auto&amp; A, const auto&amp; B)
+									 {
+										 const auto DistanceA = A.Get&lt;1&gt;();
+										 const auto DistanceB = B.Get&lt;1&gt;();
 
-												 return DistanceA &lt; DistanceB;
-											 });
+										 return DistanceA &lt; DistanceB;
+									 });
 
-				if (Nearest.IsSet())
-				{
-					const auto TargetPosition = Nearest.GetValue().Get&lt;0&gt;();
-					const auto Direction = (TargetPosition - PlayerPosition).GetSafeNormal();
-					const auto Velocity = Direction * 100.0f * DeltaTime;
+		if (Nearest.IsSet())
+		{
+			const auto TargetPosition = Nearest.GetValue().Get&lt;0&gt;();
+			const auto Direction = (TargetPosition - PlayerPosition).GetSafeNormal();
+			const auto Velocity = Direction * 100.0f * DeltaTime;
 
-					PlayerActor-&gt;SetActorLocation(PlayerPosition + Velocity);
-				}
-			});
+			PlayerActor-&gt;SetActorLocation(PlayerPosition + Velocity);
+		}
+	}
 }
 
 UCLASS()

@@ -297,15 +297,14 @@ void UBoidsMovementSystem::Run(USystemsWorld&amp; Systems)
 	const auto TimeScale = BoidsSettings-&gt;TimeScale;
 	const auto DeltaTime = Systems.GetWorld()-&gt;GetDeltaSeconds() * TimeScale;
 
-	Systems.Query&lt;UVelocityComponent, UBoidComponent&gt;().ForEach(
-		[&amp;](auto&amp; QueryItem)
-		{
-			auto* Actor = QueryItem.Get&lt;0&gt;();
-			const auto* Velocity = QueryItem.Get&lt;1&gt;();
-			const auto Position = Actor-&gt;GetActorLocation();
+	for (auto&amp; QueryItem : Systems.Query&lt;UVelocityComponent, UBoidComponent&gt;())
+	{
+		auto* Actor = QueryItem.Get&lt;0&gt;();
+		const auto* Velocity = QueryItem.Get&lt;1&gt;();
+		const auto Position = Actor-&gt;GetActorLocation();
 
-			Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DeltaTime);
-		});
+		Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DeltaTime);
+	}
 }
 </code></pre>
 <hr />

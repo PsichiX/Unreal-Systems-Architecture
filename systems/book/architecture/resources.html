@@ -214,15 +214,14 @@ void MovementSystem(USystemsWorld&amp; Systems)
 	const auto TimeScale = Settings-&gt;TimeScale;
 	const auto DeltaTime = Systems.GetWorld()-&gt;GetDeltaSeconds() * TimeScale;
 
-	Systems.Query&lt;UVelocityComponent&gt;().ForEach(
-		[&amp;](auto&amp; QueryItem)
-		{
-			auto* Actor = QueryItem.Get&lt;0&gt;();
-			const auto* Velocity = QueryItem.Get&lt;1&gt;();
-			const auto Position = Actor-&gt;GetActorLocation();
+	for (auto&amp; QueryItem : Systems.Query&lt;UVelocityComponent&gt;())
+	{
+		auto* Actor = QueryItem.Get&lt;0&gt;();
+		const auto* Velocity = QueryItem.Get&lt;1&gt;();
+		const auto Position = Actor-&gt;GetActorLocation();
 
-			Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DeltaTime);
-		});
+		Actor-&gt;SetActorLocation(Position + Velocity-&gt;Value * DeltaTime);
+	}
 }
 </code></pre>
 <h1 id="problems-that-it-solves"><a class="header" href="#problems-that-it-solves">Problems that it solves</a></h1>

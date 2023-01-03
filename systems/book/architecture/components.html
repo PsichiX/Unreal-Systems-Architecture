@@ -158,15 +158,11 @@ perform same operations on a batch of actors and their requested components in-p
 
 	if (Difference &gt; 0)
 	{
-		Systems.Query&lt;UBoidComponent&gt;()
-			.Take(Difference)
-			.ForEach(
-				[](auto&amp; QueryItem)
-				{
-					auto* Actor = QueryItem.Get&lt;0&gt;();
-
-					Actor-&gt;Destroy();
-				});
+		for (auto&amp; QueryItem : Systems.Query&lt;UBoidComponent&gt;().Take(Difference))
+		{
+			auto* Actor = QueryItem.Get&lt;0&gt;();
+			Actor-&gt;Destroy();
+		}
 	}
 </code></pre>
 <p>And all you have to do is to add or remove components on your actors of interest to enable/disabe

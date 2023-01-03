@@ -157,7 +157,10 @@ TIterStd&lt;T&gt; IterStd(
 <pre><code class="language-cpp">// [0, 1, 2, 3, 4]
 TArray&lt;int&gt; Result = IterRange(0, 5).CollectArray();
 // [0, 2, 4, 9, 16]
-IterStd(Result).ForEach([](auto&amp; Value) { Value = Value * Value; });
+for (auto&amp; Value : IterStd(Result))
+{
+	Value = Value * Value;
+}
 </code></pre>
 <hr />
 <h1 id="arguments"><a class="header" href="#arguments"><strong>Arguments</strong></a></h1>
