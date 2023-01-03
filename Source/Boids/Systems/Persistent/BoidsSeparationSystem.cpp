@@ -27,52 +27,51 @@ void BoidsSeparationSystem(USystemsWorld& Systems)
 	const auto VisibilityConeAngleDegrees = BoidsSettings->VisibilityConeAngleDegrees;
 	const auto SeparationFactor = BoidsSettings->SeparationFactor;
 
-	Systems.Query<UImpulseComponent, URadiusComponent, UBoidComponent>().ForEach(
-		[&](const auto& QueryItem)
+	for (const auto& QueryItem :
+		Systems.Query<UImpulseComponent, URadiusComponent, UBoidComponent>())
+	{
+		const auto* Actor = QueryItem.Get<0>();
+		auto* Impulse = QueryItem.Get<1>();
+		const auto* Radius = QueryItem.Get<2>();
+		const auto Position = Actor->GetActorLocation();
+		const auto Direction = Actor->GetActorForwardVector();
+
+		auto Count = 0;
+		const auto Accum =
+			Systems.Query<UObstacleComponent, URadiusComponent>()
+				.Filter(
+					[&](const auto& QueryItem)
+					{
+						const auto* OtherActor = QueryItem.Get<0>();
+						const auto OtherPosition = OtherActor->GetActorLocation();
+
+						return Actor != OtherActor &&
+							IsInVisionSpace(Position,
+								Direction,
+								OtherPosition,
+								PerceptionRange,
+								VisibilityConeAngleDegrees);
+					})
+				.Map<FVector>(
+					[&](const auto& QueryItem)
+					{
+						const auto* OtherActor = QueryItem.Get<0>();
+						const auto* Obstacle = QueryItem.Get<1>();
+						const auto* OtherRadius = QueryItem.Get<2>();
+						const auto OtherPosition = OtherActor->GetActorLocation();
+						const auto Diff = Position - OtherPosition;
+						const auto Dist = Diff.Size() - Radius->Value - OtherRadius->Value;
+						const auto DistSqr = Dist * Dist;
+
+						++Count;
+						return Dist > 0 ? (Diff * Obstacle->AvoidanceWeight) / DistSqr : FVector(0);
+					})
+				.Sum(FVector(0));
+
+		if (Count > 0)
 		{
-			const auto* Actor = QueryItem.Get<0>();
-			auto* Impulse = QueryItem.Get<1>();
-			const auto* Radius = QueryItem.Get<2>();
-			const auto Position = Actor->GetActorLocation();
-			const auto Direction = Actor->GetActorForwardVector();
-
-			auto Count = 0;
-			const auto Accum =
-				Systems.Query<UObstacleComponent, URadiusComponent>()
-					.Filter(
-						[&](const auto& QueryItem)
-						{
-							const auto* OtherActor = QueryItem.Get<0>();
-							const auto OtherPosition = OtherActor->GetActorLocation();
-
-							return Actor != OtherActor &&
-								IsInVisionSpace(Position,
-									Direction,
-									OtherPosition,
-									PerceptionRange,
-									VisibilityConeAngleDegrees);
-						})
-					.Map<FVector>(
-						[&](const auto& QueryItem)
-						{
-							const auto* OtherActor = QueryItem.Get<0>();
-							const auto* Obstacle = QueryItem.Get<1>();
-							const auto* OtherRadius = QueryItem.Get<2>();
-							const auto OtherPosition = OtherActor->GetActorLocation();
-							const auto Diff = Position - OtherPosition;
-							const auto Dist = Diff.Size() - Radius->Value - OtherRadius->Value;
-							const auto DistSqr = Dist * Dist;
-
-							++Count;
-							return Dist > 0 ? (Diff * Obstacle->AvoidanceWeight) / DistSqr
-											: FVector(0);
-						})
-					.Sum(FVector(0));
-
-			if (Count > 0)
-			{
-				const auto Average = Accum / static_cast<float>(Count);
-				Impulse->Value += (Average - Impulse->Value) * SeparationFactor;
-			}
-		});
+			const auto Average = Accum / static_cast<float>(Count);
+			Impulse->Value += (Average - Impulse->Value) * SeparationFactor;
+		}
+	}
 }

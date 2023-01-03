@@ -19,35 +19,32 @@ void ApplyBlendSpaceFlipbookSystem(USystemsWorld& Systems)
 
 	const auto TimeScale = Settings->TimeScale;
 
-	Systems
-		.Query<UFlipbookProxyComponent,
-			UFlipbookBlendSpaceComponent,
-			UCameraRelationComponent,
-			UFlatMovementComponent>()
-		.ForEach(
-			[&](auto& QueryItem)
+	for (auto& QueryItem : Systems.Query<UFlipbookProxyComponent,
+						   UFlipbookBlendSpaceComponent,
+						   UCameraRelationComponent,
+						   UFlatMovementComponent>())
+	{
+		auto* Flipbook = QueryItem.Get<1>();
+		const auto* BlendSpace = QueryItem.Get<2>();
+		const auto* Relation = QueryItem.Get<3>();
+		const auto* Movement = QueryItem.Get<4>();
+
+		if (Relation->bIsVisible)
+		{
+			const auto RelationDirection = FVector2D(Relation->Difference).GetSafeNormal();
+			const auto MovementDirection = Movement->Value.GetSafeNormal();
+			const auto Y = FVector2D::DotProduct(RelationDirection, MovementDirection);
+			const auto X = FVector2D::CrossProduct(RelationDirection, MovementDirection);
+			const auto Direction = FVector2D(X, -Y);
+			const auto PlayRate =
+				BlendSpace->FindCurrentPlayRateToSpeedFactor() * Movement->Value.Size();
+			auto* Found = BlendSpace->FindCurrentFlipbook(Direction);
+
+			if (IsValid(Found) && Flipbook->GetFlipbook() != Found)
 			{
-				auto* Flipbook = QueryItem.Get<1>();
-				const auto* BlendSpace = QueryItem.Get<2>();
-				const auto* Relation = QueryItem.Get<3>();
-				const auto* Movement = QueryItem.Get<4>();
-
-				if (Relation->bIsVisible)
-				{
-					const auto RelationDirection = FVector2D(Relation->Difference).GetSafeNormal();
-					const auto MovementDirection = Movement->Value.GetSafeNormal();
-					const auto Y = FVector2D::DotProduct(RelationDirection, MovementDirection);
-					const auto X = FVector2D::CrossProduct(RelationDirection, MovementDirection);
-					const auto Direction = FVector2D(X, -Y);
-					const auto PlayRate =
-						BlendSpace->FindCurrentPlayRateToSpeedFactor() * Movement->Value.Size();
-					auto* Found = BlendSpace->FindCurrentFlipbook(Direction);
-
-					if (IsValid(Found) && Flipbook->GetFlipbook() != Found)
-					{
-						Flipbook->SetFlipbook(Found);
-					}
-					Flipbook->SetPlayRate(PlayRate * TimeScale);
-				}
-			});
+				Flipbook->SetFlipbook(Found);
+			}
+			Flipbook->SetPlayRate(PlayRate * TimeScale);
+		}
+	}
 }

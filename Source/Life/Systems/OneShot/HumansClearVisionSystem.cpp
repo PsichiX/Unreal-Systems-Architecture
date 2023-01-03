@@ -15,15 +15,13 @@ void HumansClearVisionSystem(USystemsWorld& Systems)
 		return;
 	}
 
-	Systems.Query<UClearRangeComponent, UHumanComponent>().ForEach(
-		[&](auto& QueryItem)
+	for (auto& QueryItem : Systems.Query<UClearRangeComponent, UHumanComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		auto* Emitter = Actor->FindComponentByClass<UClearRangeEmitterComponent>();
+		if (IsValid(Emitter))
 		{
-			auto* Actor = QueryItem.Get<0>();
-
-			auto* Emitter = Actor->FindComponentByClass<UClearRangeEmitterComponent>();
-			if (IsValid(Emitter))
-			{
-				Emitter->SetRegistered(Settings->bHumansClearVision);
-			}
-		});
+			Emitter->SetRegistered(Settings->bHumansClearVision);
+		}
+	}
 }

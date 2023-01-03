@@ -8,16 +8,15 @@ void TutorialMovementSystem(USystemsWorld& Systems)
 {
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 
-	Systems.Query<UTutorialMovementComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Actor = QueryItem.Get<0>();
-			auto* Movement = QueryItem.Get<1>();
-			const auto Position = Actor->GetActorLocation();
-			const auto Velocity = FVector(Movement->Value, 0) * DeltaTime;
+	for (auto& QueryItem : Systems.Query<UTutorialMovementComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		auto* Movement = QueryItem.Get<1>();
+		const auto Position = Actor->GetActorLocation();
+		const auto Velocity = FVector(Movement->Value, 0) * DeltaTime;
 
-			Actor->SetActorLocation(Position + Velocity);
+		Actor->SetActorLocation(Position + Velocity);
 
-			Movement->Value = FVector2D(0);
-		});
+		Movement->Value = FVector2D(0);
+	}
 }

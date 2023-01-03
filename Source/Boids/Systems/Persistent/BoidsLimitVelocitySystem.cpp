@@ -23,23 +23,22 @@ void BoidsLimitVelocitySystem(USystemsWorld& Systems)
 	const auto MinVelocity = BoidsSettings->MinVelocity;
 	const auto MaxVelocity = BoidsSettings->MaxVelocity;
 
-	Systems.Query<UVelocityComponent, UBoidComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Velocity = QueryItem.Get<1>();
-			const auto Length = Velocity->Value.Size();
+	for (auto& QueryItem : Systems.Query<UVelocityComponent, UBoidComponent>())
+	{
+		auto* Velocity = QueryItem.Get<1>();
+		const auto Length = Velocity->Value.Size();
 
-			if (Velocity->Value.IsNearlyZero())
-			{
-				Velocity->Randomize(MinVelocity, MaxVelocity);
-			}
-			if (Length < MinVelocity)
-			{
-				Velocity->Value = Velocity->Value.GetSafeNormal() * MinVelocity;
-			}
-			if (Length > MaxVelocity)
-			{
-				Velocity->Value = Velocity->Value.GetSafeNormal() * MaxVelocity;
-			}
-		});
+		if (Velocity->Value.IsNearlyZero())
+		{
+			Velocity->Randomize(MinVelocity, MaxVelocity);
+		}
+		if (Length < MinVelocity)
+		{
+			Velocity->Value = Velocity->Value.GetSafeNormal() * MinVelocity;
+		}
+		if (Length > MaxVelocity)
+		{
+			Velocity->Value = Velocity->Value.GetSafeNormal() * MaxVelocity;
+		}
+	}
 }

@@ -14,15 +14,14 @@ void BoidsFaceDirectionSystem(USystemsWorld& Systems)
 		return;
 	}
 
-	Systems.Query<UVelocityComponent, UBoidComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Actor = QueryItem.Get<0>();
-			const auto* Velocity = QueryItem.Get<1>();
+	for (auto& QueryItem : Systems.Query<UVelocityComponent, UBoidComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		const auto* Velocity = QueryItem.Get<1>();
 
-			if (Velocity->Value.IsNearlyZero() == false)
-			{
-				Actor->SetActorRotation(Velocity->Value.Rotation());
-			}
-		});
+		if (Velocity->Value.IsNearlyZero() == false)
+		{
+			Actor->SetActorRotation(Velocity->Value.Rotation());
+		}
+	}
 }

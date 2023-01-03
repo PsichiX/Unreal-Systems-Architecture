@@ -25,14 +25,14 @@ void BoidsApplyImpulseSystem(USystemsWorld& Systems)
 	const auto TimeScale = BoidsSettings->TimeScale;
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds() * TimeScale;
 
-	Systems.Query<UImpulseComponent, UVelocityComponent, UBoidComponent>().ForEach(
-		[&](const auto& QueryItem)
-		{
-			const auto* Actor = QueryItem.Get<0>();
-			auto* Impulse = QueryItem.Get<1>();
-			auto* Velocity = QueryItem.Get<2>();
+	for (const auto& QueryItem :
+		Systems.Query<UImpulseComponent, UVelocityComponent, UBoidComponent>())
+	{
+		const auto* Actor = QueryItem.Get<0>();
+		auto* Impulse = QueryItem.Get<1>();
+		auto* Velocity = QueryItem.Get<2>();
 
-			Velocity->Value += Impulse->Value * DeltaTime;
-			Impulse->Value = FVector(0);
-		});
+		Velocity->Value += Impulse->Value * DeltaTime;
+		Impulse->Value = FVector(0);
+	}
 }

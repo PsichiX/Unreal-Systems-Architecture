@@ -16,12 +16,11 @@ void WaterSystem(USystemsWorld& Systems)
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 	const auto TimePassed = Settings->TimeScale * DeltaTime;
 
-	Systems.Query<UWaterComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Water = QueryItem.Get<1>();
+	for (auto& QueryItem : Systems.Query<UWaterComponent>())
+	{
+		auto* Water = QueryItem.Get<1>();
 
-			Water->Time += TimePassed;
-			Water->ApplyToMaterial();
-		});
+		Water->Time += TimePassed;
+		Water->ApplyToMaterial();
+	}
 }

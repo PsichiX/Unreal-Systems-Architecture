@@ -7,6 +7,18 @@
 #include "Boids/Components/BoidComponent.h"
 #include "Boids/Resources/BoidsSystemsRunCriteria.h"
 
+void KeepInBounds(const FBox& Box, FVector& Position, FVector& Velocity, int Channel)
+{
+	if (Position[Channel] < Box.Min[Channel])
+	{
+		Position[Channel] = Box.Max[Channel];
+	}
+	else if (Position[Channel] > Box.Max[Channel])
+	{
+		Position[Channel] = Box.Min[Channel];
+	}
+}
+
 void BoidsKeepInSpaceBoundsSystem(USystemsWorld& Systems)
 {
 	const auto* BoidsSystemsRunCriteria = Systems.Resource<UBoidsSystemsRunCriteria>();
@@ -30,36 +42,19 @@ void BoidsKeepInSpaceBoundsSystem(USystemsWorld& Systems)
 	}
 	const auto Box = BoxOpt.GetValue();
 
-	Systems.Query<UVelocityComponent, UBoidComponent>().ForEach(
-		[&](auto& QueryItem)
+	for (auto& QueryItem : Systems.Query<UVelocityComponent, UBoidComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		auto* Velocity = QueryItem.Get<1>();
+		auto Position = Actor->GetActorLocation();
+
+		if (Box.IsInsideOrOn(Position) == false)
 		{
-			auto* Actor = QueryItem.Get<0>();
-			auto* Velocity = QueryItem.Get<1>();
-			auto Position = Actor->GetActorLocation();
+			KeepInBounds(Box, Position, Velocity->Value, 0);
+			KeepInBounds(Box, Position, Velocity->Value, 1);
+			KeepInBounds(Box, Position, Velocity->Value, 2);
 
-			if (Box.IsInsideOrOn(Position) == false)
-			{
-				KeepInBounds(Box, Position, Velocity->Value, 0);
-				KeepInBounds(Box, Position, Velocity->Value, 1);
-				KeepInBounds(Box, Position, Velocity->Value, 2);
-
-				Actor->SetActorLocation(Position);
-			}
-		});
-}
-
-void KeepInBounds(const FBox& Box, FVector& Position, FVector& Velocity, int Channel)
-{
-	if (Position[Channel] < Box.Min[Channel])
-	{
-		Position[Channel] = Box.Max[Channel];
-		// Position[Channel] = Box.Min[Channel];
-		// Velocity[Channel] = -Velocity[Channel];
-	}
-	else if (Position[Channel] > Box.Max[Channel])
-	{
-		Position[Channel] = Box.Min[Channel];
-		// Position[Channel] = Box.Max[Channel];
-		// Velocity[Channel] = -Velocity[Channel];
+			Actor->SetActorLocation(Position);
+		}
 	}
 }

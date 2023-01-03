@@ -8,19 +8,18 @@ void MultiplayerCorrectTransformSystem(USystemsWorld& Systems)
 {
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 
-	Systems.Query<UMultiplayerCorrectTransformComponent>().ForEach(
-		[&](auto& QueryItem)
+	for (auto& QueryItem : Systems.Query<UMultiplayerCorrectTransformComponent>())
+	{
+		auto* CorrectTransform = QueryItem.Get<1>();
+		CorrectTransform->Metronome.Progress(DeltaTime);
+
+		if (CorrectTransform->Metronome.ConsumeTicked())
 		{
-			auto* CorrectTransform = QueryItem.Get<1>();
-			CorrectTransform->Metronome.Progress(DeltaTime);
+			const auto* Actor = QueryItem.Get<0>();
+			const auto Position = Actor->GetActorLocation();
+			const auto Rotation = Actor->GetActorRotation();
 
-			if (CorrectTransform->Metronome.ConsumeTicked())
-			{
-				const auto* Actor = QueryItem.Get<0>();
-				const auto Position = Actor->GetActorLocation();
-				const auto Rotation = Actor->GetActorRotation();
-
-				CorrectTransform->ClientUpdate(Position, Rotation);
-			}
-		});
+			CorrectTransform->ClientUpdate(Position, Rotation);
+		}
+	}
 }

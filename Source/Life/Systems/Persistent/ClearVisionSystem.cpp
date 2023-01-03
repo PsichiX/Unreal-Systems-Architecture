@@ -18,81 +18,76 @@
 template <class T>
 void PerformClearVisionQuery(USystemsWorld& Systems, float ClearOpacity)
 {
-	Systems.Query<T, UCameraRelationComponent, UClearRangeReceiverComponent>()
-		.Filter(
-			[](const auto& QueryItem)
-			{
-				const auto* CameraRelation = QueryItem.Get<2>();
-				return CameraRelation->bIsVisible;
-			})
-		.ForEach(
-			[&](auto& QueryItem)
-			{
-				const auto* Actor = QueryItem.Get<0>();
-				auto* Sprite = QueryItem.Get<1>();
-				const auto Position = Actor->GetActorLocation();
+	for (auto& QueryItem :
+		Systems.Query<T, UCameraRelationComponent, UClearRangeReceiverComponent>())
+	{
+		const auto* CameraRelation = QueryItem.Get<2>();
+		if (CameraRelation->bIsVisible == false)
+		{
+			continue;
+		}
+		const auto* Actor = QueryItem.Get<0>();
+		auto* Sprite = QueryItem.Get<1>();
+		const auto Position = Actor->GetActorLocation();
 
-				const auto Found =
-					Systems
-						.Query<UClearRangeComponent,
-							UClearRangeEmitterComponent,
-							UCameraRelationComponent>()
-						.Filter(
-							[](const auto& QueryItem)
-							{
-								const auto* CameraRelation = QueryItem.Get<3>();
-								return CameraRelation->bIsVisible;
-							})
-						.FilterMap<float>(
-							[&](const auto& QueryItem)
-							{
-								const auto* Clear = QueryItem.Get<1>();
-								const auto* Emitter = QueryItem.Get<2>();
-								const auto OtherPosition = Emitter->GetComponentLocation();
-								auto Distance = INFINITY;
-								if (Clear->bScreenSpace)
-								{
-									const auto* CameraRelation = QueryItem.Get<3>();
-									FVector Ignore;
-									Distance = FMath::PointDistToLine(Position,
-										CameraRelation->Difference,
-										OtherPosition,
-										Ignore);
-								}
-								else
-								{
-									Distance = FVector::Distance(Position, OtherPosition);
-								}
+		const auto Found =
+			Systems
+				.Query<UClearRangeComponent,
+					UClearRangeEmitterComponent,
+					UCameraRelationComponent>()
+				.Filter(
+					[](const auto& QueryItem)
+					{
+						const auto* CameraRelation = QueryItem.Get<3>();
+						return CameraRelation->bIsVisible;
+					})
+				.FilterMap<float>(
+					[&](const auto& QueryItem)
+					{
+						const auto* Clear = QueryItem.Get<1>();
+						const auto* Emitter = QueryItem.Get<2>();
+						const auto OtherPosition = Emitter->GetComponentLocation();
+						auto Distance = INFINITY;
+						if (Clear->bScreenSpace)
+						{
+							const auto* CameraRelation = QueryItem.Get<3>();
+							FVector Ignore;
+							Distance = FMath::PointDistToLine(
+								Position, CameraRelation->Difference, OtherPosition, Ignore);
+						}
+						else
+						{
+							Distance = FVector::Distance(Position, OtherPosition);
+						}
 
-								if (Distance < Clear->RangeMin)
-								{
-									return TOptional<float>(0);
-								}
-								else if (Distance < Clear->RangeMax)
-								{
-									const auto Factor = FMath::Clamp((Distance - Clear->RangeMin) /
-											(Clear->RangeMax - Clear->RangeMin),
-										0.0f,
-										1.0f);
-									return TOptional<float>(
-										FMath::Lerp(ClearOpacity, 1.0f, Factor));
-								}
-								else
-								{
-									return TOptional<float>();
-								}
-							})
-						.ComparedBy([](const auto A, const auto B) { return A < B; });
+						if (Distance < Clear->RangeMin)
+						{
+							return TOptional<float>(0);
+						}
+						else if (Distance < Clear->RangeMax)
+						{
+							const auto Factor = FMath::Clamp(
+								(Distance - Clear->RangeMin) / (Clear->RangeMax - Clear->RangeMin),
+								0.0f,
+								1.0f);
+							return TOptional<float>(FMath::Lerp(ClearOpacity, 1.0f, Factor));
+						}
+						else
+						{
+							return TOptional<float>();
+						}
+					})
+				.ComparedBy([](const auto A, const auto B) { return A < B; });
 
-				if (Found.IsSet())
-				{
-					Sprite->ApplyVisibility(Found.GetValue());
-				}
-				else
-				{
-					Sprite->ApplyVisibility(1);
-				}
-			});
+		if (Found.IsSet())
+		{
+			Sprite->ApplyVisibility(Found.GetValue());
+		}
+		else
+		{
+			Sprite->ApplyVisibility(1);
+		}
+	}
 }
 
 void ClearVisionSystem(USystemsWorld& Systems)

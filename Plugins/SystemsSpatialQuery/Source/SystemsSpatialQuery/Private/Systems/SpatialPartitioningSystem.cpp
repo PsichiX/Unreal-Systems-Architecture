@@ -24,12 +24,11 @@ void SpatialPartitioningSystem(USystemsWorld& Systems)
 	if (IsValid(Partitioning))
 	{
 		Partitioning->Reset(Settings->CoverWorldArea, Settings->CellActorsCapacity, Settings->PreferedSubdivisionPlane);
-		Systems.Query<USpatialComponent>().ForEach(
-			[&](auto& QueryItem)
-			{
-				auto* Actor = QueryItem.Get<0>();
-				Partitioning->Add(Systems, Actor);
-			});
+		for (auto& QueryItem : Systems.Query<USpatialComponent>())
+		{
+			auto* Actor = QueryItem.Get<0>();
+			Partitioning->Add(Systems, Actor);
+		}
 	}
 }
 
@@ -58,10 +57,13 @@ void DebugSpatialPartitioningSystem(USystemsWorld& Systems)
 
 		if (CurrentCount > Settings->StressTestSpawnCount)
 		{
-			Systems.Actors()
-				.Filter([&](const auto* Actor) { return Actor->GetClass() == Settings->StressTestActor.Get(); })
-				.Take(CurrentCount > Settings->StressTestSpawnCount)
-				.ForEach([&](auto* Actor) { Actor->Destroy(); });
+			for (auto* Actor :
+				Systems.Actors()
+					.Filter([&](const auto* Actor) { return Actor->GetClass() == Settings->StressTestActor.Get(); })
+					.Take(CurrentCount > Settings->StressTestSpawnCount))
+			{
+				Actor->Destroy();
+			}
 		}
 
 		while (CurrentCount < Settings->StressTestSpawnCount)
@@ -136,18 +138,17 @@ void DebugSpatialPartitioningSystem(USystemsWorld& Systems)
 				Query = Partitioning->QueryInRadius<USpatialComponent>(Systems, Position, Radius);
 			}
 
-			Query.Enumerate().ForEach(
-				[&](const auto EnumeratedQueryItem)
-				{
-					const auto Index = EnumeratedQueryItem.Get<0>();
-					const auto QueryItem = EnumeratedQueryItem.Get<1>();
-					auto* Actor = QueryItem.Get<0>();
-					const auto Distance = QueryItem.Get<1>();
+			for (const auto& EnumeratedQueryItem : Query.Enumerate())
+			{
+				const auto Index = EnumeratedQueryItem.Get<0>();
+				const auto QueryItem = EnumeratedQueryItem.Get<1>();
+				auto* Actor = QueryItem.Get<0>();
+				const auto Distance = QueryItem.Get<1>();
 
-					const auto Location = Actor->GetActorLocation();
-					const auto Content = FString::Printf(TEXT("#%u (%f)"), Index, Distance);
-					DrawDebugString(World, FVector(0.0), Content, Actor, Settings->DebugOrderedActorsColor);
-				});
+				const auto Location = Actor->GetActorLocation();
+				const auto Content = FString::Printf(TEXT("#%u (%f)"), Index, Distance);
+				DrawDebugString(World, FVector(0.0), Content, Actor, Settings->DebugOrderedActorsColor);
+			}
 		}
 	}
 }

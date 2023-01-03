@@ -24,18 +24,17 @@ void CameraRelationSystem(USystemsWorld& Systems)
 		const auto Rotation = (-CameraDirection).Rotation();
 		const auto Threshold = FMath::Cos(FMath::DegreesToRadians(ConeAngle));
 
-		Systems.Query<UCameraRelationComponent>().ForEach(
-			[&](auto& QueryItem)
-			{
-				const auto* Actor = QueryItem.Get<0>();
-				auto* CameraRelation = QueryItem.Get<1>();
-				const auto Position = Actor->GetActorLocation();
-				const auto Diff = Position - CameraPosition;
-				const auto Dot = FVector::DotProduct(CameraDirection, Diff.GetSafeNormal());
+		for (auto& QueryItem2 : Systems.Query<UCameraRelationComponent>())
+		{
+			const auto* Actor = QueryItem2.Get<0>();
+			auto* CameraRelation = QueryItem2.Get<1>();
+			const auto Position = Actor->GetActorLocation();
+			const auto Diff = Position - CameraPosition;
+			const auto Dot = FVector::DotProduct(CameraDirection, Diff.GetSafeNormal());
 
-				CameraRelation->bIsVisible = Dot >= Threshold;
-				CameraRelation->Distance = Diff.Size();
-				CameraRelation->Difference = Diff;
-			});
+			CameraRelation->bIsVisible = Dot >= Threshold;
+			CameraRelation->Distance = Diff.Size();
+			CameraRelation->Difference = Diff;
+		}
 	}
 }

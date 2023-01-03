@@ -43,34 +43,29 @@ void BoidsPopulationControlSystem(USystemsWorld& Systems)
 
 		const auto Box = BoxOpt.IsSet() ? BoxOpt.GetValue() : FBox(FVector(0), FVector(0));
 
-		IterRange(0, -Difference)
-			.ForEach(
-				[&](const auto Index)
-				{
-					const auto Position = FMath::RandPointInBox(Box);
-					auto* Actor =
-						Systems.GetWorld()->SpawnActor<AActor>(BoidClass, Position, FRotator());
+		for (const auto Index : IterRange(0, -Difference))
+		{
+			const auto Position = FMath::RandPointInBox(Box);
+			auto* Actor = Systems.GetWorld()->SpawnActor<AActor>(BoidClass, Position, FRotator());
 
-					if (IsValid(Actor))
-					{
-						auto* Velocity = Actor->FindComponentByClass<UVelocityComponent>();
-						if (IsValid(Velocity))
-						{
-							Velocity->Randomize(MinVelocity, MaxVelocity);
-						}
-					}
-				});
+			if (IsValid(Actor))
+			{
+				auto* Velocity = Actor->FindComponentByClass<UVelocityComponent>();
+				if (IsValid(Velocity))
+				{
+					Velocity->Randomize(MinVelocity, MaxVelocity);
+				}
+			}
+		}
 	}
 	else if (Difference > 0)
 	{
-		Systems.Query<UBoidComponent>()
-			.Take(static_cast<uint32>(Difference))
-			.ForEach(
-				[](const auto& QueryItem)
-				{
-					auto* Actor = QueryItem.Get<0>();
+		for (const auto& QueryItem :
+			Systems.Query<UBoidComponent>().Take(static_cast<uint32>(Difference)))
+		{
+			auto* Actor = QueryItem.Get<0>();
 
-					Actor->Destroy();
-				});
+			Actor->Destroy();
+		}
 	}
 }

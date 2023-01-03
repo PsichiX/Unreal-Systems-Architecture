@@ -19,19 +19,22 @@ void MultiplayerSpawnRocketSystem(USystemsWorld& Systems)
 
 	PlayerInput->bAction = false;
 
-	Systems
-		.Query<UMultiplayerSpawnRocketComponent,
-			UMultiPlayerComponent,
-			UMultiplayerLocalControlComponent>()
-		.ForEach([&](auto& QueryItem) { QueryItem.Get<1>()->ServerExecute(); });
+	for (auto& QueryItem : Systems.Query<UMultiplayerSpawnRocketComponent,
+						   UMultiPlayerComponent,
+						   UMultiplayerLocalControlComponent>())
+	{
+		QueryItem.Get<1>()->ServerExecute();
+	}
 }
 
 void MultiplayerSpawnRocketCooldownSystem(USystemsWorld& Systems)
 {
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 
-	Systems.Query<UMultiplayerSpawnRocketComponent, UMultiPlayerComponent>().ForEach(
-		[&](auto& QueryItem) { QueryItem.Get<1>()->Cooldown -= DeltaTime; });
+	for (auto& QueryItem : Systems.Query<UMultiplayerSpawnRocketComponent, UMultiPlayerComponent>())
+	{
+		QueryItem.Get<1>()->Cooldown -= DeltaTime;
+	}
 }
 
 void MultiplayerExecuteRocketSpawnsSystem(USystemsWorld& Systems)

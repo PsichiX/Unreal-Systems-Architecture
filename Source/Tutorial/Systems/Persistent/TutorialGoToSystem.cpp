@@ -25,12 +25,11 @@ void TutorialGoToSystem(USystemsWorld& Systems)
 	if (PlayerController->GetHitResultUnderCursor(
 			ECollisionChannel::ECC_GameTraceChannel1, true, Hit))
 	{
-		Systems.Query<UTutorialTargetComponent, UTutorialSelectedComponent>().ForEach(
-			[&](auto& QueryItem)
-			{
-				auto* Target = QueryItem.Get<1>();
-
-				Target->Position = Hit.ImpactPoint;
-			});
+		for (auto& QueryItem :
+			Systems.Query<UTutorialTargetComponent, UTutorialSelectedComponent>())
+		{
+			auto* Target = QueryItem.Get<1>();
+			Target->Position = Hit.ImpactPoint;
+		}
 	}
 }

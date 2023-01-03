@@ -23,11 +23,9 @@ void BoidsHungerSystem(USystemsWorld& Systems)
 	const auto TimeScale = BoidsSettings->TimeScale;
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds() * TimeScale;
 
-	Systems.Query<UHungerComponent, UBoidComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Hunger = QueryItem.Get<1>();
-
-			Hunger->Value += DeltaTime;
-		});
+	for (auto& QueryItem : Systems.Query<UHungerComponent, UBoidComponent>())
+	{
+		auto* Hunger = QueryItem.Get<1>();
+		Hunger->Value += DeltaTime;
+	}
 }

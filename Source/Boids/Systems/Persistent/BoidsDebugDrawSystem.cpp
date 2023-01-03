@@ -18,15 +18,14 @@ void BoidsDebugDrawSystem(USystemsWorld& Systems)
 		return;
 	}
 
-	Systems.Query<UVelocityComponent, UBoidComponent>().ForEach(
-		[&](const auto& QueryItem)
-		{
-			const auto* Actor = QueryItem.Get<0>();
-			const auto* Velocity = QueryItem.Get<1>();
-			const auto From = Actor->GetActorLocation();
-			const auto To = From + Velocity->Value;
+	for (const auto& QueryItem : Systems.Query<UVelocityComponent, UBoidComponent>())
+	{
+		const auto* Actor = QueryItem.Get<0>();
+		const auto* Velocity = QueryItem.Get<1>();
+		const auto From = Actor->GetActorLocation();
+		const auto To = From + Velocity->Value;
 
-			DrawDebugDirectionalArrow(
-				Systems.GetWorld(), From, To, ARROW_LENGTH, FColor::Red, false, 0, 0, THICKNESS);
-		});
+		DrawDebugDirectionalArrow(
+			Systems.GetWorld(), From, To, ARROW_LENGTH, FColor::Red, false, 0, 0, THICKNESS);
+	}
 }

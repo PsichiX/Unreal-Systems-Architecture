@@ -33,50 +33,47 @@ void BoidsEatSystem(USystemsWorld& Systems)
 	const auto TimeScale = BoidsSettings->TimeScale;
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds() * TimeScale;
 
-	Systems.Query<UHungerComponent, URadiusComponent, UBoidComponent>().ForEach(
-		[&](auto& QueryItem)
+	for (auto& QueryItem : Systems.Query<UHungerComponent, URadiusComponent, UBoidComponent>())
+	{
+		const auto* Actor = QueryItem.Get<0>();
+		auto* Hunger = QueryItem.Get<1>();
+		const auto* Radius = QueryItem.Get<2>();
+		const auto Position = Actor->GetActorLocation();
+
+		auto Found =
+			Systems.Query<UFoodComponent, URadiusComponent>()
+				.FilterMap<Meta>(
+					[&](const auto& QueryItem)
+					{
+						const auto* OtherActor = QueryItem.Get<0>();
+						auto* Food = QueryItem.Get<1>();
+						const auto* OtherRadius = QueryItem.Get<2>();
+						const auto OtherPosition = OtherActor->GetActorLocation();
+						const auto Distance = FVector::Distance(Position, OtherPosition);
+
+						return Distance <= Radius->Value + OtherRadius->Value
+							? TOptional<Meta>({Distance, Food})
+							: TOptional<Meta>();
+					})
+				.ComparedBy([](const auto& A, const auto& B) { return A.Distance < B.Distance; });
+
+		if (Found.IsSet())
 		{
-			const auto* Actor = QueryItem.Get<0>();
-			auto* Hunger = QueryItem.Get<1>();
-			const auto* Radius = QueryItem.Get<2>();
-			const auto Position = Actor->GetActorLocation();
+			const auto Value = DeltaTime * CONSUMPTION_SCALE;
 
-			auto Found =
-				Systems.Query<UFoodComponent, URadiusComponent>()
-					.FilterMap<Meta>(
-						[&](const auto& QueryItem)
-						{
-							const auto* OtherActor = QueryItem.Get<0>();
-							auto* Food = QueryItem.Get<1>();
-							const auto* OtherRadius = QueryItem.Get<2>();
-							const auto OtherPosition = OtherActor->GetActorLocation();
-							const auto Distance = FVector::Distance(Position, OtherPosition);
+			Found.GetValue().Food->Amount -= Value;
+			Hunger->Value -= Value;
+		}
+	}
 
-							return Distance <= Radius->Value + OtherRadius->Value
-								? TOptional<Meta>({Distance, Food})
-								: TOptional<Meta>();
-						})
-					.ComparedBy(
-						[](const auto& A, const auto& B) { return A.Distance < B.Distance; });
+	for (const auto& QueryItem : Systems.Query<UFoodComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		const auto* Food = QueryItem.Get<1>();
 
-			if (Found.IsSet())
-			{
-				const auto Value = DeltaTime * CONSUMPTION_SCALE;
-
-				Found.GetValue().Food->Amount -= Value;
-				Hunger->Value -= Value;
-			}
-		});
-
-	Systems.Query<UFoodComponent>().ForEach(
-		[](const auto& QueryItem)
+		if (Food->Amount <= 0)
 		{
-			auto* Actor = QueryItem.Get<0>();
-			const auto* Food = QueryItem.Get<1>();
-
-			if (Food->Amount <= 0)
-			{
-				Actor->Destroy();
-			}
-		});
+			Actor->Destroy();
+		}
+	}
 }

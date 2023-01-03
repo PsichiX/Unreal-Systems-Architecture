@@ -11,24 +11,22 @@
 template <class T>
 void PerformApplyAgeToSpriteQuery(USystemsWorld& Systems, float TimePassed)
 {
-	Systems.Query<UAgeComponent, T, UCameraRelationComponent>().ForEach(
-		[&](auto& QueryItem)
+	for (auto& QueryItem : Systems.Query<UAgeComponent, T, UCameraRelationComponent>())
+	{
+		auto* Age = QueryItem.Get<1>();
+		auto* Sprite = QueryItem.Get<2>();
+		const auto* CameraRelation = QueryItem.Get<3>();
+
+		Age->ApplyToSpriteMetronome.Progress(TimePassed);
+
+		if (CameraRelation->bIsVisible && Age->ApplyToSpriteMetronome.ConsumeTicked())
 		{
-			auto* Age = QueryItem.Get<1>();
-			auto* Sprite = QueryItem.Get<2>();
-			const auto* CameraRelation = QueryItem.Get<3>();
-
-			Age->ApplyToSpriteMetronome.Progress(TimePassed);
-
-			if (CameraRelation->bIsVisible && Age->ApplyToSpriteMetronome.ConsumeTicked())
-			{
-				const auto Scale = Age->ScaleMapping.GetRichCurveConst()->Eval(Age->Value);
-				const auto Saturation =
-					Age->SaturationMapping.GetRichCurveConst()->Eval(Age->Value);
-				Sprite->SetRelativeScale3D(FVector(Scale));
-				Sprite->ApplySaturation(Saturation);
-			}
-		});
+			const auto Scale = Age->ScaleMapping.GetRichCurveConst()->Eval(Age->Value);
+			const auto Saturation = Age->SaturationMapping.GetRichCurveConst()->Eval(Age->Value);
+			Sprite->SetRelativeScale3D(FVector(Scale));
+			Sprite->ApplySaturation(Saturation);
+		}
+	}
 }
 
 void ApplyAgeToSpriteSystem(USystemsWorld& Systems)

@@ -38,16 +38,14 @@ bool FBoidsLimitVelocityTest::RunTest(const FString& Parameters)
 			UTEST_TRUE("Systems world is valid", IsValid(Systems));
 
 			// Prepare mock data.
-			IterGenerate<FVector>([]() { return FMath::VRand(); })
-				.Take(100)
-				.ForEach(
-					[&](const auto& Direction)
-					{
-						FMockActorBuilder::Make<AActor>(World)
-							.AddComponent<UBoidComponent>()
-							.AddComponentWithSetup<UVelocityComponent>(
-								[&](auto* Velocity) { Velocity->Value = Direction; });
-					});
+			for (const auto& Direction :
+				IterGenerate<FVector>([]() { return FMath::VRand(); }).Take(100))
+			{
+				FMockActorBuilder::Make<AActor>(World)
+					.AddComponent<UBoidComponent>()
+					.AddComponentWithSetup<UVelocityComponent>(
+						[&](auto* Velocity) { Velocity->Value = Direction; });
+			}
 
 			// Run systems.
 			Systems->Process();

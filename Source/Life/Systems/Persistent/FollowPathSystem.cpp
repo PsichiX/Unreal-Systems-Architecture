@@ -8,23 +8,23 @@
 
 void FollowPathSystem(USystemsWorld& Systems)
 {
-	Systems.Query<UFlatMovementComponent, UFollowPathComponent, USpeedComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			const auto* Actor = QueryItem.Get<0>();
-			auto* Movement = QueryItem.Get<1>();
-			const auto* Follow = QueryItem.Get<2>();
-			const auto* Speed = QueryItem.Get<3>();
-			const auto Position = FVector2D(Actor->GetActorLocation());
+	for (auto& QueryItem :
+		Systems.Query<UFlatMovementComponent, UFollowPathComponent, USpeedComponent>())
+	{
+		const auto* Actor = QueryItem.Get<0>();
+		auto* Movement = QueryItem.Get<1>();
+		const auto* Follow = QueryItem.Get<2>();
+		const auto* Speed = QueryItem.Get<3>();
+		const auto Position = FVector2D(Actor->GetActorLocation());
 
-			if (const auto Location = Follow->FindLocationAlongPath(Position))
+		if (const auto Location = Follow->FindLocationAlongPath(Position))
+		{
+			const auto NewLocation = Location.GetValue() + Speed->Value;
+			if (const auto TargetPosition = Follow->SamplePositionAlongPath(NewLocation))
 			{
-				const auto NewLocation = Location.GetValue() + Speed->Value;
-				if (const auto TargetPosition = Follow->SamplePositionAlongPath(NewLocation))
-				{
-					const auto Difference = TargetPosition.GetValue() - Position;
-					Movement->Value += Difference.GetSafeNormal() * Speed->Value;
-				}
+				const auto Difference = TargetPosition.GetValue() - Position;
+				Movement->Value += Difference.GetSafeNormal() * Speed->Value;
 			}
-		});
+		}
+	}
 }

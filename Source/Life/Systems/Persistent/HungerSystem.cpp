@@ -16,11 +16,9 @@ void HungerSystem(USystemsWorld& Systems)
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 	const auto TimePassed = Settings->TimeScale * DeltaTime;
 
-	Systems.Query<UHungerComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Hunger = QueryItem.Get<1>();
-
-			Hunger->Value += TimePassed;
-		});
+	for (auto& QueryItem : Systems.Query<UHungerComponent>())
+	{
+		auto* Hunger = QueryItem.Get<1>();
+		Hunger->Value += TimePassed;
+	}
 }

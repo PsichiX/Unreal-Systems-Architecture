@@ -16,19 +16,18 @@ void FaceCameraSystem(USystemsWorld& Systems)
 		const auto CameraDirection = God->GetCameraRotation().Vector();
 		const auto Rotation = (-CameraDirection).Rotation();
 
-		Systems.Query<UCameraRelationComponent, UFaceCameraComponent>().ForEach(
-			[&](auto& QueryItem)
+		for (auto& QueryItem2 : Systems.Query<UCameraRelationComponent, UFaceCameraComponent>())
+		{
+			auto* Actor = QueryItem2.Get<0>();
+			const auto* CameraRelation = QueryItem2.Get<1>();
+			auto* FaceCamera = QueryItem2.Get<2>();
+
+			FaceCamera->Metronome.Progress(DeltaTime);
+
+			if (CameraRelation->bIsVisible && FaceCamera->Metronome.ConsumeTicked())
 			{
-				auto* Actor = QueryItem.Get<0>();
-				const auto* CameraRelation = QueryItem.Get<1>();
-				auto* FaceCamera = QueryItem.Get<2>();
-
-				FaceCamera->Metronome.Progress(DeltaTime);
-
-				if (CameraRelation->bIsVisible && FaceCamera->Metronome.ConsumeTicked())
-				{
-					Actor->SetActorRotation(Rotation);
-				}
-			});
+				Actor->SetActorRotation(Rotation);
+			}
+		}
 	}
 }

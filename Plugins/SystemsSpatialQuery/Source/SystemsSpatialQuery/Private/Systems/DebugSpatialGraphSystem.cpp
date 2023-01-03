@@ -17,23 +17,21 @@ void UDebugSpatialGraphSystem::Run(USystemsWorld& Systems)
 	}
 	if (this->bDrawConnections)
 	{
-		Graph->ConnectionsIter().ForEach(
-			[&](const auto& Pair)
-			{
-				const auto From = Pair.Get<0>()->GetActorLocation();
-				const auto To = Pair.Get<1>()->GetActorLocation();
-				DrawDebugLine(GetWorld(), From, To, this->ConnectionsColor);
-			});
+		for (const auto& Pair : Graph->ConnectionsIter())
+		{
+			const auto From = Pair.Get<0>()->GetActorLocation();
+			const auto To = Pair.Get<1>()->GetActorLocation();
+			DrawDebugLine(GetWorld(), From, To, this->ConnectionsColor);
+		}
 	}
 	if (this->bDrawNodes)
 	{
-		Graph->NodesIter().ForEach(
-			[&](const auto& Node)
-			{
-				FVector Origin = {};
-				FVector Extents = {};
-				Node->GetActorBounds(false, Origin, Extents, false);
-				DrawDebugBox(GetWorld(), Origin, Extents, this->NodesColor);
-			});
+		for (const auto& Node : Graph->NodesIter())
+		{
+			FVector Origin = {};
+			FVector Extents = {};
+			Node->GetActorBounds(false, Origin, Extents, false);
+			DrawDebugBox(GetWorld(), Origin, Extents, this->NodesColor);
+		}
 	}
 }

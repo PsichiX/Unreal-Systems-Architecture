@@ -47,13 +47,11 @@ void TutorialSelectActorsSystem(USystemsWorld& Systems)
 				}
 				else
 				{
-					Systems.Query<UTutorialSelectedComponent>().ForEach(
-						[](auto& QueryItem)
-						{
-							auto* Selected = QueryItem.Get<1>();
-
-							Selected->SetRegistered(false);
-						});
+					for (auto& QueryItem : Systems.Query<UTutorialSelectedComponent>())
+					{
+						auto* Selected2 = QueryItem.Get<1>();
+						Selected2->SetRegistered(false);
+					}
 
 					Selected->SetRegistered(true);
 				}
@@ -62,13 +60,11 @@ void TutorialSelectActorsSystem(USystemsWorld& Systems)
 	}
 	else
 	{
-		Systems.Query<UTutorialSelectedComponent>().ForEach(
-			[](auto& QueryItem)
-			{
-				auto* Selected = QueryItem.Get<1>();
-
-				Selected->SetRegistered(false);
-			});
+		for (auto& QueryItem : Systems.Query<UTutorialSelectedComponent>())
+		{
+			auto* Selected = QueryItem.Get<1>();
+			Selected->SetRegistered(false);
+		}
 	}
 
 	TutorialApplySelectionToHighlightSystem(Systems);

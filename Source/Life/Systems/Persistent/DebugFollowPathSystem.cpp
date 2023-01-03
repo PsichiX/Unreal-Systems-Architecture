@@ -19,41 +19,40 @@ void DebugFollowPathSystem(USystemsWorld& Systems)
 		return;
 	}
 
-	Systems.Query<UFollowPathComponent>().ForEach(
-		[&](const auto& QueryItem)
+	for (const auto& QueryItem : Systems.Query<UFollowPathComponent>())
+	{
+		const auto* Follow = QueryItem.Get<1>();
+
+		for (const auto& Segment : Follow->PathSegmentsView())
 		{
-			const auto* Follow = QueryItem.Get<1>();
+			auto StartPosition = FVector(Segment.StartPosition, OFFSET);
+			auto EndPosition = FVector(Segment.EndPosition, OFFSET);
 
-			for (const auto& Segment : Follow->PathSegmentsView())
+			FHitResult Hit;
+			if (Systems.GetWorld()->LineTraceSingleByChannel(Hit,
+					StartPosition + FVector(0, 0, TRACE_RANGE),
+					StartPosition - FVector(0, 0, TRACE_RANGE),
+					ECollisionChannel::ECC_GameTraceChannel1))
 			{
-				auto StartPosition = FVector(Segment.StartPosition, OFFSET);
-				auto EndPosition = FVector(Segment.EndPosition, OFFSET);
-
-				FHitResult Hit;
-				if (Systems.GetWorld()->LineTraceSingleByChannel(Hit,
-						StartPosition + FVector(0, 0, TRACE_RANGE),
-						StartPosition - FVector(0, 0, TRACE_RANGE),
-						ECollisionChannel::ECC_GameTraceChannel1))
-				{
-					StartPosition.Z += Hit.ImpactPoint.Z;
-				}
-				if (Systems.GetWorld()->LineTraceSingleByChannel(Hit,
-						EndPosition + FVector(0, 0, TRACE_RANGE),
-						EndPosition - FVector(0, 0, TRACE_RANGE),
-						ECollisionChannel::ECC_GameTraceChannel1))
-				{
-					EndPosition.Z += Hit.ImpactPoint.Z;
-				}
-
-				DrawDebugDirectionalArrow(Systems.GetWorld(),
-					StartPosition,
-					EndPosition,
-					ARROW_LENGTH,
-					FColor::Red,
-					false,
-					0,
-					0,
-					THICKNESS);
+				StartPosition.Z += Hit.ImpactPoint.Z;
 			}
-		});
+			if (Systems.GetWorld()->LineTraceSingleByChannel(Hit,
+					EndPosition + FVector(0, 0, TRACE_RANGE),
+					EndPosition - FVector(0, 0, TRACE_RANGE),
+					ECollisionChannel::ECC_GameTraceChannel1))
+			{
+				EndPosition.Z += Hit.ImpactPoint.Z;
+			}
+
+			DrawDebugDirectionalArrow(Systems.GetWorld(),
+				StartPosition,
+				EndPosition,
+				ARROW_LENGTH,
+				FColor::Red,
+				false,
+				0,
+				0,
+				THICKNESS);
+		}
+	}
 }

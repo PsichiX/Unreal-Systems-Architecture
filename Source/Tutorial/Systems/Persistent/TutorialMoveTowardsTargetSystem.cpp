@@ -8,20 +8,20 @@
 
 void TutorialMoveTowardsTargetSystem(USystemsWorld& Systems)
 {
-	Systems.Query<UTutorialMovementComponent, USpeedComponent, UTutorialTargetComponent>().ForEach(
-		[](auto& QueryItem)
-		{
-			const auto* Actor = QueryItem.Get<0>();
-			auto* Movement = QueryItem.Get<1>();
-			const auto* Speed = QueryItem.Get<2>();
-			const auto* Target = QueryItem.Get<3>();
-			const auto Position = Actor->GetActorLocation();
-			const auto Difference = FVector2D(Target->Position - Position);
-			const auto Distance = FMath::Min(Difference.Size(), Speed->Value);
+	for (auto& QueryItem :
+		Systems.Query<UTutorialMovementComponent, USpeedComponent, UTutorialTargetComponent>())
+	{
+		const auto* Actor = QueryItem.Get<0>();
+		auto* Movement = QueryItem.Get<1>();
+		const auto* Speed = QueryItem.Get<2>();
+		const auto* Target = QueryItem.Get<3>();
+		const auto Position = Actor->GetActorLocation();
+		const auto Difference = FVector2D(Target->Position - Position);
+		const auto Distance = FMath::Min(Difference.Size(), Speed->Value);
 
-			if (Distance > 1)
-			{
-				Movement->Value += Difference.GetSafeNormal() * Distance;
-			}
-		});
+		if (Distance > 1)
+		{
+			Movement->Value += Difference.GetSafeNormal() * Distance;
+		}
+	}
 }

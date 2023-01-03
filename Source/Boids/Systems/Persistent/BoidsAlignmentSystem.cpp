@@ -25,45 +25,43 @@ void BoidsAlignmentSystem(USystemsWorld& Systems)
 	const auto VisibilityConeAngleDegrees = BoidsSettings->VisibilityConeAngleDegrees;
 	const auto AlignmentFactor = BoidsSettings->AlignmentFactor;
 
-	Systems.Query<UImpulseComponent, UBoidComponent>().ForEach(
-		[&](const auto& QueryItem)
+	for (const auto& QueryItem : Systems.Query<UImpulseComponent, UBoidComponent>())
+	{
+		const auto* Actor = QueryItem.Get<0>();
+		auto* Impulse = QueryItem.Get<1>();
+		const auto Position = Actor->GetActorLocation();
+		const auto Direction = Actor->GetActorForwardVector();
+
+		auto Count = 0;
+		const auto Accum = Systems.Query<UImpulseComponent, UBoidComponent>()
+							   .Filter(
+								   [&](const auto& QueryItem)
+								   {
+									   const auto* OtherActor = QueryItem.Get<0>();
+									   const auto OtherPosition = OtherActor->GetActorLocation();
+
+									   return Actor != OtherActor &&
+										   IsInVisionSpace(Position,
+											   Direction,
+											   OtherPosition,
+											   PerceptionRange,
+											   VisibilityConeAngleDegrees);
+								   })
+							   .Map<FVector>(
+								   [&](const auto& QueryItem)
+								   {
+									   const auto* OtherActor = QueryItem.Get<0>();
+									   const auto* OtherImpulse = QueryItem.Get<1>();
+
+									   ++Count;
+									   return OtherImpulse->Value;
+								   })
+							   .Sum(FVector(0));
+
+		if (Count > 0)
 		{
-			const auto* Actor = QueryItem.Get<0>();
-			auto* Impulse = QueryItem.Get<1>();
-			const auto Position = Actor->GetActorLocation();
-			const auto Direction = Actor->GetActorForwardVector();
-
-			auto Count = 0;
-			const auto Accum = Systems.Query<UImpulseComponent, UBoidComponent>()
-								   .Filter(
-									   [&](const auto& QueryItem)
-									   {
-										   const auto* OtherActor = QueryItem.Get<0>();
-										   const auto OtherPosition =
-											   OtherActor->GetActorLocation();
-
-										   return Actor != OtherActor &&
-											   IsInVisionSpace(Position,
-												   Direction,
-												   OtherPosition,
-												   PerceptionRange,
-												   VisibilityConeAngleDegrees);
-									   })
-								   .Map<FVector>(
-									   [&](const auto& QueryItem)
-									   {
-										   const auto* OtherActor = QueryItem.Get<0>();
-										   const auto* OtherImpulse = QueryItem.Get<1>();
-
-										   ++Count;
-										   return OtherImpulse->Value;
-									   })
-								   .Sum(FVector(0));
-
-			if (Count > 0)
-			{
-				const auto Average = Accum / static_cast<float>(Count);
-				Impulse->Value += (Average - Impulse->Value) * AlignmentFactor;
-			}
-		});
+			const auto Average = Accum / static_cast<float>(Count);
+			Impulse->Value += (Average - Impulse->Value) * AlignmentFactor;
+		}
+	}
 }

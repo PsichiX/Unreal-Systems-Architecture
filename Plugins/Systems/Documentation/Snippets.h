@@ -91,52 +91,45 @@ void main()
 
 	if (Difference > 0)
 	{
-		Systems.Query<UBoidComponent>()
-			.Take(Difference)
-			.ForEach(
-				[](auto& QueryItem)
-				{
-					auto* Actor = QueryItem.Get<0>();
-
-					Actor->Destroy();
-				});
+		for (auto& QueryItem : Systems.Query<UBoidComponent>().Take(Difference))
+		{
+			auto* Actor = QueryItem.Get<0>();
+			Actor->Destroy();
+		}
 	}
 	//// [/snippet]
 
 	//// [snippet: systems_world_tagged_query]
-	Systems.TaggedQuery<UVelocityComponent>().With<UBoidComponent>().Iter().ForEach(
-		[](auto& QueryItem)
-		{
-			auto* Actor = QueryItem.Get<0>();
-			const auto* Velocity = QueryItem.Get<1>();
-			const auto Position = Actor->GetActorLocation();
+	for (auto& QueryItem : Systems.TaggedQuery<UVelocityComponent>().With<UBoidComponent>().Iter())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		const auto* Velocity = QueryItem.Get<1>();
+		const auto Position = Actor->GetActorLocation();
 
-			Actor->SetActorLocation(Position + Velocity->Value * DletaTime);
-		});
+		Actor->SetActorLocation(Position + Velocity->Value * DletaTime);
+	}
 	//// [/snippet]
 
 	//// [snippet: systems_world_bad_actors_query]
-	Systems.Actors().ForEach(
-		[](const auto* Actor)
+	for (const auto* Actor : Systems.Actors())
+	{
+		auto* ShiaActor = Cast<AShiaActor>(Actor);
+		if (IsValid(ShiaActor))
 		{
-			auto* ShiaActor = Cast<AShiaActor>(Actor);
-			if (IsValid(ShiaActor))
-			{
-				ShiaActor->JustDoit();
-			}
-		});
+			ShiaActor->JustDoit();
+		}
+	}
 	//// [/snippet]
 
 	//// [snippet: systems_world_good_components_query]
-	Systems.Query<UShiaComponent>().ForEach(
-		[](const auto* Actor)
+	for (const auto* Actor : Systems.Query<UShiaComponent>())
+	{
+		auto* ShiaActor = Cast<AShiaActor>(Actor);
+		if (IsValid(ShiaActor))
 		{
-			auto* ShiaActor = Cast<AShiaActor>(Actor);
-			if (IsValid(ShiaActor))
-			{
-				ShiaActor->JustDoit();
-			}
-		});
+			ShiaActor->JustDoit();
+		}
+	}
 	//// [/snippet]
 
 	//// [snippet: systems_world_count_raw]
@@ -232,12 +225,11 @@ void main()
 	//// [/snippet]
 
 	//// [snippet: iter_for_each]
-	IterRange(0, 9).ForEach(
-		[](const auto& Value)
-		{
-			const auto Squared = Value * Value;
-			UE_LOG(LogTemp, Warning, TEXT("Squared value: %i"), Squared);
-		});
+	for (const auto Value : IterRange(0, 9))
+	{
+		const auto Squared = Value * Value;
+		UE_LOG(LogTemp, Warning, TEXT("Squared value: %i"), Squared);
+	}
 	//// [/snippet]
 
 	//// [snippet: iter_any]
@@ -388,7 +380,10 @@ void main()
 	// [0, 1, 2, 3, 4]
 	TArray<int> Result = IterRange(0, 5).CollectArray();
 	// [0, 2, 4, 9, 16]
-	IterStd(Result).ForEach([](auto& Value) { Value = Value * Value; });
+	for (auto& Value : IterStd(Result))
+	{
+		Value = Value * Value;
+	}
 	//// [/snippet]
 
 	//// [snippet: iter_std_const]
@@ -620,15 +615,14 @@ void UBoidsMovementSystem::Run(USystemsWorld& Systems)
 	const auto TimeScale = BoidsSettings->TimeScale;
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds() * TimeScale;
 
-	Systems.Query<UVelocityComponent, UBoidComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Actor = QueryItem.Get<0>();
-			const auto* Velocity = QueryItem.Get<1>();
-			const auto Position = Actor->GetActorLocation();
+	for (auto& QueryItem : Systems.Query<UVelocityComponent, UBoidComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		const auto* Velocity = QueryItem.Get<1>();
+		const auto Position = Actor->GetActorLocation();
 
-			Actor->SetActorLocation(Position + Velocity->Value * DeltaTime);
-		});
+		Actor->SetActorLocation(Position + Velocity->Value * DeltaTime);
+	}
 }
 //// [/snippet]
 
@@ -638,17 +632,16 @@ void BoidsFaceDirectionSystem(USystemsWorld& Systems);
 
 void BoidsFaceDirectionSystem(USystemsWorld& Systems)
 {
-	Systems.Query<UVelocityComponent, UBoidComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Actor = QueryItem.Get<0>();
-			const auto* Velocity = QueryItem.Get<1>();
+	for (auto& QueryItem : Systems.Query<UVelocityComponent, UBoidComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		const auto* Velocity = QueryItem.Get<1>();
 
-			if (Velocity->Value.IsNearlyZero() == false)
-			{
-				Actor->SetActorRotation(Velocity->Value.Rotation());
-			}
-		});
+		if (Velocity->Value.IsNearlyZero() == false)
+		{
+			Actor->SetActorRotation(Velocity->Value.Rotation());
+		}
+	}
 }
 //// [/snippet]
 
@@ -729,56 +722,49 @@ void HuntSystem(USystemsWorld& Systems)
 	// treat it as database that we can query, also rather than putting logic
 	// into each object, we rather perform batched data processing on a set of
 	// requested components.
-	Systems
-		.Query<UPlayerComponent>()
-		// We use powerful lazy-iterators to ease our work on batched data
-		// processing. this one is one of many consumer iterators and it's job
-		// is to go through all yielded iterator values and make user do
-		// something useful with these, just like with regular for-in loops.
-		.ForEach(
-			[](auto& PlayerData)
-			{
-				// queries always yield tuple with actor that owns components
-				// requested for query, in addition to following components.
-				auto* PlayerActor = PlayerData.Get<0>();
-				const auto PlayerPosition = PlayerActor->GetActorLocation();
+	for (auto& PlayerData : Systems.Query<UPlayerComponent>())
+	{
+		// Queries always yield tuple with actor that owns components
+		// requested for query, in addition to following components.
+		auto* PlayerActor = PlayerData.Get<0>();
+		const auto PlayerPosition = PlayerActor->GetActorLocation();
 
-				const auto Nearest = Systems
-										 .Query<UEnemyComponent>()
-										 // mapping iterator is one of the most commonly used
-										 // types of iterators that transform data from one form
-										 // to another, usually to get exact information needed
-										 // by next iterators in chain, or to just process it and
-										 // collect the result.
-										 .Map<TTuple<FVector, float>>(
-											 [&](const auto& EnemyData)
-											 {
-												 const auto* EnemyActor = EnemyData.Get<0>();
-												 const auto EnemyPosition = EnemyActor->GetActorLocation();
-												 const auto Distance = FVector::Distance(PlayerPosition, EnemyPosition);
+		const auto Nearest = Systems
+								 .Query<UEnemyComponent>()
+								 // Mapping iterator is one of the most commonly used
+								 // types of iterators that transform data from one form
+								 // to another, usually to get exact information needed
+								 // by next iterators in chain, or to just process it and
+								 // collect the result.
+								 .Map<TTuple<FVector, float>>(
+									 [&](const auto& EnemyData)
+									 {
+										 const auto* EnemyActor = EnemyData.Get<0>();
+										 const auto EnemyPosition = EnemyActor->GetActorLocation();
+										 const auto Distance = FVector::Distance(PlayerPosition, EnemyPosition);
 
-												 return MakeTuple(EnemyPosition, Distance);
-											 })
-										 // finding the nearest enemy based on distance extracted
-										 // in previous iteration step.
-										 .ComparedBy(
-											 [](const auto& A, const auto& B)
-											 {
-												 const auto DistanceA = A.Get<1>();
-												 const auto DistanceB = B.Get<1>();
+										 return MakeTuple(EnemyPosition, Distance);
+									 })
+								 // Finding the nearest enemy based on distance extracted
+								 // in previous iteration step.
+								 .ComparedBy(
+									 [](const auto& A, const auto& B)
+									 {
+										 const auto DistanceA = A.Get<1>();
+										 const auto DistanceB = B.Get<1>();
 
-												 return DistanceA < DistanceB;
-											 });
+										 return DistanceA < DistanceB;
+									 });
 
-				if (Nearest.IsSet())
-				{
-					const auto TargetPosition = Nearest.GetValue().Get<0>();
-					const auto Direction = (TargetPosition - PlayerPosition).GetSafeNormal();
-					const auto Velocity = Direction * 100.0f * DeltaTime;
+		if (Nearest.IsSet())
+		{
+			const auto TargetPosition = Nearest.GetValue().Get<0>();
+			const auto Direction = (TargetPosition - PlayerPosition).GetSafeNormal();
+			const auto Velocity = Direction * 100.0f * DeltaTime;
 
-					PlayerActor->SetActorLocation(PlayerPosition + Velocity);
-				}
-			});
+			PlayerActor->SetActorLocation(PlayerPosition + Velocity);
+		}
+	}
 }
 
 UCLASS()
@@ -859,15 +845,14 @@ void MovementSystem(USystemsWorld& Systems)
 	const auto TimeScale = Settings->TimeScale;
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds() * TimeScale;
 
-	Systems.Query<UVelocityComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Actor = QueryItem.Get<0>();
-			const auto* Velocity = QueryItem.Get<1>();
-			const auto Position = Actor->GetActorLocation();
+	for (auto& QueryItem : Systems.Query<UVelocityComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		const auto* Velocity = QueryItem.Get<1>();
+		const auto Position = Actor->GetActorLocation();
 
-			Actor->SetActorLocation(Position + Velocity->Value * DeltaTime);
-		});
+		Actor->SetActorLocation(Position + Velocity->Value * DeltaTime);
+	}
 }
 //// [/snippet]
 
@@ -944,15 +929,14 @@ void MovementSystem(USystemsWorld& Systems)
 	const auto TimeScale = Settings->TimeScale;
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds() * TimeScale;
 
-	Systems.Query<UVelocityComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Actor = QueryItem.Get<0>();
-			const auto* Velocity = QueryItem.Get<1>();
-			const auto Position = Actor->GetActorLocation();
+	for (auto& QueryItem : Systems.Query<UVelocityComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		const auto* Velocity = QueryItem.Get<1>();
+		const auto Position = Actor->GetActorLocation();
 
-			Actor->SetActorLocation(Position + Velocity->Value * DeltaTime);
-		});
+		Actor->SetActorLocation(Position + Velocity->Value * DeltaTime);
+	}
 }
 //// [/snippet]
 

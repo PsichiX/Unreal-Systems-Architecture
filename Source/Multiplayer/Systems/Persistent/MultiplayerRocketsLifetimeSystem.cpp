@@ -15,16 +15,15 @@ void MultiplayerRocketsLifetimeSystem(USystemsWorld& Systems)
 
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 
-	Systems.Query<UMultiplayerRocketComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Actor = QueryItem.Get<0>();
-			auto* Rocket = QueryItem.Get<1>();
+	for (auto& QueryItem : Systems.Query<UMultiplayerRocketComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		auto* Rocket = QueryItem.Get<1>();
 
-			Rocket->LifetimeLeft -= DeltaTime;
-			if (Rocket->LifetimeLeft <= 0)
-			{
-				Commands->RequestedActorsToKill.Enqueue(Actor);
-			}
-		});
+		Rocket->LifetimeLeft -= DeltaTime;
+		if (Rocket->LifetimeLeft <= 0)
+		{
+			Commands->RequestedActorsToKill.Enqueue(Actor);
+		}
+	}
 }

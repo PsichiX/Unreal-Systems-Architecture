@@ -32,10 +32,9 @@ void SpawnFoodSystem(USystemsWorld& Systems, uint32 Amount)
 
 	const auto Box = BoxOpt.IsSet() ? BoxOpt.GetValue() : FBox(FVector(0), FVector(0));
 
-	IterRange<uint32>(0, Amount).ForEach(
-		[&](const auto Index)
-		{
-			const auto Position = FMath::RandPointInBox(Box);
-			Systems.GetWorld()->SpawnActor<AActor>(FoodClass, Position, FRotator());
-		});
+	for (const auto Index : IterRange<uint32>(0, Amount))
+	{
+		const auto Position = FMath::RandPointInBox(Box);
+		Systems.GetWorld()->SpawnActor<AActor>(FoodClass, Position, FRotator());
+	}
 }

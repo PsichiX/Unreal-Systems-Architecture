@@ -16,11 +16,9 @@ void AgingSystem(USystemsWorld& Systems)
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 	const auto TimePassed = Settings->TimeScale * DeltaTime;
 
-	Systems.Query<UAgeComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Age = QueryItem.Get<1>();
-
-			Age->Value += TimePassed;
-		});
+	for (auto& QueryItem : Systems.Query<UAgeComponent>())
+	{
+		auto* Age = QueryItem.Get<1>();
+		Age->Value += TimePassed;
+	}
 }

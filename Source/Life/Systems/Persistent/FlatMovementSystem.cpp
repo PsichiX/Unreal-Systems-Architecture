@@ -18,23 +18,22 @@ void FlatMovementSystem(USystemsWorld& Systems)
 	const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 	const auto TimePassed = Settings->TimeScale * DeltaTime;
 
-	Systems.Query<UFlatMovementComponent>().ForEach(
-		[&](auto& QueryItem)
+	for (auto& QueryItem : Systems.Query<UFlatMovementComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		auto* Movement = QueryItem.Get<1>();
+		auto Position = Actor->GetActorLocation() + FVector(Movement->Value, 0) * TimePassed;
+
+		FHitResult Hit;
+		if (Systems.GetWorld()->LineTraceSingleByChannel(Hit,
+				Position + FVector(0, 0, TRACE_RANGE),
+				Position - FVector(0, 0, TRACE_RANGE),
+				ECollisionChannel::ECC_GameTraceChannel1))
 		{
-			auto* Actor = QueryItem.Get<0>();
-			auto* Movement = QueryItem.Get<1>();
-			auto Position = Actor->GetActorLocation() + FVector(Movement->Value, 0) * TimePassed;
+			Position.Z = Hit.ImpactPoint.Z;
+		}
+		Actor->SetActorLocation(Position);
 
-			FHitResult Hit;
-			if (Systems.GetWorld()->LineTraceSingleByChannel(Hit,
-					Position + FVector(0, 0, TRACE_RANGE),
-					Position - FVector(0, 0, TRACE_RANGE),
-					ECollisionChannel::ECC_GameTraceChannel1))
-			{
-				Position.Z = Hit.ImpactPoint.Z;
-			}
-			Actor->SetActorLocation(Position);
-
-			Movement->Value = FVector2D(0);
-		});
+		Movement->Value = FVector2D(0);
+	}
 }

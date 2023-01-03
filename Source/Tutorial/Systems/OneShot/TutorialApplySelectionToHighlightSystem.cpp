@@ -7,13 +7,12 @@
 
 void TutorialApplySelectionToHighlightSystem(USystemsWorld& Systems)
 {
-	Systems.Query<UTutorialHighlightComponent>().ForEach(
-		[&](auto& QueryItem)
-		{
-			auto* Actor = QueryItem.Get<0>();
-			auto* Highlight = QueryItem.Get<1>();
-			const auto bIsSelected = IsValid(Systems.Component<UTutorialSelectedComponent>(Actor));
+	for (auto& QueryItem : Systems.Query<UTutorialHighlightComponent>())
+	{
+		auto* Actor = QueryItem.Get<0>();
+		auto* Highlight = QueryItem.Get<1>();
+		const auto bIsSelected = IsValid(Systems.Component<UTutorialSelectedComponent>(Actor));
 
-			Highlight->ApplyHighlighted(bIsSelected);
-		});
+		Highlight->ApplyHighlighted(bIsSelected);
+	}
 }
