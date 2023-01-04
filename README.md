@@ -102,15 +102,14 @@ in more functional way, using powerful lazy-iterators:
     {
         const auto DeltaTime = Systems.GetWorld()->GetDeltaSeconds();
 
-        Systems.Query<UVelocityComponent, UBoidComponent>().ForEach(
-            [&](auto& QueryItem)
-            {
-                auto* Actor = QueryItem.Get<0>();
-                const auto* Velocity = QueryItem.Get<1>();
-                const auto Position = Actor->GetActorLocation() + Velocity->Value * DeltaTime;
-
-                Actor->SetActorLocation(Position);
-            });
+        for(auto& QueryItem : Systems.Query<UVelocityComponent, UBoidComponent>())
+        {        
+            auto* Actor = QueryItem.Get<0>();
+            const auto* Velocity = QueryItem.Get<1>();
+            const auto Position = Actor->GetActorLocation() + Velocity->Value * DeltaTime;
+    
+            Actor->SetActorLocation(Position);
+        }
     }
     ```
 

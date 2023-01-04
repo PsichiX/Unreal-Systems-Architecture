@@ -1,6 +1,7 @@
 .vscode
 .ignore
 .vs
+.idea
 Binaries
 DerivedDataCache
 Intermediate
