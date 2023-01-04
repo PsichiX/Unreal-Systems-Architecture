@@ -11,6 +11,7 @@ Script
 Documentation/Distribution
 Content/Collections
 Content/Developers
+Plugins/Developer
 *.code-workspace
 *.pdb
 *.patch_*.*
