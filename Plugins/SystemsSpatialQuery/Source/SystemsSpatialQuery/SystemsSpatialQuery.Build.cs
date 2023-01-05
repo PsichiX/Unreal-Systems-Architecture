@@ -27,7 +27,6 @@ public class SystemsSpatialQuery : ModuleRules
             new string[]
             {
                 "Core",
-                "GeometryCore",
 				"Systems",
             }
         );
@@ -38,6 +37,7 @@ public class SystemsSpatialQuery : ModuleRules
             {
                 "CoreUObject",
                 "Engine",
+                "GeometryCore",
             }
         );
 
