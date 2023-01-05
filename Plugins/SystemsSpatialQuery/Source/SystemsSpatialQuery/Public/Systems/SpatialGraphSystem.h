@@ -4,7 +4,7 @@
 
 #include "Systems/Public/System.h"
 
-#include "ClosestSpatialGraphSystem.generated.h"
+#include "SpatialGraphSystem.generated.h"
 
 class USystemsWorld;
 class USpatialGraph;
@@ -48,7 +48,7 @@ public:
 	TEnumAsByte<ECollisionChannel> CollisionChannel = ECollisionChannel::ECC_WorldStatic;
 };
 
-/// Fills given graph with connections only between two closests spatial nodes.
+/// Fills given graph with efficient connections of spatial nodes.
 UCLASS(BlueprintType)
 class SYSTEMSSPATIALQUERY_API UClosestSpatialGraphSystem : public USystem
 {
@@ -79,6 +79,40 @@ private:
 	/// (rectangular or hexagonal grids for example - uniform structure is what matters).
 	UPROPERTY(EditAnywhere);
 	float CollisionCircumsphereTolerance = 0;
+
+	UPROPERTY(EditAnywhere, Export, Instanced);
+	TSet<TObjectPtr<USpatialGraphConnectionValidator>> ConnectionValidators = {};
+
+	/// Type of spatial graph resource to fill.
+	///
+	/// Since spatial graphs are resources, in case user wants to have more than one graph at
+	/// the same time, it's advised to create classes for each one and make them inherit
+	/// [`class: USpatialGraph`]().
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<USpatialGraph> ResourceType = {};
+
+	/// Set of additional components that has to be present in actors to make these actors
+	/// recognized by this system.
+	///
+	/// Useful when wanting to have multiple types of graphs, using components to tag selected
+	/// actors to be assigned to given graph.
+	UPROPERTY(EditAnywhere)
+	TSet<TSubclassOf<UActorComponent>> ExtraComponentTypes = {};
+};
+
+/// Fills given graph with connections produced by 2D Delaunay triangulation.
+UCLASS(BlueprintType)
+class SYSTEMSSPATIALQUERY_API UDelaunay2dSpatialGraphSystem : public USystem
+{
+	GENERATED_BODY()
+
+public:
+	virtual void Run(USystemsWorld& Systems) override;
+
+private:
+	/// Rebuilds given graph only if that graph resource has been marked as changed.
+	UPROPERTY(EditAnywhere);
+	bool bRebuildOnlyOnChange = false;
 
 	UPROPERTY(EditAnywhere, Export, Instanced);
 	TSet<TObjectPtr<USpatialGraphConnectionValidator>> ConnectionValidators = {};

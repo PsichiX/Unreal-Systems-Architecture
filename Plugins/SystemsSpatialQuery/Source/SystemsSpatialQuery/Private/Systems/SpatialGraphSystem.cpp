@@ -1,5 +1,6 @@
-#include "SystemsSpatialQuery/Public/Systems/ClosestSpatialGraphSystem.h"
+#include "SystemsSpatialQuery/Public/Systems/SpatialGraphSystem.h"
 
+#include "CompGeom/Delaunay2.h"
 #include "Systems/Public/SystemsWorld.h"
 #include "SystemsSpatialQuery/Public/Components/SpatialComponent.h"
 #include "SystemsSpatialQuery/Public/Resources/SpatialGraph.h"
@@ -92,10 +93,9 @@ void UClosestSpatialGraphSystem::Run(USystemsWorld& Systems)
 			{
 				continue;
 			}
-			const auto bIsValid = IterStdConst(this->ConnectionValidators)
-									  .All([&](const auto& Validator)
-										  { return Validator == false || Validator->Validate(Actor, Actor2); });
-			if (bIsValid)
+			if (IterStdConst(this->ConnectionValidators)
+					.All([&](const auto& Validator)
+						{ return Validator == false || Validator->Validate(Actor, Actor2); }))
 			{
 				Graph->Add(Actor, Actor2, true);
 				--Limit;
@@ -104,6 +104,67 @@ void UClosestSpatialGraphSystem::Run(USystemsWorld& Systems)
 					break;
 				}
 			}
+		}
+	}
+}
+
+void UDelaunay2dSpatialGraphSystem::Run(USystemsWorld& Systems)
+{
+	if (IsValid(this->ResourceType.Get()) == false)
+	{
+		return;
+	}
+	if (this->bRebuildOnlyOnChange && Systems.ResourceDidChangedRaw(this->ResourceType.Get()) == false)
+	{
+		return;
+	}
+	auto* Graph = Cast<USpatialGraph>(Systems.ResourceRaw(this->ResourceType.Get()));
+	if (IsValid(Graph) == false)
+	{
+		return;
+	}
+	const auto* Spatial = Systems.Resource<USpatialPartitioning>();
+	if (IsValid(Spatial) == false)
+	{
+		return;
+	}
+	Graph->Reset();
+	auto Query = Systems.TaggedQuery<USpatialComponent>();
+	for (const auto& Type : this->ExtraComponentTypes)
+	{
+		if (IsValid(Type.Get()))
+		{
+			Query.WithRaw(Type.Get());
+		}
+	}
+	const auto Actors =
+		Query.Iter().Map<AActor*>([](const auto& QueryItem) { return QueryItem.Get<0>(); }).CollectArray();
+	const auto Points =
+		Query.Iter()
+			.Map<FVector2d>([](const auto& QueryItem) { return FVector2d(QueryItem.Get<0>()->GetActorLocation()); })
+			.CollectArray();
+	UE::Geometry::FDelaunay2 Solver;
+	if (Solver.Triangulate(Points) == false)
+	{
+		return;
+	}
+	const auto Triangles = Solver.GetTriangles();
+	for (const auto& Triangle : Triangles)
+	{
+		auto* A = Actors[Triangle.A];
+		auto* B = Actors[Triangle.B];
+		auto* C = Actors[Triangle.C];
+		if (IterStdConst(this->ConnectionValidators)
+				.All(
+					[&](const auto& Validator)
+					{
+						return Validator == false ||
+							(Validator->Validate(A, B) && Validator->Validate(B, C) && Validator->Validate(C, A));
+					}))
+		{
+			Graph->Add(A, B, true);
+			Graph->Add(B, C, true);
+			Graph->Add(C, A, true);
 		}
 	}
 }

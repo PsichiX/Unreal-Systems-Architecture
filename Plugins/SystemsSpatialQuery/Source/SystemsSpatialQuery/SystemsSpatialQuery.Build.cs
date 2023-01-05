@@ -27,6 +27,7 @@ public class SystemsSpatialQuery : ModuleRules
             new string[]
             {
                 "Core",
+                "GeometryCore",
 				"Systems",
             }
         );
