@@ -46,7 +46,7 @@ public:
 		//// [/ignore]
 	}
 
-	/// Handy wrapper for [`class: Self::Next`]() for use in blueprints, where iteration can branch to `yielded` and
+	/// Handy wrapper for [`class: $Self$::Next`]() for use in blueprints, where iteration can branch to `yielded` and
 	/// `completed` execution nodes.
 	UFUNCTION(BlueprintCallable, Category = Systems, Meta = (ExpandEnumAsExecs = "Branches", DevelopmentOnly))
 	UObject* NextBranched(EDynamicIteratorNextBranch& Branches);

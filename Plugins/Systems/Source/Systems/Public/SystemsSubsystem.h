@@ -51,7 +51,7 @@ public:
 
 	/// Create, setup and register new systems world.
 	///
-	/// Blueprint-side version of [`class: Self::AcquireSystemsWorld`]().
+	/// Blueprint-side version of [`class: $Self$::AcquireSystemsWorld`]().
 	UFUNCTION(BlueprintCallable, Category = "Systems|Subsystem", Meta = (DisplayName = "Acquire Systems World"))
 	void BlueprintAcquireSystemsWorld(
 		/// Systems world ID.

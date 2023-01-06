@@ -38,7 +38,7 @@ public:
 	}
 
 	/// Registers this component to subsystem's systems worlds listed in
-	/// [`class: Self::SystemsWorlds`]().
+	/// [`class: $Self$::SystemsWorlds`]().
 	void SetRegistered(
 		/// If true, component gets registered, otherwise it gets unregistered.
 		bool bMode,
@@ -107,7 +107,7 @@ public:
 	}
 
 	/// Registers this component to subsystem's systems worlds listed in
-	/// [`class: Self::SystemsWorlds`]().
+	/// [`class: $Self$::SystemsWorlds`]().
 	void SetRegistered(
 		/// If true, component gets registered, otherwise it gets unregistered.
 		bool bMode,

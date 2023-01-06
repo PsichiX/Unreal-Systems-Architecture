@@ -31,7 +31,7 @@ public:
 
 	/// Gets actor component from globally registered systems world by its label.
 	///
-	/// This is a handy shortcut for [`class: Self::GetSystemsWorld`]() and then
+	/// This is a handy shortcut for [`class: $Self$::GetSystemsWorld`]() and then
 	/// [`class: USystemsWorld::ComponentRaw`]() on it.
 	UFUNCTION(BlueprintPure,
 		Category = "Systems|Components",
@@ -96,7 +96,7 @@ public:
 
 	/// Gets resource from globally registered systems world by its label.
 	///
-	/// This is a handy shortcut for [`class: Self::GetSystemsWorld`]() and then
+	/// This is a handy shortcut for [`class: $Self$::GetSystemsWorld`]() and then
 	/// [`class: USystemsWorld::ResourceRaw`]() on it.
 	UFUNCTION(BlueprintPure,
 		Category = "Systems|Resources",
@@ -114,7 +114,7 @@ public:
 
 	/// Gets resource from globally registered systems world by its label.
 	///
-	/// This is a handy template shortcut for [`class: Self::ResourceRaw`]().
+	/// This is a handy template shortcut for [`class: $Self$::ResourceRaw`]().
 	template <class T>
 	static T* GetResource(
 		/// Systems world ID.

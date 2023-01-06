@@ -91,13 +91,13 @@ class SYSTEMS_API USystemsPipeline : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	/// Creates new global systems world under [`class: Self::WorldId`]() name and
+	/// Creates new global systems world under [`class: $Self$::WorldId`]() name and
 	/// installs this pipeline content into that systems world.
 	void Install(
 		/// World that has running [`class: USystemsSubsystem`]().
 		UWorld* World) const;
 
-	/// Destroys systems world registered under [`class: Self::WorldId`]() name.
+	/// Destroys systems world registered under [`class: $Self$::WorldId`]() name.
 	void Uninstall(
 		/// World that has running [`class: USystemsSubsystem`]().
 		UWorld* World) const;
