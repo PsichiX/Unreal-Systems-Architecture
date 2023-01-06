@@ -6,7 +6,7 @@ function Format-Sources
         [string]$path
     )
 
-    Get-ChildItem "$path" -Recurse -Include *h, *.cpp | ForEach-Object {
+    Get-ChildItem "$path" -Recurse -Include *.h, *.cpp | ForEach-Object {
         Write-Output "- $_"
         clang-format -i "$_"
     }
