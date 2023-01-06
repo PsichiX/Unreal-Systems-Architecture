@@ -5791,7 +5791,7 @@ UObject* NextBranched(
 <li><strong>DevelopmentOnly</strong></li>
 </ul>
 <hr />
-<p>Handy wrapper for <strong><code>Self::Next</code></strong> for use in blueprints, where iteration can branch to <code>yielded</code> and
+<p>Handy wrapper for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/UDynamicIterator.html#next"><strong><code>UDynamicIterator::Next</code></strong></a> for use in blueprints, where iteration can branch to <code>yielded</code> and
 <code>completed</code> execution nodes.</p>
 <hr />
 <h1 id="arguments-82"><a class="header" href="#arguments-82"><strong>Arguments</strong></a></h1>
@@ -6350,7 +6350,7 @@ void SetRegistered(
 <details>
 <hr />
 <p>Registers this component to subsystem's systems worlds listed in
-<strong><code>Self::SystemsWorlds</code></strong>.</p>
+<a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.html#systemsworlds"><strong><code>USystemsActorComponent::SystemsWorlds</code></strong></a>.</p>
 <hr />
 <h1 id="arguments-89"><a class="header" href="#arguments-89"><strong>Arguments</strong></a></h1>
 <ul>
@@ -6504,7 +6504,7 @@ void Install(
 </code></pre>
 <details>
 <hr />
-<p>Creates new global systems world under <strong><code>Self::WorldId</code></strong> name and
+<p>Creates new global systems world under <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html#worldid"><strong><code>USystemsPipeline::WorldId</code></strong></a> name and
 installs this pipeline content into that systems world.</p>
 <hr />
 <h1 id="arguments-90"><a class="header" href="#arguments-90"><strong>Arguments</strong></a></h1>
@@ -6527,7 +6527,7 @@ void Uninstall(
 </code></pre>
 <details>
 <hr />
-<p>Destroys systems world registered under <strong><code>Self::WorldId</code></strong> name.</p>
+<p>Destroys systems world registered under <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html#worldid"><strong><code>USystemsPipeline::WorldId</code></strong></a> name.</p>
 <hr />
 <h1 id="arguments-91"><a class="header" href="#arguments-91"><strong>Arguments</strong></a></h1>
 <ul>
@@ -6635,7 +6635,7 @@ void SetRegistered(
 <details>
 <hr />
 <p>Registers this component to subsystem's systems worlds listed in
-<strong><code>Self::SystemsWorlds</code></strong>.</p>
+<a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsSceneComponent.html#systemsworlds"><strong><code>USystemsSceneComponent::SystemsWorlds</code></strong></a>.</p>
 <hr />
 <h1 id="arguments-92"><a class="header" href="#arguments-92"><strong>Arguments</strong></a></h1>
 <ul>
@@ -6800,7 +6800,7 @@ static UActorComponent* GetComponentRaw(
 </ul>
 <hr />
 <p>Gets actor component from globally registered systems world by its label.</p>
-<p>This is a handy shortcut for <strong><code>Self::GetSystemsWorld</code></strong> and then
+<p>This is a handy shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsStatics.html#getsystemsworld"><strong><code>USystemsStatics::GetSystemsWorld</code></strong></a> and then
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#componentraw"><strong><code>USystemsWorld::ComponentRaw</code></strong></a> on it.</p>
 <hr />
 <h1 id="arguments-95"><a class="header" href="#arguments-95"><strong>Arguments</strong></a></h1>
@@ -6844,7 +6844,7 @@ static T* GetResource(
 <details>
 <hr />
 <p>Gets resource from globally registered systems world by its label.</p>
-<p>This is a handy template shortcut for <strong><code>Self::ResourceRaw</code></strong>.</p>
+<p>This is a handy template shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsStatics.html#resourceraw"><strong><code>USystemsStatics::ResourceRaw</code></strong></a>.</p>
 <hr />
 <h1 id="arguments-96"><a class="header" href="#arguments-96"><strong>Arguments</strong></a></h1>
 <ul>
@@ -6889,7 +6889,7 @@ static UObject* GetResourceRaw(
 </ul>
 <hr />
 <p>Gets resource from globally registered systems world by its label.</p>
-<p>This is a handy shortcut for <strong><code>Self::GetSystemsWorld</code></strong> and then
+<p>This is a handy shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsStatics.html#getsystemsworld"><strong><code>USystemsStatics::GetSystemsWorld</code></strong></a> and then
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#resourceraw"><strong><code>USystemsWorld::ResourceRaw</code></strong></a> on it.</p>
 <hr />
 <h1 id="arguments-97"><a class="header" href="#arguments-97"><strong>Arguments</strong></a></h1>
@@ -7146,7 +7146,7 @@ void BlueprintAcquireSystemsWorld(
 </ul>
 <hr />
 <p>Create, setup and register new systems world.</p>
-<p>Blueprint-side version of <strong><code>Self::AcquireSystemsWorld</code></strong>.</p>
+<p>Blueprint-side version of <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.html#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a>.</p>
 <hr />
 <h1 id="arguments-101"><a class="header" href="#arguments-101"><strong>Arguments</strong></a></h1>
 <ul>
