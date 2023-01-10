@@ -101,3 +101,14 @@ void USystemsSceneComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 	SetRegistered(false, true);
 }
+
+void USystemsGroupComponent::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (IsValid(this->GetOwner()))
+	{
+		this->CachedComponents.Reset();
+		this->GetOwner()->GetComponents(this->Type, this->CachedComponents);
+	}
+}

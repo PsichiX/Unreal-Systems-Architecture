@@ -10,6 +10,25 @@
 
 #include "SystemsWorld.generated.h"
 
+//// [ignore]
+namespace SystemsWorld
+{
+using LambdaSystemType = void(USystemsWorld& Systems);
+using LambdaFactoryType = UObject*(UObject*);
+}	 // namespace SystemsWorld
+//// [/ignore]
+
+USTRUCT()
+struct SYSTEMS_API FProxyResource
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	UObject* Resource = nullptr;
+
+	TFunction<SystemsWorld::LambdaFactoryType> Accessor = {};
+};
+
 /// Set of options for installation of this system.
 ///
 /// It uses builder pattern to simplify setting options.
@@ -114,13 +133,11 @@ class SYSTEMS_API USystemsWorld : public UObject
 	friend struct FActorsIter;
 
 public:
-	using LambdaSystemType = void(ThisClass& Systems);
-
 	/// Seal registry and initialize installed systems.
 	///
 	/// Method called by: [`class: USystemsSubsystem::AcquireSystemsWorld`]().
 	///
-	/// When user doesn't use [`class: USystemsSubsystem`]() as global systems
+	/// When user does not use [`class: USystemsSubsystem`]() as global systems
 	/// world registry, or wants to handle systems world on their own, user
 	/// should call this method after systems world setup (registering
 	/// components, installation of systems and resources) and then call this
@@ -239,6 +256,57 @@ public:
 		//// [/ignore]
 	}
 
+	/// Register proxy resource object.
+	///
+	/// Proxy resources are typically some wrapper objects inner resource we
+	/// want to access instead of the wrapper one.
+	/// Basically it does the same what [`class: $Self$::InstallResourceRaw`]()
+	/// does, except it allows user to provide unpacking of its inner content.
+	///
+	/// # Return
+	/// True if resource was successfully installed (registry is not sealed).
+	///
+	/// # Example
+	/// ```snippet
+	/// proxy_resource_class
+	/// ```
+	/// ```snippet
+	/// systems_world_install_proxy_resource_raw
+	/// ```
+	bool InstallProxyResourceRaw(
+		/// Resource object to get registered and managed by this systems world.
+		const UClass* Type,
+		/// Wrapper resource object.
+		UObject* Resource,
+		/// Accessor function that unpacks wrapper object to get its inner resource.
+		TFunction<SystemsWorld::LambdaFactoryType> Accessor);
+
+	/// Register proxy resource object.
+	///
+	/// Handy shortcut for [`class: USystemsWorld::InstallProxyResourceRaw`]()
+	///
+	/// # Return
+	/// True if resource was successfully installed (registry is not sealed).
+	///
+	/// # Example
+	/// ```snippet
+	/// proxy_resource_class
+	/// ```
+	/// ```snippet
+	/// systems_world_install_proxy_resource
+	/// ```
+	template <class T>
+	bool InstallProxyResource(
+		/// Wrapper resource object.
+		UObject* Resource,
+		/// Accessor function that unpacks wrapper object to get its inner resource.
+		TFunction<SystemsWorld::LambdaFactoryType> Accessor)
+	{
+		//// [ignore]
+		return InstallProxyResourceRaw(T::StaticClass(), Resource, Accessor);
+		//// [/ignore]
+	}
+
 	/// Install system.
 	///
 	/// Usually user would want to install systems using either
@@ -336,11 +404,16 @@ public:
 		/// # Note
 		/// > `LambdaSystemType` should comply to given signature:
 		/// `void(USystemsWorld&)`
-		TFunction<LambdaSystemType>&& Functor,
+		TFunction<SystemsWorld::LambdaSystemType>&& Functor,
 		/// System install options.
 		FInstallSystemOptions Options = FInstallSystemOptions());
 
 	/// Tries to get pointer to resource by its class.
+	///
+	/// See:
+	/// - [`class: $Self$::InstallResourceRaw`]().
+	/// - [`class: $Self$::InstallResource`]().
+	/// - [`class: $Self$::InstallDefaultResource`]().
 	///
 	/// # Return
 	/// Pointer to resource or `nullptr` in case resource does not exist in
@@ -356,6 +429,11 @@ public:
 		const UClass* Type);
 
 	/// Tries to get pointer to resource by its type.
+	///
+	/// See:
+	/// - [`class: $Self$::InstallResourceRaw`]().
+	/// - [`class: $Self$::InstallResource`]().
+	/// - [`class: $Self$::InstallDefaultResource`]().
 	///
 	/// # Return
 	/// Pointer to resource or `nullptr` in case resource does not exist in
@@ -373,16 +451,56 @@ public:
 		//// [/ignore]
 	}
 
+	/// Tries to get pointer to proxy resource by its type.
+	///
+	/// See:
+	/// - [`class: $Self$::InstallProxyResourceRaw`]().
+	/// - [`class: $Self$::InstallProxyResource`]().
+	///
+	/// # Return
+	/// Pointer to proxy resource or `nullptr` in case resource does not exist in
+	/// registry.
+	///
+	/// # Example
+	/// ```snippet
+	/// systems_world_proxy_resource_raw
+	/// ```
+	UObject* ProxyResourceRaw(
+		/// Resource type.
+		const UClass* Type);
+
+	/// Tries to get pointer to proxy resource by its type.
+	///
+	/// See:
+	/// - [`class: $Self$::InstallProxyResourceRaw`]().
+	/// - [`class: $Self$::InstallProxyResource`]().
+	///
+	/// # Return
+	/// Pointer to proxy resource or `nullptr` in case resource does not exist in
+	/// registry.
+	///
+	/// # Example
+	/// ```snippet
+	/// systems_world_proxy_resource
+	/// ```
+	template <typename T>
+	T* ProxyResource()
+	{
+		//// [ignore]
+		return Cast<T>(ProxyResourceRaw(T::StaticClass()));
+		//// [/ignore]
+	}
+
 	/// Add actor component to registry.
 	///
 	/// Called in [`class: USystemsActorComponent::BeginPlay`]() and
-	/// [`class:USystemsSceneComponent::BeginPlay`]() methods so user doesn't
+	/// [`class:USystemsSceneComponent::BeginPlay`]() methods so user does not
 	/// have to, but in case of user dynamically removing actor component to
 	/// achieve support for behavior toggling, adding components back to
 	/// registry can be achieved with this method.
 	///
 	/// # Note
-	/// > Actor components are not registered immediatelly to avoid undefined
+	/// > Actor components are not registered immediately to avoid undefined
 	/// behavior or even game crashes when performing this while iterating
 	/// over systems world queries - rather they ar queued and registered
 	/// after all systems complete their run on current game tick.
@@ -402,13 +520,13 @@ public:
 	/// Remove actor component from registry.
 	///
 	/// Called in [`class: USystemsActorComponent::EndPlay`]() and
-	/// [`class:USystemsSceneComponent::EndPlay`]() methods so user doesn't have
+	/// [`class:USystemsSceneComponent::EndPlay`]() methods so user does not have
 	/// to, but in case of user dynamically adding actor component to achieve
 	/// support for behavior toggling, removing components from registry can be
 	/// achieved with this method.
 	///
 	/// # Note
-	/// > Actor components are not unregistered immediatelly to avoid undefined
+	/// > Actor components are not unregistered immediately to avoid undefined
 	/// behavior or eve game crashes when performing this while iterating
 	/// over systems world queries - rather the are queued and unregistered
 	/// after all systems complete their run on current game tick.
@@ -430,7 +548,7 @@ public:
 	/// Useful if user wants to create reactive systems and/or UI that should
 	/// only trigger when given resource changes. The reason why user has to
 	/// manually mark resources as changed is for optimizations purposes, to
-	/// mark deliberate changes in resources instead of markin them
+	/// mark deliberate changes in resources instead of marking them
 	/// automatically, to avoid a lot of boilerplate of that automation, when
 	/// most of the times systems and UI do not require to ask for changes.
 	///
@@ -459,7 +577,7 @@ public:
 	/// Returns a set of unique type IDs of all resources that changed in last
 	/// game tick.
 	///
-	/// Useful for more advanced usecases where user needs to ask for all
+	/// Useful for more advanced use cases where user needs to ask for all
 	/// changes anyway and compare them with some cached set of previously
 	/// stored changes.
 	const TSet<uint32>& LastChangedResources() const
@@ -473,14 +591,14 @@ public:
 	///
 	/// # Note
 	/// > This will mark component type, not component instance, as changed. The
-	/// need for component iinstance here is purely to ensure we do not mark
+	/// need for component instance here is purely to ensure we do not mark
 	/// components we do not have access to.
 	UFUNCTION(BlueprintCallable, Category = Systems)
 	void MarkComponentChanged(UActorComponent* Component);
 
 	/// Returns signature of component types that changed during last game tick.
 	///
-	/// Useful for more usecases where user needs to cache and perform more
+	/// Useful for more use cases where user needs to cache and perform more
 	/// advanced change detection between game ticks.
 	UFUNCTION()
 	const FArchetypeSignature& LastChangedComponents() const
@@ -626,7 +744,7 @@ public:
 	/// components.
 	///
 	/// The difference between [`struct: TQuery`]() is that tagged queries
-	/// allows to request existance of additional components on actor, ones that
+	/// allows to request existence of additional components on actor, ones that
 	/// are not required for query to access - useful when user do not require
 	/// any data of given components.
 	///
@@ -678,10 +796,10 @@ public:
 	/// with [`class: USystemsWorld::Query`]().
 	///
 	/// The only use case i can think of is when user needs to for example count
-	/// all registered actors, but there are other usecases which can definitely
+	/// all registered actors, but there are other use cases which can definitely
 	/// be solved with regular component queries.
 	///
-	/// Common usecase that would be wrong to query actors would be:
+	/// Common use case that would be wrong to query actors would be:
 	/// ```snippet
 	/// systems_world_bad_actors_query
 	/// ```
@@ -716,7 +834,7 @@ public:
 	/// # Note
 	/// > For example if requested signature is: `<A, B>` and there are actors:
 	/// `1: A, B, C` and `2: A, C` then only actor `1: A, B, C` gets counted
-	/// since only this one contains entirel requested signature.
+	/// since only this one contains entire requested signature.
 	UFUNCTION()
 	uint32 CountRaw(
 		/// Archetype signature with minimal set of components that counted
@@ -787,7 +905,7 @@ public:
 	/// Get component registry index.
 	///
 	/// Useful when working directly with [`struct: FArchetypeSignature`](), but
-	/// user most likely won't have any high-level usecase for that.
+	/// user most likely won't have any high-level use case for that.
 	///
 	/// For getting component index by its class use: [`class:
 	/// USystemsWorld::ComponentTypeIndex`]()
@@ -800,7 +918,7 @@ public:
 	/// Get component registry index.
 	///
 	/// Useful when working directly with [`struct: FArchetypeSignature`](), but
-	/// user most likely won't have any high-level usecase for that.
+	/// user most likely won't have any high-level use case for that.
 	///
 	/// For getting component index by component: [`class:
 	/// USystemsWorld::ComponentIndex`]()
@@ -809,7 +927,7 @@ public:
 	/// Get archetype signature of given set of components.
 	///
 	/// Useful when working directly with [`struct: FArchetypeSignature`](), but
-	/// user most likely won't have any high-level usecase for that.
+	/// user most likely won't have any high-level use case for that.
 	FArchetypeSignature ComponentsSignature(const TArrayView<UActorComponent*>& View) const;
 
 	FArchetypeSignature ComponentsIdsSignature(const TArrayView<uint32>& View) const;
@@ -843,6 +961,9 @@ private:
 
 	UPROPERTY()
 	TMap<uint32, UObject*> Resources = {};
+
+	UPROPERTY()
+	TMap<uint32, FProxyResource> ProxyResources = {};
 
 	UPROPERTY()
 	uint32 ComponentTypes[SYSTEMS_COMPONENTS_COUNT] = {0};

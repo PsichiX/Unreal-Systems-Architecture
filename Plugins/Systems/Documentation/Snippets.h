@@ -52,6 +52,17 @@ void main()
 	Systems.InstallResource<UInventory>();
 	//// [/snippet]
 
+	//// [snippet: systems_world_install_proxy_resource_raw]
+	Systems.InstallProxyResourceRaw(UInventory::StaticClass(),
+		NewObject<UInventoryWrapper>(Systems, UInventoryWrapper::StaticClass()),
+		[](auto* Wrapper) { return Wrapper->GeneratedInventory; });
+	//// [/snippet]
+
+	//// [snippet: systems_world_install_proxy_resource]
+	auto* Wrapper = NewObject<UInventoryWrapper>(Systems, UInventoryWrapper::StaticClass());
+	Systems.InstallProxyResource<UInventory>(Wrapper, [](auto* Wrapper) { return Wrapper->GeneratedInventory; });
+	//// [/snippet]
+
 	//// [snippet: systems_world_install_system_raw]
 	Systems.InstallSystemRaw(
 		NewObject<USomeSystem>(Systems, USomeSystem::StaticClass()), FInstallSystemOptions("Something"));
@@ -66,15 +77,21 @@ void main()
 	//// [/snippet]
 
 	//// [snippet: systems_world_resource_raw]
-	auto* Inventory = Cast<UInventory>(Systems.ResourceRaw());
-	if (IsValid(Inventory))
-	{
-		Inventory->AddItem(FItem{FItemType::Sword});
-	}
+	auto* Inventory = Cast<UInventory>(Systems.ResourceRaw(UInventory::StaticClass()));
+	Inventory->AddItem(FItem{FItemType::Sword});
 	//// [/snippet]
 
 	//// [snippet: systems_world_resource]
 	Systems.Resource<UInventory>()->AddItem(FItem{FItemType::Sword});
+	//// [/snippet]
+
+	//// [snippet: systems_world_proxy_resource_raw]
+	auto* Inventory = Cast<UInventory>(Systems.ProxyResourceRaw(UInventory::StaticClass()));
+	Inventory->AddItem(FItem{FItemType::Sword});
+	//// [/snippet]
+
+	//// [snippet: systems_world_proxy_resource]
+	Systems.ProxyResource<UInventory>()->AddItem(FItem{FItemType::Sword});
 	//// [/snippet]
 
 	//// [snippet: systems_world_component_raw]
@@ -457,6 +474,18 @@ void main()
 	}
 	//// [/snippet]
 }
+
+//// [snippet: proxy_resource_class]
+UCLASS()
+class EXAMPLE_API UInventoryWrapper : public UDataAsset
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	UInventory* GeneratedInventory = nullptr;
+};
+//// [/snippet]
 
 //// [snippet: subsystem_game_instance]
 UCLASS()

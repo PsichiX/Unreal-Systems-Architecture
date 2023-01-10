@@ -4,6 +4,7 @@
 
 #include "Components/ActorComponent.h"
 #include "Components/SceneComponent.h"
+#include "Iterator/Std.h"
 
 #include "SystemsComponent.generated.h"
 
@@ -88,7 +89,7 @@ private:
 /// Base class for systems scene components.
 ///
 ///	This is scene component equivalent to [`class: USystemsActorComponent`]() -
-/// scene componets are useful where given component should have transformation
+/// scene components are useful where given component should have transformation
 /// relative to actor.
 UCLASS(BlueprintType, Blueprintable, Abstract, Meta = (BlueprintSpawnableComponent))
 class SYSTEMS_API USystemsSceneComponent : public USceneComponent
@@ -152,4 +153,55 @@ protected:
 private:
 	UPROPERTY(EditAnywhere, Category = "Systems|Component|Scene")
 	bool bRegister = true;
+};
+
+/// Component that groups actor components of certain type.
+///
+/// The point of this component is to allow Systems World to have a single point of
+/// iteration on more than one component of given type, which is not possible to do
+/// by default in Systems Architecture, because queries are single-typed.
+///
+/// This is useful mostly for cases where actor might have multiple components of
+/// same type which we would like to iterate on.
+///
+/// # Note
+/// > Since queries require concrete type for each component, it's best to create
+/// classes per each components group type and make them inherit this class, so
+/// you register that specialized group type into Systems World and use same
+/// specialized group type in component queries.
+UCLASS()
+class SYSTEMS_API USystemsGroupComponent : public USystemsActorComponent
+{
+	GENERATED_BODY()
+
+public:
+	/// Gives iterator that yields grouped components that casts to `T`.
+	template <typename T>
+	auto Iter()
+	{
+		//// [ignore]
+		return IterStd(this->CachedComponents)
+			.Map<T>([](auto* Component) { return Cast<T>(Component); })
+			.Filter([](const auto* Component) { return IsValid(Component); });
+		//// [/ignore]
+	}
+
+	/// Gives iterator that yields grouped components that has `Tag` tag and casts to `T`.
+	template <typename T>
+	auto TagIter(FName Tag)
+	{
+		//// [ignore]
+		return Iter<T>().Filter([Tag](const auto* Component) { return Component->ComponentHasTag(Tag); });
+		//// [/ignore]
+	}
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UActorComponent> Type = {};
+
+	UPROPERTY(EditAnywhere)
+	TArray<UActorComponent*> CachedComponents = {};
 };

@@ -21,7 +21,7 @@ public:
 		/// Unique name for given system function.
 		FName Name,
 		/// Reference to system function.
-		TFunction<USystemsWorld::LambdaSystemType> Callback);
+		TFunction<SystemsWorld::LambdaSystemType> Callback);
 
 	/// Unregister system function under given name.
 	void Unregister(
@@ -34,12 +34,12 @@ public:
 		TArray<FString>& Result) const;
 
 	/// Find system function by name.
-	TOptional<TFunction<USystemsWorld::LambdaSystemType>> FindByName(
+	TOptional<TFunction<SystemsWorld::LambdaSystemType>> FindByName(
 		/// Unique name for given system function.
 		FName Name) const;
 
 private:
-	TMap<FName, TFunction<USystemsWorld::LambdaSystemType>> Registry = {};
+	TMap<FName, TFunction<SystemsWorld::LambdaSystemType>> Registry = {};
 
 	mutable FCriticalSection CriticalSection = {};
 };

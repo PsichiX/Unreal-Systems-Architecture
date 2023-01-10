@@ -6,6 +6,23 @@
 
 #include "SystemsPipeline.generated.h"
 
+UCLASS(Abstract, EditInlineNew)
+class USystemsPipelineProxyResource : public UObject
+{
+	GENERATED_BODY()
+
+public:
+	virtual TFunction<SystemsWorld::LambdaFactoryType> Factory() const
+	{
+		//// [ignore]
+		return [](UObject* Object) { return Object; };
+		//// [/ignore]
+	}
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<const UClass> Type = {};
+};
+
 /// Pipeline component descriptor.
 USTRUCT(BlueprintType)
 struct SYSTEMS_API FSystemsPipelineComponent
@@ -44,6 +61,17 @@ struct SYSTEMS_API FSystemsPipelineResource
 	/// pipeline (quick tests).
 	UPROPERTY(EditAnywhere, Category = "Options")
 	bool bUse = true;
+
+	/// Optionally mark this resource as proxy one for given type.
+	///
+	/// Useful to unpack wrapper resources and get their inner content that match
+	/// requested proxy resource type.
+	///
+	/// # Note
+	/// > It doesn't affect type resources since proxy resources are mean to unpack
+	/// complex asset data such as asset hubs or similar, where outer type isn't unique.
+	UPROPERTY(EditAnywhere, Export, Instanced, Category = "Options")
+	TObjectPtr<USystemsPipelineProxyResource> Proxy = {};
 
 	/// Tells if this resource should be stored in global storage when pipeline
 	/// gets uninstalled and restored from global storage when pipeline gets installed.

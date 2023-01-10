@@ -72,7 +72,14 @@ void USystemsPipeline::Install(UWorld* World) const
 					continue;
 				}
 #endif
-				Systems.InstallResourceRaw(Pair.Key);
+				if (Pair.Value.Proxy && Pair.Value.Proxy->Type)
+				{
+					Systems.InstallProxyResourceRaw(Pair.Value.Proxy->Type, Pair.Key, Pair.Value.Proxy->Factory());
+				}
+				else
+				{
+					Systems.InstallResourceRaw(Pair.Key);
+				}
 			}
 
 			for (const auto& Data : this->PersistentSystemsToInstall)

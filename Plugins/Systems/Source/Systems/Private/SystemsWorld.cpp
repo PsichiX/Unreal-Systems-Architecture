@@ -76,6 +76,20 @@ bool USystemsWorld::InstallDefaultResource(const UClass* Type)
 	return InstallResourceRaw(NewObject<UObject>(this, Type));
 }
 
+bool USystemsWorld::InstallProxyResourceRaw(const UClass* Type,
+	UObject* Resource,
+	TFunction<UObject*(UObject*)> Accessor)
+{
+	if (this->bSealed || IsValid(Resource) == false)
+	{
+		return false;
+	}
+	const auto Id = Type->GetUniqueID();
+	this->ProxyResources.Add(Id, {Resource, Accessor});
+	this->ResourcesBeingChanged.Add(Id);
+	return true;
+}
+
 bool USystemsWorld::InstallSystemRaw(USystem* System, FInstallSystemOptions Options)
 {
 	if (this->bSealed || IsValid(System) == false ||
@@ -139,7 +153,8 @@ bool USystemsWorld::InstallDefaultSystem(const UClass* Type, FInstallSystemOptio
 	return InstallSystemRaw(NewObject<USystem>(this, Type), MoveTempIfPossible(Options));
 }
 
-bool USystemsWorld::InstallLambdaSystem(TFunction<ThisClass::LambdaSystemType>&& Functor, FInstallSystemOptions Options)
+bool USystemsWorld::InstallLambdaSystem(TFunction<SystemsWorld::LambdaSystemType>&& Functor,
+	FInstallSystemOptions Options)
 {
 	auto* System = NewObject<ULambdaSystem>();
 	if (IsValid(System))
@@ -161,6 +176,21 @@ UObject* USystemsWorld::ResourceRaw(const UClass* Type)
 	if (Found != nullptr)
 	{
 		return *Found;
+	}
+	return nullptr;
+}
+
+UObject* USystemsWorld::ProxyResourceRaw(const UClass* Type)
+{
+	if (this->bSealed == false || IsValid(Type) == false)
+	{
+		return nullptr;
+	}
+	const auto Id = Type->GetUniqueID();
+	const auto* Found = this->ProxyResources.Find(Id);
+	if (Found != nullptr && IsValid(Found->Resource))
+	{
+		return Found->Accessor(Found->Resource);
 	}
 	return nullptr;
 }
