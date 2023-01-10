@@ -6,7 +6,7 @@
 
 #include "SystemsPipeline.generated.h"
 
-UCLASS(Abstract, EditInlineNew)
+UCLASS(Abstract, BlueprintType, Blueprintable, EditInlineNew)
 class USystemsPipelineProxyResource : public UObject
 {
 	GENERATED_BODY()
@@ -61,31 +61,36 @@ struct SYSTEMS_API FSystemsPipelineResource
 	/// pipeline (quick tests).
 	UPROPERTY(EditAnywhere, Category = "Options")
 	bool bUse = true;
+};
 
-	/// Optionally mark this resource as proxy one for given type.
-	///
-	/// Useful to unpack wrapper resources and get their inner content that match
-	/// requested proxy resource type.
-	///
-	/// # Note
-	/// > It doesn't affect type resources since proxy resources are mean to unpack
-	/// complex asset data such as asset hubs or similar, where outer type isn't unique.
-	UPROPERTY(EditAnywhere, Export, Instanced, Category = "Options")
-	TObjectPtr<USystemsPipelineProxyResource> Proxy = {};
+/// Pipeline type resource descriptor.
+USTRUCT(BlueprintType)
+struct SYSTEMS_API FSystemsPipelineTypeResource : public FSystemsPipelineResource
+{
+	GENERATED_BODY()
 
 	/// Tells if this resource should be stored in global storage when pipeline
 	/// gets uninstalled and restored from global storage when pipeline gets installed.
 	///
 	/// Useful to transfer resources between persistent maps, like player username
 	/// typed in main menu and used in game world, or after mission ends, score gets
-	/// transfered to main menu for display.
-	///
-	/// # Note
-	/// > It doesn't affect asset resources since they have "global" lifetime anyway,
-	/// no need to pass them between systems world other way than just using same
-	/// reference in shared systems worlds.
+	/// transferred to main menu for display.
 	UPROPERTY(EditAnywhere, Category = "Options")
 	bool bUseGlobalStorage = false;
+};
+
+/// Pipeline asset resource descriptor.
+USTRUCT(BlueprintType)
+struct SYSTEMS_API FSystemsPipelineAssetResource : public FSystemsPipelineResource
+{
+	GENERATED_BODY()
+
+	/// Optionally mark this resource as proxy one for given type.
+	///
+	/// Useful to unpack wrapper resources and get their inner content that match
+	/// requested proxy resource type.
+	UPROPERTY(EditAnywhere, Export, Instanced, Category = "Options")
+	TObjectPtr<USystemsPipelineProxyResource> Proxy = {};
 };
 
 /// Pipeline system descriptor.
@@ -138,13 +143,13 @@ public:
 	///
 	/// Usually these are used as game managers.
 	UPROPERTY(EditAnywhere, Category = "Resources|Types")
-	TMap<TSubclassOf<UObject>, FSystemsPipelineResource> TypeResourcesToInstall = {};
+	TMap<TSubclassOf<UObject>, FSystemsPipelineTypeResource> TypeResourcesToInstall = {};
 
 	/// Asset resources to be registered into systems world.
 	///
 	/// Usually these are used as settings/config data sources.
 	UPROPERTY(EditAnywhere, Category = "Resources|Assets")
-	TMap<TObjectPtr<UDataAsset>, FSystemsPipelineResource> AssetResourcesToInstall = {};
+	TMap<TObjectPtr<UDataAsset>, FSystemsPipelineAssetResource> AssetResourcesToInstall = {};
 
 	/// System templates to instantiate and run on systems world creation.
 	///
