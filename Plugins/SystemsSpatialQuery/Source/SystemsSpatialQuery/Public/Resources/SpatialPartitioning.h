@@ -4,16 +4,16 @@
 
 #include "Systems/Public/ArchetypeSignature.h"
 #include "Systems/Public/Iterator.h"
+#include "Systems/Public/SystemsWorld.h"
 
 #include "SpatialPartitioning.generated.h"
 
-class USystemsWorld;
 class USpatialPartitioningSettings;
 struct FSpatialNode;
 struct FSpatialLeafs;
 
 UENUM(BlueprintType)
-enum class ESpatialPreferedPlane : uint8
+enum class ESpatialPreferredPlane : uint8
 {
 	None = 0b000 UMETA(Hidden),
 	X = 0b001 UMETA(Hidden),
@@ -54,12 +54,12 @@ struct SYSTEMSSPATIALQUERY_API FArea
 
 	bool Overlaps(FVector Center, FVector::FReal Radius) const;
 
-	ESpatialPreferedPlane SubdividePreferedAxis(ESpatialPreferedPlane PreferedPlane) const;
+	ESpatialPreferredPlane SubdividePreferredAxis(ESpatialPreferredPlane PreferredPlane) const;
 
 	void Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
 		FVector Center,
 		uint32 Capacity,
-		ESpatialPreferedPlane PreferedPlane) const;
+		ESpatialPreferredPlane PreferredPlane) const;
 
 	UPROPERTY(EditAnywhere)
 	FVector Lower = FVector(0);
@@ -104,8 +104,8 @@ struct FSpatialNodeClosest
 
 struct FSpatialNode
 {
-	FSpatialNode(FArea InArea, uint32 Capacity, ESpatialPreferedPlane InPreferedPlane)
-		: Area(InArea), Signature({}), Count(0), PreferedPlane(InPreferedPlane)
+	FSpatialNode(FArea InArea, uint32 Capacity, ESpatialPreferredPlane InPreferredPlane)
+		: Area(InArea), Signature({}), Count(0), PreferredPlane(InPreferredPlane)
 	{
 		this->Content.Set<FSpatialActors>(Capacity);
 	}
@@ -141,7 +141,7 @@ struct FSpatialNode
 
 	uint32 Count = 0;
 
-	ESpatialPreferedPlane PreferedPlane = ESpatialPreferedPlane::Any;
+	ESpatialPreferredPlane PreferredPlane = ESpatialPreferredPlane::Any;
 };
 
 struct FSpatialQueryLimitsNone
@@ -362,7 +362,7 @@ class SYSTEMSSPATIALQUERY_API USpatialPartitioning : public UObject
 	GENERATED_BODY()
 
 public:
-	void Reset(const FArea& Area, uint32 Capacity, ESpatialPreferedPlane PreferedPlane = ESpatialPreferedPlane::Any);
+	void Reset(const FArea& Area, uint32 Capacity, ESpatialPreferredPlane PreferredPlane = ESpatialPreferredPlane::Any);
 
 	uint32 GetCount() const;
 
@@ -442,7 +442,7 @@ public:
 	FArea CoverWorldArea = {};
 
 	UPROPERTY(EditAnywhere);
-	ESpatialPreferedPlane PreferedSubdivisionPlane = ESpatialPreferedPlane::Any;
+	ESpatialPreferredPlane PreferredSubdivisionPlane = ESpatialPreferredPlane::Any;
 
 	UPROPERTY(EditAnywhere)
 	bool bRebuildOnlyOnChange = false;
