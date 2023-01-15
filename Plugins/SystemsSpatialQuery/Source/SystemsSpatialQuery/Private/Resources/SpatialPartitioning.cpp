@@ -486,7 +486,7 @@ bool USpatialPartitioning::FindActorsTriangleContaining(TSet<TObjectPtr<AActor>>
 	auto* Second = SecondItem.GetValue().Get<0>();
 	const auto FirstPos = FVector2d(First->GetActorLocation());
 	const auto SecondPos = FVector2d(Second->GetActorLocation());
-	const auto bExpectedSide = FVector2d::CrossProduct(SecondPos - FirstPos, Position2d) >= 0.0;
+	const auto bExpectedSide = FVector2d::CrossProduct(SecondPos - FirstPos, Position2d - FirstPos) >= 0.0;
 	while (const auto ThirdItem = Iter.Next())
 	{
 		auto* Third = ThirdItem.GetValue().Get<0>();
@@ -495,17 +495,17 @@ bool USpatialPartitioning::FindActorsTriangleContaining(TSet<TObjectPtr<AActor>>
 			continue;
 		}
 		const auto ThirdPos = FVector2d(Third->GetActorLocation());
-		auto bSide = FVector2d::CrossProduct(SecondPos - FirstPos, ThirdPos) >= 0.0;
+		auto bSide = FVector2d::CrossProduct(SecondPos - FirstPos, ThirdPos - FirstPos) >= 0.0;
 		if (bSide != bExpectedSide)
 		{
 			continue;
 		}
-		bSide = FVector2d::CrossProduct(ThirdPos - SecondPos, Position2d) >= 0.0;
+		bSide = FVector2d::CrossProduct(ThirdPos - SecondPos, Position2d - SecondPos) >= 0.0;
 		if (bSide != bExpectedSide)
 		{
 			continue;
 		}
-		bSide = FVector2d::CrossProduct(FirstPos - ThirdPos, Position2d) >= 0.0;
+		bSide = FVector2d::CrossProduct(FirstPos - ThirdPos, Position2d - ThirdPos) >= 0.0;
 		if (bSide != bExpectedSide)
 		{
 			continue;
