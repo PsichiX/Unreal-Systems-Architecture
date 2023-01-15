@@ -27,7 +27,7 @@ public:
 
 	void Unset(const TObjectPtr<AActor>& Actor, FName Id);
 
-	void Clear(const TObjectPtr<AActor>& Actor);
+	void UnsetAll(const TObjectPtr<AActor>& Actor);
 
 	void Reset();
 

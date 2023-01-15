@@ -31,7 +31,7 @@ void USpatialInformation::Unset(const TObjectPtr<AActor>& Actor, FName Id)
 	}
 }
 
-void USpatialInformation::Clear(const TObjectPtr<AActor>& Actor)
+void USpatialInformation::UnsetAll(const TObjectPtr<AActor>& Actor)
 {
 	auto* Point = this->Points.Find(Actor);
 	if (Point != nullptr)
