@@ -23,7 +23,8 @@ void SpatialPartitioningSystem(USystemsWorld& Systems)
 	auto* Partitioning = Systems.Resource<USpatialPartitioning>();
 	if (IsValid(Partitioning))
 	{
-		Partitioning->Reset(Settings->CoverWorldArea, Settings->CellActorsCapacity, Settings->PreferredSubdivisionPlane);
+		Partitioning->Reset(
+			Settings->CoverWorldArea, Settings->CellActorsCapacity, Settings->PreferredSubdivisionPlane);
 		for (auto& QueryItem : Systems.Query<USpatialComponent>())
 		{
 			auto* Actor = QueryItem.Get<0>();

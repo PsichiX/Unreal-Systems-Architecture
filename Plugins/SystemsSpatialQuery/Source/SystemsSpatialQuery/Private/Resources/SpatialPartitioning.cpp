@@ -1,5 +1,6 @@
 #include "SystemsSpatialQuery/Public/Resources/SpatialPartitioning.h"
 
+#include "Components/SpatialComponent.h"
 #include "Systems/Public/SystemsWorld.h"
 
 FVector FArea::Center() const
@@ -465,6 +466,56 @@ TObjectPtr<AActor> USpatialPartitioning::FindClosestActor(FVector Position,
 		}
 	}
 	return {};
+}
+
+bool USpatialPartitioning::FindActorsTriangleContaining(TSet<TObjectPtr<AActor>>& Result,
+	FVector Position,
+	USystemsWorld& Systems,
+	TFunction<bool(AActor*)> Validator) const
+{
+	const auto Position2d = FVector2d(Position);
+	auto Iter = Query<USpatialComponent>(Systems, Position)
+					.Filter([&](const auto& QueryItem) { return Validator(QueryItem.Get<0>()); });
+	const auto FirstItem = Iter.Next();
+	const auto SecondItem = Iter.Next();
+	if (FirstItem.IsSet() == false || SecondItem.IsSet() == false)
+	{
+		return false;
+	}
+	auto* First = FirstItem.GetValue().Get<0>();
+	auto* Second = SecondItem.GetValue().Get<0>();
+	const auto FirstPos = FVector2d(First->GetActorLocation());
+	const auto SecondPos = FVector2d(Second->GetActorLocation());
+	const auto bExpectedSide = FVector2d::CrossProduct(SecondPos - FirstPos, Position2d) >= 0.0;
+	while (const auto ThirdItem = Iter.Next())
+	{
+		auto* Third = ThirdItem.GetValue().Get<0>();
+		if (Validator(Third) == false)
+		{
+			continue;
+		}
+		const auto ThirdPos = FVector2d(Third->GetActorLocation());
+		auto bSide = FVector2d::CrossProduct(SecondPos - FirstPos, ThirdPos) >= 0.0;
+		if (bSide != bExpectedSide)
+		{
+			continue;
+		}
+		bSide = FVector2d::CrossProduct(ThirdPos - SecondPos, Position2d) >= 0.0;
+		if (bSide != bExpectedSide)
+		{
+			continue;
+		}
+		bSide = FVector2d::CrossProduct(FirstPos - ThirdPos, Position2d) >= 0.0;
+		if (bSide != bExpectedSide)
+		{
+			continue;
+		}
+		Result.Add(First);
+		Result.Add(Second);
+		Result.Add(Third);
+		return true;
+	}
+	return false;
 }
 
 void USpatialPartitioning::ForEachArea(const TFunction<void(const FArea&, bool)> Callback) const

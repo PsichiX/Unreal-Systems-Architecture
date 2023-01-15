@@ -47,7 +47,7 @@ void USpatialInformation::Reset()
 
 double USpatialInformation::Sample(const FVector& Position,
 	FName Id,
-	const TArray<TObjectPtr<AActor>>& Actors,
+	const TSet<TObjectPtr<AActor>>& Actors,
 	double Default) const
 {
 	struct FMetaInformation

@@ -379,6 +379,11 @@ public:
 
 	TObjectPtr<AActor> FindClosestActor(FVector Position, const TFunction<bool(AActor*)>& Validator = {}) const;
 
+	bool FindActorsTriangleContaining(TSet<TObjectPtr<AActor>>& Result,
+		FVector Position,
+		USystemsWorld& Systems,
+		TFunction<bool(AActor*)> Validator = {}) const;
+
 	void ForEachArea(const TFunction<void(const FArea&, bool)> Callback) const;
 
 	template <class... T>

@@ -33,7 +33,7 @@ public:
 
 	double Sample(const FVector& Position,
 		FName Id,
-		const TArray<TObjectPtr<AActor>>& Actors,
+		const TSet<TObjectPtr<AActor>>& Actors,
 		double Default = 0.0) const;
 
 	auto Iter(const TObjectPtr<AActor>& Actor) const
