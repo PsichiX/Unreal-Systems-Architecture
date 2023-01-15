@@ -47,42 +47,27 @@ void USpatialInformation::Reset()
 	this->Points.Reset();
 }
 
-double USpatialInformation::SampleNearest(const FVector& Position,
+double USpatialInformation::Sample(const FVector& Position,
 	FName Id,
-	uint32 ProbesCount,
-	USystemsWorld& Systems,
-	const USpatialPartitioning& Partitioning,
+	const TArray<TObjectPtr<AActor>>& Actors,
 	double Default) const
 {
 	struct FMetaInformation
 	{
 		double Value = 0.0;
-		FVector Position = FVector(0.0);
 		double Distance = 0.0;
 	};
 
-	auto Values = Partitioning.Query<USpatialComponent>(Systems, Position)
-					  .FilterMap<FMetaInformation>(
-						  [&](const auto& QueryItem)
-						  {
-							  auto* Actor = QueryItem.Get<0>();
-							  const auto* Point = this->Points.Find(Actor);
-							  if (Point == nullptr)
-							  {
-								  return TOptional<FMetaInformation>();
-							  }
-							  const auto* Value = Point->Values.Find(Id);
-							  FMetaInformation Result = {};
-							  if (Value != nullptr)
-							  {
-								  Result.Value = *Value;
-								  Result.Position = Actor->GetActorLocation();
-								  Result.Distance = QueryItem.Get<1>();
-							  }
-							  return TOptional(Result);
-						  })
-					  .Take(ProbesCount)
-					  .CollectArray();
+	TArray<FMetaInformation> Values = {};
+	Values.Reserve(Actors.Num());
+	for (const auto& Actor : Actors)
+	{
+		const auto Location = Actor->GetActorLocation();
+		const auto Distance = FVector::Distance(Position, Location);
+		const auto ValueOpt = Get(Actor, Id);
+		const auto Value = ValueOpt.IsSet() ? ValueOpt.GetValue() : Default;
+		Values.Add({Value, Distance});
+	}
 	if (Values.Num() <= 0)
 	{
 		return Default;
