@@ -1,8 +1,6 @@
 ﻿#include "SystemsSpatialQuery/Public/Resources/SpatialInformation.h"
 
-#include "Systems/Public/SystemsWorld.h"
 #include "SystemsSpatialQuery/Public/Components/SpatialComponent.h"
-#include "SystemsSpatialQuery/Public/Resources/SpatialPartitioning.h"
 
 TOptional<double> USpatialInformation::Get(const TObjectPtr<AActor>& Actor, FName Id) const
 {

@@ -6,9 +6,6 @@
 
 #include "SpatialInformation.generated.h"
 
-class USpatialPartitioning;
-class USystemsWorld;
-
 USTRUCT(BlueprintType)
 struct SYSTEMSSPATIALQUERY_API FSpatialInformationPoint
 {
