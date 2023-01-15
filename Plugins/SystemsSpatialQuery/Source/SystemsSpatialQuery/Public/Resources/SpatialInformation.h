@@ -34,8 +34,9 @@ public:
 
 	void Reset();
 
-	double SampleTriangle(const FVector& Position,
+	double SampleNearest(const FVector& Position,
 		FName Id,
+		uint32 ProbesCount,
 		USystemsWorld& Systems,
 		const USpatialPartitioning& Partitioning,
 		double Default = 0.0) const;

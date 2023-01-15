@@ -47,49 +47,59 @@ void USpatialInformation::Reset()
 	this->Points.Reset();
 }
 
-double USpatialInformation::SampleTriangle(const FVector& Position,
+double USpatialInformation::SampleNearest(const FVector& Position,
 	FName Id,
+	uint32 ProbesCount,
 	USystemsWorld& Systems,
 	const USpatialPartitioning& Partitioning,
 	double Default) const
 {
-	struct Meta
+	struct FMetaInformation
 	{
 		double Value = 0.0;
-		AActor* Actor = nullptr;
+		FVector Position = FVector(0.0);
+		double Distance = 0.0;
 	};
 
-	const auto Values = Partitioning.Query<USpatialComponent>(Systems, Position)
-							.FilterMap<Meta>(
-								[&](const auto& QueryItem)
-								{
-									auto* Actor = QueryItem.Get<0>();
-									const auto* Point = this->Points.Find(Actor);
-									if (Point == nullptr)
-									{
-										return TOptional<Meta>();
-									}
-									const auto* Value = Point->Values.Find(Id);
-									Meta Result = {};
-									if (Value != nullptr)
-									{
-										Result.Value = *Value;
-										Result.Actor = Actor;
-									}
-									return TOptional(Result);
-								})
-							.Take(3)
-							.CollectArray();
-	if (Values.Num() == 3)
+	auto Values = Partitioning.Query<USpatialComponent>(Systems, Position)
+					  .FilterMap<FMetaInformation>(
+						  [&](const auto& QueryItem)
+						  {
+							  auto* Actor = QueryItem.Get<0>();
+							  const auto* Point = this->Points.Find(Actor);
+							  if (Point == nullptr)
+							  {
+								  return TOptional<FMetaInformation>();
+							  }
+							  const auto* Value = Point->Values.Find(Id);
+							  FMetaInformation Result = {};
+							  if (Value != nullptr)
+							  {
+								  Result.Value = *Value;
+								  Result.Position = Actor->GetActorLocation();
+								  Result.Distance = QueryItem.Get<1>();
+							  }
+							  return TOptional(Result);
+						  })
+					  .Take(ProbesCount)
+					  .CollectArray();
+	if (Values.Num() <= 0)
 	{
+		return Default;
 	}
-	else if (Values.Num() == 2)
-	{
-		// return FMath::Lerp(Values[0].Value, Values[1].Value);
-	}
-	else if (Values.Num() == 1)
+	if (Values.Num() == 1)
 	{
 		return Values[0].Value;
 	}
-	return Default;
+	const auto MaxDistance = IterStdConst(Values).Fold<double>(
+		0.0, [](const auto Accum, const auto& Meta) { return FMath::Max(Accum, Meta.Distance); });
+	auto TotalWeight = 0.0;
+	auto Result = 0.0;
+	for (const auto& Meta : Values)
+	{
+		const auto Weight = FMath::Clamp(1.0 - (Meta.Distance / MaxDistance), 0.0, 1.0);
+		TotalWeight += Weight;
+		Result += Meta.Value * Weight;
+	}
+	return Result / TotalWeight;
 }
