@@ -36,7 +36,12 @@ public:
 		const TSet<TObjectPtr<AActor>>& Actors,
 		double Default = 0.0) const;
 
-	auto Iter(const TObjectPtr<AActor>& Actor) const
+	auto PointsIter() const
+	{
+		return IterStdConst(this->Points).Map<TObjectPtr<AActor>>([](const auto& Pair) { return Pair.Key; });
+	}
+
+	auto PointIter(const TObjectPtr<AActor>& Actor) const
 	{
 		static TMap<FName, double> EMPTY = {};
 		auto& Result = EMPTY;

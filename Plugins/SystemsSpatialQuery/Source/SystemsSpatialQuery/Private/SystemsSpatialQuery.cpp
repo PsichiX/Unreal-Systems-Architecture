@@ -1,7 +1,7 @@
 #include "SystemsSpatialQuery/Public/SystemsSpatialQuery.h"
 
 #include "Systems/Public/SystemsReflection.h"
-#include "SystemsSpatialQuery/Public/Systems/SpatialpartitioningSystem.h"
+#include "SystemsSpatialQuery/Public/Systems/SpatialPartitioningSystem.h"
 
 #define LOCTEXT_NAMESPACE "FSystemsSpatialQueryModule"
 #define SYSTEMS_NAMESPACE "SystemsSpatialQuery"
