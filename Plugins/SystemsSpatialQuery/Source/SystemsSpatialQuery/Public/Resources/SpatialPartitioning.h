@@ -16,9 +16,9 @@ UENUM(BlueprintType)
 enum class ESpatialPreferredPlane : uint8
 {
 	None = 0b000 UMETA(Hidden),
-	X = 0b001 UMETA(Hidden),
-	Y = 0b010 UMETA(Hidden),
-	Z = 0b100 UMETA(Hidden),
+	X = 0b001,
+	Y = 0b010,
+	Z = 0b100,
 	XY = 0b011,
 	YZ = 0b110,
 	ZX = 0b101,
@@ -56,7 +56,7 @@ struct SYSTEMSSPATIALQUERY_API FArea
 
 	ESpatialPreferredPlane SubdividePreferredAxis(ESpatialPreferredPlane PreferredPlane) const;
 
-	void Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
+	bool Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
 		FVector Center,
 		uint32 Capacity,
 		ESpatialPreferredPlane PreferredPlane) const;

@@ -50,71 +50,49 @@ bool FArea::Overlaps(FVector Center, FVector::FReal Radius) const
 
 ESpatialPreferredPlane FArea::SubdividePreferredAxis(ESpatialPreferredPlane PreferredPlane) const
 {
-	if (PreferredPlane == ESpatialPreferredPlane::None || PreferredPlane == ESpatialPreferredPlane::X ||
-		PreferredPlane == ESpatialPreferredPlane::Y || PreferredPlane == ESpatialPreferredPlane::Z)
+	if (PreferredPlane == ESpatialPreferredPlane::None)
 	{
 		return ESpatialPreferredPlane::None;
+	}
+	if (PreferredPlane == ESpatialPreferredPlane::X || PreferredPlane == ESpatialPreferredPlane::Y ||
+		PreferredPlane == ESpatialPreferredPlane::Z)
+	{
+		return PreferredPlane;
 	}
 	const auto Dim = Dimensions();
 	if (PreferredPlane == ESpatialPreferredPlane::XY)
 	{
-		if (Dim.X > Dim.Y)
-		{
-			return ESpatialPreferredPlane::X;
-		}
-		else
-		{
-			return ESpatialPreferredPlane::Y;
-		}
+		return Dim.X >= Dim.Y ? ESpatialPreferredPlane::X : ESpatialPreferredPlane::Y;
 	}
-	else if (PreferredPlane == ESpatialPreferredPlane::YZ)
+	if (PreferredPlane == ESpatialPreferredPlane::YZ)
 	{
-		if (Dim.Y > Dim.Z)
-		{
-			return ESpatialPreferredPlane::Y;
-		}
-		else
-		{
-			return ESpatialPreferredPlane::Z;
-		}
+		return Dim.Y >= Dim.Z ? ESpatialPreferredPlane::Y : ESpatialPreferredPlane::Z;
 	}
-	else if (PreferredPlane == ESpatialPreferredPlane::ZX)
+	if (PreferredPlane == ESpatialPreferredPlane::ZX)
 	{
-		if (Dim.Z > Dim.X)
-		{
-			return ESpatialPreferredPlane::Z;
-		}
-		else
-		{
-			return ESpatialPreferredPlane::X;
-		}
+		return Dim.Z >= Dim.X ? ESpatialPreferredPlane::Z : ESpatialPreferredPlane::X;
 	}
-	else if (PreferredPlane == ESpatialPreferredPlane::Any)
+	if (Dim.X >= Dim.Y && Dim.X >= Dim.Z)
 	{
-		if (Dim.X > Dim.Y && Dim.X > Dim.Z)
-		{
-			return ESpatialPreferredPlane::X;
-		}
-		else if (Dim.Y > Dim.Z && Dim.Y > Dim.X)
-		{
-			return ESpatialPreferredPlane::Y;
-		}
-		else
-		{
-			return ESpatialPreferredPlane::Z;
-		}
+		return ESpatialPreferredPlane::X;
+	}
+	if (Dim.Y >= Dim.Z && Dim.Y >= Dim.X)
+	{
+		return ESpatialPreferredPlane::Y;
+	}
+	if (Dim.Z >= Dim.X && Dim.Z >= Dim.Y)
+	{
+		return ESpatialPreferredPlane::Z;
 	}
 	return ESpatialPreferredPlane::None;
 }
 
-void FArea::Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
+bool FArea::Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
 	FVector Center,
 	uint32 Capacity,
 	ESpatialPreferredPlane PreferredPlane) const
 {
 	const auto Axis = SubdividePreferredAxis(PreferredPlane);
-	ensure(Axis != ESpatialPreferredPlane::None);
-
 	if (Axis == ESpatialPreferredPlane::X)
 	{
 		Result[0] = MakeUnique<FSpatialNode>(FArea(FVector(this->Lower.X, this->Lower.Y, this->Lower.Z),
@@ -125,8 +103,9 @@ void FArea::Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
 												 FVector(this->Upper.X, this->Upper.Y, this->Upper.Z)),
 			Capacity,
 			PreferredPlane);
+		return true;
 	}
-	else if (Axis == ESpatialPreferredPlane::Y)
+	if (Axis == ESpatialPreferredPlane::Y)
 	{
 		Result[0] = MakeUnique<FSpatialNode>(FArea(FVector(this->Lower.X, this->Lower.Y, this->Lower.Z),
 												 FVector(this->Upper.X, Center.Y, this->Upper.Z)),
@@ -136,8 +115,9 @@ void FArea::Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
 												 FVector(this->Upper.X, this->Upper.Y, this->Upper.Z)),
 			Capacity,
 			PreferredPlane);
+		return true;
 	}
-	else
+	if (Axis == ESpatialPreferredPlane::Z)
 	{
 		Result[0] = MakeUnique<FSpatialNode>(FArea(FVector(this->Lower.X, this->Lower.Y, this->Lower.Z),
 												 FVector(this->Upper.X, this->Upper.Y, Center.Z)),
@@ -147,7 +127,9 @@ void FArea::Subdivide(TUniquePtr<FSpatialNode> (&Result)[2],
 												 FVector(this->Upper.X, this->Upper.Y, this->Upper.Z)),
 			Capacity,
 			PreferredPlane);
+		return true;
 	}
+	return false;
 }
 
 FSpatialLeafs::FSpatialLeafs(TUniquePtr<FSpatialNode> (&&InLeafs)[2]) : Leafs()
@@ -179,42 +161,42 @@ bool FSpatialNode::Add(TObjectPtr<AActor> Actor, FArchetypeSignature InSignature
 			++this->Count;
 			return true;
 		}
-		else
+		auto Center = Actor->GetActorLocation();
+		auto Num = 1;
+		for (const auto& Current : Data.Actors)
 		{
-			auto Center = Actor->GetActorLocation();
-			auto Num = 1;
-			for (const auto& Current : Data.Actors)
+			if (Current)
 			{
-				if (Current)
-				{
-					Center += Current->GetActorLocation();
-					++Num;
-				}
+				Center += Current->GetActorLocation();
+				++Num;
 			}
-			Center /= Num;
-			TUniquePtr<FSpatialNode> Leafs[2];
-			this->Area.Subdivide(Leafs, Center, Data.Actors.Max(), this->PreferredPlane);
-			while (Data.Actors.Num() > 0)
-			{
-				const auto Current = Data.Actors[0];
-				Data.Actors.RemoveAtSwap(0, 1, false);
-				if (Current == false)
-				{
-					continue;
-				}
-				const auto Location = Current->GetActorLocation();
-				for (auto Index = 0; Index < 2; ++Index)
-				{
-					auto& Leaf = Leafs[Index];
-					if (Leaf->Area.Contains(Location))
-					{
-						Leaf->Add(Current, InSignature);
-						break;
-					}
-				}
-			}
-			this->Content.Set<FSpatialLeafs>(MoveTemp(Leafs));
 		}
+		Center /= Num;
+		TUniquePtr<FSpatialNode> Leafs[2];
+		if (this->Area.Subdivide(Leafs, Center, Data.Actors.Max(), this->PreferredPlane) == false)
+		{
+			return false;
+		}
+		while (Data.Actors.Num() > 0)
+		{
+			const auto Current = Data.Actors[0];
+			Data.Actors.RemoveAtSwap(0, 1, false);
+			if (Current == false)
+			{
+				continue;
+			}
+			const auto Location = Current->GetActorLocation();
+			for (auto Index = 0; Index < 2; ++Index)
+			{
+				auto& Leaf = Leafs[Index];
+				if (Leaf->Area.Contains(Location))
+				{
+					Leaf->Add(Current, InSignature);
+					break;
+				}
+			}
+		}
+		this->Content.Set<FSpatialLeafs>(MoveTemp(Leafs));
 	}
 	if (this->Content.IsType<FSpatialLeafs>())
 	{
