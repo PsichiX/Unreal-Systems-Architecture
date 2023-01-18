@@ -181,7 +181,7 @@ public:
 	{
 		//// [ignore]
 		return IterStd(this->CachedComponents)
-			.Map<T>([](auto* Component) { return Cast<T>(Component); })
+			.Map<T*>([](auto* Component) { return Cast<T>(Component); })
 			.Filter([](const auto* Component) { return IsValid(Component); });
 		//// [/ignore]
 	}
@@ -202,6 +202,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UActorComponent> Type = {};
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	TArray<UActorComponent*> CachedComponents = {};
 };
