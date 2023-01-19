@@ -94,3 +94,19 @@ bool USpatialDiscretization::HasTriangle(const FSpatialDiscretizationTriangle& T
 {
 	return this->Triangles.Contains(Triangle);
 }
+
+TArray<TTuple<TObjectPtr<AActor>, double>> USpatialDiscretization::TriangleActorWeightsForPoint(
+	const FVector2D& Point) const
+{
+	const auto Found =
+		IterStdConst(this->Triangles).Find([&](const auto& Triangle) { return Triangle.ContainsPoint(Point); });
+	if (Found.IsSet())
+	{
+		const auto& Triangle = Found.GetValue();
+		const auto Barycentric = Triangle.ToBarycentric(Point);
+		return {MakeTuple(Triangle.A, Barycentric.X),
+			MakeTuple(Triangle.B, Barycentric.Y),
+			MakeTuple(Triangle.C, Barycentric.Z)};
+	}
+	return {};
+}

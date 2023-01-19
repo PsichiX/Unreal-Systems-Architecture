@@ -66,6 +66,8 @@ public:
 			.Filter([&](const auto& Triangle) { return Triangle.ContainsPoint(Point); });
 	}
 
+	TArray<TTuple<TObjectPtr<AActor>, double>> TriangleActorWeightsForPoint(const FVector2D& Point) const;
+
 private:
 	UPROPERTY()
 	TSet<FSpatialDiscretizationTriangle> Triangles = {};
