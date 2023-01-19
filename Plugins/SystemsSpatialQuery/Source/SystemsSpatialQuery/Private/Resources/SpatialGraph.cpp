@@ -10,10 +10,15 @@ bool FSpatialGraphConnection::Equals(const FSpatialGraphConnection& Other) const
 	return this->From == Other.From && this->To == Other.To;
 }
 
-void USpatialGraph::Reset(uint32 NodesCapacity, uint32 ConnectionsCapacity)
+uint32 GetTypeHash(const FSpatialGraphConnection& Value)
 {
-	this->Nodes.Reset(NodesCapacity);
-	this->Connections.Reset(ConnectionsCapacity);
+	return HashCombine(GetTypeHash(Value.From), GetTypeHash(Value.To));
+}
+
+void USpatialGraph::Reset()
+{
+	this->Nodes.Reset();
+	this->Connections.Reset();
 }
 
 void USpatialGraph::Add(const TObjectPtr<AActor>& From, const TObjectPtr<AActor>& To, bool bBidirectional)
@@ -22,12 +27,12 @@ void USpatialGraph::Add(const TObjectPtr<AActor>& From, const TObjectPtr<AActor>
 	{
 		return;
 	}
-	const auto FromIndex = static_cast<uint32>(this->Nodes.AddUnique(From));
-	const auto ToIndex = static_cast<uint32>(this->Nodes.AddUnique(To));
-	this->Connections.AddUnique(FSpatialGraphConnection{FromIndex, ToIndex});
+	this->Nodes.Add(From);
+	this->Nodes.Add(To);
+	this->Connections.Add(FSpatialGraphConnection{From, To});
 	if (bBidirectional)
 	{
-		this->Connections.AddUnique(FSpatialGraphConnection{ToIndex, FromIndex});
+		this->Connections.Add(FSpatialGraphConnection{To, From});
 	}
 }
 
@@ -44,19 +49,11 @@ bool USpatialGraph::HasConnection(const TObjectPtr<AActor>& From,
 	{
 		return false;
 	}
-	const auto FoundFrom = this->Nodes.Find(From);
-	const auto FoundTo = this->Nodes.Find(To);
-	if (FoundFrom < 0 || FoundTo < 0)
-	{
-		return false;
-	}
-	const auto FromIndex = static_cast<uint32>(FoundFrom);
-	const auto ToIndex = static_cast<uint32>(FoundTo);
-	if (this->Connections.Contains(FSpatialGraphConnection{FromIndex, ToIndex}))
+	if (this->Connections.Contains(FSpatialGraphConnection{From, To}))
 	{
 		return true;
 	}
-	if (bBidirectional && this->Connections.Contains(FSpatialGraphConnection{ToIndex, FromIndex}))
+	if (bBidirectional && this->Connections.Contains(FSpatialGraphConnection{To, From}))
 	{
 		return true;
 	}
