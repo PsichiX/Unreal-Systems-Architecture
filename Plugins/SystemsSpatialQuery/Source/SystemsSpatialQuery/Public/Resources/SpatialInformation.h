@@ -37,6 +37,8 @@ class SYSTEMSSPATIALQUERY_API USpatialInformation : public UObject
 public:
 	TOptional<double> Get(const TObjectPtr<AActor>& Actor, FName Id) const;
 
+	double GetOrDefault(const TObjectPtr<AActor>& Actor, FName Id) const;
+
 	void Set(const TObjectPtr<AActor>& Actor, FName Id, double Value);
 
 	void Accumulate(const TObjectPtr<AActor>& Actor, FName Id, double RelativeValue);

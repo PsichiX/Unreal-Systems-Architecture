@@ -16,6 +16,12 @@ TOptional<double> USpatialInformation::Get(const TObjectPtr<AActor>& Actor, FNam
 	return {};
 }
 
+double USpatialInformation::GetOrDefault(const TObjectPtr<AActor>& Actor, FName Id) const
+{
+	const auto Value = Get(Actor, Id);
+	return Value.IsSet() ? Value.GetValue() : 0.0;
+}
+
 void USpatialInformation::Set(const TObjectPtr<AActor>& Actor, FName Id, double Value)
 {
 	this->Points.FindOrAdd(Actor).Values.FindOrAdd(Id).Value = Value;
@@ -63,8 +69,7 @@ double USpatialInformation::Sample(const FVector& Position, FName Id, const TSet
 	{
 		const auto Location = Actor->GetActorLocation();
 		const auto Distance = FVector::Distance(Position, Location);
-		const auto ValueOpt = Get(Actor, Id);
-		const auto Value = ValueOpt.IsSet() ? ValueOpt.GetValue() : 0.0;
+		const auto Value = GetOrDefault(Actor, Id);
 		Values.Add({Value, Distance});
 	}
 	if (Values.Num() <= 0)

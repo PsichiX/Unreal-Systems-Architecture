@@ -14,6 +14,10 @@ struct SYSTEMSSPATIALQUERY_API FSpatialPropagationSettings
 {
 	GENERATED_BODY()
 
+	/// Speed of propagation in Unreal spatial units per second.
+	UPROPERTY(EditAnywhere)
+	double Speed = 100.0;
+
 	UPROPERTY(EditAnywhere)
 	double DampingFactor = 0.0;
 };

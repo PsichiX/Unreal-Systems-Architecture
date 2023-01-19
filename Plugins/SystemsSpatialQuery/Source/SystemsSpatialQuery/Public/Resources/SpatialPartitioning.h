@@ -193,23 +193,23 @@ public:
 		, ExcludeSignature()
 		, Visited()
 	{
-		if (IsValid(Systems) && IsValid(Partitioning))
+		if (IsValid(this->Systems) && IsValid(this->Partitioning))
 		{
 			const UClass* Types[] = {T::StaticClass()...};
 			for (const auto* Type : Types)
 			{
-				IncludeType(Systems, Type);
+				IncludeType(this->Systems, Type);
 			}
 		}
 	}
 
 	TOptional<Item> Next()
 	{
-		if (IsValid(Systems) == false || IsValid(Partitioning) == false)
+		if (IsValid(this->Systems) == false || IsValid(this->Partitioning) == false)
 		{
 			return {};
 		}
-		auto Found = Partitioning->FindClosestActor(this->Position,
+		auto Found = this->Partitioning->FindClosestActor(this->Position,
 			[&](auto* Actor)
 			{
 				if (this->Visited.Contains(Actor))

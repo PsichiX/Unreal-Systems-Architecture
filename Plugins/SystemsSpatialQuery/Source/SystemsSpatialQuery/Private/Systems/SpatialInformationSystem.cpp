@@ -25,12 +25,17 @@ void USpatialInformationSystem::Run(USystemsWorld& Systems)
 			continue;
 		}
 		auto& PointTo = Information->Points.FindOrAdd(To);
+		const auto Distance = FVector::Distance(From->GetActorLocation(), To->GetActorLocation());
+		const auto Count = Graph->NeighborsIter(From).Count();
 		for (auto& PairFrom : PointFrom->Values)
 		{
+			const auto& Propagation = FindPropagationSettings(PairFrom.Key);
 			auto& ValueTo = PointTo.Values.FindOrAdd(PairFrom.Key);
-			const auto Difference = PairFrom.Value.Value - ValueTo.Value;
-			PairFrom.Value.Deviation -= Difference;
-			ValueTo.Deviation += Difference;
+			const auto Direction = PairFrom.Value.Value - ValueTo.Value;
+			const auto Difference = (Direction * Propagation.Speed) / static_cast<double>(Count);
+			const auto Change = (Difference / Distance) * DeltaTime;
+			PairFrom.Value.Deviation -= Change;
+			ValueTo.Deviation += Change;
 		}
 	}
 
@@ -38,10 +43,9 @@ void USpatialInformationSystem::Run(USystemsWorld& Systems)
 	{
 		for (auto& ValuePair : PointPair.Value.Values)
 		{
-			const auto& Propagation = FindPropagationSettings(ValuePair.Key);
-			const auto Count = Graph->NeighborsIter(PointPair.Key).Count();
-			ValuePair.Value.Value += ValuePair.Value.Deviation / static_cast<double>(Count) * DeltaTime;
+			ValuePair.Value.Value += ValuePair.Value.Deviation;
 
+			const auto& Propagation = FindPropagationSettings(ValuePair.Key);
 			if (FMath::IsNearlyZero(Propagation.DampingFactor) == false)
 			{
 				ValuePair.Value.Value *= FMath::Exp(-Propagation.DampingFactor * DeltaTime);
