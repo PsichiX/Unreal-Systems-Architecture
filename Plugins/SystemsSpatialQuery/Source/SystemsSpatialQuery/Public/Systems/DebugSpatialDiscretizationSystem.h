@@ -9,7 +9,7 @@
 class USpatialDiscretization;
 
 UCLASS(BlueprintType)
-class UDebugSpatialDiscretizationSystem : public USystem
+class SYSTEMSSPATIALQUERY_API UDebugSpatialDiscretizationSystem : public USystem
 {
 	GENERATED_BODY()
 

@@ -33,6 +33,7 @@ class SYSTEMSSPATIALQUERY_API USpatialInformation : public UObject
 	GENERATED_BODY()
 
 	friend class SYSTEMSSPATIALQUERY_API USpatialInformationSystem;
+	friend class SYSTEMSSPATIALQUERY_API UDebugSpatialInformationSystem;
 
 public:
 	TOptional<double> Get(const TObjectPtr<AActor>& Actor, FName Id) const;
