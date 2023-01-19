@@ -3,6 +3,7 @@
 #include "CompGeom/Delaunay2.h"
 #include "Systems/Public/SystemsWorld.h"
 #include "SystemsSpatialQuery/Public/Components/SpatialComponent.h"
+#include "SystemsSpatialQuery/Public/Resources/SpatialDiscretization.h"
 #include "SystemsSpatialQuery/Public/Resources/SpatialGraph.h"
 #include "SystemsSpatialQuery/Public/Resources/SpatialPartitioning.h"
 
@@ -110,25 +111,30 @@ void UClosestSpatialGraphSystem::Run(USystemsWorld& Systems)
 
 void UDelaunay2dSpatialGraphSystem::Run(USystemsWorld& Systems)
 {
-	if (IsValid(this->ResourceType.Get()) == false)
+	if (IsValid(this->GraphResourceType.Get()) == false)
 	{
 		return;
 	}
-	if (this->bRebuildOnlyOnChange && Systems.ResourceDidChangedRaw(this->ResourceType.Get()) == false)
+	if (this->bRebuildOnlyOnChange && Systems.ResourceDidChangedRaw(this->GraphResourceType.Get()) == false)
 	{
 		return;
 	}
-	auto* Graph = Cast<USpatialGraph>(Systems.ResourceRaw(this->ResourceType.Get()));
+	auto* Graph = Cast<USpatialGraph>(Systems.ResourceRaw(this->GraphResourceType.Get()));
 	if (IsValid(Graph) == false)
 	{
 		return;
 	}
+	auto* Discretization = Cast<USpatialDiscretization>(Systems.ResourceRaw(this->DiscretizationResourceType.Get()));
 	const auto* Spatial = Systems.Resource<USpatialPartitioning>();
 	if (IsValid(Spatial) == false)
 	{
 		return;
 	}
 	Graph->Reset();
+	if (IsValid(Discretization))
+	{
+		Discretization->Reset();
+	}
 	auto Query = Systems.TaggedQuery<USpatialComponent>();
 	for (const auto& Type : this->ExtraComponentTypes)
 	{
@@ -165,6 +171,10 @@ void UDelaunay2dSpatialGraphSystem::Run(USystemsWorld& Systems)
 			Graph->Add(A, B, true);
 			Graph->Add(B, C, true);
 			Graph->Add(C, A, true);
+			if (IsValid(Discretization))
+			{
+				Discretization->AddTriangle(FSpatialDiscretizationTriangle(A, B, C));
+			}
 		}
 	}
 }

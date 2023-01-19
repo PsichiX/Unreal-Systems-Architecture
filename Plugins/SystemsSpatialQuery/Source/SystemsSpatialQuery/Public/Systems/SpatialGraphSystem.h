@@ -8,6 +8,7 @@
 
 class USystemsWorld;
 class USpatialGraph;
+class USpatialDiscretization;
 
 UCLASS(BlueprintType, Blueprintable, EditInlineNew)
 class SYSTEMSSPATIALQUERY_API USpatialGraphConnectionValidator : public UObject
@@ -75,7 +76,7 @@ private:
 	/// circumsphere produced by these two nodes. This tolerance makes circumsphere
 	/// radius lower so more error is accepted.
 	///
-	/// It is useful to in cases when we work with crystaline lattice graphs structures
+	/// It is useful to in cases when we work with crystalline lattice graphs structures
 	/// (rectangular or hexagonal grids for example - uniform structure is what matters).
 	UPROPERTY(EditAnywhere);
 	float CollisionCircumsphereTolerance = 0;
@@ -123,7 +124,15 @@ private:
 	/// the same time, it's advised to create classes for each one and make them inherit
 	/// [`class: USpatialGraph`]().
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<USpatialGraph> ResourceType = {};
+	TSubclassOf<USpatialGraph> GraphResourceType = {};
+
+	/// Type of optional spatial discretization resource to fill.
+	///
+	/// Since spatial discretizations are resources, in case user wants to have more than one
+	/// discretization at the same time, it's advised to create classes for each one and make
+	/// them inherit [`class: USpatialDiscretization`]().
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<USpatialDiscretization> DiscretizationResourceType = {};
 
 	/// Set of additional components that has to be present in actors to make these actors
 	/// recognized by this system.
