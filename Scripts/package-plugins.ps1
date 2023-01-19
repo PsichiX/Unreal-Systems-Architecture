@@ -38,7 +38,7 @@ function New-Package-Set {
     )
 
     New-Package -name $name -dir $dir
-    New-Package -name $name -dir "$dir-BP" -b
+    New-Package -name $name -dir "BP-$dir" -b
 }
 
 Remove-Item $target -Recurse -Force
