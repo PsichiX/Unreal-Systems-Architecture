@@ -28,8 +28,7 @@ void TutorialSelectActorsSystem(USystemsWorld& Systems)
 	const auto bSubtraction = PlayerController->IsInputKeyDown(LEFT_ALT_BUTTON);
 
 	FHitResult Hit;
-	if (PlayerController->GetHitResultUnderCursor(
-			ECollisionChannel::ECC_GameTraceChannel2, true, Hit))
+	if (PlayerController->GetHitResultUnderCursor(ECC_GameTraceChannel2, true, Hit))
 	{
 		auto* Actor = Hit.GetActor();
 		if (IsValid(Actor))

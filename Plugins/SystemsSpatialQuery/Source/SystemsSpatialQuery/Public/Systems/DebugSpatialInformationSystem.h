@@ -20,7 +20,7 @@ struct FDebugSpatialInformationData
 	double Scale = 1.0;
 };
 
-UCLASS()
+UCLASS(BlueprintType)
 class SYSTEMSSPATIALQUERY_API UDebugSpatialInformationSystem : public USystem
 {
 	GENERATED_BODY()
@@ -29,6 +29,9 @@ public:
 	virtual void Run(USystemsWorld& Systems) override;
 
 private:
+	UPROPERTY(EditAnywhere)
+	int SphereSegments = 32;
+
 	UPROPERTY(EditAnywhere)
 	TMap<FName, FDebugSpatialInformationData> InformationColors = {};
 

@@ -22,8 +22,9 @@ void UDebugSpatialInformationSystem::Run(USystemsWorld& Systems)
 			const auto* Found = this->InformationColors.Find(ValuePair.Key);
 			if (Found != nullptr)
 			{
+				const auto Center = PointPair.Key->GetActorLocation();
 				const auto Size = ValuePair.Value.Value * Found->Scale;
-				DrawDebugPoint(GetWorld(), PointPair.Key->GetActorLocation(), Size, Found->Color);
+				DrawDebugSphere(GetWorld(), Center, Size, this->SphereSegments, Found->Color);
 			}
 		}
 	}

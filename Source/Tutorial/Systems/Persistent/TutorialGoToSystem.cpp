@@ -22,8 +22,7 @@ void TutorialGoToSystem(USystemsWorld& Systems)
 	}
 
 	FHitResult Hit;
-	if (PlayerController->GetHitResultUnderCursor(
-			ECollisionChannel::ECC_GameTraceChannel1, true, Hit))
+	if (PlayerController->GetHitResultUnderCursor(ECC_GameTraceChannel1, true, Hit))
 	{
 		for (auto& QueryItem :
 			Systems.Query<UTutorialTargetComponent, UTutorialSelectedComponent>())

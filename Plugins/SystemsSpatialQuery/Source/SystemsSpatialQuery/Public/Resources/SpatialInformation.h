@@ -53,15 +53,21 @@ public:
 	template <typename T>
 	double SampleWeighted(FName Id, T ActorWeightTupleIter) const
 	{
-		auto TotalWeight = 0.0;
 		auto Result = 0.0;
 		for (const auto& Pair : ActorWeightTupleIter)
 		{
-			const auto Weight = Pair.Get<1>();
-			Result += GetOrDefault(Pair.Get<0>(), Id) * Weight;
-			TotalWeight += Weight;
+			Result += GetOrDefault(Pair.Get<0>(), Id) * Pair.Get<1>();
 		}
-		return TotalWeight != 0.0 ? Result / TotalWeight : 0.0;
+		return Result;
+	}
+
+	template <typename T>
+	void ApplyWeighted(FName Id, double Value, T ActorWeightTupleIter)
+	{
+		for (const auto& Pair : ActorWeightTupleIter)
+		{
+			Accumulate(Pair.Get<0>(), Id, Value * Pair.Get<1>());
+		}
 	}
 
 	auto PointsIter() const
