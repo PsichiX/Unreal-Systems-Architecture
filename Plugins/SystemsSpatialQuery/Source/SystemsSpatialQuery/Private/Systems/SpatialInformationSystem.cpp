@@ -38,7 +38,20 @@ void USpatialInformationSystem::Run(USystemsWorld& Systems)
 	{
 		for (auto& ValuePair : PointPair.Value.Values)
 		{
-			ValuePair.Value.Value += ValuePair.Value.Deviation * DeltaTime;
+			const auto& Propagation = FindPropagationSettings(ValuePair.Key);
+			const auto Count = Graph->NeighborsIter(PointPair.Key).Count();
+			ValuePair.Value.Value += ValuePair.Value.Deviation / static_cast<double>(Count) * DeltaTime;
+
+			if (FMath::IsNearlyZero(Propagation.DampingFactor) == false)
+			{
+				ValuePair.Value.Value *= FMath::Exp(-Propagation.DampingFactor * DeltaTime);
+			}
 		}
 	}
+}
+
+const FSpatialPropagationSettings& USpatialInformationSystem::FindPropagationSettings(FName Id) const
+{
+	const auto* Found = this->SpecializedPropagation.Find(Id);
+	return Found == nullptr ? this->DefaultPropagation : *Found;
 }

@@ -14,11 +14,8 @@ struct SYSTEMSSPATIALQUERY_API FSpatialPropagationSettings
 {
 	GENERATED_BODY()
 
-	// UPROPERTY(EditAnywhere)
-	// double Speed = 1.0;
-
-	// UPROPERTY(EditAnywhere)
-	// double Damping = 0.0;
+	UPROPERTY(EditAnywhere)
+	double DampingFactor = 0.0;
 };
 
 UCLASS(BlueprintType)
@@ -30,6 +27,8 @@ public:
 	virtual void Run(USystemsWorld& Systems) override;
 
 private:
+	const FSpatialPropagationSettings& FindPropagationSettings(FName Id) const;
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<USpatialGraph> ResourceType = {};
 
