@@ -522,6 +522,13 @@ bool USystemsWorld::ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObj
 	{
 		return true;
 	}
+	for (const auto& ResourcePair : this->Resources)
+	{
+		if (IsValid(ResourcePair.Value) && ResourcePair.Value->ProcessConsoleExec(Cmd, Ar, Executor))
+		{
+			return true;
+		}
+	}
 	for (const auto& System : this->Systems)
 	{
 		if (System.System->ProcessConsoleExec(Cmd, Ar, Executor))
