@@ -516,6 +516,22 @@ TOptional<FArchetypeSignature> USystemsWorld::ActorSignature(AActor* Actor) cons
 	return TOptional<FArchetypeSignature>();
 }
 
+bool USystemsWorld::ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObject* Executor)
+{
+	if (UObject::ProcessConsoleExec(Cmd, Ar, Executor))
+	{
+		return true;
+	}
+	for (const auto& System : this->Systems)
+	{
+		if (System.System->ProcessConsoleExec(Cmd, Ar, Executor))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorComponents(AActor* Actor)
 {
 	for (auto& Pair : this->Archetypes)

@@ -75,6 +75,22 @@ UObject* USystemsSubsystem::Restore(const UClass* Type, UObject* NewOwner)
 	return nullptr;
 }
 
+bool USystemsSubsystem::ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObject* Executor)
+{
+	if (Super::ProcessConsoleExec(Cmd, Ar, Executor))
+	{
+		return true;
+	}
+	for (const auto& Pair : this->SystemsWorlds)
+	{
+		if (IsValid(Pair.Value) && Pair.Value->ProcessConsoleExec(Cmd, Ar, Executor))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void USystemsSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
@@ -115,3 +131,15 @@ void USystemsSubsystem::OnTick()
 
 	GetGameInstance()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::OnTick);
 }
+
+static bool SystemsExec(UWorld* InWorld, const TCHAR* Cmd, FOutputDevice& Ar)
+{
+	auto* Subsystem = USystemsSubsystem::Get(InWorld);
+	if (IsValid(Subsystem))
+	{
+		return Subsystem->ProcessConsoleExec(Cmd, Ar, Subsystem);
+	}
+	return false;
+}
+
+FStaticSelfRegisteringExec SystemsExecRegistration(SystemsExec);
