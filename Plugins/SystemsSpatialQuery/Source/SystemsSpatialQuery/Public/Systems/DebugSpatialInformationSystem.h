@@ -7,12 +7,14 @@
 #include "DebugSpatialInformationSystem.generated.h"
 
 class USpatialInformation;
+class USpatialDiscretization;
 
 UENUM()
 enum class EDebugSpatialInformationDrawMode : uint8
 {
 	Scale,
 	Color,
+	HeightField,
 };
 
 USTRUCT(BlueprintType)
@@ -23,20 +25,16 @@ struct FDebugSpatialInformationData
 	UPROPERTY(EditAnywhere)
 	EDebugSpatialInformationDrawMode DrawMode = EDebugSpatialInformationDrawMode::Scale;
 
-	UPROPERTY(EditAnywhere,
-		Meta = (EditCondition = "DrawMode == EDebugSpatialInformationDrawMode::Scale", EditConditionHides))
+	UPROPERTY(EditAnywhere)
 	FColor Color = FColor::MakeRandomColor().WithAlpha(10.0);
 
-	UPROPERTY(EditAnywhere,
-		Meta = (EditCondition = "DrawMode == EDebugSpatialInformationDrawMode::Scale", EditConditionHides))
+	UPROPERTY(EditAnywhere)
 	double Scale = 1.0;
 
-	UPROPERTY(EditAnywhere,
-		Meta = (EditCondition = "DrawMode == EDebugSpatialInformationDrawMode::Color", EditConditionHides))
+	UPROPERTY(EditAnywhere)
 	double ValueRangeLimit = 1.0;
 
-	UPROPERTY(EditAnywhere,
-		Meta = (EditCondition = "DrawMode == EDebugSpatialInformationDrawMode::Color", EditConditionHides))
+	UPROPERTY(EditAnywhere)
 	double Size = 1.0;
 };
 
@@ -62,8 +60,11 @@ private:
 	FLinearColor NegativeColor = FLinearColor::Blue;
 
 	UPROPERTY(EditAnywhere)
-	TMap<FName, FDebugSpatialInformationData> InformationColors = {};
+	TMap<FName, FDebugSpatialInformationData> InformationData = {};
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<USpatialInformation> ResourceType = {};
+	TSubclassOf<USpatialInformation> InformationResourceType = {};
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<USpatialDiscretization> DiscretizationResourceType = {};
 };
