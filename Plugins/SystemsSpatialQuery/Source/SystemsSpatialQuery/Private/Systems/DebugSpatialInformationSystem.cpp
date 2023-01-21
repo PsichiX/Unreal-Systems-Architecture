@@ -23,15 +23,25 @@ void UDebugSpatialInformationSystem::Run(USystemsWorld& Systems)
 			if (Found != nullptr)
 			{
 				const auto Center = PointPair.Key->GetActorLocation();
-				const auto Size = ValuePair.Value.Value * Found->Scale;
-				auto Color = Found->Color;
-				if (Size < 0.0)
+				if (Found->DrawMode == EDebugSpatialInformationDrawMode::Scale)
 				{
-					Color.R = 255 - Color.R;
-					Color.G = 255 - Color.G;
-					Color.B = 255 - Color.B;
+					const auto Size = ValuePair.Value.Value * Found->Scale;
+					auto Color = Found->Color;
+					if (Size < 0.0)
+					{
+						Color.R = static_cast<uint8>((static_cast<uint16>(Color.R) + 128) % 256);
+						Color.G = static_cast<uint8>((static_cast<uint16>(Color.G) + 128) % 256);
+						Color.B = static_cast<uint8>((static_cast<uint16>(Color.B) + 128) % 256);
+					}
+					DrawDebugSphere(GetWorld(), Center, Size, this->SphereSegments, Color);
 				}
-				DrawDebugSphere(GetWorld(), Center, Size, this->SphereSegments, Color);
+				else if (Found->DrawMode == EDebugSpatialInformationDrawMode::Color)
+				{
+					const auto Factor = FMath::Clamp(ValuePair.Value.Value / Found->ValueRangeLimit, -1.0, 1.0);
+					const auto Color = Factor >= 0.0 ? FMath::Lerp(this->NeutralColor, this->PositiveColor, Factor)
+													 : FMath::Lerp(this->NeutralColor, this->NegativeColor, -Factor);
+					DrawDebugSphere(GetWorld(), Center, Found->Size, this->SphereSegments, Color.ToFColorSRGB());
+				}
 			}
 		}
 	}
