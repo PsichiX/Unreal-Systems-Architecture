@@ -22,6 +22,13 @@ struct FSceneVoxelPrimitives
 
 using FSceneVoxelContent = TVariant<FSceneVoxelEmpty, FSceneVoxelCells, FSceneVoxelPrimitives>;
 
+enum class ESceneVoxelQueryOptions : uint8
+{
+	Any,
+	Occupied,
+	PrimitivesOnly,
+};
+
 struct FSceneVoxelNode
 {
 	FSceneVoxelNode(FBox InBoundingBox, double InMinSize = 100.0) : BoundingBox(InBoundingBox), MinSize(InMinSize)
@@ -33,9 +40,11 @@ struct FSceneVoxelNode
 
 	void Add(TObjectPtr<UPrimitiveComponent> Primitive);
 
-	void ForEachNode(const TFunctionRef<void(const FSceneVoxelNode& Node)> Callback, bool bPrimitivesOnly = true) const;
+	void ForEachNode(const TFunctionRef<void(const FSceneVoxelNode& Node)> Callback,
+		ESceneVoxelQueryOptions Options = ESceneVoxelQueryOptions::Any) const;
 
-	const FSceneVoxelNode* FindNode(FVector Position, bool bPrimitivesOnly = true) const;
+	const FSceneVoxelNode* FindNode(FVector Position,
+		ESceneVoxelQueryOptions Options = ESceneVoxelQueryOptions::Any) const;
 
 	TOptional<FVector> FindClosestPointOnSurface(FVector Position) const;
 

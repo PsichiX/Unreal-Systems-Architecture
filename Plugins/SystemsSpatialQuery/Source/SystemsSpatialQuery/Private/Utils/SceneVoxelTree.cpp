@@ -81,11 +81,11 @@ void FSceneVoxelNode::Add(TObjectPtr<UPrimitiveComponent> Primitive)
 }
 
 void FSceneVoxelNode::ForEachNode(const TFunctionRef<void(const FSceneVoxelNode& Node)> Callback,
-	bool bPrimitivesOnly) const
+	ESceneVoxelQueryOptions Options) const
 {
 	if (this->Content.IsType<FSceneVoxelCells>())
 	{
-		if (bPrimitivesOnly == false)
+		if (Options != ESceneVoxelQueryOptions::PrimitivesOnly)
 		{
 			Callback(*this);
 		}
@@ -101,7 +101,7 @@ void FSceneVoxelNode::ForEachNode(const TFunctionRef<void(const FSceneVoxelNode&
 	}
 }
 
-const FSceneVoxelNode* FSceneVoxelNode::FindNode(FVector Position, bool bPrimitivesOnly) const
+const FSceneVoxelNode* FSceneVoxelNode::FindNode(FVector Position, ESceneVoxelQueryOptions Options) const
 {
 	if (this->BoundingBox.IsInsideOrOn(Position) == false)
 	{
@@ -113,13 +113,17 @@ const FSceneVoxelNode* FSceneVoxelNode::FindNode(FVector Position, bool bPrimiti
 		for (auto Index = 0; Index < 8; ++Index)
 		{
 			const auto& Cell = Data.Cells[Index];
-			if (const auto* Node = Cell->FindNode(Position, bPrimitivesOnly))
+			if (const auto* Node = Cell->FindNode(Position, Options))
 			{
 				return Node;
 			}
 		}
 	}
-	if (bPrimitivesOnly && this->Content.IsType<FSceneVoxelPrimitives>() == false)
+	if (Options == ESceneVoxelQueryOptions::PrimitivesOnly && this->Content.IsType<FSceneVoxelPrimitives>() == false)
+	{
+		return nullptr;
+	}
+	if (Options == ESceneVoxelQueryOptions::Occupied && this->Content.IsType<FSceneVoxelEmpty>())
 	{
 		return nullptr;
 	}
