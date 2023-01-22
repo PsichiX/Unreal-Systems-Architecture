@@ -50,7 +50,13 @@ struct FSceneVoxelNode
 
 	TOptional<FVector> FindClosestPointOnSurface(FVector Position) const;
 
+	TOptional<FVector> GetClosestPointOnSurface() const;
+
+	TOptional<double> GetClosestDistanceToSurface() const;
+
 	bool IsOccupied() const;
+
+	void GetAllPrimitives(TSet<TObjectPtr<UPrimitiveComponent>>& Result) const;
 
 	auto PrimitivesIter() const
 	{
@@ -69,7 +75,8 @@ struct FSceneVoxelNode
 
 	FSceneVoxelContent Content = {};
 
-	FVector ClosestPointOnSurface = {};
+private:
+	TOptional<FVector> ClosestPointOnSurface = {};
 
-	double ClosestDistanceToSurface = INFINITY;
+	TOptional<double> ClosestDistanceToSurface = {};
 };

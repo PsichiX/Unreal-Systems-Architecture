@@ -54,12 +54,18 @@ void FSceneVoxelNode::Add(TObjectPtr<UPrimitiveComponent> Primitive)
 		auto& Data = this->Content.Get<FSceneVoxelCells>();
 		for (auto Index = 0; Index < 8; ++Index)
 		{
-			auto& Cell = Data.Cells[Index];
+			const auto& Cell = Data.Cells[Index];
 			Cell->Add(Primitive);
-			if (Cell->ClosestDistanceToSurface < this->ClosestDistanceToSurface)
+			if (Cell->ClosestPointOnSurface.IsSet())
 			{
-				this->ClosestDistanceToSurface = Cell->ClosestDistanceToSurface;
-				this->ClosestPointOnSurface = Cell->ClosestPointOnSurface;
+				const auto Distance =
+					FVector::Distance(this->BoundingBox.GetCenter(), Cell->ClosestPointOnSurface.GetValue());
+				if (this->ClosestDistanceToSurface.IsSet() == false ||
+					Distance < this->ClosestDistanceToSurface.GetValue())
+				{
+					this->ClosestDistanceToSurface = Distance;
+					this->ClosestPointOnSurface = Cell->ClosestPointOnSurface;
+				}
 			}
 		}
 	}
@@ -69,14 +75,19 @@ void FSceneVoxelNode::Add(TObjectPtr<UPrimitiveComponent> Primitive)
 		if (Data.Components.Contains(Primitive) == false)
 		{
 			FVector Point = {};
-			const auto Distance = Primitive->GetClosestPointOnCollision(this->BoundingBox.GetCenter(), Point);
-			if (Distance < this->ClosestDistanceToSurface)
+			const auto Status = Primitive->GetClosestPointOnCollision(this->BoundingBox.GetCenter(), Point);
+			if (Status > 0.0)
 			{
-				this->ClosestDistanceToSurface = Distance;
-				this->ClosestPointOnSurface = Point;
+				const auto Distance = FVector::Distance(this->BoundingBox.GetCenter(), Point);
+				if (this->ClosestDistanceToSurface.IsSet() == false ||
+					Distance < this->ClosestDistanceToSurface.GetValue())
+				{
+					this->ClosestDistanceToSurface = Distance;
+					this->ClosestPointOnSurface = Point;
+				}
+				Data.Components.Add(Primitive);
 			}
 		}
-		Data.Components.Add(Primitive);
 	}
 }
 
@@ -132,6 +143,10 @@ const FSceneVoxelNode* FSceneVoxelNode::FindNode(FVector Position, ESceneVoxelQu
 
 TOptional<FVector> FSceneVoxelNode::FindClosestPointOnSurface(FVector Position) const
 {
+	if (this->BoundingBox.IsInsideOrOn(Position) == false)
+	{
+		Position = this->BoundingBox.GetClosestPointTo(Position);
+	}
 	const auto* Node = FindNode(Position);
 	if (Node != nullptr)
 	{
@@ -140,7 +155,37 @@ TOptional<FVector> FSceneVoxelNode::FindClosestPointOnSurface(FVector Position) 
 	return {};
 }
 
+TOptional<FVector> FSceneVoxelNode::GetClosestPointOnSurface() const
+{
+	return this->ClosestPointOnSurface;
+}
+
+TOptional<double> FSceneVoxelNode::GetClosestDistanceToSurface() const
+{
+	return this->ClosestDistanceToSurface;
+}
+
 bool FSceneVoxelNode::IsOccupied() const
 {
 	return this->Content.IsType<FSceneVoxelEmpty>() == false;
+}
+
+void FSceneVoxelNode::GetAllPrimitives(TSet<TObjectPtr<UPrimitiveComponent>>& Result) const
+{
+	if (this->Content.IsType<FSceneVoxelCells>())
+	{
+		const auto& Data = this->Content.Get<FSceneVoxelCells>();
+		for (auto Index = 0; Index < 8; ++Index)
+		{
+			Data.Cells[Index]->GetAllPrimitives(Result);
+		}
+	}
+	else if (this->Content.IsType<FSceneVoxelPrimitives>())
+	{
+		const auto& Data = this->Content.Get<FSceneVoxelPrimitives>();
+		for (const auto& Primitive : Data.Components)
+		{
+			Result.Add(Primitive);
+		}
+	}
 }
