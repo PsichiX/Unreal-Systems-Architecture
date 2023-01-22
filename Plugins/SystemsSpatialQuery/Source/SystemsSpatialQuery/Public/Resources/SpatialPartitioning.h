@@ -131,7 +131,7 @@ struct FSpatialNode
 
 	bool FindNodesPath(TArray<const FSpatialNode*>& Result, FVector Position) const;
 
-	void ForEachArea(const TFunction<void(const FArea&, bool)> Callback) const;
+	void ForEachArea(const TFunctionRef<void(const FArea&, bool)> Callback) const;
 
 	FArea Area = {};
 

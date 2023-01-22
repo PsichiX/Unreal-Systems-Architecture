@@ -77,7 +77,7 @@ void UDebugSpatialInformationSystem::Run(USystemsWorld& Systems)
 				Vertices[0] = Triangle.A->GetActorLocation() + OffsetA * DataPair.Value.Scale;
 				Vertices[1] = Triangle.B->GetActorLocation() + OffsetB * DataPair.Value.Scale;
 				Vertices[2] = Triangle.C->GetActorLocation() + OffsetC * DataPair.Value.Scale;
-				DrawDebugMesh(GetWorld(), Vertices, Indices, DataPair.Value.Color, false, -1, 1);
+				DrawDebugMesh(GetWorld(), Vertices, Indices, DataPair.Value.Color);
 				Vertices[0].Z += 5.0;
 				Vertices[1].Z += 5.0;
 				Vertices[2].Z += 5.0;

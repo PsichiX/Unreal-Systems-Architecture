@@ -19,6 +19,11 @@
 			"Name": "SystemsSpatialQuery",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "SystemsSpatialQueryEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [

@@ -342,9 +342,9 @@ const FSpatialNode* FSpatialNode::FindNode(FVector Position) const
 		for (auto Index = 0; Index < 2; ++Index)
 		{
 			const auto& Leaf = Data.Leafs[Index];
-			if (const auto* Result = Leaf->FindNode(Position))
+			if (const auto* Node = Leaf->FindNode(Position))
 			{
-				return Result;
+				return Node;
 			}
 		}
 	}
@@ -373,7 +373,7 @@ bool FSpatialNode::FindNodesPath(TArray<const FSpatialNode*>& Result, FVector Po
 	return false;
 }
 
-void FSpatialNode::ForEachArea(const TFunction<void(const FArea&, bool)> Callback) const
+void FSpatialNode::ForEachArea(const TFunctionRef<void(const FArea&, bool)> Callback) const
 {
 	if (this->Content.IsType<FSpatialActors>())
 	{
