@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 
+#include "Systems/Public/Iterator.h"
+
 struct FSceneVoxelNode;
 
 struct FSceneVoxelEmpty
@@ -49,6 +51,17 @@ struct FSceneVoxelNode
 	TOptional<FVector> FindClosestPointOnSurface(FVector Position) const;
 
 	bool IsOccupied() const;
+
+	auto PrimitivesIter() const
+	{
+		static TSet<TObjectPtr<UPrimitiveComponent>> EMPTY = {};
+		auto& Result = EMPTY;
+		if (this->Content.IsType<FSceneVoxelPrimitives>())
+		{
+			Result = this->Content.Get<FSceneVoxelPrimitives>().Components;
+		}
+		return IterStdConst(Result);
+	}
 
 	FBox BoundingBox = {};
 
