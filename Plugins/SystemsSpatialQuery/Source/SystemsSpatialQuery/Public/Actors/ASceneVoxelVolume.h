@@ -6,6 +6,8 @@
 
 #include "ASceneVoxelVolume.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnSceneVoxelRegenerateEvent);
+
 UCLASS(BlueprintType)
 class SYSTEMSSPATIALQUERY_API ASceneVoxelVolume : public AVolume
 {
@@ -15,10 +17,10 @@ public:
 	UFUNCTION(BlueprintCallable, CallInEditor)
 	void Regenerate();
 
-	TOptional<FVector> FindClosestPointOnSurface(FVector Position) const;
+	const FSceneVoxelNode* Voxelizer() const;
 
-	void ForEachNode(const TFunctionRef<void(const FSceneVoxelNode& Node)> Callback,
-		ESceneVoxelQueryOptions Options = ESceneVoxelQueryOptions::Any) const;
+	UPROPERTY(BlueprintAssignable)
+	FOnSceneVoxelRegenerateEvent OnRegenerate = {};
 
 protected:
 	virtual void OnConstruction(const FTransform& Transform) override;

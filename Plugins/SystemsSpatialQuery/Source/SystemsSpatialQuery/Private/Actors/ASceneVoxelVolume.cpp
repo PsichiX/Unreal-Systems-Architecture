@@ -31,24 +31,16 @@ void ASceneVoxelVolume::Regenerate()
 		SceneVoxelRoot->Add(Primitive);
 	}
 	this->DataBase = this->SceneVoxelRoot->Store();
+
+	if (this->OnRegenerate.IsBound())
+	{
+		this->OnRegenerate.Broadcast();
+	}
 }
 
-TOptional<FVector> ASceneVoxelVolume::FindClosestPointOnSurface(FVector Position) const
+const FSceneVoxelNode* ASceneVoxelVolume::Voxelizer() const
 {
-	if (this->SceneVoxelRoot.IsValid())
-	{
-		return this->SceneVoxelRoot->FindClosestPointOnSurface(Position);
-	}
-	return {};
-}
-
-void ASceneVoxelVolume::ForEachNode(const TFunctionRef<void(const FSceneVoxelNode& Node)> Callback,
-	ESceneVoxelQueryOptions Options) const
-{
-	if (this->SceneVoxelRoot.IsValid())
-	{
-		this->SceneVoxelRoot->ForEachNode(Callback, Options);
-	}
+	return this->SceneVoxelRoot.Get();
 }
 
 void ASceneVoxelVolume::OnConstruction(const FTransform& Transform)
