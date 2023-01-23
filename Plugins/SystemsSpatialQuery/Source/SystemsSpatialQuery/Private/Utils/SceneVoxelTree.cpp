@@ -13,7 +13,7 @@ TUniquePtr<FSceneVoxelNode> FSceneVoxelNode::Make(FBox InBoundingBox, double InM
 	return MakeUnique<FSceneVoxelNode>(InBoundingBox, InMinSize);
 }
 
-void FSceneVoxelNode::Add(TObjectPtr<UPrimitiveComponent> Primitive)
+void FSceneVoxelNode::Add(TObjectPtr<UPrimitiveComponent> Primitive, bool bIgnoreInside)
 {
 	if (Primitive == false)
 	{
@@ -27,7 +27,7 @@ void FSceneVoxelNode::Add(TObjectPtr<UPrimitiveComponent> Primitive)
 	if (this->Content.IsType<FSceneVoxelEmpty>())
 	{
 		const auto Extent = this->BoundingBox.GetExtent();
-		if (Extent.X < this->MinSize || Extent.Y < this->MinSize || Extent.Z < this->MinSize)
+		if (Extent.GetMin() < this->MinSize)
 		{
 			this->Content.Set<FSceneVoxelPrimitives>({});
 		}
@@ -65,6 +65,7 @@ void FSceneVoxelNode::Add(TObjectPtr<UPrimitiveComponent> Primitive)
 				{
 					this->ClosestDistanceToSurface = Distance;
 					this->ClosestPointOnSurface = Cell->ClosestPointOnSurface;
+					this->bInsideSurface = Cell->bInsideSurface;
 				}
 			}
 		}
@@ -75,17 +76,22 @@ void FSceneVoxelNode::Add(TObjectPtr<UPrimitiveComponent> Primitive)
 		if (Data.Components.Contains(Primitive) == false)
 		{
 			FVector Point = {};
-			const auto Status = Primitive->GetClosestPointOnCollision(this->BoundingBox.GetCenter(), Point);
-			if (Status > 0.0)
+			float Status = -1;
+			if (Primitive->GetSquaredDistanceToCollision(this->BoundingBox.GetCenter(), Status, Point))
 			{
-				const auto Distance = FVector::Distance(this->BoundingBox.GetCenter(), Point);
-				if (this->ClosestDistanceToSurface.IsSet() == false ||
-					Distance < this->ClosestDistanceToSurface.GetValue())
+				const auto bInside = FMath::IsNearlyZero(Status);
+				if (bIgnoreInside == false || bInside == false)
 				{
-					this->ClosestDistanceToSurface = Distance;
-					this->ClosestPointOnSurface = Point;
+					const auto Distance = FVector::Distance(this->BoundingBox.GetCenter(), Point);
+					if (this->ClosestDistanceToSurface.IsSet() == false ||
+						Distance < this->ClosestDistanceToSurface.GetValue())
+					{
+						this->ClosestDistanceToSurface = Distance;
+						this->ClosestPointOnSurface = Point;
+						this->bInsideSurface = FMath::IsNearlyZero(Status);
+					}
+					Data.Components.Add(Primitive);
 				}
-				Data.Components.Add(Primitive);
 			}
 		}
 	}
@@ -165,9 +171,33 @@ TOptional<double> FSceneVoxelNode::GetClosestDistanceToSurface() const
 	return this->ClosestDistanceToSurface;
 }
 
+bool FSceneVoxelNode::IsInsideSurface() const
+{
+	return this->bInsideSurface;
+}
+
 bool FSceneVoxelNode::IsOccupied() const
 {
 	return this->Content.IsType<FSceneVoxelEmpty>() == false;
+}
+
+uint32 FSceneVoxelNode::CellsCount() const
+{
+	auto Result = 1;
+	if (this->Content.IsType<FSceneVoxelCells>())
+	{
+		auto& Data = this->Content.Get<FSceneVoxelCells>();
+		for (auto Index = 0; Index < 8; ++Index)
+		{
+			Result += Data.Cells[Index]->CellsCount();
+		}
+	}
+	return Result;
+}
+
+const FSceneVoxelContent& FSceneVoxelNode::AccessContent() const
+{
+	return this->Content;
 }
 
 void FSceneVoxelNode::GetAllPrimitives(TSet<TObjectPtr<UPrimitiveComponent>>& Result) const
@@ -188,4 +218,73 @@ void FSceneVoxelNode::GetAllPrimitives(TSet<TObjectPtr<UPrimitiveComponent>>& Re
 			Result.Add(Primitive);
 		}
 	}
+}
+
+FSceneVoxelDataBase FSceneVoxelNode::Store() const
+{
+	FSceneVoxelDataBase Result = {};
+	const auto Count = this->CellsCount();
+	Result.MinSize = this->MinSize;
+	Result.Items.Reserve(Count);
+	StoreInner(Result);
+	return Result;
+}
+
+int FSceneVoxelNode::StoreInner(FSceneVoxelDataBase& Result) const
+{
+	const auto ItemIndex = Result.Items.Add({this->BoundingBox,
+		{},
+		{},
+		this->ClosestPointOnSurface.IsSet() ? this->ClosestPointOnSurface.GetValue() : FVector(),
+		this->ClosestDistanceToSurface.IsSet() ? this->ClosestDistanceToSurface.GetValue() : INFINITY,
+		this->bInsideSurface});
+	auto& Item = Result.Items[ItemIndex];
+	if (this->Content.IsType<FSceneVoxelCells>())
+	{
+		Item.Cells.Reserve(8);
+		const auto& Data = this->Content.Get<FSceneVoxelCells>();
+		for (auto Index = 0; Index < 8; ++Index)
+		{
+			Item.Cells.Add(Data.Cells[Index]->StoreInner(Result));
+		}
+	}
+	else if (this->Content.IsType<FSceneVoxelPrimitives>())
+	{
+		Item.Components.Append(this->Content.Get<FSceneVoxelPrimitives>().Components);
+	}
+	return ItemIndex;
+}
+
+TUniquePtr<FSceneVoxelNode> FSceneVoxelDataBaseItem::Restore(const FSceneVoxelDataBase& DataBase) const
+{
+	auto Result = FSceneVoxelNode::Make(this->BoundingBox, DataBase.MinSize);
+	if (this->Cells.IsEmpty() == false)
+	{
+		TUniquePtr<FSceneVoxelNode> InCells[8] = {};
+		for (auto Index = 0; Index < 8; ++Index)
+		{
+			InCells[Index] = DataBase.Items[Index].Restore(DataBase);
+		}
+		Result->Content.Set<FSceneVoxelCells>(MoveTemp(InCells));
+	}
+	else if (this->Components.IsEmpty() == false)
+	{
+		Result->Content.Set<FSceneVoxelPrimitives>({this->Components});
+	}
+	if (this->ClosestDistanceToSurface < INFINITY)
+	{
+		Result->ClosestPointOnSurface = this->ClosestPointOnSurface;
+		Result->ClosestDistanceToSurface = this->ClosestDistanceToSurface;
+		Result->bInsideSurface = this->bInsideSurface;
+	}
+	return Result;
+}
+
+TUniquePtr<FSceneVoxelNode> FSceneVoxelDataBase::Restore() const
+{
+	if (this->Items.IsEmpty())
+	{
+		return {};
+	}
+	return this->Items[0].Restore(*this);
 }

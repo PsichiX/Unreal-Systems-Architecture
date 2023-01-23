@@ -66,12 +66,21 @@
 		{
 			"Name": "EditorTests",
 			"Enabled": true
+		},
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true
+		},
+		{
+			"Name": "StaticMeshEditorModeling",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [
 		"AllDesktop",
 		"LinuxAArch64NoEditor",
 		"WindowsNoEditor",
-		"LinuxNoEditor"
+		"LinuxNoEditor",
+		"HoloLens"
 	]
 }
