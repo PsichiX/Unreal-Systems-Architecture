@@ -14,12 +14,15 @@ class SYSTEMSSPATIALQUERY_API ASceneVoxelVolume : public AVolume
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, CallInEditor)
+	UFUNCTION(CallInEditor, Category = "Scene Voxel Volume")
 	void Regenerate();
+
+	UFUNCTION(CallInEditor, Category = "Scene Voxel Volume")
+	void Clear();
 
 	const FSceneVoxelNode* Voxelizer() const;
 
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable, Category = "Scene Voxel Volume")
 	FOnSceneVoxelRegenerateEvent OnRegenerate = {};
 
 protected:
@@ -28,20 +31,28 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Scene Voxel Volume")
 	bool bAutoRegenerate = false;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Scene Voxel Volume")
 	double MinSize = 100.0;
 
-	UPROPERTY(EditAnywhere)
-	TSet<FName> ActorTagsFilter = {};
+	UPROPERTY(EditAnywhere, Category = "Scene Voxel Volume")
+	TMap<FName, bool> ActorTagsFilter = {};
 
-	UPROPERTY(EditAnywhere)
-	TSet<FName> PrimitiveComponentTagsFilter = {};
+	UPROPERTY(EditAnywhere, Category = "Scene Voxel Volume")
+	TMap<FName, bool> PrimitiveComponentTagsFilter = {};
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume")
 	FSceneVoxelDataBase DataBase = {};
+
+#if WITH_EDITORONLY_DATA
+	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume")
+	TSet<TObjectPtr<AActor>> DebugActors = {};
+
+	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume")
+	TSet<TObjectPtr<UPrimitiveComponent>> DebugPrimitives = {};
+#endif
 
 	TUniquePtr<FSceneVoxelNode> SceneVoxelRoot = {};
 };

@@ -45,7 +45,7 @@ struct FSceneVoxelNode
 
 	static TUniquePtr<FSceneVoxelNode> Make(FBox InBoundingBox, double InMinSize = 100.0);
 
-	void Add(TObjectPtr<UPrimitiveComponent> Primitive, bool bIgnoreInside = false);
+	bool Add(TObjectPtr<UPrimitiveComponent> Primitive, bool bIgnoreInside = false);
 
 	void ForEachNode(const TFunctionRef<void(const FSceneVoxelNode& Node)> Callback,
 		ESceneVoxelQueryOptions Options = ESceneVoxelQueryOptions::Any) const;
