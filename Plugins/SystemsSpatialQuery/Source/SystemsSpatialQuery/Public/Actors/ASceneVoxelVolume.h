@@ -31,6 +31,10 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+#if WITH_EDITOR
+	virtual void Tick(float DeltaSeconds) override;
+#endif
+
 	UPROPERTY(EditAnywhere, Category = "Scene Voxel Volume")
 	bool bAutoRegenerate = false;
 
@@ -43,15 +47,18 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Scene Voxel Volume")
 	TMap<FName, bool> PrimitiveComponentTagsFilter = {};
 
-	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume")
+	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume|Debug")
 	FSceneVoxelDataBase DataBase = {};
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume")
+	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume|Debug")
 	TSet<TObjectPtr<AActor>> DebugActors = {};
 
-	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume")
+	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume|Debug")
 	TSet<TObjectPtr<UPrimitiveComponent>> DebugPrimitives = {};
+
+	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume|Debug")
+	bool bDrawDebugCells = false;
 #endif
 
 	TUniquePtr<FSceneVoxelNode> SceneVoxelRoot = {};

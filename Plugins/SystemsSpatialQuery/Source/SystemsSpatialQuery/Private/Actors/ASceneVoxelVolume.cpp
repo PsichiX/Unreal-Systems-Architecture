@@ -75,3 +75,15 @@ void ASceneVoxelVolume::BeginPlay()
 
 	this->SceneVoxelRoot = this->DataBase.Restore();
 }
+
+#if WITH_EDITOR
+void ASceneVoxelVolume::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (this->bDrawDebugCells == false || this->SceneVoxelRoot.IsValid() == false)
+	{
+		return;
+	}
+}
+#endif

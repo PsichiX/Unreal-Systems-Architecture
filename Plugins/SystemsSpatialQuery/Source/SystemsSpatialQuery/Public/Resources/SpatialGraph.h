@@ -24,6 +24,36 @@ struct SYSTEMSSPATIALQUERY_API FSpatialGraphConnection
 
 uint32 GetTypeHash(const FSpatialGraphConnection& Value);
 
+UCLASS(BlueprintType, Blueprintable, EditInlineNew)
+class USpatialGraphHeuristics : public UObject
+{
+	GENERATED_BODY()
+
+public:
+	virtual double Calculate(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph) const
+	{
+		return INFINITY;
+	}
+};
+
+UCLASS(BlueprintType)
+class UDistanceSpatialGraphHeuristics : public USpatialGraphHeuristics
+{
+	GENERATED_BODY()
+
+public:
+	virtual double Calculate(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph) const override;
+};
+
+UCLASS(BlueprintType)
+class UManhattanSpatialGraphHeuristics : public USpatialGraphHeuristics
+{
+	GENERATED_BODY()
+
+public:
+	virtual double Calculate(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph) const override;
+};
+
 UCLASS(BlueprintType)
 class SYSTEMSSPATIALQUERY_API USpatialGraph : public UObject
 {
@@ -37,6 +67,10 @@ public:
 	bool HasNode(const TObjectPtr<AActor>& Actor) const;
 
 	bool HasConnection(const TObjectPtr<AActor>& From, const TObjectPtr<AActor>& To, bool bBidirectional = true) const;
+
+	TArray<TObjectPtr<AActor>> FindPath(const TObjectPtr<AActor>& From,
+		const TObjectPtr<AActor>& To,
+		uint32 NodesCountEstimate = 0) const;
 
 	auto NodesIter() const
 	{
@@ -71,6 +105,9 @@ public:
 			.Filter([&](const auto& Item) { return Item.To == To && Item.From && Item.To; })
 			.Map<TObjectPtr<AActor>>([&](const auto& Item) { return Item.From; });
 	}
+
+	UPROPERTY(EditAnywhere, Export, Instanced)
+	TObjectPtr<USpatialGraphHeuristics> Heuristics = {};
 
 private:
 	UPROPERTY()
