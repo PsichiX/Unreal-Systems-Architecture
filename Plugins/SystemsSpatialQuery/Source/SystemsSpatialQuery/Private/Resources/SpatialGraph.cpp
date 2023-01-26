@@ -15,19 +15,93 @@ uint32 GetTypeHash(const FSpatialGraphConnection& Value)
 	return HashCombine(GetTypeHash(Value.From), GetTypeHash(Value.To));
 }
 
-double UDistanceSpatialGraphHeuristics::Calculate(const AActor* Node,
-	const AActor* Goal,
-	const USpatialGraph* Graph) const
+double DistanceSpatialGraphHeuristics(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph)
 {
 	return FVector::Distance(Node->GetActorLocation(), Goal->GetActorLocation());
 }
-double UManhattanSpatialGraphHeuristics::Calculate(const AActor* Node,
-	const AActor* Goal,
-	const USpatialGraph* Graph) const
+
+double ManhattanSpatialGraphHeuristics(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph)
 {
 	const auto A = Node->GetActorLocation();
 	const auto B = Goal->GetActorLocation();
 	return FMath::Abs(A.X - B.X) + FMath::Abs(A.Y - B.Y);
+}
+
+FSpatialGraphPathFinder::FSpatialGraphPathFinder(const USpatialGraph* InGraph,
+	const TObjectPtr<AActor>& From,
+	const TObjectPtr<AActor>& To,
+	TFunction<double(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph)> InHeuristics,
+	uint32 NodesCountEstimate)
+{
+	if (IsValid(InGraph) == false || From == false || To == false)
+	{
+		return;
+	}
+	this->Graph = InGraph;
+	this->Start = From;
+	this->Goal = To;
+	this->Heuristics = InHeuristics;
+	this->Open.Reserve(NodesCountEstimate);
+	this->Open.Push({this->Start, 0.0});
+	this->Costs.Add(this->Start, 0.0);
+	this->Distances.Add(this->Start, Heuristics(this->Start, this->Goal, this->Graph));
+}
+
+bool FSpatialGraphPathFinder::Step()
+{
+	if (this->Graph == false)
+	{
+		return false;
+	}
+	if (this->Open.IsEmpty())
+	{
+		return false;
+	}
+	this->Open.Sort([](const auto& A, const auto& B) { return A.Priority > B.Priority; });
+	const auto Current = this->Open.Pop();
+	if (Current.Node == this->Goal)
+	{
+		return false;
+	}
+	for (const auto& Neighbor : this->Graph->OutgoingNeighborsIter(Current.Node))
+	{
+		const auto Cost = this->Costs[Current.Node];
+		if (this->Costs.Contains(Neighbor) == false || Cost < this->Costs[Neighbor])
+		{
+			this->Costs.Add(Neighbor) = Cost;
+			const auto Priority = Cost + this->Heuristics(Neighbor, this->Goal, this->Graph);
+			this->Open.Add({Neighbor, Priority});
+			this->Parents.Add(Neighbor) = Current.Node;
+		}
+	}
+	return true;
+}
+
+TArray<TObjectPtr<AActor>> FSpatialGraphPathFinder::ReconstructPath() const
+{
+	if (Parents.Contains(this->Goal) == false)
+	{
+		return {};
+	}
+	TArray<TObjectPtr<AActor>> Result = {};
+	Result.Reserve(this->Parents.Num());
+	auto Target = this->Goal;
+	while (Target != this->Start)
+	{
+		Result.Add(Target);
+		Target = this->Parents[Target];
+	}
+	Result.Add(this->Start);
+	Algo::Reverse(Result);
+	return Result;
+}
+
+TArray<TObjectPtr<AActor>> FSpatialGraphPathFinder::Consume()
+{
+	while (Step())
+	{
+	}
+	return ReconstructPath();
 }
 
 void USpatialGraph::Reset()
@@ -75,66 +149,10 @@ bool USpatialGraph::HasConnection(const TObjectPtr<AActor>& From,
 	return false;
 }
 
-TArray<TObjectPtr<AActor>> USpatialGraph::FindPath(const TObjectPtr<AActor>& From,
+FSpatialGraphPathFinder USpatialGraph::FindPath(const TObjectPtr<AActor>& From,
 	const TObjectPtr<AActor>& To,
+	TFunction<double(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph)> Heuristics,
 	uint32 NodesCountEstimate) const
 {
-	struct Meta
-	{
-		TObjectPtr<AActor> Node = {};
-		double Priority = 0;
-	};
-
-	if (this->Heuristics == false || IsValid(From) == false || IsValid(To) == false ||
-		this->Nodes.Contains(From) == false || this->Nodes.Contains(To) == false)
-	{
-		return {};
-	}
-	if (From == To)
-	{
-		return {From, To};
-	}
-	TArray<Meta> Open = {};
-	Open.Reserve(NodesCountEstimate);
-	Open.Push({From, 0.0});
-	TMap<TObjectPtr<AActor>, double> Costs = {};
-	Costs.Add(From, 0.0);
-	TMap<TObjectPtr<AActor>, TObjectPtr<AActor>> Parents = {};
-	TMap<TObjectPtr<AActor>, double> Distances = {};
-	Distances.Add(From, this->Heuristics->Calculate(From, To, this));
-	while (Open.IsEmpty() == false)
-	{
-		Open.Sort([](const auto& A, const auto& B) { return A.Priority > B.Priority; });
-		const auto Current = Open.Pop();
-		if (Current.Node == To)
-		{
-			break;
-		}
-		for (const auto& Neighbor : OutgoingNeighborsIter(Current.Node))
-		{
-			const auto Cost = Costs[Current.Node];
-			if (Costs.Contains(Neighbor) == false || Cost < Costs[Neighbor])
-			{
-				Costs[Neighbor] = Cost;
-				const auto Priority = Cost + this->Heuristics->Calculate(Neighbor, To, this);
-				Open.Add({Neighbor, Priority});
-				Parents[Neighbor] = Current.Node;
-			}
-		}
-	}
-	if (Parents.Contains(To) == false)
-	{
-		return {};
-	}
-	TArray<TObjectPtr<AActor>> Result = {};
-	Result.Reserve(Parents.Num());
-	auto Target = To;
-	while (Target != From)
-	{
-		Result.Add(Target);
-		Target = Parents[Target];
-	}
-	Result.Add(From);
-	Algo::Reverse(Result);
-	return Result;
+	return FSpatialGraphPathFinder(this, From, To, Heuristics, NodesCountEstimate);
 }

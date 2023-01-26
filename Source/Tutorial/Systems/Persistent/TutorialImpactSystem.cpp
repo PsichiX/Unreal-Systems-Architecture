@@ -5,14 +5,11 @@
 #include "SystemsSpatialQuery/Public/Resources/SpatialInformation.h"
 
 const FName Z_BUTTON = FName(TEXT("Z"));
-const FName MIDDLE_MOUSE_BUTTON = FName(TEXT("MiddleMouseButton"));
 
 void UTutorialImpactSystem::Run(USystemsWorld& Systems)
 {
 	const auto* PlayerController = Systems.GetWorld()->GetFirstPlayerController();
-	if (IsValid(PlayerController) == false ||
-		(PlayerController->IsInputKeyDown(Z_BUTTON) == false &&
-			PlayerController->IsInputKeyDown(MIDDLE_MOUSE_BUTTON) == false))
+	if (IsValid(PlayerController) == false || (PlayerController->IsInputKeyDown(Z_BUTTON) == false))
 	{
 		return;
 	}

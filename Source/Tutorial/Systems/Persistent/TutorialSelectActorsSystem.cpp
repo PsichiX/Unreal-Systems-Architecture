@@ -2,7 +2,6 @@
 
 #include "Systems/Public/SystemsWorld.h"
 
-#include "Tutorial/Components/TutorialNpcComponent.h"
 #include "Tutorial/Components/TutorialSelectedComponent.h"
 #include "Tutorial/Systems/OneShot/TutorialApplySelectionToHighlightSystem.h"
 

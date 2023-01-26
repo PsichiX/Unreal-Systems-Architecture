@@ -4,5 +4,4 @@
 
 class USystemsWorld;
 
-UFUNCTION()
 void TutorialApplySelectionToHighlightSystem(USystemsWorld& Systems);

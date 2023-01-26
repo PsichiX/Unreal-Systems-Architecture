@@ -24,34 +24,71 @@ struct SYSTEMSSPATIALQUERY_API FSpatialGraphConnection
 
 uint32 GetTypeHash(const FSpatialGraphConnection& Value);
 
-UCLASS(BlueprintType, Blueprintable, EditInlineNew)
-class USpatialGraphHeuristics : public UObject
+double SYSTEMSSPATIALQUERY_API DistanceSpatialGraphHeuristics(const AActor* Node,
+	const AActor* Goal,
+	const USpatialGraph* Graph);
+
+double SYSTEMSSPATIALQUERY_API ManhattanSpatialGraphHeuristics(const AActor* Node,
+	const AActor* Goal,
+	const USpatialGraph* Graph);
+
+USTRUCT()
+struct SYSTEMSSPATIALQUERY_API FSpatialGraphPathFinderOpenItem
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	TObjectPtr<AActor> Node = {};
+
+	UPROPERTY()
+	double Priority = 0;
+};
+
+USTRUCT(BlueprintType)
+struct SYSTEMSSPATIALQUERY_API FSpatialGraphPathFinder
 {
 	GENERATED_BODY()
 
 public:
-	virtual double Calculate(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph) const
+	FSpatialGraphPathFinder()
 	{
-		return INFINITY;
 	}
-};
 
-UCLASS(BlueprintType)
-class UDistanceSpatialGraphHeuristics : public USpatialGraphHeuristics
-{
-	GENERATED_BODY()
+	FSpatialGraphPathFinder(const USpatialGraph* InGraph,
+		const TObjectPtr<AActor>& From,
+		const TObjectPtr<AActor>& To,
+		TFunction<double(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph)> InHeuristics,
+		uint32 NodesCountEstimate = 0);
 
-public:
-	virtual double Calculate(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph) const override;
-};
+	bool Step();
 
-UCLASS(BlueprintType)
-class UManhattanSpatialGraphHeuristics : public USpatialGraphHeuristics
-{
-	GENERATED_BODY()
+	TArray<TObjectPtr<AActor>> ReconstructPath() const;
 
-public:
-	virtual double Calculate(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph) const override;
+	TArray<TObjectPtr<AActor>> Consume();
+
+private:
+	UPROPERTY()
+	TArray<FSpatialGraphPathFinderOpenItem> Open = {};
+
+	UPROPERTY()
+	TMap<TObjectPtr<AActor>, double> Costs = {};
+
+	UPROPERTY()
+	TMap<TObjectPtr<AActor>, TObjectPtr<AActor>> Parents = {};
+
+	UPROPERTY()
+	TMap<TObjectPtr<AActor>, double> Distances = {};
+
+	UPROPERTY()
+	TObjectPtr<const USpatialGraph> Graph = {};
+
+	UPROPERTY()
+	TObjectPtr<AActor> Start = {};
+
+	UPROPERTY()
+	TObjectPtr<AActor> Goal = {};
+
+	TFunction<double(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph)> Heuristics = {};
 };
 
 UCLASS(BlueprintType)
@@ -68,8 +105,9 @@ public:
 
 	bool HasConnection(const TObjectPtr<AActor>& From, const TObjectPtr<AActor>& To, bool bBidirectional = true) const;
 
-	TArray<TObjectPtr<AActor>> FindPath(const TObjectPtr<AActor>& From,
+	FSpatialGraphPathFinder FindPath(const TObjectPtr<AActor>& From,
 		const TObjectPtr<AActor>& To,
+		TFunction<double(const AActor* Node, const AActor* Goal, const USpatialGraph* Graph)> Heuristics,
 		uint32 NodesCountEstimate = 0) const;
 
 	auto NodesIter() const
@@ -105,9 +143,6 @@ public:
 			.Filter([&](const auto& Item) { return Item.To == To && Item.From && Item.To; })
 			.Map<TObjectPtr<AActor>>([&](const auto& Item) { return Item.From; });
 	}
-
-	UPROPERTY(EditAnywhere, Export, Instanced)
-	TObjectPtr<USpatialGraphHeuristics> Heuristics = {};
 
 private:
 	UPROPERTY()
