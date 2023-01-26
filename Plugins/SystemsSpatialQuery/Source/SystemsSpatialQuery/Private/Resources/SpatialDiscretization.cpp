@@ -16,7 +16,8 @@ FSpatialDiscretizationTriangle::FSpatialDiscretizationTriangle(AActor* InA, AAct
 
 bool FSpatialDiscretizationTriangle::ContainsPoint(const FVector2D& Point) const
 {
-	if (BoundingBox().IsInside(Point) == false)
+	const auto Box = BoundingBox();
+	if (Box.IsInside(Point) == false)
 	{
 		return false;
 	}

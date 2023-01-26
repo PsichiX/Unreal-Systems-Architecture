@@ -16,6 +16,9 @@ struct SYSTEMSSPATIALQUERY_API FSpatialInformationValue
 
 	UPROPERTY()
 	double Deviation = 0.0;
+
+	UPROPERTY(EditAnywhere)
+	double DampingFactorBias = 0.0;
 };
 
 USTRUCT(BlueprintType)
@@ -43,6 +46,12 @@ public:
 	void Set(const TObjectPtr<AActor>& Actor, FName Id, double Value);
 
 	void Accumulate(const TObjectPtr<AActor>& Actor, FName Id, double RelativeValue);
+
+	TOptional<double> GetDamping(const TObjectPtr<AActor>& Actor, FName Id) const;
+
+	double GetDampingOrDefault(const TObjectPtr<AActor>& Actor, FName Id) const;
+
+	void SetDamping(const TObjectPtr<AActor>& Actor, FName Id, double DampingFactorBias);
 
 	void Unset(const TObjectPtr<AActor>& Actor, FName Id);
 

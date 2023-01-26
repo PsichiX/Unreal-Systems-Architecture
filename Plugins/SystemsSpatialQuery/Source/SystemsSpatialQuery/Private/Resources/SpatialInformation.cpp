@@ -32,6 +32,31 @@ void USpatialInformation::Accumulate(const TObjectPtr<AActor>& Actor, FName Id, 
 	this->Points.FindOrAdd(Actor).Values.FindOrAdd(Id).Value += RelativeValue;
 }
 
+TOptional<double> USpatialInformation::GetDamping(const TObjectPtr<AActor>& Actor, FName Id) const
+{
+	const auto* Point = this->Points.Find(Actor);
+	if (Point != nullptr)
+	{
+		const auto* Value = Point->Values.Find(Id);
+		if (Value != nullptr)
+		{
+			return Value->DampingFactorBias;
+		}
+	}
+	return {};
+}
+
+double USpatialInformation::GetDampingOrDefault(const TObjectPtr<AActor>& Actor, FName Id) const
+{
+	const auto Value = GetDamping(Actor, Id);
+	return Value.IsSet() ? Value.GetValue() : 0.0;
+}
+
+void USpatialInformation::SetDamping(const TObjectPtr<AActor>& Actor, FName Id, double DampingFactorBias)
+{
+	this->Points.FindOrAdd(Actor).Values.FindOrAdd(Id).DampingFactorBias = DampingFactorBias;
+}
+
 void USpatialInformation::Unset(const TObjectPtr<AActor>& Actor, FName Id)
 {
 	auto* Point = this->Points.Find(Actor);

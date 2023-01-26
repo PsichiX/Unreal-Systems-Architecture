@@ -14,7 +14,36 @@ void USpatialInformationSystem::Run(USystemsWorld& Systems)
 	}
 
 	const auto DeltaTime = GetWorld()->GetDeltaSeconds();
+	if (this->FixedStepFrequency == ESpatialPropagationFixedStepFrequency::None)
+	{
+		PerformStep(DeltaTime, Information, Graph);
+		return;
+	}
 
+	const auto FixedDeltaTime = 1.0 / static_cast<double>(static_cast<uint8>(this->FixedStepFrequency));
+	this->FixedStepAccumulator += DeltaTime;
+	auto Steps = this->FixedStepSubstepsLimit;
+	while (this->FixedStepAccumulator >= FixedDeltaTime)
+	{
+		this->FixedStepAccumulator -= FixedDeltaTime;
+		if (Steps > 0)
+		{
+			PerformStep(FixedDeltaTime, Information, Graph);
+			--Steps;
+		}
+	}
+}
+
+const FSpatialPropagationSettings& USpatialInformationSystem::FindPropagationSettings(FName Id) const
+{
+	const auto* Found = this->SpecializedPropagation.Find(Id);
+	return Found == nullptr ? this->DefaultPropagation : *Found;
+}
+
+void USpatialInformationSystem::PerformStep(double DeltaTime,
+	USpatialInformation* Information,
+	const USpatialGraph* Graph) const
+{
 	for (const auto& FromTo : Graph->ConnectionsIter())
 	{
 		const auto& From = FromTo.Get<0>();
@@ -43,19 +72,14 @@ void USpatialInformationSystem::Run(USystemsWorld& Systems)
 	{
 		for (auto& ValuePair : PointPair.Value.Values)
 		{
-			ValuePair.Value.Value += ValuePair.Value.Deviation;
+			ValuePair.Value.Value += ValuePair.Value.Deviation * DeltaTime;
 
 			const auto& Propagation = FindPropagationSettings(ValuePair.Key);
-			if (FMath::IsNearlyZero(Propagation.DampingFactor) == false)
+			const auto DampingFactor = Propagation.DampingFactor + ValuePair.Value.DampingFactorBias;
+			if (FMath::IsNearlyZero(DampingFactor) == false)
 			{
-				ValuePair.Value.Value *= FMath::Exp(-Propagation.DampingFactor * DeltaTime);
+				ValuePair.Value.Value *= FMath::Exp(-DampingFactor * DeltaTime);
 			}
 		}
 	}
-}
-
-const FSpatialPropagationSettings& USpatialInformationSystem::FindPropagationSettings(FName Id) const
-{
-	const auto* Found = this->SpecializedPropagation.Find(Id);
-	return Found == nullptr ? this->DefaultPropagation : *Found;
 }
