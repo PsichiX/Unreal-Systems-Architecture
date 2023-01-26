@@ -5,18 +5,33 @@
 #include "SystemsSpatialQuery/Public/Resources/SpatialInformation.h"
 
 const FName Z_BUTTON = FName(TEXT("Z"));
+const FName X_BUTTON = FName(TEXT("X"));
 
 void UTutorialImpactSystem::Run(USystemsWorld& Systems)
 {
 	const auto* PlayerController = Systems.GetWorld()->GetFirstPlayerController();
-	if (IsValid(PlayerController) == false || (PlayerController->IsInputKeyDown(Z_BUTTON) == false))
+	if (IsValid(PlayerController) == false)
 	{
 		return;
 	}
 
 	auto* Information = Systems.Resource<USpatialInformation>();
+	if (IsValid(Information) == false)
+	{
+		return;
+	}
+	if (PlayerController->IsInputKeyDown(X_BUTTON))
+	{
+		Information->Reset();
+		return;
+	}
+	if (PlayerController->IsInputKeyDown(Z_BUTTON) == false)
+	{
+		return;
+	}
+
 	const auto* Discretization = Systems.Resource<USpatialDiscretization>();
-	if (IsValid(Information) == false || IsValid(Discretization) == false)
+	if (IsValid(Information) == false)
 	{
 		return;
 	}
