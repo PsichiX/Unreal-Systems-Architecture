@@ -49,11 +49,7 @@ FSpatialGraphPathFinder::FSpatialGraphPathFinder(const USpatialGraph* InGraph,
 
 bool FSpatialGraphPathFinder::Step()
 {
-	if (this->Graph == false)
-	{
-		return false;
-	}
-	if (this->Open.IsEmpty())
+	if (this->Graph == false || this->Open.IsEmpty())
 	{
 		return false;
 	}

@@ -17,6 +17,12 @@ public:
 	virtual void Run(USystemsWorld& Systems) override;
 
 private:
+	static void ClearImpact(USystemsWorld& Systems);
+
+	void ApplyImpact(double Scale,
+		const APlayerController* PlayerController,
+		USystemsWorld& Systems) const;
+
 	UPROPERTY(EditAnywhere)
 	FName ImpactId = FName(TEXT("Impact"));
 

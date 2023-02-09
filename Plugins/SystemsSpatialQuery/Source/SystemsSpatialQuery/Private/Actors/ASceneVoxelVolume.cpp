@@ -85,5 +85,13 @@ void ASceneVoxelVolume::Tick(float DeltaSeconds)
 	{
 		return;
 	}
+
+	this->SceneVoxelRoot->ForEachNode(
+		[&](const auto& Node)
+		{
+			const auto BoundingBox = Node.GetBoundingBox();
+			DrawDebugBox(GetWorld(), BoundingBox.GetCenter(), BoundingBox.GetExtent(), FColor::Blue);
+		},
+		ESceneVoxelQueryOptions::Any);
 }
 #endif

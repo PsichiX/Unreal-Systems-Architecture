@@ -59,6 +59,8 @@ struct FSceneVoxelNode
 
 	TOptional<double> GetClosestDistanceToSurface() const;
 
+	FBox GetBoundingBox() const;
+
 	bool IsInsideSurface() const;
 
 	bool IsOccupied() const;

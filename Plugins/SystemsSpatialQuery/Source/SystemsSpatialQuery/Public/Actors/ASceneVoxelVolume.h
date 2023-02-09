@@ -32,6 +32,11 @@ protected:
 
 private:
 #if WITH_EDITOR
+	virtual bool ShouldTickIfViewportsOnly() const override
+	{
+		return true;
+	}
+
 	virtual void Tick(float DeltaSeconds) override;
 #endif
 
@@ -57,7 +62,7 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume|Debug")
 	TSet<TObjectPtr<UPrimitiveComponent>> DebugPrimitives = {};
 
-	UPROPERTY(VisibleAnywhere, Category = "Scene Voxel Volume|Debug")
+	UPROPERTY(EditAnywhere, Category = "Scene Voxel Volume|Debug")
 	bool bDrawDebugCells = false;
 #endif
 

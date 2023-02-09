@@ -61,10 +61,10 @@ void USpatialInformationSystem::PerformStep(double DeltaTime,
 			const auto& Propagation = FindPropagationSettings(PairFrom.Key);
 			auto& ValueTo = PointTo.Values.FindOrAdd(PairFrom.Key);
 			const auto Direction = PairFrom.Value.Value - ValueTo.Value;
-			const auto Difference = (Direction * Propagation.Speed) / static_cast<double>(Count);
-			const auto Change = (Difference / Distance) * DeltaTime;
-			PairFrom.Value.Deviation -= Change;
-			ValueTo.Deviation += Change;
+			const auto Difference =
+				Direction * Propagation.ChangeScale * DeltaTime / Distance / static_cast<double>(Count);
+			PairFrom.Value.Deviation -= Difference;
+			ValueTo.Deviation += Difference;
 		}
 	}
 

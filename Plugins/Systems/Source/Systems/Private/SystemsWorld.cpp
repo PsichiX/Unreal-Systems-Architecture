@@ -47,6 +47,14 @@ void USystemsWorld::SealAndInitialize()
 	}
 }
 
+void USystemsWorld::Cleanup()
+{
+	for (auto& Data : this->Systems)
+	{
+		Data.System->Cleanup(*this);
+	}
+}
+
 bool USystemsWorld::RegisterComponentRaw(const UClass* Type)
 {
 	if (this->bSealed || IsValid(Type) == false || this->ComponentTypesCount >= SYSTEMS_COMPONENTS_COUNT)

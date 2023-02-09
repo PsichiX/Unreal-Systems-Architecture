@@ -160,21 +160,49 @@ void UDelaunay2dSpatialGraphSystem::Run(USystemsWorld& Systems)
 		auto* A = Actors[Triangle.A];
 		auto* B = Actors[Triangle.B];
 		auto* C = Actors[Triangle.C];
-		if (IterStdConst(this->ConnectionValidators)
-				.All(
-					[&](const auto& Validator)
-					{
-						return Validator == false ||
-							(Validator->Validate(A, B) && Validator->Validate(B, C) && Validator->Validate(C, A));
-					}))
+		auto bIsValidAB = true;
+		auto bIsValidBC = true;
+		auto bIsValidCA = true;
+
+		for (const auto& Validator : this->ConnectionValidators)
+		{
+			if (Validator == false)
+			{
+				continue;
+			}
+			if (bIsValidAB && Validator->Validate(A, B) == false)
+			{
+				bIsValidAB = false;
+			}
+			if (bIsValidBC && Validator->Validate(B, C) == false)
+			{
+				bIsValidBC = false;
+			}
+			if (bIsValidCA && Validator->Validate(C, A) == false)
+			{
+				bIsValidCA = false;
+			}
+		}
+		if (this->bAllowPartialConnectivity == false &&
+			(bIsValidAB == false || bIsValidBC == false || bIsValidCA == false))
+		{
+			continue;
+		}
+		if (bIsValidAB)
 		{
 			Graph->Add(A, B, true);
+		}
+		if (bIsValidBC)
+		{
 			Graph->Add(B, C, true);
+		}
+		if (bIsValidCA)
+		{
 			Graph->Add(C, A, true);
-			if (IsValid(Discretization))
-			{
-				Discretization->AddTriangle(FSpatialDiscretizationTriangle(A, B, C));
-			}
+		}
+		if (IsValid(Discretization) && bIsValidAB && bIsValidBC && bIsValidCA)
+		{
+			Discretization->AddTriangle(FSpatialDiscretizationTriangle(A, B, C));
 		}
 	}
 }

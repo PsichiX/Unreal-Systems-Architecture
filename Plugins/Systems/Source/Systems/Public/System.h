@@ -51,6 +51,19 @@ public:
 	{
 	}
 
+	/// Override to cleanup system (its internal state).
+	///
+	/// This method is called by [`class: USystemsWorld::Cleanup`](),
+	/// right before systems world is scheduled to removal.
+	///
+	/// Here user can perform cleanup of this system internal state, or
+	/// free acquired resources.
+	virtual void Cleanup(
+		/// Reference to systems world that triggers this system cleanup.
+		USystemsWorld& Systems)
+	{
+	}
+
 	/// Override to run system work logic (perform queries on world components
 	/// and resources).
 	///

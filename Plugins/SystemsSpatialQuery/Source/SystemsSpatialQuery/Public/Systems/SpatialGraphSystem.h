@@ -141,4 +141,11 @@ private:
 	/// actors to be assigned to given graph.
 	UPROPERTY(EditAnywhere)
 	TSet<TSubclassOf<UActorComponent>> ExtraComponentTypes = {};
+
+	/// Do not require validity of all 3 connections per triangle.
+	///
+	/// By default 3 nodes are connected only when all 3 connections are available, with this
+	/// set to `true` any valid connection will be made (without creating triangle).
+	UPROPERTY(EditAnywhere)
+	bool bAllowPartialConnectivity = false;
 };

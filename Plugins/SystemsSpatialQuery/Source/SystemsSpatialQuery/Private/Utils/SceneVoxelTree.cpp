@@ -176,6 +176,11 @@ TOptional<double> FSceneVoxelNode::GetClosestDistanceToSurface() const
 	return this->ClosestDistanceToSurface;
 }
 
+FBox FSceneVoxelNode::GetBoundingBox() const
+{
+	return this->BoundingBox;
+}
+
 bool FSceneVoxelNode::IsInsideSurface() const
 {
 	return this->bInsideSurface;

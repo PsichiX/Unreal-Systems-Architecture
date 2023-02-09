@@ -113,6 +113,7 @@ void USystemsSubsystem::OnTick()
 
 	for (auto& Id : this->ToRemove)
 	{
+		this->SystemsWorlds[Id]->Cleanup();
 		this->SystemsWorlds.Remove(Id);
 	}
 

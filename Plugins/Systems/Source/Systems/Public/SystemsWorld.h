@@ -155,6 +155,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Systems)
 	void SealAndInitialize();
 
+	/// Cleanup existing systems.
+	///
+	/// Method called in next tick after: [`class: USystemsSubsystem::ReleaseSystemsWorld`].
+	UFUNCTION(BlueprintCallable, Category = Systems)
+	void Cleanup();
+
 	/// Register component type.
 	///
 	/// Prior to [`struct: FArchetypeSignature`]() being usable for queries and

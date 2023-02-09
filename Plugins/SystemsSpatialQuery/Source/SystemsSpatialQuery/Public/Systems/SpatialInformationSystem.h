@@ -17,6 +17,8 @@ enum class ESpatialPropagationFixedStepFrequency : uint8
 	None = 0,
 	/// Unbearable
 	Hertz1 = 1,
+	/// Mildly Interesting
+	Hertz2 = 2,
 	/// Ultra Low
 	Hertz5 = 5,
 	/// Semi Low
@@ -42,9 +44,9 @@ struct SYSTEMSSPATIALQUERY_API FSpatialPropagationSettings
 {
 	GENERATED_BODY()
 
-	/// Speed of propagation in Unreal spatial units per second.
+	/// Scale of values change propagation.
 	UPROPERTY(EditAnywhere)
-	double Speed = 100.0;
+	double ChangeScale = 100.0;
 
 	UPROPERTY(EditAnywhere)
 	double DampingFactor = 0.0;
