@@ -67,7 +67,8 @@ public:
 	/// Override to run system work logic (perform queries on world components
 	/// and resources).
 	///
-	/// This method is called by [`class: USystemsWorld::Process`]().
+	/// This method is called by [`class: USystems::AdvancedRun`]() when systems
+	/// dispatcher gets request for default mode run.
 	///
 	/// Here user can perform system logic, usually performs single task such as
 	/// apply velocity accumulated by other systems on actor location, or
@@ -87,6 +88,23 @@ public:
 		USystemsWorld& Systems)
 	{
 	}
+
+	/// Override to run system work logic in special mode triggered .
+	///
+	/// This method is called by [`class: USystemsWorld::Process`]().
+	/// See also [`class: USystem::Run`]().
+	///
+	/// Here user can perform system logic in special mode, like for example systems
+	/// dispatcher gets request to run systems in network rollback/rollforth mode so
+	/// systems that support rollback/rollforth can go back in time and re-simulate
+	/// their part of the game state.
+	virtual void AdvancedRun(
+		/// Reference to systems world that triggers this system run.
+		USystemsWorld& Systems,
+		/// Name of the mode system wants to run in (default mode is `None`).
+		const FName& Mode,
+		/// Additional payload provided from systems dispatcher that contains extra data for given run mode.
+		const TObjectPtr<UObject>& Payload);
 };
 
 /// Variant of system that works with blueprints.

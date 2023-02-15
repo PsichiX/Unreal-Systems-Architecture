@@ -19,6 +19,18 @@ using LambdaFactoryType = UObject*(UObject*);
 //// [/ignore]
 
 USTRUCT()
+struct SYSTEMS_API FSystemsDispatchRequest
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	FName Mode = FName();
+
+	UPROPERTY()
+	TObjectPtr<UObject> Payload = {};
+};
+
+USTRUCT()
 struct SYSTEMS_API FProxyResource
 {
 	GENERATED_BODY()
@@ -949,6 +961,8 @@ public:
 
 	virtual bool ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObject* Executor) override;
 
+	void RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload = {});
+
 private:
 	TOptional<FConsumedActorComponents> ConsumeSwapActorComponents(AActor* Actor);
 
@@ -1012,4 +1026,7 @@ private:
 
 	UPROPERTY()
 	bool ActorsChanged = false;
+
+	UPROPERTY()
+	TArray<FSystemsDispatchRequest> DispatchRequests = {};
 };

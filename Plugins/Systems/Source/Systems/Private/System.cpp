@@ -3,6 +3,14 @@
 #include "Systems/Public/SystemsReflection.h"
 #include "Systems/Public/SystemsWorld.h"
 
+void USystem::AdvancedRun(USystemsWorld& Systems, const FName& Mode, const TObjectPtr<UObject>& Payload)
+{
+	if (Mode.IsNone())
+	{
+		Run(Systems);
+	}
+}
+
 void UScriptableSystem::OnInit_Implementation(USystemsWorld* Systems)
 {
 }

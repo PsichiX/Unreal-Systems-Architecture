@@ -433,9 +433,24 @@ void USystemsWorld::Process()
 		}
 	}
 
-	for (auto& Data : this->Systems)
+	if (this->DispatchRequests.IsEmpty())
 	{
-		Data.System->Run(*this);
+		for (auto& Data : this->Systems)
+		{
+			Data.System->Run(*this);
+		}
+	}
+	else
+	{
+		const auto Requests = this->DispatchRequests;
+		this->DispatchRequests.Reset();
+		for (const auto& Request : Requests)
+		{
+			for (auto& Data : this->Systems)
+			{
+				Data.System->AdvancedRun(*this, Request.Mode, Request.Payload);
+			}
+		}
 	}
 }
 
@@ -545,6 +560,11 @@ bool USystemsWorld::ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObj
 		}
 	}
 	return false;
+}
+
+void USystemsWorld::RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload)
+{
+	this->DispatchRequests.Add(FSystemsDispatchRequest{Mode, Payload});
 }
 
 TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorComponents(AActor* Actor)
