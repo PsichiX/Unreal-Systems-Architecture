@@ -433,23 +433,17 @@ void USystemsWorld::Process()
 		}
 	}
 
-	if (this->DispatchRequests.IsEmpty())
+	for (auto& Data : this->Systems)
+	{
+		Data.System->Run(*this);
+	}
+	const auto Requests = this->DispatchRequests;
+	this->DispatchRequests.Reset();
+	for (const auto& Request : Requests)
 	{
 		for (auto& Data : this->Systems)
 		{
-			Data.System->Run(*this);
-		}
-	}
-	else
-	{
-		const auto Requests = this->DispatchRequests;
-		this->DispatchRequests.Reset();
-		for (const auto& Request : Requests)
-		{
-			for (auto& Data : this->Systems)
-			{
-				Data.System->AdvancedRun(*this, Request.Mode, Request.Payload);
-			}
+			Data.System->AdvancedRun(*this, Request.Mode, Request.Payload);
 		}
 	}
 }
