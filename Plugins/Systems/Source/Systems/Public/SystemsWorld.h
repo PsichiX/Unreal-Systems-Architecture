@@ -28,6 +28,9 @@ struct SYSTEMS_API FSystemsDispatchRequest
 
 	UPROPERTY()
 	TObjectPtr<UObject> Payload = {};
+
+	UPROPERTY()
+	bool bWorldMaintenance = true;
 };
 
 USTRUCT()
@@ -964,7 +967,9 @@ public:
 	void RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload = {});
 
 private:
-	void ProcessStep(const FName& Mode, const TObjectPtr<UObject>& Payload);
+	void Maintanance();
+
+	void ProcessStep(const FSystemsDispatchRequest& Request);
 
 	TOptional<FConsumedActorComponents> ConsumeSwapActorComponents(AActor* Actor);
 

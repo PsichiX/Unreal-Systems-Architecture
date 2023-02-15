@@ -360,12 +360,12 @@ void USystemsWorld::Process()
 		return;
 	}
 
-	ProcessStep(FName(), {});
+	ProcessStep({});
 	const auto Requests = this->DispatchRequests;
 	this->DispatchRequests.Reset();
 	for (const auto& Request : Requests)
 	{
-		ProcessStep(Request.Mode, Request.Payload);
+		ProcessStep(Request);
 	}
 }
 
@@ -482,7 +482,7 @@ void USystemsWorld::RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload)
 	this->DispatchRequests.Add(FSystemsDispatchRequest{Mode, Payload});
 }
 
-void USystemsWorld::ProcessStep(const FName& Mode, const TObjectPtr<UObject>& Payload)
+void USystemsWorld::Maintanance()
 {
 	this->CachedLastComponentsChanged = this->ComponentsBeingChanged;
 	this->ComponentsBeingChanged.Clear();
@@ -556,10 +556,17 @@ void USystemsWorld::ProcessStep(const FName& Mode, const TObjectPtr<UObject>& Pa
 			this->Archetypes.Remove(Key);
 		}
 	}
+}
 
+void USystemsWorld::ProcessStep(const FSystemsDispatchRequest& Request)
+{
+	if (Request.bWorldMaintenance)
+	{
+		Maintanance();
+	}
 	for (auto& Data : this->Systems)
 	{
-		Data.System->AdvancedRun(*this, Mode, Payload);
+		Data.System->AdvancedRun(*this, Request.Mode, Request.Payload);
 	}
 }
 
