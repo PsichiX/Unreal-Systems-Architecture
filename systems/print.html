@@ -35,6 +35,7 @@
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
@@ -6238,6 +6239,74 @@ void ULogBirdsNumberChangeSystem::Run(USystemsWorld&amp; Systems)
 <h1 id="methods-14"><a class="header" href="#methods-14"><strong>Methods</strong></a></h1>
 <ul>
 <li>
+<h1 id="advancedrun"><a class="header" href="#advancedrun"><strong><code>AdvancedRun</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+virtual void AdvancedRun(
+    USystemsWorld&amp; Systems,
+    const FName&amp; Mode,
+    const TObjectPtr&lt;UObject&gt;&amp; Payload
+);
+</code></pre>
+<details>
+<hr />
+<p>Override to run system work logic in special mode triggered .</p>
+<p>This method is called by <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#process"><strong><code>USystemsWorld::Process</code></strong></a>.
+See also <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystem.html#run"><strong><code>USystem::Run</code></strong></a>.</p>
+<p>Here user can perform system logic in special mode, like for example systems
+dispatcher gets request to run systems in network rollback/rollforth mode so
+systems that support rollback/rollforth can go back in time and re-simulate
+their part of the game state.</p>
+<hr />
+<h1 id="arguments-87"><a class="header" href="#arguments-87"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="systems-7"><a class="header" href="#systems-7"><strong><code>Systems</code></strong></a></h2>
+<pre><code class="language-cpp">USystemsWorld&amp; Systems
+</code></pre>
+<p>Reference to systems world that triggers this system run.</p>
+</li>
+<li>
+<h2 id="mode"><a class="header" href="#mode"><strong><code>Mode</code></strong></a></h2>
+<pre><code class="language-cpp">const FName&amp; Mode
+</code></pre>
+<p>Name of the mode system wants to run in (default mode is <code>None</code>).</p>
+</li>
+<li>
+<h2 id="payload"><a class="header" href="#payload"><strong><code>Payload</code></strong></a></h2>
+<pre><code class="language-cpp">const TObjectPtr&lt;UObject&gt;&amp; Payload
+</code></pre>
+<p>Additional payload provided from systems dispatcher that contains extra data for given run mode.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="cleanup"><a class="header" href="#cleanup"><strong><code>Cleanup</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+virtual void Cleanup(
+    USystemsWorld&amp; Systems
+);
+</code></pre>
+<details>
+<hr />
+<p>Override to cleanup system (its internal state).</p>
+<p>This method is called by <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#cleanup"><strong><code>USystemsWorld::Cleanup</code></strong></a>,
+right before systems world is scheduled to removal.</p>
+<p>Here user can perform cleanup of this system internal state, or
+free acquired resources.</p>
+<hr />
+<h1 id="arguments-88"><a class="header" href="#arguments-88"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="systems-8"><a class="header" href="#systems-8"><strong><code>Systems</code></strong></a></h2>
+<pre><code class="language-cpp">USystemsWorld&amp; Systems
+</code></pre>
+<p>Reference to systems world that triggers this system cleanup.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
 <h1 id="init"><a class="header" href="#init"><strong><code>Init</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 virtual void Init(
@@ -6278,10 +6347,10 @@ void UBoidsMovementSystem::Init(USystemsWorld&amp; Systems)
 }
 </code></pre>
 <hr />
-<h1 id="arguments-87"><a class="header" href="#arguments-87"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-89"><a class="header" href="#arguments-89"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="systems-7"><a class="header" href="#systems-7"><strong><code>Systems</code></strong></a></h2>
+<h2 id="systems-9"><a class="header" href="#systems-9"><strong><code>Systems</code></strong></a></h2>
 <pre><code class="language-cpp">USystemsWorld&amp; Systems
 </code></pre>
 <p>Reference to systems world that triggers this system initialization.</p>
@@ -6300,7 +6369,8 @@ virtual void Run(
 <hr />
 <p>Override to run system work logic (perform queries on world components
 and resources).</p>
-<p>This method is called by <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#process"><strong><code>USystemsWorld::Process</code></strong></a>.</p>
+<p>This method is called by <strong><code>USystems::AdvancedRun</code></strong> when systems
+dispatcher gets request for default mode run.</p>
 <p>Here user can perform system logic, usually performs single task such as
 apply velocity accumulated by other systems on actor location, or
 perform actors AI tasks, or kill actors that has 0 or less health -
@@ -6342,10 +6412,10 @@ void UBoidsMovementSystem::Run(USystemsWorld&amp; Systems)
 }
 </code></pre>
 <hr />
-<h1 id="arguments-88"><a class="header" href="#arguments-88"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-90"><a class="header" href="#arguments-90"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="systems-8"><a class="header" href="#systems-8"><strong><code>Systems</code></strong></a></h2>
+<h2 id="systems-10"><a class="header" href="#systems-10"><strong><code>Systems</code></strong></a></h2>
 <pre><code class="language-cpp">USystemsWorld&amp; Systems
 </code></pre>
 <p>Reference to systems world that triggers this system run.</p>
@@ -6447,7 +6517,7 @@ void SetRegistered(
 <p>Registers this component to subsystem's systems worlds listed in
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsActorComponent.html#systemsworlds"><strong><code>USystemsActorComponent::SystemsWorlds</code></strong></a>.</p>
 <hr />
-<h1 id="arguments-89"><a class="header" href="#arguments-89"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-91"><a class="header" href="#arguments-91"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="bmode"><a class="header" href="#bmode"><strong><code>bMode</code></strong></a></h2>
@@ -6521,7 +6591,7 @@ auto TagIter(
 <hr />
 <p>Gives iterator that yields grouped components that has <code>Tag</code> tag and casts to <code>T</code>.</p>
 <hr />
-<h1 id="arguments-90"><a class="header" href="#arguments-90"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-92"><a class="header" href="#arguments-92"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="tag"><a class="header" href="#tag"><strong><code>Tag</code></strong></a></h2>
@@ -6661,7 +6731,7 @@ void Install(
 <p>Creates new global systems world under <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html#worldid"><strong><code>USystemsPipeline::WorldId</code></strong></a> name and
 installs this pipeline content into that systems world.</p>
 <hr />
-<h1 id="arguments-91"><a class="header" href="#arguments-91"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-93"><a class="header" href="#arguments-93"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="world-1"><a class="header" href="#world-1"><strong><code>World</code></strong></a></h2>
@@ -6683,7 +6753,7 @@ void Uninstall(
 <hr />
 <p>Destroys systems world registered under <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html#worldid"><strong><code>USystemsPipeline::WorldId</code></strong></a> name.</p>
 <hr />
-<h1 id="arguments-92"><a class="header" href="#arguments-92"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-94"><a class="header" href="#arguments-94"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="world-2"><a class="header" href="#world-2"><strong><code>World</code></strong></a></h2>
@@ -6791,7 +6861,7 @@ void SetRegistered(
 <p>Registers this component to subsystem's systems worlds listed in
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsSceneComponent.html#systemsworlds"><strong><code>USystemsSceneComponent::SystemsWorlds</code></strong></a>.</p>
 <hr />
-<h1 id="arguments-93"><a class="header" href="#arguments-93"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-95"><a class="header" href="#arguments-95"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="bmode-1"><a class="header" href="#bmode-1"><strong><code>bMode</code></strong></a></h2>
@@ -6859,7 +6929,7 @@ static void AddComponent(
 components to make them auto added to global systems worlds on
 <code>BeginPlay</code>.</p>
 <hr />
-<h1 id="arguments-94"><a class="header" href="#arguments-94"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-96"><a class="header" href="#arguments-96"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component"><a class="header" href="#component"><strong><code>Component</code></strong></a></h2>
@@ -6910,7 +6980,7 @@ static void AddComponentEverywhere(
 components to make them auto added to global systems worlds on
 <code>BeginPlay</code>.</p>
 <hr />
-<h1 id="arguments-95"><a class="header" href="#arguments-95"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-97"><a class="header" href="#arguments-97"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-1"><a class="header" href="#component-1"><strong><code>Component</code></strong></a></h2>
@@ -6957,7 +7027,7 @@ static UActorComponent* GetComponentRaw(
 <p>This is a handy shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsStatics.html#getsystemsworld"><strong><code>USystemsStatics::GetSystemsWorld</code></strong></a> and then
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#componentraw"><strong><code>USystemsWorld::ComponentRaw</code></strong></a> on it.</p>
 <hr />
-<h1 id="arguments-96"><a class="header" href="#arguments-96"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-98"><a class="header" href="#arguments-98"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id"><a class="header" href="#id"><strong><code>Id</code></strong></a></h2>
@@ -7000,7 +7070,7 @@ static T* GetResource(
 <p>Gets resource from globally registered systems world by its label.</p>
 <p>This is a handy template shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsStatics.html#resourceraw"><strong><code>USystemsStatics::ResourceRaw</code></strong></a>.</p>
 <hr />
-<h1 id="arguments-97"><a class="header" href="#arguments-97"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-99"><a class="header" href="#arguments-99"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-1"><a class="header" href="#id-1"><strong><code>Id</code></strong></a></h2>
@@ -7046,7 +7116,7 @@ static UObject* GetResourceRaw(
 <p>This is a handy shortcut for <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsStatics.html#getsystemsworld"><strong><code>USystemsStatics::GetSystemsWorld</code></strong></a> and then
 <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#resourceraw"><strong><code>USystemsWorld::ResourceRaw</code></strong></a> on it.</p>
 <hr />
-<h1 id="arguments-98"><a class="header" href="#arguments-98"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-100"><a class="header" href="#arguments-100"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-2"><a class="header" href="#id-2"><strong><code>Id</code></strong></a></h2>
@@ -7095,7 +7165,7 @@ static USystemsWorld* GetSystemsWorld(
 <p>Useful in places where we need to perform systems qorld query, but there
 is no systems world provided into the scope.</p>
 <hr />
-<h1 id="arguments-99"><a class="header" href="#arguments-99"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-101"><a class="header" href="#arguments-101"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-3"><a class="header" href="#id-3"><strong><code>Id</code></strong></a></h2>
@@ -7139,7 +7209,7 @@ static void RemoveComponent(
 components to make them auto removed from global systems worlds on
 <code>EndPlay</code>.</p>
 <hr />
-<h1 id="arguments-100"><a class="header" href="#arguments-100"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-102"><a class="header" href="#arguments-102"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-2"><a class="header" href="#component-2"><strong><code>Component</code></strong></a></h2>
@@ -7256,7 +7326,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 }
 </code></pre>
 <hr />
-<h1 id="arguments-101"><a class="header" href="#arguments-101"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-103"><a class="header" href="#arguments-103"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-4"><a class="header" href="#id-4"><strong><code>Id</code></strong></a></h2>
@@ -7302,7 +7372,7 @@ void BlueprintAcquireSystemsWorld(
 <p>Create, setup and register new systems world.</p>
 <p>Blueprint-side version of <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsSubsystem.html#acquiresystemsworld"><strong><code>USystemsSubsystem::AcquireSystemsWorld</code></strong></a>.</p>
 <hr />
-<h1 id="arguments-102"><a class="header" href="#arguments-102"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-104"><a class="header" href="#arguments-104"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-5"><a class="header" href="#id-5"><strong><code>Id</code></strong></a></h2>
@@ -7335,7 +7405,7 @@ static USystemsSubsystem* Get(
 <hr />
 <p>Gets instance of this subsystem.</p>
 <hr />
-<h1 id="arguments-103"><a class="header" href="#arguments-103"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-105"><a class="header" href="#arguments-105"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="world-3"><a class="header" href="#world-3"><strong><code>World</code></strong></a></h2>
@@ -7368,7 +7438,7 @@ USystemsWorld* GetSystemsWorld(
 <hr />
 <p>Gets systems world by its label.</p>
 <hr />
-<h1 id="arguments-104"><a class="header" href="#arguments-104"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-106"><a class="header" href="#arguments-106"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-6"><a class="header" href="#id-6"><strong><code>Id</code></strong></a></h2>
@@ -7392,7 +7462,7 @@ void GetSystemsWorldsIds(
 <p>Useful only for more advanced usecases like editor tools that might want
 to list currently existing systems world.</p>
 <hr />
-<h1 id="arguments-105"><a class="header" href="#arguments-105"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-107"><a class="header" href="#arguments-107"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="output"><a class="header" href="#output"><strong><code>Output</code></strong></a></h2>
@@ -7466,7 +7536,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 }
 </code></pre>
 <hr />
-<h1 id="arguments-106"><a class="header" href="#arguments-106"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-108"><a class="header" href="#arguments-108"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="id-7"><a class="header" href="#id-7"><strong><code>Id</code></strong></a></h2>
@@ -7609,7 +7679,7 @@ after all systems complete their run on current game tick.</p>
 }
 </code></pre>
 <hr />
-<h1 id="arguments-107"><a class="header" href="#arguments-107"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-109"><a class="header" href="#arguments-109"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-3"><a class="header" href="#component-3"><strong><code>Component</code></strong></a></h2>
@@ -7618,6 +7688,24 @@ after all systems complete their run on current game tick.</p>
 <p>Component to be registered.</p>
 </li>
 </ul>
+</details>
+</li>
+<li>
+<h1 id="cleanup-1"><a class="header" href="#cleanup-1"><strong><code>Cleanup</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void Cleanup();
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-54"><a class="header" href="#specifiers-54">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Cleanup existing systems.</p>
+<p>Method called in next tick after: [<code>class: USystemsSubsystem::ReleaseSystemsWorld</code>].</p>
 </details>
 </li>
 <li>
@@ -7643,7 +7731,7 @@ registry.</p>
 <pre><code class="language-cpp">Systems.Component&lt;UShiaComponent&gt;(Actor)-&gt;JustDoIt();
 </code></pre>
 <hr />
-<h1 id="arguments-108"><a class="header" href="#arguments-108"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-110"><a class="header" href="#arguments-110"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="actor-1"><a class="header" href="#actor-1"><strong><code>Actor</code></strong></a></h2>
@@ -7668,7 +7756,7 @@ TOptional&lt;uint32&gt; ComponentIndex(
 user most likely won't have any high-level use case for that.</p>
 <p>For getting component index by its class use: <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#componenttypeindex"><strong><code>USystemsWorld::ComponentTypeIndex</code></strong></a></p>
 <hr />
-<h1 id="arguments-109"><a class="header" href="#arguments-109"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-111"><a class="header" href="#arguments-111"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-5"><a class="header" href="#component-5"><strong><code>Component</code></strong></a></h2>
@@ -7690,7 +7778,7 @@ UActorComponent* ComponentRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-54"><a class="header" href="#specifiers-54">Specifiers:</a></h3>
+<h3 id="specifiers-55"><a class="header" href="#specifiers-55">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7721,7 +7809,7 @@ registry.</p>
 <pre><code class="language-cpp">Systems.ComponentRaw(Actor, UShiaComponent::StaticClass())-&gt;JustDoIt();
 </code></pre>
 <hr />
-<h1 id="arguments-110"><a class="header" href="#arguments-110"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-112"><a class="header" href="#arguments-112"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="actor-2"><a class="header" href="#actor-2"><strong><code>Actor</code></strong></a></h2>
@@ -7752,7 +7840,7 @@ TOptional&lt;uint32&gt; ComponentTypeIndex(
 user most likely won't have any high-level use case for that.</p>
 <p>For getting component index by component: <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#componentindex"><strong><code>USystemsWorld::ComponentIndex</code></strong></a></p>
 <hr />
-<h1 id="arguments-111"><a class="header" href="#arguments-111"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-113"><a class="header" href="#arguments-113"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-6"><a class="header" href="#type-6"><strong><code>Type</code></strong></a></h2>
@@ -7784,7 +7872,7 @@ component not being registered, it returns <code>nullptr</code> in tuple element
 corresponding to requested actor component type.</p>
 </blockquote>
 <hr />
-<h1 id="arguments-112"><a class="header" href="#arguments-112"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-114"><a class="header" href="#arguments-114"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="actor-3"><a class="header" href="#actor-3"><strong><code>Actor</code></strong></a></h2>
@@ -7823,7 +7911,7 @@ bool ComponentsDidChangedRaw(
 <p>This checks if any, not all of components marked in signature changed.</p>
 </blockquote>
 <hr />
-<h1 id="arguments-113"><a class="header" href="#arguments-113"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-115"><a class="header" href="#arguments-115"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="signature"><a class="header" href="#signature"><strong><code>Signature</code></strong></a></h2>
@@ -7846,7 +7934,7 @@ FArchetypeSignature ComponentsSignature(
 <p>Useful when working directly with <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/structs/FArchetypeSignature.html"><strong><code>FArchetypeSignature</code></strong></a>, but
 user most likely won't have any high-level use case for that.</p>
 <hr />
-<h1 id="arguments-114"><a class="header" href="#arguments-114"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-116"><a class="header" href="#arguments-116"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="view"><a class="header" href="#view"><strong><code>View</code></strong></a></h2>
@@ -7912,7 +8000,7 @@ components (although non-ergonomic for sure):</p>
 since only this one contains entire requested signature.</p>
 </blockquote>
 <hr />
-<h1 id="arguments-115"><a class="header" href="#arguments-115"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-117"><a class="header" href="#arguments-117"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="includesignature"><a class="header" href="#includesignature"><strong><code>IncludeSignature</code></strong></a></h2>
@@ -7954,7 +8042,7 @@ bool InstallDefaultResource(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-55"><a class="header" href="#specifiers-55">Specifiers:</a></h3>
+<h3 id="specifiers-56"><a class="header" href="#specifiers-56">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7968,7 +8056,7 @@ bool InstallDefaultResource(
 <pre><code class="language-cpp">Systems.InstallDefaultResource(UInventory::StaticClass());
 </code></pre>
 <hr />
-<h1 id="arguments-116"><a class="header" href="#arguments-116"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-118"><a class="header" href="#arguments-118"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-7"><a class="header" href="#type-7"><strong><code>Type</code></strong></a></h2>
@@ -7990,7 +8078,7 @@ bool InstallDefaultSystem(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-56"><a class="header" href="#specifiers-56">Specifiers:</a></h3>
+<h3 id="specifiers-57"><a class="header" href="#specifiers-57">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8005,7 +8093,7 @@ bool InstallDefaultSystem(
 <pre><code class="language-cpp">Systems.InstallDefaultSystem(USomeSystem::StaticClass(), FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
-<h1 id="arguments-117"><a class="header" href="#arguments-117"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-119"><a class="header" href="#arguments-119"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-8"><a class="header" href="#type-8"><strong><code>Type</code></strong></a></h2>
@@ -8060,7 +8148,7 @@ void BoidsFaceDirectionSystem(USystemsWorld&amp; Systems)
 <pre><code class="language-cpp">Systems.InstallLambdaSystem(BoidsFaceDirectionSystem, FInstallSystemOptions(&quot;BoidsFaceDirection&quot;));
 </code></pre>
 <hr />
-<h1 id="arguments-118"><a class="header" href="#arguments-118"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-120"><a class="header" href="#arguments-120"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="functor"><a class="header" href="#functor"><strong><code>Functor</code></strong></a></h2>
@@ -8112,7 +8200,7 @@ public:
 Systems.InstallProxyResource&lt;UInventory&gt;(Wrapper, [](auto* Wrapper) { return Wrapper-&gt;GeneratedInventory; });
 </code></pre>
 <hr />
-<h1 id="arguments-119"><a class="header" href="#arguments-119"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-121"><a class="header" href="#arguments-121"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="resource"><a class="header" href="#resource"><strong><code>Resource</code></strong></a></h2>
@@ -8163,7 +8251,7 @@ public:
 	[](auto* Wrapper) { return Wrapper-&gt;GeneratedInventory; });
 </code></pre>
 <hr />
-<h1 id="arguments-120"><a class="header" href="#arguments-120"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-122"><a class="header" href="#arguments-122"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-9"><a class="header" href="#type-9"><strong><code>Type</code></strong></a></h2>
@@ -8213,7 +8301,7 @@ bool InstallResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-57"><a class="header" href="#specifiers-57">Specifiers:</a></h3>
+<h3 id="specifiers-58"><a class="header" href="#specifiers-58">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8233,7 +8321,7 @@ object that has its lifetime managed by other object.</p>
 <pre><code class="language-cpp">Systems.InstallResourceRaw(NewObject&lt;UInventory&gt;(Systems, UInventory::StaticClass()));
 </code></pre>
 <hr />
-<h1 id="arguments-121"><a class="header" href="#arguments-121"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-123"><a class="header" href="#arguments-123"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="resource-2"><a class="header" href="#resource-2"><strong><code>Resource</code></strong></a></h2>
@@ -8267,7 +8355,7 @@ bool InstallSystem(
 <pre><code class="language-cpp">Systems.InstallSystem&lt;USomeSystem&gt;(FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
-<h1 id="arguments-122"><a class="header" href="#arguments-122"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-124"><a class="header" href="#arguments-124"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="options-2"><a class="header" href="#options-2"><strong><code>Options</code></strong></a></h2>
@@ -8289,7 +8377,7 @@ bool InstallSystemRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-58"><a class="header" href="#specifiers-58">Specifiers:</a></h3>
+<h3 id="specifiers-59"><a class="header" href="#specifiers-59">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8316,7 +8404,7 @@ will generate random label from new GUID.</p>
 	NewObject&lt;USomeSystem&gt;(Systems, USomeSystem::StaticClass()), FInstallSystemOptions(&quot;Something&quot;));
 </code></pre>
 <hr />
-<h1 id="arguments-123"><a class="header" href="#arguments-123"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-125"><a class="header" href="#arguments-125"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="system"><a class="header" href="#system"><strong><code>System</code></strong></a></h2>
@@ -8371,7 +8459,7 @@ void MarkComponentChanged(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-59"><a class="header" href="#specifiers-59">Specifiers:</a></h3>
+<h3 id="specifiers-60"><a class="header" href="#specifiers-60">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8385,7 +8473,7 @@ need for component instance here is purely to ensure we do not mark
 components we do not have access to.</p>
 </blockquote>
 <hr />
-<h1 id="arguments-124"><a class="header" href="#arguments-124"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-126"><a class="header" href="#arguments-126"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-6"><a class="header" href="#component-6"><strong><code>Component</code></strong></a></h2>
@@ -8405,7 +8493,7 @@ void MarkResourceChanged(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-60"><a class="header" href="#specifiers-60">Specifiers:</a></h3>
+<h3 id="specifiers-61"><a class="header" href="#specifiers-61">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8421,7 +8509,7 @@ most of the times systems and UI do not require to ask for changes.</p>
 <p>Use <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#resourcedidchanged"><strong><code>USystemsWorld::ResourceDidChanged</code></strong></a> to ask if some
 resource has changed.</p>
 <hr />
-<h1 id="arguments-125"><a class="header" href="#arguments-125"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-127"><a class="header" href="#arguments-127"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="resource-3"><a class="header" href="#resource-3"><strong><code>Resource</code></strong></a></h2>
@@ -8439,7 +8527,7 @@ void Process();
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-61"><a class="header" href="#specifiers-61">Specifiers:</a></h3>
+<h3 id="specifiers-62"><a class="header" href="#specifiers-62">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8510,7 +8598,7 @@ registry.</p>
 Inventory-&gt;AddItem(FItem{FItemType::Sword});
 </code></pre>
 <hr />
-<h1 id="arguments-126"><a class="header" href="#arguments-126"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-128"><a class="header" href="#arguments-128"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-10"><a class="header" href="#type-10"><strong><code>Type</code></strong></a></h2>
@@ -8595,7 +8683,7 @@ bool RegisterComponentRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-62"><a class="header" href="#specifiers-62">Specifiers:</a></h3>
+<h3 id="specifiers-63"><a class="header" href="#specifiers-63">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8617,7 +8705,7 @@ registry haven't reached its capacity).</p>
 <pre><code class="language-cpp">Systems.RegisterComponentRaw(USomeComponent::StaticClass());
 </code></pre>
 <hr />
-<h1 id="arguments-127"><a class="header" href="#arguments-127"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-129"><a class="header" href="#arguments-129"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-11"><a class="header" href="#type-11"><strong><code>Type</code></strong></a></h2>
@@ -8638,7 +8726,7 @@ bool RemoveComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-63"><a class="header" href="#specifiers-63">Specifiers:</a></h3>
+<h3 id="specifiers-64"><a class="header" href="#specifiers-64">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8674,7 +8762,7 @@ after all systems complete their run on current game tick.</p>
 }
 </code></pre>
 <hr />
-<h1 id="arguments-128"><a class="header" href="#arguments-128"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-130"><a class="header" href="#arguments-130"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="component-7"><a class="header" href="#component-7"><strong><code>Component</code></strong></a></h2>
@@ -8730,7 +8818,7 @@ bool ResourceDidChangedRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-64"><a class="header" href="#specifiers-64">Specifiers:</a></h3>
+<h3 id="specifiers-65"><a class="header" href="#specifiers-65">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8739,7 +8827,7 @@ bool ResourceDidChangedRaw(
 <p>Tells if given resource type did changed in last game tick.</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#markresourcechanged"><strong><code>USystemsWorld::MarkResourceChanged</code></strong></a>.</p>
 <hr />
-<h1 id="arguments-129"><a class="header" href="#arguments-129"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-131"><a class="header" href="#arguments-131"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-12"><a class="header" href="#type-12"><strong><code>Type</code></strong></a></h2>
@@ -8759,7 +8847,7 @@ UObject* ResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-65"><a class="header" href="#specifiers-65">Specifiers:</a></h3>
+<h3 id="specifiers-66"><a class="header" href="#specifiers-66">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8785,7 +8873,7 @@ registry.</p>
 Inventory-&gt;AddItem(FItem{FItemType::Sword});
 </code></pre>
 <hr />
-<h1 id="arguments-130"><a class="header" href="#arguments-130"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-132"><a class="header" href="#arguments-132"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="type-13"><a class="header" href="#type-13"><strong><code>Type</code></strong></a></h2>
@@ -8804,7 +8892,7 @@ void SealAndInitialize();
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-66"><a class="header" href="#specifiers-66">Specifiers:</a></h3>
+<h3 id="specifiers-67"><a class="header" href="#specifiers-67">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8846,7 +8934,7 @@ UDynamicQuery* SpawnQuery(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-67"><a class="header" href="#specifiers-67">Specifiers:</a></h3>
+<h3 id="specifiers-68"><a class="header" href="#specifiers-68">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8865,7 +8953,7 @@ to iterate over actor components and should be avoided in favor of
 <strong><code>USystems::Query</code></strong>.</p>
 <p>See <a href="reference/classes//Unreal-Systems-Architecture/systems/reference/classes/UDynamicQuery.html"><strong><code>UDynamicQuery</code></strong></a></p>
 <hr />
-<h1 id="arguments-131"><a class="header" href="#arguments-131"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-133"><a class="header" href="#arguments-133"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="bundletype"><a class="header" href="#bundletype"><strong><code>BundleType</code></strong></a></h2>
@@ -8935,7 +9023,7 @@ TIterArray&lt;N, T&gt; IterArray(
 const TArray&lt;int&gt; Result = IterArray&lt;5&gt;({1, 2, 3, 4, 5}).CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-132"><a class="header" href="#arguments-132"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-134"><a class="header" href="#arguments-134"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="args"><a class="header" href="#args"><strong><code>Args</code></strong></a></h2>
@@ -8963,7 +9051,7 @@ yields.</p>
 const TArray&lt;int&gt; Result = IterGenerate&lt;int&gt;([]() { return FMath::Rand(); }).Take(5).CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-133"><a class="header" href="#arguments-133"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-135"><a class="header" href="#arguments-135"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="functor-1"><a class="header" href="#functor-1"><strong><code>Functor</code></strong></a></h2>
@@ -8990,7 +9078,7 @@ multiple iterators.</p>
 const TArray&lt;int&gt; Result = IterRange(0, 5).Chain(IterOnce(-1)).Chain(IterRange(5, 10)).CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-134"><a class="header" href="#arguments-134"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-136"><a class="header" href="#arguments-136"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="value-6"><a class="header" href="#value-6"><strong><code>Value</code></strong></a></h2>
@@ -9027,7 +9115,7 @@ to implemen <code>operator++</code> and <code>operator-</code>;</p>
 const TArray&lt;int&gt; Result = IterRange(0, 10).CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-135"><a class="header" href="#arguments-135"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-137"><a class="header" href="#arguments-137"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="from"><a class="header" href="#from"><strong><code>From</code></strong></a></h2>
@@ -9060,7 +9148,7 @@ collecting iterator values that never ends.</p>
 const TArray&lt;int&gt; Result = IterRepeat(1).Take(5).CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-136"><a class="header" href="#arguments-136"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-138"><a class="header" href="#arguments-138"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="value-7"><a class="header" href="#value-7"><strong><code>Value</code></strong></a></h2>
@@ -9091,7 +9179,7 @@ for (auto&amp; Value : IterStd(Result))
 }
 </code></pre>
 <hr />
-<h1 id="arguments-137"><a class="header" href="#arguments-137"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-139"><a class="header" href="#arguments-139"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="container"><a class="header" href="#container"><strong><code>Container</code></strong></a></h2>
@@ -9119,7 +9207,7 @@ const TArray&lt;int&gt; ResultA = IterRange(0, 10).CollectArray();
 const TArray&lt;int&gt; ResultB = IterStd(ResultA).CollectArray();
 </code></pre>
 <hr />
-<h1 id="arguments-138"><a class="header" href="#arguments-138"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-140"><a class="header" href="#arguments-140"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="container-1"><a class="header" href="#container-1"><strong><code>Container</code></strong></a></h2>
@@ -9174,5 +9262,6 @@ const TArray&lt;int&gt; ResultB = IterStd(ResultA).CollectArray();
         });
         </script>
 
+    </div>
     </body>
 </html>

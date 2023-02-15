@@ -34,6 +34,7 @@
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "../../";
@@ -204,6 +205,74 @@ void ULogBirdsNumberChangeSystem::Run(USystemsWorld&amp; Systems)
 <h1 id="methods"><a class="header" href="#methods"><strong>Methods</strong></a></h1>
 <ul>
 <li>
+<h1 id="advancedrun"><a class="header" href="#advancedrun"><strong><code>AdvancedRun</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+virtual void AdvancedRun(
+    USystemsWorld&amp; Systems,
+    const FName&amp; Mode,
+    const TObjectPtr&lt;UObject&gt;&amp; Payload
+);
+</code></pre>
+<details>
+<hr />
+<p>Override to run system work logic in special mode triggered .</p>
+<p>This method is called by <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#process"><strong><code>USystemsWorld::Process</code></strong></a>.
+See also <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystem.html#run"><strong><code>USystem::Run</code></strong></a>.</p>
+<p>Here user can perform system logic in special mode, like for example systems
+dispatcher gets request to run systems in network rollback/rollforth mode so
+systems that support rollback/rollforth can go back in time and re-simulate
+their part of the game state.</p>
+<hr />
+<h1 id="arguments"><a class="header" href="#arguments"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="systems"><a class="header" href="#systems"><strong><code>Systems</code></strong></a></h2>
+<pre><code class="language-cpp">USystemsWorld&amp; Systems
+</code></pre>
+<p>Reference to systems world that triggers this system run.</p>
+</li>
+<li>
+<h2 id="mode"><a class="header" href="#mode"><strong><code>Mode</code></strong></a></h2>
+<pre><code class="language-cpp">const FName&amp; Mode
+</code></pre>
+<p>Name of the mode system wants to run in (default mode is <code>None</code>).</p>
+</li>
+<li>
+<h2 id="payload"><a class="header" href="#payload"><strong><code>Payload</code></strong></a></h2>
+<pre><code class="language-cpp">const TObjectPtr&lt;UObject&gt;&amp; Payload
+</code></pre>
+<p>Additional payload provided from systems dispatcher that contains extra data for given run mode.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<h1 id="cleanup"><a class="header" href="#cleanup"><strong><code>Cleanup</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+virtual void Cleanup(
+    USystemsWorld&amp; Systems
+);
+</code></pre>
+<details>
+<hr />
+<p>Override to cleanup system (its internal state).</p>
+<p>This method is called by <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#cleanup"><strong><code>USystemsWorld::Cleanup</code></strong></a>,
+right before systems world is scheduled to removal.</p>
+<p>Here user can perform cleanup of this system internal state, or
+free acquired resources.</p>
+<hr />
+<h1 id="arguments-1"><a class="header" href="#arguments-1"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="systems-1"><a class="header" href="#systems-1"><strong><code>Systems</code></strong></a></h2>
+<pre><code class="language-cpp">USystemsWorld&amp; Systems
+</code></pre>
+<p>Reference to systems world that triggers this system cleanup.</p>
+</li>
+</ul>
+</details>
+</li>
+<li>
 <h1 id="init"><a class="header" href="#init"><strong><code>Init</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 virtual void Init(
@@ -244,10 +313,10 @@ void UBoidsMovementSystem::Init(USystemsWorld&amp; Systems)
 }
 </code></pre>
 <hr />
-<h1 id="arguments"><a class="header" href="#arguments"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-2"><a class="header" href="#arguments-2"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="systems"><a class="header" href="#systems"><strong><code>Systems</code></strong></a></h2>
+<h2 id="systems-2"><a class="header" href="#systems-2"><strong><code>Systems</code></strong></a></h2>
 <pre><code class="language-cpp">USystemsWorld&amp; Systems
 </code></pre>
 <p>Reference to systems world that triggers this system initialization.</p>
@@ -266,7 +335,8 @@ virtual void Run(
 <hr />
 <p>Override to run system work logic (perform queries on world components
 and resources).</p>
-<p>This method is called by <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html#process"><strong><code>USystemsWorld::Process</code></strong></a>.</p>
+<p>This method is called by <strong><code>USystems::AdvancedRun</code></strong> when systems
+dispatcher gets request for default mode run.</p>
 <p>Here user can perform system logic, usually performs single task such as
 apply velocity accumulated by other systems on actor location, or
 perform actors AI tasks, or kill actors that has 0 or less health -
@@ -308,10 +378,10 @@ void UBoidsMovementSystem::Run(USystemsWorld&amp; Systems)
 }
 </code></pre>
 <hr />
-<h1 id="arguments-1"><a class="header" href="#arguments-1"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-3"><a class="header" href="#arguments-3"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
-<h2 id="systems-1"><a class="header" href="#systems-1"><strong><code>Systems</code></strong></a></h2>
+<h2 id="systems-3"><a class="header" href="#systems-3"><strong><code>Systems</code></strong></a></h2>
 <pre><code class="language-cpp">USystemsWorld&amp; Systems
 </code></pre>
 <p>Reference to systems world that triggers this system run.</p>
@@ -371,5 +441,6 @@ void UBoidsMovementSystem::Run(USystemsWorld&amp; Systems)
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

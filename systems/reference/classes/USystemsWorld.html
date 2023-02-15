@@ -34,6 +34,7 @@
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "../../";
@@ -285,6 +286,24 @@ after all systems complete their run on current game tick.</p>
 </details>
 </li>
 <li>
+<h1 id="cleanup"><a class="header" href="#cleanup"><strong><code>Cleanup</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void Cleanup();
+</code></pre>
+<details>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-2"><a class="header" href="#specifiers-2">Specifiers:</a></h3>
+<ul>
+<li><strong>BlueprintCallable</strong></li>
+<li><strong>Category</strong> = <em>Systems</em></li>
+</ul>
+<hr />
+<p>Cleanup existing systems.</p>
+<p>Method called in next tick after: [<code>class: USystemsSubsystem::ReleaseSystemsWorld</code>].</p>
+</details>
+</li>
+<li>
 <h1 id="component-1"><a class="header" href="#component-1"><strong><code>Component</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 template &lt;class T&gt;
@@ -354,7 +373,7 @@ UActorComponent* ComponentRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-2"><a class="header" href="#specifiers-2">Specifiers:</a></h3>
+<h3 id="specifiers-3"><a class="header" href="#specifiers-3">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -618,7 +637,7 @@ bool InstallDefaultResource(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-3"><a class="header" href="#specifiers-3">Specifiers:</a></h3>
+<h3 id="specifiers-4"><a class="header" href="#specifiers-4">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -654,7 +673,7 @@ bool InstallDefaultSystem(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-4"><a class="header" href="#specifiers-4">Specifiers:</a></h3>
+<h3 id="specifiers-5"><a class="header" href="#specifiers-5">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -877,7 +896,7 @@ bool InstallResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-5"><a class="header" href="#specifiers-5">Specifiers:</a></h3>
+<h3 id="specifiers-6"><a class="header" href="#specifiers-6">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -953,7 +972,7 @@ bool InstallSystemRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-6"><a class="header" href="#specifiers-6">Specifiers:</a></h3>
+<h3 id="specifiers-7"><a class="header" href="#specifiers-7">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1035,7 +1054,7 @@ void MarkComponentChanged(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-7"><a class="header" href="#specifiers-7">Specifiers:</a></h3>
+<h3 id="specifiers-8"><a class="header" href="#specifiers-8">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1069,7 +1088,7 @@ void MarkResourceChanged(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-8"><a class="header" href="#specifiers-8">Specifiers:</a></h3>
+<h3 id="specifiers-9"><a class="header" href="#specifiers-9">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1103,7 +1122,7 @@ void Process();
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-9"><a class="header" href="#specifiers-9">Specifiers:</a></h3>
+<h3 id="specifiers-10"><a class="header" href="#specifiers-10">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1259,7 +1278,7 @@ bool RegisterComponentRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-10"><a class="header" href="#specifiers-10">Specifiers:</a></h3>
+<h3 id="specifiers-11"><a class="header" href="#specifiers-11">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1302,7 +1321,7 @@ bool RemoveComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-11"><a class="header" href="#specifiers-11">Specifiers:</a></h3>
+<h3 id="specifiers-12"><a class="header" href="#specifiers-12">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1394,7 +1413,7 @@ bool ResourceDidChangedRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-12"><a class="header" href="#specifiers-12">Specifiers:</a></h3>
+<h3 id="specifiers-13"><a class="header" href="#specifiers-13">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1423,7 +1442,7 @@ UObject* ResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-13"><a class="header" href="#specifiers-13">Specifiers:</a></h3>
+<h3 id="specifiers-14"><a class="header" href="#specifiers-14">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1468,7 +1487,7 @@ void SealAndInitialize();
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-14"><a class="header" href="#specifiers-14">Specifiers:</a></h3>
+<h3 id="specifiers-15"><a class="header" href="#specifiers-15">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1510,7 +1529,7 @@ UDynamicQuery* SpawnQuery(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-15"><a class="header" href="#specifiers-15">Specifiers:</a></h3>
+<h3 id="specifiers-16"><a class="header" href="#specifiers-16">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -1618,5 +1637,6 @@ any data of given components.</p>
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>
