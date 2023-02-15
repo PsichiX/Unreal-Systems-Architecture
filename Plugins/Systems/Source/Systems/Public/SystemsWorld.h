@@ -964,6 +964,8 @@ public:
 	void RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload = {});
 
 private:
+	void ProcessStep(const FName& Mode, const TObjectPtr<UObject>& Payload);
+
 	TOptional<FConsumedActorComponents> ConsumeSwapActorComponents(AActor* Actor);
 
 	TOptional<FConsumedActorComponents> ConsumeSwapActorIdComponents(uint32 Id);

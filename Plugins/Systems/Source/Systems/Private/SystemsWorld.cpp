@@ -360,91 +360,12 @@ void USystemsWorld::Process()
 		return;
 	}
 
-	this->CachedLastComponentsChanged = this->ComponentsBeingChanged;
-	this->ComponentsBeingChanged.Clear();
-	this->CachedLastResourcesChanged = this->ResourcesBeingChanged;
-	this->ResourcesBeingChanged.Reset();
-
-	// TODO: count actors to be added and reserve additional number of records
-	// memory in archetype buckets before we actually add them.
-	for (const auto& Pair : this->ActorComponentsToChange)
-	{
-		if (Pair.Value.IsEmpty())
-		{
-			continue;
-		}
-		const auto ActorId = Pair.Key;
-		auto* Actor = Pair.Value.Actor;
-		auto Added = Pair.Value.GetAdded();
-		auto Removed = Pair.Value.GetRemoved();
-		auto SignatureAdded = ComponentsSignature(Added);
-		const auto SignatureRemoved = ComponentsIdsSignature(Removed);
-
-		this->ComponentsBeingChanged = this->ComponentsBeingChanged.Include(SignatureAdded).Include(SignatureRemoved);
-
-		if (const auto Consumed = ConsumeSwapActorIdComponents(ActorId))
-		{
-			SignatureAdded = Consumed.GetValue().Signature.Include(SignatureAdded).Exclude(SignatureRemoved);
-			Added.Append(Consumed.GetValue().Components);
-			Added.RemoveAllSwap([&](const auto* Component)
-				{ return IsValid(Component) == false || Removed.Contains(Component->GetUniqueID()); },
-				false);
-		}
-
-		if (Added.Num() <= 0 || IsValid(Actor) == false)
-		{
-			continue;
-		}
-
-		auto* ArchetypeFound = this->Archetypes.Find(SignatureAdded);
-		if (ArchetypeFound == nullptr)
-		{
-			// TODO: preallocate with capacity.
-			auto Archetype = FArchetype(SignatureAdded);
-			Archetype.RebuildComponentTypesMap(*this);
-			ArchetypeFound = &this->Archetypes.Add(SignatureAdded, Archetype);
-		}
-		const auto ComponentsOffset = ArchetypeFound->Actors.Num() * ArchetypeFound->Stride;
-		ArchetypeFound->Actors.Add(Actor);
-		ArchetypeFound->ActorsIds.Add(Actor->GetUniqueID());
-		ArchetypeFound->Components.Reserve(ArchetypeFound->Actors.Num() * ArchetypeFound->Stride);
-		for (uint32 Index = 0; Index < ArchetypeFound->Stride; ++Index)
-		{
-			ArchetypeFound->Components.Add(nullptr);
-		}
-		for (auto* Component : Added)
-		{
-			const auto Offset = ArchetypeFound->ComponentOffset(Component);
-			if (Offset.IsSet())
-			{
-				ArchetypeFound->Components[ComponentsOffset + Offset.GetValue()] = Component;
-			}
-		}
-	}
-
-	this->ActorComponentsToChange.Reset();
-	this->CachedLastArchetypeKeys.Reserve(this->Archetypes.Num());
-	this->Archetypes.GetKeys(this->CachedLastArchetypeKeys);
-	for (const auto& Key : this->CachedLastArchetypeKeys)
-	{
-		if (this->Archetypes[Key].Actors.Num() <= 0)
-		{
-			this->Archetypes.Remove(Key);
-		}
-	}
-
-	for (auto& Data : this->Systems)
-	{
-		Data.System->Run(*this);
-	}
+	ProcessStep(FName(), {});
 	const auto Requests = this->DispatchRequests;
 	this->DispatchRequests.Reset();
 	for (const auto& Request : Requests)
 	{
-		for (auto& Data : this->Systems)
-		{
-			Data.System->AdvancedRun(*this, Request.Mode, Request.Payload);
-		}
+		ProcessStep(Request.Mode, Request.Payload);
 	}
 }
 
@@ -559,6 +480,87 @@ bool USystemsWorld::ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObj
 void USystemsWorld::RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload)
 {
 	this->DispatchRequests.Add(FSystemsDispatchRequest{Mode, Payload});
+}
+
+void USystemsWorld::ProcessStep(const FName& Mode, const TObjectPtr<UObject>& Payload)
+{
+	this->CachedLastComponentsChanged = this->ComponentsBeingChanged;
+	this->ComponentsBeingChanged.Clear();
+	this->CachedLastResourcesChanged = this->ResourcesBeingChanged;
+	this->ResourcesBeingChanged.Reset();
+
+	// TODO: count actors to be added and reserve additional number of records
+	// memory in archetype buckets before we actually add them.
+	for (const auto& Pair : this->ActorComponentsToChange)
+	{
+		if (Pair.Value.IsEmpty())
+		{
+			continue;
+		}
+		const auto ActorId = Pair.Key;
+		auto* Actor = Pair.Value.Actor;
+		auto Added = Pair.Value.GetAdded();
+		auto Removed = Pair.Value.GetRemoved();
+		auto SignatureAdded = ComponentsSignature(Added);
+		const auto SignatureRemoved = ComponentsIdsSignature(Removed);
+
+		this->ComponentsBeingChanged = this->ComponentsBeingChanged.Include(SignatureAdded).Include(SignatureRemoved);
+
+		if (const auto Consumed = ConsumeSwapActorIdComponents(ActorId))
+		{
+			SignatureAdded = Consumed.GetValue().Signature.Include(SignatureAdded).Exclude(SignatureRemoved);
+			Added.Append(Consumed.GetValue().Components);
+			Added.RemoveAllSwap([&](const auto* Component)
+				{ return IsValid(Component) == false || Removed.Contains(Component->GetUniqueID()); },
+				false);
+		}
+
+		if (Added.Num() <= 0 || IsValid(Actor) == false)
+		{
+			continue;
+		}
+
+		auto* ArchetypeFound = this->Archetypes.Find(SignatureAdded);
+		if (ArchetypeFound == nullptr)
+		{
+			// TODO: preallocate with capacity.
+			auto Archetype = FArchetype(SignatureAdded);
+			Archetype.RebuildComponentTypesMap(*this);
+			ArchetypeFound = &this->Archetypes.Add(SignatureAdded, Archetype);
+		}
+		const auto ComponentsOffset = ArchetypeFound->Actors.Num() * ArchetypeFound->Stride;
+		ArchetypeFound->Actors.Add(Actor);
+		ArchetypeFound->ActorsIds.Add(Actor->GetUniqueID());
+		ArchetypeFound->Components.Reserve(ArchetypeFound->Actors.Num() * ArchetypeFound->Stride);
+		for (uint32 Index = 0; Index < ArchetypeFound->Stride; ++Index)
+		{
+			ArchetypeFound->Components.Add(nullptr);
+		}
+		for (auto* Component : Added)
+		{
+			const auto Offset = ArchetypeFound->ComponentOffset(Component);
+			if (Offset.IsSet())
+			{
+				ArchetypeFound->Components[ComponentsOffset + Offset.GetValue()] = Component;
+			}
+		}
+	}
+
+	this->ActorComponentsToChange.Reset();
+	this->CachedLastArchetypeKeys.Reserve(this->Archetypes.Num());
+	this->Archetypes.GetKeys(this->CachedLastArchetypeKeys);
+	for (const auto& Key : this->CachedLastArchetypeKeys)
+	{
+		if (this->Archetypes[Key].Actors.Num() <= 0)
+		{
+			this->Archetypes.Remove(Key);
+		}
+	}
+
+	for (auto& Data : this->Systems)
+	{
+		Data.System->AdvancedRun(*this, Mode, Payload);
+	}
 }
 
 TOptional<FConsumedActorComponents> USystemsWorld::ConsumeSwapActorComponents(AActor* Actor)
