@@ -964,7 +964,7 @@ public:
 
 	virtual bool ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObject* Executor) override;
 
-	void RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload = {});
+	void RequestSystemsRun(FSystemsDispatchRequest Request);
 
 	bool HasSystemsRunRequests(FName Mode = FName()) const;
 

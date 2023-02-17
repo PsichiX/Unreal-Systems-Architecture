@@ -477,9 +477,9 @@ bool USystemsWorld::ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObj
 	return false;
 }
 
-void USystemsWorld::RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload)
+void USystemsWorld::RequestSystemsRun(FSystemsDispatchRequest Request)
 {
-	this->DispatchRequests.Add(FSystemsDispatchRequest{Mode, Payload});
+	this->DispatchRequests.Add(Request);
 }
 
 bool USystemsWorld::HasSystemsRunRequests(FName Mode) const
