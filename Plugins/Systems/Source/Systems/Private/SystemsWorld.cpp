@@ -482,6 +482,13 @@ void USystemsWorld::RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload)
 	this->DispatchRequests.Add(FSystemsDispatchRequest{Mode, Payload});
 }
 
+bool USystemsWorld::HasSystemsRunRequests(FName Mode) const
+{
+	return Mode.IsNone()
+		? this->DispatchRequests.IsEmpty() == false
+		: IterStdConst(this->DispatchRequests).Any([&](const auto& Request) { return Request.Mode == Mode; });
+}
+
 void USystemsWorld::Maintanance()
 {
 	this->CachedLastComponentsChanged = this->ComponentsBeingChanged;

@@ -966,6 +966,8 @@ public:
 
 	void RequestSystemsRun(FName Mode, TObjectPtr<UObject> Payload = {});
 
+	bool HasSystemsRunRequests(FName Mode = FName()) const;
+
 private:
 	void Maintanance();
 
