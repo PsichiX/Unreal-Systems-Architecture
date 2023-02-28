@@ -93,6 +93,10 @@ public:
 private:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
+	virtual void Deinitialize() override;
+
+	void Cleanup();
+
 	UFUNCTION()
 	void OnTick();
 

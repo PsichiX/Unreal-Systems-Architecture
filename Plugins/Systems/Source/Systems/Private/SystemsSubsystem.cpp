@@ -101,13 +101,29 @@ void USystemsSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	}
 }
 
+void USystemsSubsystem::Deinitialize()
+{
+	Super::Deinitialize();
+
+	Cleanup();
+}
+
+void USystemsSubsystem::Cleanup()
+{
+	this->ToAdd.Reset();
+	this->ToRemove.Reset();
+	for (auto& Pair : this->SystemsWorlds)
+	{
+		Pair.Value->Cleanup();
+	}
+	this->SystemsWorlds.Reset();
+}
+
 void USystemsSubsystem::OnTick()
 {
 	if (IsValid(GetGameInstance()) == false)
 	{
-		this->ToRemove.Reset();
-		this->ToAdd.Reset();
-		this->SystemsWorlds.Reset();
+		Cleanup();
 		return;
 	}
 
