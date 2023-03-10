@@ -130,6 +130,13 @@ public:
 		/// World that has running [`class: USystemsSubsystem`]().
 		UWorld* World) const;
 
+	/// Installs this pipeline content into given systems world.
+	void InstallInto(
+		/// Target [`class: USystemsWorld`]().
+		///
+		/// > NOTE: Make sure to install pipeline in its Setup phase, before it gets sealed.
+		USystemsWorld& Systems) const;
+
 	/// Destroys systems world registered under [`class: $Self$::WorldId`]() name.
 	void Uninstall(
 		/// World that has running [`class: USystemsSubsystem`]().

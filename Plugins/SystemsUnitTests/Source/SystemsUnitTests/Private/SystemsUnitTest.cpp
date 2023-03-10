@@ -1,6 +1,7 @@
 #include "SystemsUnitTests/Public/SystemsUnitTest.h"
 
 #include "Engine/World.h"
+#include "SystemsPipeline.h"
 
 bool SystemsUnitTest(TFunction<bool(UWorld*)> Functor)
 {
@@ -14,7 +15,7 @@ bool SystemsUnitTest(TFunction<bool(UWorld*)> Functor)
 	return false;
 }
 
-USystemsWorld* AcquireMockWorld(UWorld* TheWorld, TFunction<void(USystemsWorld&)> Setup)
+TObjectPtr<USystemsWorld> AcquireMockWorld(UWorld* TheWorld, TFunction<void(USystemsWorld&)> Setup)
 {
 	if (IsValid(TheWorld))
 	{
@@ -26,5 +27,18 @@ USystemsWorld* AcquireMockWorld(UWorld* TheWorld, TFunction<void(USystemsWorld&)
 			return Systems;
 		}
 	}
-	return nullptr;
+	return {};
+}
+
+TObjectPtr<USystemsWorld> AcquireMockWorldWithPipeline(UWorld* TheWorld, TObjectPtr<USystemsPipeline> Pipeline)
+{
+	return AcquireMockWorld(TheWorld, [&](auto& Systems) { Pipeline->InstallInto(Systems); });
+}
+
+TObjectPtr<USystemsWorld> AcquireMockWorldWithPipeline(UWorld* TheWorld, FString PipelineAssetPath)
+{
+	const auto AssetObject = FSoftObjectPtr(FSoftObjectPath(PipelineAssetPath));
+	auto* Pipeline = Cast<USystemsPipeline>(AssetObject.LoadSynchronous());
+	checkf(IsValid(Pipeline), TEXT("Could not load Systems pipeline from: %s"), *PipelineAssetPath);
+	return AcquireMockWorldWithPipeline(TheWorld, Pipeline);
 }

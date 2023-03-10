@@ -6,13 +6,17 @@
 #include "Systems/Public/SystemsWorld.h"
 #include "SystemsUnitTests/Public/MockActorBuilder.h"
 
-// TODO: document.
 bool SYSTEMSUNITTESTS_API SystemsUnitTest(TFunction<bool(UWorld*)> Functor);
 
-// TODO: document.
-USystemsWorld SYSTEMSUNITTESTS_API* AcquireMockWorld(UWorld* TheWorld, TFunction<void(USystemsWorld&)> Setup);
+TObjectPtr<USystemsWorld> SYSTEMSUNITTESTS_API AcquireMockWorld(UWorld* TheWorld,
+	TFunction<void(USystemsWorld&)> Setup);
 
-// TODO: document.
+TObjectPtr<USystemsWorld> SYSTEMSUNITTESTS_API AcquireMockWorldWithPipeline(UWorld* TheWorld,
+	TObjectPtr<USystemsPipeline> Pipeline);
+
+TObjectPtr<USystemsWorld> SYSTEMSUNITTESTS_API AcquireMockWorldWithPipeline(UWorld* TheWorld,
+	FString PipelineAssetPath);
+
 template <class T>
 T* AcquireMockResource(UWorld* TheWorld, TFunction<void(T&)> Setup)
 {

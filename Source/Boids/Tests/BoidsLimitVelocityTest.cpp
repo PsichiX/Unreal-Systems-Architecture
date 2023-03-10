@@ -24,7 +24,7 @@ bool FBoidsLimitVelocityTest::RunTest(const FString& Parameters)
 				});
 			UTEST_TRUE("Settings are valid", IsValid(Settings));
 
-			auto* Systems = AcquireMockWorld(World,
+			auto Systems = AcquireMockWorld(World,
 				[&](auto& Systems)
 				{
 					Systems.RegisterComponent<UBoidComponent>();

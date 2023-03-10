@@ -170,6 +170,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Systems)
 	void SealAndInitialize();
 
+	/// Tells if systems world is sealed.
+	///
+	/// Sealed systems world means that it has completed its setup phase and is
+	/// ready to run or already running.
+	UFUNCTION(BlueprintCallable, Category = Systems)
+	bool IsSealed() const;
+
 	/// Cleanup existing systems.
 	///
 	/// Method called in next tick after: [`class: USystemsSubsystem::ReleaseSystemsWorld`].
@@ -963,6 +970,8 @@ public:
 	}
 
 	virtual bool ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObject* Executor) override;
+
+	void ClearPendingSystemRunRequests();
 
 	void RequestSystemsRun(FSystemsDispatchRequest Request);
 

@@ -4,7 +4,6 @@
 
 #include "MockActorBuilder.generated.h"
 
-// TODO: document.
 USTRUCT()
 struct SYSTEMSUNITTESTS_API FMockActorBuilder
 {

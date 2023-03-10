@@ -47,6 +47,11 @@ void USystemsWorld::SealAndInitialize()
 	}
 }
 
+bool USystemsWorld::IsSealed() const
+{
+	return this->bSealed;
+}
+
 void USystemsWorld::Cleanup()
 {
 	for (auto& Data : this->Systems)
@@ -360,6 +365,7 @@ void USystemsWorld::Process()
 		return;
 	}
 
+	ClearPendingSystemRunRequests();
 	ProcessStep({});
 	const auto Requests = this->DispatchRequests;
 	this->DispatchRequests.Reset();
@@ -475,6 +481,11 @@ bool USystemsWorld::ProcessConsoleExec(const TCHAR* Cmd, FOutputDevice& Ar, UObj
 		}
 	}
 	return false;
+}
+
+void USystemsWorld::ClearPendingSystemRunRequests()
+{
+	this->DispatchRequests.Reset();
 }
 
 void USystemsWorld::RequestSystemsRun(FSystemsDispatchRequest Request)
