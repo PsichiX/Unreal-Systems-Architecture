@@ -180,7 +180,7 @@ bool USystemsWorld::InstallLambdaSystem(TFunction<SystemsWorld::LambdaSystemType
 
 UObject* USystemsWorld::ResourceRaw(const UClass* Type)
 {
-	if (this->bSealed == false || IsValid(Type) == false)
+	if (IsValid(Type) == false)
 	{
 		return nullptr;
 	}
@@ -195,7 +195,7 @@ UObject* USystemsWorld::ResourceRaw(const UClass* Type)
 
 UObject* USystemsWorld::ProxyResourceRaw(const UClass* Type)
 {
-	if (this->bSealed == false || IsValid(Type) == false)
+	if (IsValid(Type) == false)
 	{
 		return nullptr;
 	}

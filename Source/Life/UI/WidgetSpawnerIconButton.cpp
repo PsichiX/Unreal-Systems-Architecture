@@ -4,7 +4,7 @@
 #include "Components/Button.h"
 #include "Components/Image.h"
 #include "PaperSprite.h"
-#include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "ReactiveSystems/Public/Resources/SystemsChangeDetection.h"
 #include "Shared/Utils.h"
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
@@ -21,10 +21,11 @@ void UWidgetSpawnerIconButton::NativeConstruct()
 		this->Button->OnClicked.AddUniqueDynamic(this, &ThisClass::OnClicked);
 	}
 
-	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
+	auto* ChangeDetection =
+		USystemsStatics::GetResource<USystemsChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
-		auto Signature = FUiChangeSignature();
+		auto Signature = FSystemsChangeSignature();
 		Signature.Resource<ULifeSpawner>();
 		ChangeDetection->Subscribe(Signature, this, &ThisClass::OnLifeSpawnerChanged);
 	}
@@ -39,7 +40,8 @@ void UWidgetSpawnerIconButton::NativeDestruct()
 		this->Button->OnClicked.RemoveAll(this);
 	}
 
-	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
+	auto* ChangeDetection =
+		USystemsStatics::GetResource<USystemsChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);

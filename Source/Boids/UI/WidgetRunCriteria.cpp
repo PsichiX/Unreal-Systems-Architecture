@@ -1,6 +1,6 @@
 #include "Boids/UI/WidgetRunCriteria.h"
 
-#include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "ReactiveSystems/Public/Resources/SystemsChangeDetection.h"
 #include "Shared/UI/WidgetCheckbox.h"
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
@@ -77,10 +77,11 @@ void UWidgetRunCriteria::NativeConstruct()
 		this->RunDebugDraw->OnChanged().AddUniqueDynamic(this, &ThisClass::OnRunDebugDrawChanged);
 	}
 
-	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
+	auto* ChangeDetection =
+		USystemsStatics::GetResource<USystemsChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
-		auto Signature = FUiChangeSignature();
+		auto Signature = FSystemsChangeSignature();
 		Signature.Resource<UBoidsSystemsRunCriteria>();
 		ChangeDetection->Subscribe(Signature, this, &ThisClass::OnRunCriteriaChanged);
 	}
@@ -147,7 +148,8 @@ void UWidgetRunCriteria::NativeDestruct()
 		this->RunDebugDraw->OnChanged().RemoveAll(this);
 	}
 
-	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
+	auto* ChangeDetection =
+		USystemsStatics::GetResource<USystemsChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);

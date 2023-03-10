@@ -20,7 +20,7 @@ public class Life : ModuleRules
             "NavigationSystem",
             "AIModule",
             "Systems",
-            "ReactiveUserInterfaceSystems",
+            "ReactiveSystems",
             "Shared",
         });
 

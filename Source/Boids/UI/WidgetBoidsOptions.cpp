@@ -1,6 +1,6 @@
 #include "Boids/UI/WidgetBoidsOptions.h"
 
-#include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "ReactiveSystems/Public/Resources/SystemsChangeDetection.h"
 #include "Shared/UI/WidgetScalarParameter.h"
 #include "Shared/UI/WidgetVariantParameter.h"
 #include "Systems/Public/SystemsStatics.h"
@@ -79,10 +79,11 @@ void UWidgetBoidsOptions::NativeConstruct()
 			this, &ThisClass::OnProximityColorModeChanged);
 	}
 
-	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
+	auto* ChangeDetection =
+		USystemsStatics::GetResource<USystemsChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
-		auto Signature = FUiChangeSignature();
+		auto Signature = FSystemsChangeSignature();
 		Signature.Resource<UBoidsSettings>();
 		ChangeDetection->Subscribe(Signature, this, &ThisClass::OnBoidsSettingsChanged);
 	}
@@ -149,7 +150,8 @@ void UWidgetBoidsOptions::NativeDestruct()
 		this->ProximityColorMode->OnChanged().RemoveAll(this);
 	}
 
-	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
+	auto* ChangeDetection =
+		USystemsStatics::GetResource<USystemsChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);

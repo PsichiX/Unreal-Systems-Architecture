@@ -1,0 +1,126 @@
+#include "ReactiveSystems/Public/Resources/SystemsChangeDetection.h"
+
+#include "Systems/Public/SystemsWorld.h"
+
+FSystemsChangeSignature::FSystemsChangeSignature()
+{
+}
+
+FSystemsChangeSignature::FSystemsChangeSignature(
+	const FArchetypeSignature& InComponents,
+	const TSet<uint32>& InResources)
+	: Components(InComponents), Resources(InResources)
+{
+}
+
+void FSystemsChangeSignature::ComponentRaw(const UClass* Type,
+	const USystemsWorld* Systems)
+{
+	if (IsValid(Type) && IsValid(Systems))
+	{
+		const auto Index = Systems->ComponentTypeIndex(Type);
+		if (Index.IsSet())
+		{
+			this->Components.EnableBit(Index.GetValue());
+		}
+	}
+}
+
+void FSystemsChangeSignature::ResourceRaw(const UClass* Type)
+{
+	if (IsValid(Type))
+	{
+		this->Resources.Add(Type->GetUniqueID());
+	}
+}
+
+bool FSystemsChangeSignature::ContainsAny(
+	const FSystemsChangeSignature& Other) const
+{
+	if (this->Components.ContainsAny(Other.Components))
+	{
+		return true;
+	}
+	for (const auto Item : Other.Resources)
+	{
+		if (this->Resources.Contains(Item))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool FSystemsChangeSignature::operator==(
+	const FSystemsChangeSignature& Other) const
+{
+	return Equals(Other);
+}
+
+bool FSystemsChangeSignature::Equals(const FSystemsChangeSignature& Other) const
+{
+	if (this->Components.Equals(Other.Components) == false ||
+		this->Resources.Num() != Other.Resources.Num())
+	{
+		return false;
+	}
+	// NOTE: Sadly Unreal do not have any optimized comparison operator for TSet
+	// so here we go with brute forced one for now.
+	for (const auto Item : Other.Resources)
+	{
+		if (this->Resources.Contains(Item) == false)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+uint32 GetTypeHash(const FSystemsChangeSignature& Signature)
+{
+	return FCrc::MemCrc32(&Signature, sizeof(FSystemsChangeSignature));
+}
+
+void USystemsChangeDetection::SubscribeDynamic(
+	const FSystemsChangeSignature& Signature,
+	FSystemsWorldChangedEvent Callback,
+	bool bForcedInitializationCall)
+{
+	auto* Found = this->Events.Find(Signature);
+	if (Found != nullptr)
+	{
+		Found->AddLambda(
+			[=](auto& Systems) { Callback.ExecuteIfBound(&Systems); });
+	}
+	else
+	{
+		auto Event = FSystemsWorldChangedDelegate();
+		Event.AddLambda(
+			[=](auto& Systems) { Callback.ExecuteIfBound(&Systems); });
+		this->Events.Add(Signature, Event);
+	}
+	if (bForcedInitializationCall)
+	{
+		this->InitializationEvents.AddLambda(
+			[=](auto& Systems) { Callback.ExecuteIfBound(&Systems); });
+	}
+}
+
+void USystemsChangeDetection::BroadcastChanges(
+	const FSystemsChangeSignature& Signature,
+	USystemsWorld& Systems)
+{
+	if (this->InitializationEvents.IsBound())
+	{
+		this->InitializationEvents.Broadcast(Systems);
+	}
+	this->InitializationEvents.Clear();
+
+	for (auto& Pair : this->Events)
+	{
+		if (Pair.Key.ContainsAny(Signature) && Pair.Value.IsBound())
+		{
+			Pair.Value.Broadcast(Systems);
+		}
+	}
+}

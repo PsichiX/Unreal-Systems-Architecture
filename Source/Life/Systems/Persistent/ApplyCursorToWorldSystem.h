@@ -5,4 +5,7 @@
 class USystemsWorld;
 
 UFUNCTION()
+void SpawnCursorSystem(USystemsWorld& Systems);
+
+UFUNCTION()
 void ApplyCursorToWorldSystem(USystemsWorld& Systems);

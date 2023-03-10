@@ -1,7 +1,7 @@
 #include "Life/UI/WidgetGodsInterface.h"
 
 #include "Components/ListView.h"
-#include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "ReactiveSystems/Public/Resources/SystemsChangeDetection.h"
 #include "Systems/Public/SystemsStatics.h"
 
 #include "Life/Resources/LifeSettings.h"

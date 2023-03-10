@@ -1,7 +1,7 @@
 #include "Life/UI/WidgetLifeStats.h"
 
 #include "Components/TextBlock.h"
-#include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "ReactiveSystems/Public/Resources/SystemsChangeDetection.h"
 #include "Systems/Public/SystemsStatics.h"
 #include "Systems/Public/SystemsWorld.h"
 
@@ -15,14 +15,14 @@ void UWidgetLifeStats::NativeConstruct()
 	auto* Systems = USystemsStatics::GetSystemsWorld(FName(), GetWorld());
 	if (IsValid(Systems))
 	{
-		auto* ChangeDetection = Systems->Resource<UUiChangeDetection>();
+		auto* ChangeDetection = Systems->Resource<USystemsChangeDetection>();
 		if (IsValid(ChangeDetection))
 		{
-			auto Signature = FUiChangeSignature();
+			auto Signature = FSystemsChangeSignature();
 			Signature.Component<UHumanComponent>(Systems);
 			ChangeDetection->Subscribe(Signature, this, &ThisClass::OnHumansChanged);
 
-			Signature = FUiChangeSignature();
+			Signature = FSystemsChangeSignature();
 			Signature.Component<UAnimalComponent>(Systems);
 			ChangeDetection->Subscribe(Signature, this, &ThisClass::OnAnimalsChanged);
 		}
@@ -33,7 +33,8 @@ void UWidgetLifeStats::NativeDestruct()
 {
 	Super::NativeDestruct();
 
-	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
+	auto* ChangeDetection =
+		USystemsStatics::GetResource<USystemsChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);

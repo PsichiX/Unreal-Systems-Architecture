@@ -17,7 +17,7 @@ public class Boids : ModuleRules
             "SlateCore",
             "UMG",
             "Systems",
-            "ReactiveUserInterfaceSystems",
+            "ReactiveSystems",
             "SystemsUnitTests",
             "Shared",
         });

@@ -20,7 +20,7 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Systems",
-				"ReactiveUserInterfaceSystems",
+				"ReactiveSystems",
 				"SystemsUnitTests",
 				"Engine",
 				"UMG",
@@ -33,7 +33,7 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Systems",
-				"ReactiveUserInterfaceSystems",
+				"ReactiveSystems",
 				"Engine",
 				"UMG",
 				"Shared"

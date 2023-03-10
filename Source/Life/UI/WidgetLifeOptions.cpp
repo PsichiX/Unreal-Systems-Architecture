@@ -1,6 +1,6 @@
 #include "Life/UI/WidgetLifeOptions.h"
 
-#include "ReactiveUserInterfaceSystems/Public/Resources/UiChangeDetection.h"
+#include "ReactiveSystems/Public/Resources/SystemsChangeDetection.h"
 #include "Shared/UI/WidgetCheckbox.h"
 #include "Shared/UI/WidgetScalarParameter.h"
 #include "Systems/Public/SystemsStatics.h"
@@ -24,10 +24,11 @@ void UWidgetLifeOptions::NativeConstruct()
 		TimeScale->OnChanged().AddUniqueDynamic(this, &ThisClass::OnTimeScaleChanged);
 	}
 
-	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
+	auto* ChangeDetection =
+		USystemsStatics::GetResource<USystemsChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
-		auto Signature = FUiChangeSignature();
+		auto Signature = FSystemsChangeSignature();
 		Signature.Resource<ULifeSettings>();
 		ChangeDetection->Subscribe(Signature, this, &ThisClass::OnLifeSettingsChanged);
 	}
@@ -47,7 +48,8 @@ void UWidgetLifeOptions::NativeDestruct()
 		TimeScale->OnChanged().RemoveAll(this);
 	}
 
-	auto* ChangeDetection = USystemsStatics::GetResource<UUiChangeDetection>(FName(), GetWorld());
+	auto* ChangeDetection =
+		USystemsStatics::GetResource<USystemsChangeDetection>(FName(), GetWorld());
 	if (IsValid(ChangeDetection))
 	{
 		ChangeDetection->UnsubscribeAll(this);

@@ -5,7 +5,17 @@
 #include "Life/Components/ClearRangeComponent.h"
 #include "Life/Components/ClearRangeEmitterComponent.h"
 #include "Life/Components/CursorComponent.h"
+#include "Life/Resources/LifeSettings.h"
 #include "Life/Resources/LifeSpawner.h"
+
+void SpawnCursorSystem(USystemsWorld& Systems)
+{
+	const auto* Settings = Systems.Resource<ULifeSettings>();
+	if (IsValid(Settings))
+	{
+		Systems.GetWorld()->SpawnActor<AActor>(Settings->CursorType);
+	}
+}
 
 void ApplyCursorToWorldSystem(USystemsWorld& Systems)
 {
