@@ -72,10 +72,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -283,6 +285,31 @@ installs this pipeline content into that systems world.</p>
 </details>
 </li>
 <li>
+<h1 id="installinto"><a class="header" href="#installinto"><strong><code>InstallInto</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+void InstallInto(
+    USystemsWorld&amp; Systems
+) const;
+</code></pre>
+<details>
+<hr />
+<p>Installs this pipeline content into given systems world.</p>
+<hr />
+<h1 id="arguments-1"><a class="header" href="#arguments-1"><strong>Arguments</strong></a></h1>
+<ul>
+<li>
+<h2 id="systems"><a class="header" href="#systems"><strong><code>Systems</code></strong></a></h2>
+<pre><code class="language-cpp">USystemsWorld&amp; Systems
+</code></pre>
+<p>Target <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsWorld.html"><strong><code>USystemsWorld</code></strong></a>.</p>
+<blockquote>
+<p>NOTE: Make sure to install pipeline in its Setup phase, before it gets sealed.</p>
+</blockquote>
+</li>
+</ul>
+</details>
+</li>
+<li>
 <h1 id="uninstall"><a class="header" href="#uninstall"><strong><code>Uninstall</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 void Uninstall(
@@ -293,7 +320,7 @@ void Uninstall(
 <hr />
 <p>Destroys systems world registered under <a href="/Unreal-Systems-Architecture/systems/reference/classes/USystemsPipeline.html#worldid"><strong><code>USystemsPipeline::WorldId</code></strong></a> name.</p>
 <hr />
-<h1 id="arguments-1"><a class="header" href="#arguments-1"><strong>Arguments</strong></a></h1>
+<h1 id="arguments-2"><a class="header" href="#arguments-2"><strong>Arguments</strong></a></h1>
 <ul>
 <li>
 <h2 id="world-1"><a class="header" href="#world-1"><strong><code>World</code></strong></a></h2>
