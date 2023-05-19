@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 
+#include "Engine/DataAsset.h"
+
 #include "Life/AI/Reasoner/UtilityAiConsideration.h"
 
 #include "UtilityAiBehavior.generated.h"

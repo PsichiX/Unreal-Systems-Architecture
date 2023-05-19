@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 
+#include "Engine/DataAsset.h"
 #include "Systems/Public/SystemsWorld.h"
 
 #include "SystemsPipeline.generated.h"

@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 
+#include "Engine/DataAsset.h"
+
 #include "UtilityAiConsideration.generated.h"
 
 class USystemsWorld;

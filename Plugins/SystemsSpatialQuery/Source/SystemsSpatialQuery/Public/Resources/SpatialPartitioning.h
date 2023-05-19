@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 
+#include "Engine/DataAsset.h"
 #include "Systems/Public/ArchetypeSignature.h"
 #include "Systems/Public/Iterator.h"
 #include "Systems/Public/SystemsWorld.h"

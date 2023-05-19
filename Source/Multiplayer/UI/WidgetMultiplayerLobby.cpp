@@ -1,12 +1,11 @@
 #include "Multiplayer/UI/WidgetMultiplayerLobby.h"
 
 #include "Components/Button.h"
-#include "Components/EditableTextBox.h"
 #include "Components/ListView.h"
 #include "Components/WidgetSwitcher.h"
 #include "Interfaces/OnlineSessionInterface.h"
 #include "Kismet/GameplayStatics.h"
-#include "OnlineSubsystem.h"
+#include "Online/OnlineSessionNames.h"
 #include "OnlineSubsystemUtils.h"
 #include "Systems/Public/Iterator.h"
 

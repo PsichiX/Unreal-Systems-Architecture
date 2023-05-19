@@ -3,7 +3,8 @@
 $source = "$PSScriptRoot/../Plugins"
 $target = "$PSScriptRoot/../Distribution"
 
-function New-Package {
+function New-Package
+{
     param (
         [string]$name,
         [string]$dir,
@@ -14,24 +15,28 @@ function New-Package {
     $target = "$target/$dir"
 
     Copy-Item $source $target -Recurse -Force
-    if ($blueprintonly) {
+    if ($blueprintonly)
+    {
         Get-ChildItem -Path "$target/Binaries" -Recurse -Include "*.pdb" | ForEach-Object {
             Remove-Item "$_" -Force
         }
     }
-    else {
+    else
+    {
         Remove-Item "$target/Binaries" -Recurse -Force
     }
     Remove-Item "$target/Intermediate" -Recurse -Force
     Remove-Item "$target/Documentation" -Recurse -Force -ErrorAction SilentlyContinue
-    if ($blueprintonly) {
+    if ($blueprintonly)
+    {
         Remove-Item "$target/Source" -Recurse -Force
     }
     7z a -tzip "$target.zip" $target
     Remove-Item $target -Recurse -Force
 }
 
-function New-Package-Set {
+function New-Package-Set
+{
     param (
         [string]$name,
         [string]$dir

@@ -6,6 +6,7 @@ param (
 
 unreal-doc -i "$PSScriptRoot/../Plugins/Systems/Documentation/UnrealDoc.toml"
 
-if ($serve) {
+if ($serve)
+{
     mdbook serve -o "$PSScriptRoot/../Plugins/Systems/Documentation/Distribution"
 }
