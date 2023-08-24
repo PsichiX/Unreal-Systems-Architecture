@@ -60,7 +60,7 @@ public:
 		///
 		/// # Note
 		/// > This delegate has given signature:
-		/// `void(USystemsWorld& Systems)`.
+		/// `void(USystemsWorld* Systems)`.
 		FOnSetupSystemsWorld SetupDelegate);
 
 	/// Unregister given systems world.
@@ -101,7 +101,7 @@ private:
 	void OnTick();
 
 	UPROPERTY()
-	TMap<FName, USystemsWorld*> SystemsWorlds;
+	TMap<FName, USystemsWorld*> SystemsWorlds = {};
 
 	UPROPERTY()
 	TMap<FName, USystemsWorld*> ToAdd = {};

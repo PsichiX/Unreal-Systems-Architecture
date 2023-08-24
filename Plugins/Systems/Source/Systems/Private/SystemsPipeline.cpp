@@ -125,6 +125,7 @@ void USystemsPipeline::InstallInto(USystemsWorld& Systems) const
 		{
 			Instance->Init(Systems);
 			Instance->Run(Systems);
+			Instance->Cleanup(Systems);
 		}
 	}
 }
@@ -165,6 +166,7 @@ void USystemsPipeline::Uninstall(UWorld* World) const
 				{
 					Instance->Init(*Systems);
 					Instance->Run(*Systems);
+					Instance->Cleanup(*Systems);
 				}
 			}
 		}

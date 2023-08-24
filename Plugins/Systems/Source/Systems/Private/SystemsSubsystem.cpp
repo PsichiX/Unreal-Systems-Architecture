@@ -52,8 +52,14 @@ USystemsWorld* USystemsSubsystem::GetSystemsWorld(FName Id)
 
 void USystemsSubsystem::GetSystemsWorldsIds(TSet<FName>& Output) const
 {
-	this->SystemsWorlds.GetKeys(Output);
-	this->ToAdd.GetKeys(Output);
+	for (const auto& Pair : this->SystemsWorlds)
+	{
+		Output.Add(Pair.Key);
+	}
+	for (const auto& Pair : this->ToAdd)
+	{
+		Output.Add(Pair.Key);
+	}
 }
 
 void USystemsSubsystem::Store(UObject* Resource)
@@ -132,11 +138,13 @@ void USystemsSubsystem::OnTick()
 		this->SystemsWorlds[Id]->Cleanup();
 		this->SystemsWorlds.Remove(Id);
 	}
+	this->ToRemove.Reset();
 
 	for (auto& Pair : this->ToAdd)
 	{
 		this->SystemsWorlds.Add(Pair.Key, Pair.Value);
 	}
+	this->ToAdd.Reset();
 
 	for (auto& Pair : this->SystemsWorlds)
 	{

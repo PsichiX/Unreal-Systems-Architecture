@@ -1,86 +1,50 @@
 {
-	"FileVersion": 3,
-	"EngineAssociation": "5.2",
-	"Category": "",
-	"Description": "",
-	"Modules": [
-		{
-			"Name": "Shared",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Systems",
-				"Engine",
-				"UMG"
-			]
-		},
-		{
-			"Name": "Boids",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Systems",
-				"ReactiveSystems",
-				"SystemsUnitTests",
-				"Engine",
-				"UMG",
-				"Shared"
-			]
-		},
-		{
-			"Name": "Life",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Systems",
-				"ReactiveSystems",
-				"Engine",
-				"UMG",
-				"Shared"
-			]
-		},
-		{
-			"Name": "Multiplayer",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Systems",
-				"Engine",
-				"UMG",
-				"Shared"
-			]
-		},
-		{
-			"Name": "Tutorial",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Systems",
-				"Engine",
-				"UMG",
-				"Shared"
-			]
-		}
-	],
-	"Plugins": [
-		{
-			"Name": "EditorTests",
-			"Enabled": true
-		},
-		{
-			"Name": "ModelingToolsEditorMode",
-			"Enabled": true
-		},
-		{
-			"Name": "StaticMeshEditorModeling",
-			"Enabled": true
-		}
-	],
-	"TargetPlatforms": [
-		"AllDesktop",
-		"LinuxAArch64NoEditor",
-		"WindowsNoEditor",
-		"LinuxNoEditor",
-		"HoloLens"
-	]
+  "FileVersion": 3,
+  "EngineAssociation": "5.2",
+  "Category": "",
+  "Description": "",
+  "Modules": [
+    {
+      "Name": "Shared",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "Boids",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "Life",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "Multiplayer",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "Tutorial",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "Plugins": [
+    {
+      "Name": "EditorTests",
+      "Enabled": true
+    },
+    {
+      "Name": "ModelingToolsEditorMode",
+      "Enabled": true
+    },
+    {
+      "Name": "StaticMeshEditorModeling",
+      "Enabled": true
+    }
+  ],
+  "TargetPlatforms": [
+    "AllDesktop"
+  ]
 }
