@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js ayu">
+<html lang="en" class="ayu" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Systems - Modular and scalable game architecture for orthogonal game logic</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -34,7 +34,7 @@
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -64,24 +64,29 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('ayu')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -119,9 +124,9 @@
                                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -6708,13 +6713,28 @@ every tick.</p>
 <p>Order in the list represents order of execution.</p>
 </li>
 <li>
+<h1 id="pipelinestoimport"><a class="header" href="#pipelinestoimport"><strong><code>PipelinesToImport</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TArray&lt;TObjectPtr&lt;USystemsPipeline&gt;&gt; PipelinesToImport;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-39"><a class="header" href="#specifiers-39">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Pipelines</em></li>
+</ul>
+<hr />
+<p>List of additional pipelines to import setup from when installing into systems world.</p>
+</li>
+<li>
 <h1 id="startupsystemstorun"><a class="header" href="#startupsystemstorun"><strong><code>StartupSystemsToRun</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 TArray&lt;FSystemsPipelineSystem&gt; StartupSystemsToRun;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-39"><a class="header" href="#specifiers-39">Specifiers:</a></h3>
+<h3 id="specifiers-40"><a class="header" href="#specifiers-40">Specifiers:</a></h3>
 <ul>
 <li><strong>EditAnywhere</strong></li>
 <li><strong>Category</strong> = <em>Systems|Startup</em></li>
@@ -6730,7 +6750,7 @@ TMap&lt;TSubclassOf&lt;UObject&gt;, FSystemsPipelineTypeResource&gt; TypeResourc
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-40"><a class="header" href="#specifiers-40">Specifiers:</a></h3>
+<h3 id="specifiers-41"><a class="header" href="#specifiers-41">Specifiers:</a></h3>
 <ul>
 <li><strong>EditAnywhere</strong></li>
 <li><strong>Category</strong> = <em>Resources|Types</em></li>
@@ -6770,7 +6790,8 @@ installs this pipeline content into that systems world.</p>
 <h1 id="installinto"><a class="header" href="#installinto"><strong><code>InstallInto</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 void InstallInto(
-    USystemsWorld&amp; Systems
+    USystemsWorld&amp; Systems,
+    TSet&lt;TObjectPtr&lt;USystemsPipeline&gt;&gt;&amp; PipelinesToIgnore
 ) const;
 </code></pre>
 <details>
@@ -6787,6 +6808,14 @@ void InstallInto(
 <blockquote>
 <p>NOTE: Make sure to install pipeline in its Setup phase, before it gets sealed.</p>
 </blockquote>
+</li>
+<li>
+<h2 id="pipelinestoignore"><a class="header" href="#pipelinestoignore"><strong><code>PipelinesToIgnore</code></strong></a></h2>
+<pre><code class="language-cpp">TSet&lt;TObjectPtr&lt;USystemsPipeline&gt;&gt;&amp; PipelinesToIgnore
+</code></pre>
+<p>List of pipelines to ignore when installing.</p>
+<p>This is needed for internal importing mechanism to avoid cycles of cross-referencing
+pipelines. You most likely might want to leave it empty when called yourself.</p>
 </li>
 </ul>
 </details>
@@ -6832,7 +6861,7 @@ void Uninstall(
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-41"><a class="header" href="#specifiers-41">Specifiers:</a></h3>
+<h3 id="specifiers-42"><a class="header" href="#specifiers-42">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintType</strong></li>
 <li><strong>Blueprintable</strong></li>
@@ -6857,7 +6886,7 @@ TSet&lt;FName&gt; SystemsWorlds;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-42"><a class="header" href="#specifiers-42">Specifiers:</a></h3>
+<h3 id="specifiers-43"><a class="header" href="#specifiers-43">Specifiers:</a></h3>
 <ul>
 <li><strong>EditAnywhere</strong></li>
 <li><strong>Category</strong> = <em>Systems|Component|Scene</em></li>
@@ -6962,7 +6991,7 @@ static void AddComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-43"><a class="header" href="#specifiers-43">Specifiers:</a></h3>
+<h3 id="specifiers-44"><a class="header" href="#specifiers-44">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
@@ -7013,7 +7042,7 @@ static void AddComponentEverywhere(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-44"><a class="header" href="#specifiers-44">Specifiers:</a></h3>
+<h3 id="specifiers-45"><a class="header" href="#specifiers-45">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
@@ -7059,7 +7088,7 @@ static UActorComponent* GetComponentRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-45"><a class="header" href="#specifiers-45">Specifiers:</a></h3>
+<h3 id="specifiers-46"><a class="header" href="#specifiers-46">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
@@ -7148,7 +7177,7 @@ static UObject* GetResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-46"><a class="header" href="#specifiers-46">Specifiers:</a></h3>
+<h3 id="specifiers-47"><a class="header" href="#specifiers-47">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems|Resources</em></li>
@@ -7199,7 +7228,7 @@ static USystemsWorld* GetSystemsWorld(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-47"><a class="header" href="#specifiers-47">Specifiers:</a></h3>
+<h3 id="specifiers-48"><a class="header" href="#specifiers-48">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems|World</em></li>
@@ -7242,7 +7271,7 @@ static void RemoveComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-48"><a class="header" href="#specifiers-48">Specifiers:</a></h3>
+<h3 id="specifiers-49"><a class="header" href="#specifiers-49">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Components</em></li>
@@ -7408,7 +7437,7 @@ void BlueprintAcquireSystemsWorld(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-49"><a class="header" href="#specifiers-49">Specifiers:</a></h3>
+<h3 id="specifiers-50"><a class="header" href="#specifiers-50">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Subsystem</em></li>
@@ -7475,7 +7504,7 @@ USystemsWorld* GetSystemsWorld(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-50"><a class="header" href="#specifiers-50">Specifiers:</a></h3>
+<h3 id="specifiers-51"><a class="header" href="#specifiers-51">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Subsystem</em></li>
@@ -7531,7 +7560,7 @@ void ReleaseSystemsWorld(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-51"><a class="header" href="#specifiers-51">Specifiers:</a></h3>
+<h3 id="specifiers-52"><a class="header" href="#specifiers-52">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems|Subsystem</em></li>
@@ -7604,7 +7633,7 @@ void AExampleGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-52"><a class="header" href="#specifiers-52">Specifiers:</a></h3>
+<h3 id="specifiers-53"><a class="header" href="#specifiers-53">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintType</strong></li>
 </ul>
@@ -7692,7 +7721,7 @@ bool AddComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-53"><a class="header" href="#specifiers-53">Specifiers:</a></h3>
+<h3 id="specifiers-54"><a class="header" href="#specifiers-54">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7747,7 +7776,7 @@ void Cleanup();
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-54"><a class="header" href="#specifiers-54">Specifiers:</a></h3>
+<h3 id="specifiers-55"><a class="header" href="#specifiers-55">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -7827,7 +7856,7 @@ UActorComponent* ComponentRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-55"><a class="header" href="#specifiers-55">Specifiers:</a></h3>
+<h3 id="specifiers-56"><a class="header" href="#specifiers-56">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8091,7 +8120,7 @@ bool InstallDefaultResource(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-56"><a class="header" href="#specifiers-56">Specifiers:</a></h3>
+<h3 id="specifiers-57"><a class="header" href="#specifiers-57">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8127,7 +8156,7 @@ bool InstallDefaultSystem(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-57"><a class="header" href="#specifiers-57">Specifiers:</a></h3>
+<h3 id="specifiers-58"><a class="header" href="#specifiers-58">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8350,7 +8379,7 @@ bool InstallResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-58"><a class="header" href="#specifiers-58">Specifiers:</a></h3>
+<h3 id="specifiers-59"><a class="header" href="#specifiers-59">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8426,7 +8455,7 @@ bool InstallSystemRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-59"><a class="header" href="#specifiers-59">Specifiers:</a></h3>
+<h3 id="specifiers-60"><a class="header" href="#specifiers-60">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8478,7 +8507,7 @@ bool IsSealed() const;
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-60"><a class="header" href="#specifiers-60">Specifiers:</a></h3>
+<h3 id="specifiers-61"><a class="header" href="#specifiers-61">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8527,7 +8556,7 @@ void MarkComponentChanged(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-61"><a class="header" href="#specifiers-61">Specifiers:</a></h3>
+<h3 id="specifiers-62"><a class="header" href="#specifiers-62">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8561,7 +8590,7 @@ void MarkResourceChanged(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-62"><a class="header" href="#specifiers-62">Specifiers:</a></h3>
+<h3 id="specifiers-63"><a class="header" href="#specifiers-63">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8595,7 +8624,7 @@ void Process();
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-63"><a class="header" href="#specifiers-63">Specifiers:</a></h3>
+<h3 id="specifiers-64"><a class="header" href="#specifiers-64">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8751,7 +8780,7 @@ bool RegisterComponentRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-64"><a class="header" href="#specifiers-64">Specifiers:</a></h3>
+<h3 id="specifiers-65"><a class="header" href="#specifiers-65">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8794,7 +8823,7 @@ bool RemoveComponent(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-65"><a class="header" href="#specifiers-65">Specifiers:</a></h3>
+<h3 id="specifiers-66"><a class="header" href="#specifiers-66">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8886,7 +8915,7 @@ bool ResourceDidChangedRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-66"><a class="header" href="#specifiers-66">Specifiers:</a></h3>
+<h3 id="specifiers-67"><a class="header" href="#specifiers-67">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8915,7 +8944,7 @@ UObject* ResourceRaw(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-67"><a class="header" href="#specifiers-67">Specifiers:</a></h3>
+<h3 id="specifiers-68"><a class="header" href="#specifiers-68">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintPure</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -8960,7 +8989,7 @@ void SealAndInitialize();
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-68"><a class="header" href="#specifiers-68">Specifiers:</a></h3>
+<h3 id="specifiers-69"><a class="header" href="#specifiers-69">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>
@@ -9002,7 +9031,7 @@ UDynamicQuery* SpawnQuery(
 <details>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-69"><a class="header" href="#specifiers-69">Specifiers:</a></h3>
+<h3 id="specifiers-70"><a class="header" href="#specifiers-70">Specifiers:</a></h3>
 <ul>
 <li><strong>BlueprintCallable</strong></li>
 <li><strong>Category</strong> = <em>Systems</em></li>

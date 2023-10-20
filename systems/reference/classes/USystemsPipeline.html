@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js ayu">
+<html lang="en" class="ayu" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -10,7 +10,7 @@
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../../favicon.svg">
         <link rel="shortcut icon" href="../../favicon.png">
@@ -33,7 +33,7 @@
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -63,24 +63,29 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('ayu')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -118,9 +123,9 @@
                                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -248,13 +253,28 @@ every tick.</p>
 <p>Order in the list represents order of execution.</p>
 </li>
 <li>
+<h1 id="pipelinestoimport"><a class="header" href="#pipelinestoimport"><strong><code>PipelinesToImport</code></strong></a></h1>
+<pre><code class="language-cpp">public:
+TArray&lt;TObjectPtr&lt;USystemsPipeline&gt;&gt; PipelinesToImport;
+</code></pre>
+<hr />
+<p><strong><em>Reflection-enabled</em></strong></p>
+<h3 id="specifiers-5"><a class="header" href="#specifiers-5">Specifiers:</a></h3>
+<ul>
+<li><strong>EditAnywhere</strong></li>
+<li><strong>Category</strong> = <em>Pipelines</em></li>
+</ul>
+<hr />
+<p>List of additional pipelines to import setup from when installing into systems world.</p>
+</li>
+<li>
 <h1 id="startupsystemstorun"><a class="header" href="#startupsystemstorun"><strong><code>StartupSystemsToRun</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 TArray&lt;FSystemsPipelineSystem&gt; StartupSystemsToRun;
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-5"><a class="header" href="#specifiers-5">Specifiers:</a></h3>
+<h3 id="specifiers-6"><a class="header" href="#specifiers-6">Specifiers:</a></h3>
 <ul>
 <li><strong>EditAnywhere</strong></li>
 <li><strong>Category</strong> = <em>Systems|Startup</em></li>
@@ -270,7 +290,7 @@ TMap&lt;TSubclassOf&lt;UObject&gt;, FSystemsPipelineTypeResource&gt; TypeResourc
 </code></pre>
 <hr />
 <p><strong><em>Reflection-enabled</em></strong></p>
-<h3 id="specifiers-6"><a class="header" href="#specifiers-6">Specifiers:</a></h3>
+<h3 id="specifiers-7"><a class="header" href="#specifiers-7">Specifiers:</a></h3>
 <ul>
 <li><strong>EditAnywhere</strong></li>
 <li><strong>Category</strong> = <em>Resources|Types</em></li>
@@ -310,7 +330,8 @@ installs this pipeline content into that systems world.</p>
 <h1 id="installinto"><a class="header" href="#installinto"><strong><code>InstallInto</code></strong></a></h1>
 <pre><code class="language-cpp">public:
 void InstallInto(
-    USystemsWorld&amp; Systems
+    USystemsWorld&amp; Systems,
+    TSet&lt;TObjectPtr&lt;USystemsPipeline&gt;&gt;&amp; PipelinesToIgnore
 ) const;
 </code></pre>
 <details>
@@ -327,6 +348,14 @@ void InstallInto(
 <blockquote>
 <p>NOTE: Make sure to install pipeline in its Setup phase, before it gets sealed.</p>
 </blockquote>
+</li>
+<li>
+<h2 id="pipelinestoignore"><a class="header" href="#pipelinestoignore"><strong><code>PipelinesToIgnore</code></strong></a></h2>
+<pre><code class="language-cpp">TSet&lt;TObjectPtr&lt;USystemsPipeline&gt;&gt;&amp; PipelinesToIgnore
+</code></pre>
+<p>List of pipelines to ignore when installing.</p>
+<p>This is needed for internal importing mechanism to avoid cycles of cross-referencing
+pipelines. You most likely might want to leave it empty when called yourself.</p>
 </li>
 </ul>
 </details>
@@ -365,7 +394,7 @@ void Uninstall(
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../../reference/classes/USystemsReflection.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../reference/classes/USystemsReflection.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -379,7 +408,7 @@ void Uninstall(
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../../reference/classes/USystemsReflection.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../reference/classes/USystemsReflection.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
