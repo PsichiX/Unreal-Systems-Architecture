@@ -5,6 +5,7 @@
 #include "Systems/Public/ConsumedActorComponents.h"
 #include "Systems/Public/System.h"
 #include "Systems/Public/SystemsComponent.h"
+#include "SystemsResourceLifeCycle.h"
 
 FInstallSystemOptions::FInstallSystemOptions() : Label(), Before(), After()
 {
@@ -41,6 +42,15 @@ void USystemsWorld::SealAndInitialize()
 		this->ComponentTypesMap.Add(this->ComponentTypes[Index], Index);
 	}
 
+	for (auto& Pair : this->Resources)
+	{
+		auto* Interface = Cast<ISystemsResourceLifeCycle>(Pair.Value);
+		if (Interface != nullptr)
+		{
+			Interface->OnInit(*this);
+		}
+	}
+
 	for (auto& Data : this->Systems)
 	{
 		Data.System->Init(*this);
@@ -57,6 +67,15 @@ void USystemsWorld::Cleanup()
 	for (auto& Data : this->Systems)
 	{
 		Data.System->Cleanup(*this);
+	}
+
+	for (auto& Pair : this->Resources)
+	{
+		auto* Interface = Cast<ISystemsResourceLifeCycle>(Pair.Value);
+		if (Interface != nullptr)
+		{
+			Interface->OnCleanup(*this);
+		}
 	}
 }
 
@@ -506,6 +525,8 @@ void USystemsWorld::Maintanance()
 	this->ComponentsBeingChanged.Clear();
 	this->CachedLastResourcesChanged = this->ResourcesBeingChanged;
 	this->ResourcesBeingChanged.Reset();
+	this->ActorsComponentsAdded.Reset();
+	this->ActorsComponentsRemoved.Reset();
 
 	// TODO: count actors to be added and reserve additional number of records
 	// memory in archetype buckets before we actually add them.
@@ -532,6 +553,9 @@ void USystemsWorld::Maintanance()
 				{ return IsValid(Component) == false || Removed.Contains(Component->GetUniqueID()); },
 				false);
 		}
+
+		this->ActorsComponentsAdded.Add(Pair.Key, SignatureAdded);
+		this->ActorsComponentsRemoved.Add(Pair.Key, SignatureRemoved);
 
 		if (Added.Num() <= 0 || IsValid(Actor) == false)
 		{

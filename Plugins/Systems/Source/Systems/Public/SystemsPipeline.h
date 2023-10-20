@@ -136,12 +136,21 @@ public:
 		/// Target [`class: USystemsWorld`]().
 		///
 		/// > NOTE: Make sure to install pipeline in its Setup phase, before it gets sealed.
-		USystemsWorld& Systems) const;
+		USystemsWorld& Systems,
+		/// List of pipelines to ignore when installing.
+		///
+		/// This is needed for internal importing mechanism to avoid cycles of cross-referencing
+		/// pipelines. You most likely might want to leave it empty when called yourself.
+		TSet<TObjectPtr<USystemsPipeline>>& PipelinesToIgnore) const;
 
 	/// Destroys systems world registered under [`class: $Self$::WorldId`]() name.
 	void Uninstall(
 		/// World that has running [`class: USystemsSubsystem`]().
 		UWorld* World) const;
+
+	/// List of additional pipelines to import setup from when installing into systems world.
+	UPROPERTY(EditAnywhere, Category = "Pipelines")
+	TArray<TObjectPtr<USystemsPipeline>> PipelinesToImport = {};
 
 	/// Typed components to be registered into systems world.
 	UPROPERTY(EditAnywhere, Category = "Components|Types")

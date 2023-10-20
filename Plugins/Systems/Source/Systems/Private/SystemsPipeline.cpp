@@ -9,15 +9,29 @@ void USystemsPipeline::Install(UWorld* World) const
 	auto* Subsystem = USystemsSubsystem::Get(World);
 	if (IsValid(Subsystem))
 	{
-		Subsystem->AcquireSystemsWorld(this->WorldId, [&](auto& Systems) { InstallInto(Systems); });
+		Subsystem->AcquireSystemsWorld(this->WorldId,
+			[&](auto& Systems)
+			{
+				TSet<TObjectPtr<USystemsPipeline>> Ignore = {};
+				InstallInto(Systems, Ignore);
+			});
 	}
 }
 
-void USystemsPipeline::InstallInto(USystemsWorld& Systems) const
+void USystemsPipeline::InstallInto(USystemsWorld& Systems, TSet<TObjectPtr<USystemsPipeline>>& PipelinesToIgnore) const
 {
 	if (Systems.IsSealed())
 	{
 		return;
+	}
+
+	for (auto& Pipeline : this->PipelinesToImport)
+	{
+		if (Pipeline && PipelinesToImport.Contains(Pipeline) == false)
+		{
+			PipelinesToIgnore.Add(Pipeline);
+			Pipeline->InstallInto(Systems, PipelinesToIgnore);
+		}
 	}
 
 	auto* Subsystem = USystemsSubsystem::Get(Systems.GetWorld());

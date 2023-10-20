@@ -663,6 +663,74 @@ public:
 		//// [/ignore]
 	}
 
+	UFUNCTION()
+	const TMap<uint32, FArchetypeSignature>& GetActorsComponentsAdded() const
+	{
+		//// [ignore]
+		return this->ActorsComponentsAdded;
+		//// [/ignore]
+	}
+
+	UFUNCTION()
+	const TMap<uint32, FArchetypeSignature>& GetActorsComponentsRemoved() const
+	{
+		//// [ignore]
+		return this->ActorsComponentsRemoved;
+		//// [/ignore]
+	}
+
+	template <class... T>
+	auto GetActorsComponentsAdded() const
+	{
+		//// [ignore]
+		auto Signature = FArchetypeSignature();
+		const UClass* Types[] = {T::StaticClass()...};
+		for (const auto* Type : Types)
+		{
+			if (const auto Index = ComponentTypeIndex(Type))
+			{
+				Signature.EnableBit(Index.GetValue());
+			}
+		}
+		return IterStdConst(this->ActorsComponentsAdded)
+			.FilterMap<uint32>(
+				[&](const auto& Pair)
+				{
+					if (Pair.Value.ContainsAll(Signature))
+					{
+						return Pair.Key;
+					}
+					return {};
+				});
+		//// [/ignore]
+	}
+
+	template <class... T>
+	auto GetActorsComponentsRemoved() const
+	{
+		//// [ignore]
+		auto Signature = FArchetypeSignature();
+		const UClass* Types[] = {T::StaticClass()...};
+		for (const auto* Type : Types)
+		{
+			if (const auto Index = ComponentTypeIndex(Type))
+			{
+				Signature.EnableBit(Index.GetValue());
+			}
+		}
+		return IterStdConst(this->ActorsComponentsRemoved)
+			.FilterMap<uint32>(
+				[&](const auto& Pair)
+				{
+					if (Pair.Value.ContainsAll(Signature))
+					{
+						return Pair.Key;
+					}
+					return {};
+				});
+		//// [/ignore]
+	}
+
 	/// Tries to get pointer to registered actor component.
 	///
 	/// # Note
@@ -1043,7 +1111,10 @@ private:
 	TSet<FArchetypeSignature> CachedLastArchetypeKeys = {};
 
 	UPROPERTY()
-	bool ActorsChanged = false;
+	TMap<uint32, FArchetypeSignature> ActorsComponentsAdded = {};
+
+	UPROPERTY()
+	TMap<uint32, FArchetypeSignature> ActorsComponentsRemoved = {};
 
 	UPROPERTY()
 	TArray<FSystemsDispatchRequest> DispatchRequests = {};

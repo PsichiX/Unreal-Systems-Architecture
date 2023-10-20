@@ -22,11 +22,12 @@ class SYSTEMS_API ASystemsActor : public AActor
 public:
 	ASystemsActor();
 
-private:
+protected:
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+private:
 	/// Tells into which global systems world this component should register.
 	UPROPERTY(EditAnywhere)
 	FName SystemsWorld = FName();

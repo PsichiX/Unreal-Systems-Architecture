@@ -32,7 +32,12 @@ TObjectPtr<USystemsWorld> AcquireMockWorld(UWorld* TheWorld, TFunction<void(USys
 
 TObjectPtr<USystemsWorld> AcquireMockWorldWithPipeline(UWorld* TheWorld, TObjectPtr<USystemsPipeline> Pipeline)
 {
-	return AcquireMockWorld(TheWorld, [&](auto& Systems) { Pipeline->InstallInto(Systems); });
+	return AcquireMockWorld(TheWorld,
+		[&](auto& Systems)
+		{
+			TSet<TObjectPtr<USystemsPipeline>> Ignore = {};
+			Pipeline->InstallInto(Systems, Ignore);
+		});
 }
 
 TObjectPtr<USystemsWorld> AcquireMockWorldWithPipeline(UWorld* TheWorld, FString PipelineAssetPath)
